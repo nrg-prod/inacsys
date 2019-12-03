@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Account in  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("paymentSales:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+</h:head>
+ 
+ <body onload="#{accountinReMB.accountDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="paymentSales">
+<table  border="0" class="form_background" width="100%" align="center">
+
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+
+  
+
+
+<tr><td align="center">
+<h:outputText value= "Sales Payment"  class="header_ui"/>
+<br/>
+</td></tr>
+<tr ><td align="center"><h:outputText value="#{accountinReMB.validate}" class="validation_ui"/></td></tr>
+
+<tr>
+                    <td align="center">
+                    <rich:panel style="font-size:10px; width:365px" align="left" header="Search by Order Number"  >  
+	        <h:panelGrid  columns="9"  style="font-size:10px; width:400px;height: 100px;" align="center">  
+	          
+	            <h:outputLabel value="Sales Order Number *"  class="label_ui" />
+	             &nbsp;
+	            
+	             
+	             <h:selectOneMenu onkeypress="return process(event);" class="text_ui"  value="#{accountinReMB.salereferencenumber}"  label="select one type">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{accountinReMB.drop}" />
+				    
+				 </h:selectOneMenu>
+	             
+	            <h:outputText  />
+	            <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	            
+	           &nbsp;
+	            <h:outputText value="" /><h:commandButton id="find" class="button"  value="Find" action="#{accountinReMB.accountin()}" /> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	    </rich:panel></td></tr>
+	    <tr>
+                  <td height="20px"></td></tr>
+                   		 
+                  <tr>
+                  <td align="center">
+                  <div style="height:100px ; width:700px; overflow-x:scroll; overflow-y:scroll;display:#{accountinReMB.flag}" align="center">
+                   <h:panelGrid style="display:#{accountinReMB.flag}">
+                   <rich:dataTable id="dataTable" var="info"  value="#{accountinReMB.resu}" columnsWidth="100px,135px,150px,150px,150px,165px">  
+         	
+ 
+  
+  
+	        <h:column headerText="Product name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">   Date  </span>      </f:facet>
+	            <h:outputText value="#{info.startDate}"  class="label_ui"><f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime><f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>  </h:outputText>
+	        </h:column>  
+  
+	        <h:column headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Order Number  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.i0022.i0021.salesOrderNumber}"  class="label_ui"/>  
+	        </h:column>  
+ 
+  <h:column  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Customer Name </span>      </f:facet>
+	            <h:outputText class="label_ui" value="#{info.i0022.i0021.customerName}" />  
+	        </h:column>  
+  
+	   		<h:column  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Total Amount</span>      </f:facet>
+	            <h:outputText class="label_ui"  value="Rp " />
+	            <h:outputText class="label_ui" value="#{info.payableAmount}" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	        </h:column>  
+  
+	   		<h:column  headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Amount Received </span>      </f:facet>
+	        <h:outputText class="label_ui"  value="Rp " />
+	        <h:outputText class="label_ui" value="#{info.paidAmount}" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>      
+	        </h:column> 
+	        <h:column  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Outstanding Amount  </span>      </f:facet>
+	            <h:outputText class="label_ui"  value="Rp " />
+	            <h:outputText class="label_ui" value="#{info.balanceAmount}" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	        </h:column>   
+  <h:column  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Action </span>      </f:facet>
+	          <div align="center"> <p:commandButton styleClass="button_ui"   value="Receive" action="#{accountinReMB.redirect()}" /></div>    
+	        </h:column>
+          
+ </rich:dataTable> 
+  </h:panelGrid></div>
+            
+                  </td></tr>
+
+   
+</table> 
+
+</td></tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

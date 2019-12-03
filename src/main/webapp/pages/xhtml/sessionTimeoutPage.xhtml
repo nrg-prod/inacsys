@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <link rel="stylesheet" href="../../css/css.css"> </link>
+<style>
+body{
+	background: -webkit-linear-gradient(#CCC, #AAA);
+	background-attachment: fixed;
+}
+#box{
+	border-radius: 5px;
+	-webkit-box-shadow: 2px 5px 12px #555;
+	padding: 20px;
+	width: 80%;
+	background-color: white;
+	color: black;
+	font-size: 10pt;
+	line-height: 18px;
+	margin: auto;
+	max-width: 750px;
+	min-width: 200px;
+	min-height:250px;
+	max-height:300px;
+	padding: 0px;
+}
+#header{
+	height:50px;
+	background: -webkit-linear-gradient(#fff, #eae6e6);
+	border-radius:5px
+}
+</style>
+</h:head>
+<body>
+<h:form>
+<div id="box">
+<div id="header">
+<table width="100%"><tr><td style="height:5px"></td></tr><tr align="center"><td>
+<h:outputText value="Please sign in again" style="font-size:22px;font-family:'Arial,san-serif,font-weight:bold'"></h:outputText>
+</td></tr></table>
+</div>
+<table width="100%"><tr align="center"><td>
+</td></tr>
+<tr><td style="height:20px"></td></tr>
+<tr><td><p:commandButton value="Reload" action="#{idleMonitorView.reloadClick}"></p:commandButton></td></tr>
+</table>
+</div>
+</h:form>
+</body>
+</ui:composition>
+  
+    

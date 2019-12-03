@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title>  Inacsys | Sales report  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body>
+
+
+<h:form>
+
+				 <table align="center">
+				 <tr>
+				 <td>
+				 <center>
+				<h:panelGrid>
+					<h:outputText value="#{SalesReportMB.validate}" class="validation_ui"/>
+				</h:panelGrid>
+				</center>
+				 <h:panelGrid columns="4" style="font-size:10px; width:650px; height: 70px;" align="center" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
+					<h:panelGroup>
+						<h:outputText value="From Date" class="label_ui"></h:outputText>
+						<h:outputText style="color:red" value="*"></h:outputText>
+					</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar  pattern="yyyy-MM-dd" value="#{SalesReportMB.salesFromDate}" id="fdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar>
+					 <h:message for="fdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="To Date" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar pattern="yyyy-MM-dd" value="#{SalesReportMB.salesToDate}" id="tdate">
+						<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar>
+					 <h:message for="tdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Type"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+				<h:selectOneRadio id="vt" value="#{SalesReportMB.customerType}" style="font-size:10px;" valueChangeListener="#{SalesReportMB.valueChange}">
+				<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+				<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+				<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+				 <h:message for="vt" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Customer Name" class="label_ui" for="venauto" style="display:#{SalesReportMB.singleCustomerFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{SalesReportMB.singleCustomerFlag}" value="*" ></h:outputText>
+					<h:outputText value="All" class="label_ui" style="display:#{SalesReportMB.multipleCustomerFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{SalesReportMB.multipleCustomerFlag}" value="*"></h:outputText>
+					 
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText value="#{SalesReportMB.repornew}" styleClass="inputTxt" id="v1" style="display:#{SalesReportMB.singleCustomerFlag}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<h:message for="v1" style="color:red;font-size:11px"></h:message>
+					<h:selectOneMenu id="av1" style="font-size:10px;width:200px;height:25px;display:#{SalesReportMB.multipleCustomerFlag}"  styleClass="ui-selectdropd" value="#{SalesReportMB.ALLcustomerName}" >
+		  	 			<f:selectItem itemLabel="--- Select ---" itemValue="--- Select ---"/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Sales Delivery" itemValue="Sales Delivery"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Sales Return" itemValue="Sales Return"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+					<h:message for="av1" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+			</h:panelGrid>
+			<center>
+				<h:panelGrid>
+						<p:commandButton  styleClass="button" style="font-size:15px" value="search" action="#{SalesReportMB.searchReport}" ajax="false"></p:commandButton>
+				</h:panelGrid>
+			</center>
+				
+				 </td>
+				 </tr>
+				 </table>
+			</h:form>
+			
+			<h:form>
+			<center>
+			<p:panel rendered="#{SalesReportMB.salesdetailFlag}" style="width:730px;border-width:0px">
+				<ui:include src="../../pages/xhtml/salesReportDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel rendered="#{SalesReportMB.reportSuccessFlag1}" style="width:730px;border-width:0px">
+				<ui:include src="../../pages/xhtml/salesDetailedDatatable.xhtml"></ui:include>
+			</p:panel>
+	<p:panel  rendered="#{SalesReportMB.salesdeliveredFlag}" style="width:730px;border-width:0px">
+			<ui:include src="../../pages/xhtml/salesDeliveryReportDatatable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel  rendered="#{SalesReportMB.salesreturnedFlag}" style="width:730px;border-width:0px">
+			<ui:include src="../../pages/xhtml/salesReturnReportDataTable.xhtml"></ui:include>
+			</p:panel>
+	<p:dialog visible="#{SalesReportMB.norecordflag}" header="Confirmation" widgetVar="cd" width="200px" height="60px" modal="true" appendTo="@(body)" resizable="false">
+	<center>
+	<h:panelGrid columns="3">
+	<p style="font-size:12px;">No Records Found</p></h:panelGrid><br/>
+	<p:commandButton value="Ok" onclick="PF('cd').hide()"></p:commandButton>
+	</center>
+	</p:dialog>
+	</center>
+
+</h:form>
+
+</body>
+</ui:composition>

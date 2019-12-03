@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Cash Assets  </title>
+ <link rel="stylesheet" href="../../css/css.css"></link>
+</h:head>
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  border="0" class="form_background" align="center" style="width: 100%;">
+
+
+
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td></td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+<tr><td  align="center">
+<h:outputText value= "Cash Book"  class="header_ui"/>
+
+</td></tr>
+<tr >
+<td  align="center" colspan="2"><h:outputText value="" style="color:#FFFFFF;"/><h:outputText value="#{cashBookMB.validate}" class="validation_ui"/></td>
+</tr>
+
+<tr>
+                    <td align="center" >
+                    <rich:panel style="font-size:14px; width:365px" header="Search by Date" align="left" >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:365px;height: 110px;" align="center">  
+	           <h:outputLabel value="From Date *"  class="label_ui" />
+	          <rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{cashBookMB.fromDate}"></rich:calendar>
+	           <h:outputLabel value="To Date *"  class="label_ui" />
+	           	<rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy"  value="#{cashBookMB.toDate}"></rich:calendar> 
+	          <h:outputLabel></h:outputLabel>
+	          <h:commandButton class="button"  value="Search" id="find1"  action="#{cashBookMB.findCashBook}"></h:commandButton> 
+	          </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr><td height="10px;"></td></tr>
+                  <tr><td>
+                 
+                  <div style="height:250px ; width:680px; overflow-x:scroll; overflow-y:scroll;display:#{cashBookMB.flag}" align="center">
+<h:panelGrid style="display:#{cashBookMB.flag} ;" >
+                    <rich:dataTable id="dataTable" var="info"  value="#{cashBookMB.cashBookList}"   style="max-width:710px;max-height:250px ;font-size:14;" 
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row" columnsWidth="40px,100px,120px,100px,150px,150px" >  
+         	
+  			<h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  No  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </h:column> 
+	        
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date  </span>      </f:facet>
+	            <h:outputText value="#{info.batch}"  class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>  
+	         
+	        </h:column>
+	         <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Client Name  </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </h:column> 
+	        
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Particulars   </span>      </f:facet>
+	            <h:outputText value="#{info.particulars}"  class="label_ui"/>  
+	        </h:column> 
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Debit   </span>      </f:facet>
+	            <h:panelGroup>
+<h:outputText rendered="#{info.credit!=''}"  class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText value="#{info.credit}" class="label1_ui" >
+	            <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>  
+	            <f:facet name="footer"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Total Debit   </span> 
+	            <h:panelGroup>
+<h:outputText  class="label_ui" value="Rp&nbsp;"></h:outputText>
+	             <h:outputText value="#{cashBookMB.credit}" class="label1_ui" style="font-style: normal;font-size:15px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">
+	             <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>  </f:facet>
+	        </h:column>
+	        
+	          <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Credit  </span>      </f:facet>
+	            <h:panelGroup>
+<h:outputText  rendered="#{info.debit!=''}"  class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText value="#{info.debit}" class="filter2" style="font-style: normal;font-size:15px;" >
+	            <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText> </h:panelGroup>
+	              <f:facet name="footer"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Total Credit   </span> 
+	              <h:panelGroup>
+<h:outputText  class="label_ui" value="Rp&nbsp;"></h:outputText>
+	              <h:outputText value="#{cashBookMB.debit}" class="filter2" style="font-style: normal;font-size:15px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">
+	              <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+	              
+	                  </f:facet> 
+	        </h:column>
+ </rich:dataTable> </h:panelGrid></div>
+ <div align="center">
+ <h:panelGrid style="display:#{cashBookMB.flag} ;" columns="12">
+ <h:outputText style="font-weight: bold;font-size:14px;padding-top:5px;font-family:'Helvetica Neue LT Pro 55';" value="Balance Amount is  :  ">
+ </h:outputText>
+ <h:panelGroup>
+<h:outputText  class="label_ui" value="Rp&nbsp;" style="font-style: bold;font-size:14px;padding-top:5px;font-family:'Helvetica Neue LT Pro 55';"></h:outputText>
+ <h:outputText style="color:#{cashBookMB.color};font-weight: bold;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';" value="#{cashBookMB.balance}">
+<f:converter converterId="com.inventory.util.UrlConverter"/> </h:outputText></h:panelGroup>
+ </h:panelGrid>
+ </div>
+ <div id="popup" style="display:#{cashBookMB.flag1}" align="center">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 365px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{cashBookMB.redirectCashBook()}" ></h:commandButton>
+
+
+
+</h:panelGrid></div>
+
+   
+
+  
+
+ 
+            
+   </div>
+                  
+                  </td></tr>
+  
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+<td align="center" >
+
+
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    
+ xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Quick Sales  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javascript" src="../../js/mycustom.js"></script>
+     <script type="text/javascript" src="../../js/mycustompurchase.js"></script>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("quick:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body background="../../images/brown.jpg" onload="#{quickSaleMB.returnDrop()}" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+		<h:form id="quick">
+			<table  border="0" class="form_background" align="center">
+	
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr><td height="200px" align="center">
+<table align="center"><tr align="center"><td align="center"><h:outputText value="" style="color:white"/>
+<h:outputText value="#{quickSaleMB.validate}" style="font-style: 'HelveticaNeueLT Pro 55 Roman';font-size:12px;color:red"/></td></tr>
+</table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                     <td align="center" >   
+                    <rich:panel style="font-size:14px; width:365px"   > 
+                     <h:panelGrid  columns="3"  style="font-size:14px; width:400px;height:20px" align="center">  
+	         <h:outputLabel/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	            <h:outputLabel value="Quick Sales Return"  class="header_ui"/>
+	           <h:outputLabel/><h:outputLabel/><h:outputLabel/><h:outputLabel/>
+	             
+	           
+	            
+	            
+	            
+	            
+	        </h:panelGrid>
+	        
+	        
+                    <h:panelGrid  columns="2"  style="font-size:14px; width:400px;height: 110px;" align="center">  
+	          
+	           
+				  <h:outputLabel value="Order Number *"  class="label_ui" />
+	            
+				 <h:selectOneMenu onkeypress="return process(event);" style="font-size: 10px;  height: 20px; width: 200px;  font-family:'Helvetica Neue LT Pro 55';"  value="#{quickSaleMB.salereferencenumber}"  label="select one group">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{quickSaleMB.result}" />
+				    
+				 </h:selectOneMenu>
+	           
+	            <h:outputText value="" /><h:commandButton class="button" id="find"  value="Find" action="#{quickSaleMB.salesReturnView}" /> 
+	            
+	            
+	            
+	        </h:panelGrid></rich:panel>
+	       <br/>
+	       <h:panelGrid style="display:#{quickSaleMB.flag4};">
+	       <rich:panel style="width:450px;" >
+		<h:panelGrid class="label_ui" border="0"   columns="2"  style="font-size:14px; width:450px;" align="center" cellpadding="3">
+  		 <h:outputText id="reg" value="Sales Information " class="header_ui"/>
+	            </h:panelGrid>
+			<h:panelGrid class="label_ui" border="0"     columns="2"  style="font-size:14px; width:450px; height: 85" align="center" cellpadding="3">
+	            <h:outputText class="label_ui" value="Type"></h:outputText>
+				<h:outputText class="text_ui" value="#{quickSaleMB.customerName}" id="Name"  label="name" >
+			
+				</h:outputText>
+				
+				 <h:outputText class="label_ui" value="Sales Number "></h:outputText>
+				<h:outputText class="text_ui" value="#{quickSaleMB.salereferencenumber}"  id="Nam"  label="name" >
+			
+				
+				 
+			
+				</h:outputText>
+				
+				
+				</h:panelGrid></rich:panel></h:panelGrid>
+	       
+	       <br></br>
+	        <h:form id="main" prependId="false">
+	        <h:panelGrid style="display:#{quickSaleMB.flag4};">
+	        
+	        
+	        
+	       
+	        <h:panelGrid  >
+	        <table align="center"><tr align="center"><td align="center"><div align="center"> <h:outputLabel id="text3" style="color:red" value="#{quickSaleMB.tempValidate}"></h:outputLabel></div></td></tr></table>
+    <rich:dataTable id="dataTable1" var="info"  value="#{quickSaleMB.resulfinal1}" columnsWidth="30px,200px,100px,40px,120px,120px">  
+         	
+ 
+   <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> No  </span>      </f:facet>
+	         <h:outputText class="label_ui" value="#{info.serialNo}" /> 
+	         <!-- <h:outputText class="label_ui" value="#{info.orderDate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText> -->    
+	        </h:column>
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Product Name   </span>      </f:facet>
+	            <h:outputText value="#{info.product_name}"  class="label_ui"/>  
+	        </h:column> 
+	         
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Quantity   </span>      </f:facet>
+	            <h:outputText value="#{info.quantity}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" />
+	            </h:outputText>   <h:outputText value=" "></h:outputText>
+	             <h:outputText value="#{info.unit}"  class="label_ui"/> 
+	        </h:column> 
+  
+	        
+  <h:column>
+  <f:facet name="header"><span style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"></span></f:facet>
+ 
+   <h:selectBooleanCheckbox id="check" value="#{info.priroty}" valueChangeListener="#{quickSaleMB.checkBox}" >
+  
+   			<f:selectItem itemValue="1" itemLabel=" " />
+   			<f:attribute value="#{info.rollID}" name="roll"></f:attribute>
+   			<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+   			<f:attribute value="#{info.tempFlag1}" name="flag1"></f:attribute>
+   			<f:attribute value="#{info.tempFlag2}" name="flag2"></f:attribute>
+   			<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+   			<f:attribute value="#{info.unit}" name="unit1"></f:attribute>
+   			<f:attribute value="#{info.orderDatez}" name="datez"></f:attribute>
+   			<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+   			<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+   			<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+   			<f:ajax render="@form" execute="check"></f:ajax>
+   		</h:selectBooleanCheckbox>
+  
+  </h:column>
+  <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Normal Return </span>      </f:facet>
+	   		
+	            <h:inputText id="text1" valueChangeListener="#{quickSaleMB.nrChange}" style="display:#{info.tempFlag1};height: 20px; width: 100px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#04368C; background-color:#E6EBF5;font-family:cursive;" value="#{info.nr}" >
+	         <f:attribute value="#{info.orderDate}" name="datez"></f:attribute>
+	           <f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+   			<f:attribute value="#{info.tempFlag1}" name="flag1"></f:attribute>
+   			<f:attribute value="#{info.tempFlag2}" name="flag2"></f:attribute>
+   			<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+   			<f:attribute value="#{info.rollID}" name="rolls"></f:attribute>
+   			<f:attribute value="#{info.unit}" name="unit1"></f:attribute>
+   			<f:attribute value="#{info.priroty}" name="pri"></f:attribute>
+   			<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+   			<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+   			<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+   			  <f:ajax execute="text1" render="@form"></f:ajax>
+	            </h:inputText> 
+	        </h:column>  
+  <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Damage Return </span>      </f:facet>
+	   		 
+	            <h:inputText id="text2" valueChangeListener="#{quickSaleMB.drChange}" style="display:#{info.tempFlag1};height: 20px; width: 100px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#04368C; background-color:#E6EBF5;font-family:cursive;" value="#{info.dr}" >
+	           <f:attribute value="#{info.orderDate}" name="datez"></f:attribute>
+	            <f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+   			<f:attribute value="#{info.tempFlag1}" name="flag1"></f:attribute>
+   			<f:attribute value="#{info.tempFlag2}" name="flag2"></f:attribute>
+   			<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+   			<f:attribute value="#{info.priroty}" name="pri"></f:attribute>
+   			<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+   			<f:attribute value="#{info.rollID}" name="rolls"></f:attribute>
+   			<f:attribute value="#{info.unit}" name="unit1"></f:attribute>
+   			<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+   			<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+   			 <f:ajax execute="text2" render="@form"></f:ajax>
+	            </h:inputText>  
+	        </h:column>  
+   
+  
+          
+ </rich:dataTable></h:panelGrid>
+	        
+	        </h:panelGrid></h:form>
+	        
+	         </td>
+                  </tr>
+                  <tr align="center">
+                  <td height="30px" align="center" colspan="2" >
+                  <h:panelGrid style="display:#{quickSaleMB.flag4};" columns="2">
+                  <p:commandButton value="submit" styleClass="button_ui" action="#{quickSaleMB.salesReturnSubmit}"></p:commandButton>  <p:commandButton action="#{quickSaleMB.qsreturnclose}" styleClass="button_ui" value="cancel"></p:commandButton>
+                  
+                  </h:panelGrid>
+                 <br/><br></br>
+	        
+	        
+	         </td>
+                  </tr>
+                 
+
+ </table> 
+</td>
+</tr>
+
+</table></td></tr>
+<tr><td style="height: 10px"></td></tr>
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+ <h:head>
+<title> Inacsys | Customer View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("customerView:find1").click();
+            return false;
+        }
+        return true;
+        
+        }
+        function process1(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("customerView:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        function process2(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("customerView:find2").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body onload="#{buyersViewMB.vendors()}" style="background-attachment: fixed; background-size:cover;">
+
+<h:form id="customerView">
+<div align="right" style="height:25px;margin-right:10px;">
+<h:commandButton image="../../images/refresh.png"  action="#{buyersViewMB.custrefresh}" update=":customerView:dataTable"></h:commandButton>
+&nbsp;<h:commandButton image="../../images/Printer.png">
+<p:printer target="dataTable"></p:printer>
+</h:commandButton>
+</div>
+<center>
+	<div style="height:250px ; width:650; overflow-x:scroll; overflow-y:scroll;display:#{buyersViewMB.flag}" align="center">
+<h:panelGrid style="display:#{buyersViewMB.flag}" >
+ 			<rich:dataTable 
+    			 id="dataTable" var="info"  value="#{buyersViewMB.catbuy}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';" columnsWidth="150px,80px,100px,120px,60px,40px,40px,40px" >    
+                    
+  <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['customerName']}" sortBy="#{info.customerName}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Customer Name" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="customerName"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['customerName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['customerName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.customerName}"/>  
+	            
+	        </rich:column>
+  <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['phns']}" sortBy="#{info.phns}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Phone Number" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="phns"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['phns']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['phns']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.phns}"/>  
+	            
+	        </rich:column>
+	         <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['city']}" sortBy="#{info.city}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="City" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="city"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['city']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['city']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.city}"/>  
+	            
+	        </rich:column>
+	        <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['country']}" sortBy="#{info.country}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Country" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="country"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['country']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['country']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.country}"/>  
+	            
+	        </rich:column>
+	         <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['categoryName']}" sortBy="#{info.categoryName}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Category " execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="categoryName"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['categoryName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['categoryName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.categoryName}"/>  
+	            
+	        </rich:column>
+	       
+	   		<h:column   headerText="Phone">
+	   		 <f:facet name="header"> <span style="font-size:10px;width: 50px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  View   </span>      </f:facet>
+	         
+	           <div align="center"> <p:commandButton icon="ui-icon-search" action="#{buyersViewMB.custview}">
+	             <f:setPropertyActionListener target="#{buyersViewMB.phns}" value="#{info.phns}"></f:setPropertyActionListener>
+	           </p:commandButton></div> 
+	        </h:column>
+  
+	   		<h:column   headerText="Phone">
+	   		 <f:facet name="header"> <span style="font-size:10px;width: 50px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  Modify   </span>      </f:facet>
+	         
+	           <div align="center"> <p:commandButton icon="ui-icon-pencil" action="#{buyersViewMB.custmodify}" >
+	            <f:setPropertyActionListener target="#{buyersViewMB.phns}" value="#{info.phns}"></f:setPropertyActionListener>
+	           </p:commandButton></div> 
+	        </h:column>  
+  		<h:column   headerText="Phone">
+	   		 <f:facet name="header"> <span style="font-size:10px;width: 50px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; "> Delete   </span>      </f:facet>
+	         
+	           <div align="center">
+	           <p:commandButton icon="ui-icon-close" onclick="PF('cd').show()">
+	         <f:setPropertyActionListener target="#{buyersViewMB.phns}" value="#{info.phns}"></f:setPropertyActionListener>
+	           </p:commandButton>
+	           </div> 
+	        </h:column>  
+  
+          
+</rich:dataTable>  </h:panelGrid>
+
+</div>
+<div id="popup" style="margin-top:100px;display:#{buyersViewMB.flag1}" align="center">
+<div id="logo">
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<p:commandButton value="Ok" actionListener="#{buyersViewMB.customerviewclose}" styleClass="kbutton_ui"></p:commandButton>
+</h:panelGrid></div>            
+   </div>
+     <p:confirmDialog header="Confirmation" widgetVar="cd" message="Yes to continue No to cancel" style="font-size:11px">
+   <center>
+   <p:commandButton value="Yes" action="#{buyersViewMB.buyerDelete()}" styleClass="kbutton_ui"></p:commandButton>
+    <p:commandButton value="No" onclick="PF('cd').hide()" styleClass="kbutton_ui"></p:commandButton>
+    </center>
+   </p:confirmDialog>
+  
+   </center>		
+</h:form>
+
+</body>
+</ui:composition>

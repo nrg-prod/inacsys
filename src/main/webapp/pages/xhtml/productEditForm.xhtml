@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Product Edit Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <body onload="#{productRegisterFormMB.dropDown()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table   border="0" class="form_background" width="100%">
+
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td >
+<br/>
+<table align="center">
+
+  <tr> <td align="center"><h:outputText value="#{productViewMB.validate}" class="validation_ui"/> </td></tr>
+<tr>
+                    <td align="center" >
+	              <rich:panel style="width:730px;">
+	            <h:panelGrid class="label_ui"    style=" width:730px;HEIGHT:10PX;  " align="center" >
+	         
+	         <h:outputText id="reg" value="Product Edit" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:730px;">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:730px;" align="center" cellpadding="3">
+	        
+	             
+	           <h:outputText class="label_ui" value="Category *"></h:outputText>
+				<h:selectOneMenu class="text_ui"  value="#{productViewMB.categoryname}"  >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{productRegisterFormMB.categorytype}" />
+				    
+				 </h:selectOneMenu>
+				 <h:outputText class="label_ui" value="Brand"></h:outputText>
+				<h:inputText value="#{productViewMB.brand}" class="text_ui" >
+				</h:inputText>
+				  <h:outputText class="label_ui" value="Product Code *"></h:outputText>
+				<h:inputText class="text_ui" value="#{productViewMB.productlimit}"  ></h:inputText>
+				<h:outputText class="label_ui" value="Standard"></h:outputText>
+				<h:inputText value="#{productViewMB.product_standard}" class="text_ui"  />
+				 <h:outputText class="label_ui" value="Product Name *"></h:outputText>
+				<h:inputText  value="#{productViewMB.productName}" class="text_ui"  >
+				</h:inputText>
+				<h:outputText class="label_ui" value="Actual Price *" />
+				<h:inputText  value="#{productViewMB.autual_price}" class="text_ui"/>
+				<h:outputText class="label_ui" value="Size *"></h:outputText>
+				<h:inputText  value="#{productViewMB.size_of_product}" class="text_ui"  />
+				<h:outputText class="label_ui" value="Market Price *" />
+				<h:inputText  value="#{productViewMB.market_price}" class="text_ui"/>
+				
+				<h:outputText class="label_ui"  value="Date" ></h:outputText>
+				<h:outputLabel class="label_ui"  value="#{productViewMB.date}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputLabel>
+				<h:outputText class="label_ui" value="Unit *"></h:outputText>
+				<h:selectOneMenu class="text_ui"  value="#{productViewMB.unit}" >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItem  itemLabel="Kg" itemValue="Kg"/>
+				   		 <f:selectItem  itemLabel="Ons" itemValue="Ons"/>
+				   		 <f:selectItem  itemLabel="Meter" itemValue="Meter"/>
+				   		 <f:selectItem  itemLabel="Cm" itemValue="Cm"/>
+				   		 <f:selectItem  itemLabel="Inch" itemValue="Inch"/>
+				   		 <f:selectItem  itemLabel="Piece" itemValue="Piece"/>
+				   		  <f:selectItem  itemLabel="Roll" itemValue="Roll"/>
+				   		   <f:selectItem  itemLabel="Gross" itemValue="Gross"/>
+				   		    <f:selectItem  itemLabel="Dozen" itemValue="Dozen"/>
+				   		    <f:selectItem  itemLabel="Kod" itemValue="Kod"/>
+				   		    <f:selectItem  itemLabel="Yards" itemValue="Yards"/>
+				    
+				 </h:selectOneMenu>
+				 <h:outputText class="label_ui" value="Description"></h:outputText>
+				<h:inputText  value="#{productViewMB.description}" class="text_ui"  />
+				
+				<h:outputText class="label_ui" value="Vendor *"></h:outputText>
+				<h:outputText class="text_ui"  value="#{productViewMB.vendor}"  />
+				
+				
+				<h:inputHidden class="label_ui" value="Product ID" ></h:inputHidden>
+				<h:inputHidden  value="#{productViewMB.product_ID}" class="text_ui" />
+				
+				<!-- <h:outputText class="label_ui" value="Selling Price"></h:outputText>
+				<h:inputText   value="#{productViewMB.sellingPrice}" class="text_ui"> -->
+				</h:panelGrid></rich:panel>
+				 
+	<!-- Second panle -->
+	<!-- <h:commandButton  value="Save" class="button_ui" action="#{productRegisterFormMB.saveProductRegister()}" ></h:commandButton> -->
+	               
+	               <rich:panel style="width:730px;">
+	            
+							
+				
+				
+				
+	
+	
+	
+	   <!-- 
+	        <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:990px;" align="left" cellpadding="3">  
+	 	
+	 	<h:outputText value="Supplier " style="font-size:16px;width: 200px;color:#F51313"/>
+	 	<h:outputText/><h:outputText/><h:outputText/>
+	 	<h:outputText class="label_ui" value="Supplier name" />
+		<h:inputText class="text_ui"/>
+		<h:outputText class="label_ui" value="Address" />
+		<h:inputText class="text_ui" />
+		<h:outputText class=	"label_ui" value="Phone number"/>
+		<h:inputText class="text_ui"/>
+		<h:outputText class="label_ui" value="City" />
+		<h:inputText class="text_ui" />
+		<h:outputText class="label_ui" value="State" />
+		<h:inputText class="text_ui" />
+		<h:outputText class="label_ui" value="Country" />
+		<h:inputText class="text_ui"/>
+		<h:outputText class="label_ui" value="Fax"  />
+		<h:inputText class="text_ui"/>
+		<h:outputText   class="label_ui"  value="Email ID" />
+		<h:inputText class="text_ui"/>
+		<h:outputText class="label_ui"  value="Person Incharge"/>
+		<h:inputText class="text_ui"/>
+		<h:outputText/>
+		
+		<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      
+		        </h:panelGrid> --> 
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+<p:commandButton id="reject" value="Save" styleClass="button_ui" onclick="PF('cd').show()"></p:commandButton>
+ 
+<p:commandButton id="cancel"  value="Cancel" styleClass="button_ui" action="#{productViewMB.productviewclose}" ></p:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></rich:panel>
+	   
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="10">
+                      
+ 
+            
+    </td></tr>
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+<td align="center" >
+<p:confirmDialog header="Confirmation" message="Yes to continue No to cancel" widgetVar="cd" style="font-size:11px;">
+<center>
+<p:commandButton value="Yes" styleClass="kbutton_ui" action="#{productViewMB.productEditSave}"></p:commandButton>
+<p:commandButton value="No" styleClass="kbutton_ui" onclick="PF('cd').hide()"></p:commandButton>
+</center>
+</p:confirmDialog>
+
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

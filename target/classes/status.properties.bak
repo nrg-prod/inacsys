@@ -1,0 +1,66 @@
+#Approval status
+approval.draft.status=draft
+approval.pending.status=PENDING FOR APPROVAL
+approval.approved.status=Approved
+
+#Payment Status
+accounts.unpaid.status=Unpaid
+accounts.paid.status=Paid
+accounts.closed.status=Closed
+accounts.partial.status=Partial
+accounts.nopayment.status=Payment Not Start
+accounts.unapplied.status=Unapplied
+
+#Invoice Status
+accounts.invoice.status=Invoice Not Start
+
+#get Coa button value
+accounts.runreportbtn.status=Run report
+accounts.acchistorybtn.status=Account history
+
+#Status
+active.status=Active
+
+#OpeningBalance Status
+yes.openingbalance.status=YES
+no.openingbalance.status=NO
+non.openingbalance.status=No Opening Balance
+
+#Invoice Number for Account Sales
+accountssales.invoice.status=STNIV
+accountssales.payment.status=STNPT
+accountssales.estimate.status=STNES
+accountssales.salesreceipt.status=STNSR
+accountssales.creditmemo.status=STNCM
+accountssales.delayedcharge.status=STNDC
+accountssales.timeactivity.status=STNTA
+
+#Set Accounts Category TYpe,Detail Type,Account Name
+accountrec.categorytype.status=Accounts Receivable (A/R)
+accountrec.detailtype.status=Accounts Receivable (A/R)
+accountrec.name.status=Accounts Receivable (A/R)
+service.categorytype.status=Sales
+bank.categorytype.status=Bank
+cash.categorytype.status=Cash
+othercurrentassets.categorytype.status=Other Current Assets
+service.detailtype.status=Sales Account
+service.name.status=Sales Account
+openingbalequity.categorytype.status=Equity
+openingbalequity.name.status=Opening Balance Equity
+accountpay.categorytype.status=Accounts Payable (A/P)
+accountpay.detailtype.status=Accounts Payable (A/P)
+accountpay.name.status=Accounts Payable (A/P)
+creditcard.categorytype.status=Credit Card
+purchases.category.status=Purchase
+purchases.name.status=Purchase Account 
+ouputIGST.name.status=Output IGST
+ouputCGST.name.status=Output CGST
+ouputSGST.name.status=Output SGST
+inputIGST.name.status=Input IGST
+inputCGST.name.status=Input CGST
+inputSGST.name.status=Input SGST
+GST.category.status=Current liabilities
+GST.detail.status=Sales and service tax payable
+
+
+

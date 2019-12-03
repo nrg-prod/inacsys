@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+<h:head>
+<title> Inacsys | salesInvoice  </title>
+<link rel="stylesheet" href="../../css/css.css">
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("invoice2:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+
+
+</h:head>
+
+ <body onload="#{invoiceSalesMB.invoiceSalesDrop()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="invoice2" onkeypress="return process(event);">
+<table  border="0" class="form_background" width="100%">
+
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+<tr><td align="center">
+<h:outputText value= "Sales Invoice"  class="header_ui"/>
+<br/>
+</td></tr>
+<tr ><td align="center"><h:outputText value="#{invoiceSalesMB.validate}" class="validation_ui"/></td></tr>
+
+<tr>
+                    <td align="center" >
+                    <rich:panel style="font-size:10px; width:365px;text-align:left;" header="Search by Sales Reference Number"  >  
+	        <h:panelGrid  columns="2"  style="font-size:10px; width:370px;height: 100px;" align="center">  
+	          
+	            <h:outputLabel value="Sales Reference Number *"  class="label_ui"/>
+	            
+	             
+	             <h:selectOneMenu class="text_ui"  value="#{invoiceSalesMB.salereferencenumber}"  label="select one group">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{invoiceSalesMB.sales}" />
+				    
+				 </h:selectOneMenu>
+	          
+	            <h:outputText value="" /><h:commandButton id="find" class="button"  value="Find" action="#{invoiceSalesMB.invoiceSales}" /> 
+	            
+	            
+	            
+	        </h:panelGrid> 
+	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px"></td></tr>
+ <tr><td align="center">
+<div style="height:100px ; width:500px; overflow-x:scroll; overflow-y:scroll;display:#{invoiceSalesMB.flag}" align="center">
+<h:panelGrid style="display:#{invoiceSalesMB.flag}">
+                   <rich:dataTable id="dataTable" var="info"  value="#{invoiceSalesMB.result}" columnsWidth="80px,170px,170px,50px">  
+         	
+ 
+   
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Date   </span>      </f:facet>
+	            <h:outputText value="#{info.salesOrderDate}"  class="label_ui">  
+	            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+	            </h:outputText>
+	        </h:column>  
+  
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Customer Name </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.customerName}"  class="label_ui"/>  
+	        </h:column>  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount </span>      </f:facet>
+	            <h:outputText class="label_ui"  value="Rp " />
+	            <h:outputText value="#{info.crossTotal}" class="label_ui"  > 
+	            <f:converter converterId="com.inventory.util.UrlConverter" />
+	             </h:outputText>
+	        </h:column>  
+  
+	   		
+	          
+   <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Action  </span>      </f:facet>
+<div align="center"><h:commandButton   image="/images/view.png" action="#{invoiceSalesMB.redirect}" >
+ <f:setPropertyActionListener value="#{info.crossTotal}" target="#{info.crossTotal}"></f:setPropertyActionListener>
+</h:commandButton> 	       </div> </h:column>
+  
+          
+ </rich:dataTable>
+            </h:panelGrid></div>
+</td>
+</tr>
+  
+
+
+<tr><td align="center">
+</td></tr>
+          
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

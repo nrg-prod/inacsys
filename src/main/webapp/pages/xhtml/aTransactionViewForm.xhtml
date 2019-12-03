@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+     xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title> Inacsys | Transaction View Form </title>
+<link rel="stylesheet" href="../../css/css.css">
+</link>
+</h:head>
+<body style="background-attachment: fixed;background-position: 50% 50%; background-size:cover; overflow: hidden;">
+<h:form><div style="align:center;">
+<center>
+<p:panel style="width:450px;height:190px;border:0px;" id="tab" align="center">
+
+	             <h:panelGrid class="label_ui" border="0" cellpadding="1"  cellspacing="10"   columns="4"  style="font-size:11px; width:440px;height:100px;" align="center">
+	           <h:outputText/><h:outputText/><h:outputText/><h:outputText/>
+	           	<h:outputText class="labelTxt" value="Transaction Type"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.paymentMode}"></h:outputText>
+				<h:outputText class="labelTxt" value="Payment Date"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.paydate}"> <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+				<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+				
+				<h:outputText class="labelTxt" value="Due Date"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.duedate}"> <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+				<h:outputText class="labelTxt" value="Payment Mode"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.paymentMode}"></h:outputText>
+				<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+				
+				<h:outputText class="labelTxt" value="Mailing Address"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.maddress}"></h:outputText>
+				<h:outputText class="labelTxt" value="Amount"></h:outputText>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.amount}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+					<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+				
+					<h:outputText class="labelTxt" value="Account "></h:outputText>
+					<h:outputText class="labelTxt" value="#{aTransactionMB.particular}"></h:outputText>
+					<h:outputText class="labelTxt" value="Currency Type "></h:outputText>
+					<h:outputText class="labelTxt" value="#{aTransactionMB.currencyType}"></h:outputText>
+								<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>	
+				<h:outputText class="labelTxt" value="Base Currency Amount"></h:outputText>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.currency}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/>
+				</h:outputText>
+				<h:outputText value="#{aTransactionMB.baseCurrency}"  class="labelTxt"></h:outputText></h:panelGroup>
+				<h:outputText class="labelTxt" value="Description"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.note}"></h:outputText>
+		
+<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>		
+ <h:outputLabel value="Bank Name" class="labelTxt" style="display:#{aTransactionMB.align3}"></h:outputLabel>
+<h:outputText class="labelTxt" value="#{aTransactionMB.bankname}" style="display:#{aTransactionMB.align3}"></h:outputText>
+<h:outputText value="Card Number" class="labelTxt" style="display:#{aTransactionMB.align3}"></h:outputText>
+<h:outputText class="labelTxt" value="#{aTransactionMB.cardno}" style="display:#{aTransactionMB.align3}"></h:outputText>
+
+<h:outputLabel value="Bank Name" class="labelTxt" style="display:#{aTransactionMB.align4}"></h:outputLabel>
+<h:outputText class="labelTxt" value="#{aTransactionMB.bankname}" style="display:#{aTransactionMB.align4}"></h:outputText>
+<h:outputText value="Account Number" class="labelTxt" style="display:#{aTransactionMB.align4}"></h:outputText>
+<h:outputText class="labelTxt" value="#{aTransactionMB.cardno}" style="display:#{aTransactionMB.align4}"></h:outputText>
+<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+				
+<h:outputLabel value="Bank Name" class="labelTxt" style="display:#{aTransactionMB.align2}"></h:outputLabel>
+		<h:outputText style="display:#{aTransactionMB.align2}" class="labelTxt" value="#{aTransactionMB.bankname}" ></h:outputText>
+		<h:outputLabel value="Cheque Number" class="labelTxt" style="display:#{aTransactionMB.align2}"></h:outputLabel>
+		<h:outputText class="labelTxt" value="#{aTransactionMB.chequeno}" style="display:#{aTransactionMB.align2}"></h:outputText>
+		<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+		<h:outputLabel value=" Cheque Date" class="labelTxt" style="display:#{aTransactionMB.align2}"></h:outputLabel>
+		<h:outputText class="labelTxt" value="#{aTransactionMB.chequedate}" style="display:#{aTransactionMB.align2}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+		<h:outputText></h:outputText>	<h:outputText></h:outputText>						
+<a4j:mediaOutput style="width:100px;height:100px;display:#{aTransactionMB.flag};"
+							element="img" cacheable="false" session="true" 
+							createContent="#{aTransactionMB.imageview}" mimeType="image/png" />
+<p:commandButton ajax="false" icon="ui-icon-arrowthick-1-s" style="display:#{aTransactionMB.flag1};" actionListener="#{aTransactionMB.file}">
+        <p:fileDownload value="#{aTransactionMB.stream}" />        
+    </p:commandButton>
+				
+	
+</h:panelGrid>
+
+<!-- <h:panelGrid class="label_ui" border="0"  cellspacing="7"   columns="4"  style="display:#{aTransactionMB.align2};font-size:10px; width:990px;" align="left" cellpadding="3">  
+			
+	<h:outputLabel value="Bank Name" class="label_ui" style="display:#{aTransactionMB.align2}"></h:outputLabel>
+										<h:outputText style="display:#{aTransactionMB.align2}" class="text_ui" value="#{aTransactionMB.bankname}" ></h:outputText>
+										<h:outputLabel value="Cheque Number" class="label_ui" style="display:#{aTransactionMB.align2}"></h:outputLabel>
+										<h:outputText class="text_ui" value="#{aTransactionMB.chequeno}" style="display:#{aTransactionMB.align2}"></h:outputText>
+										<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+								<h:outputLabel value=" Cheque Date" class="label_ui" style="display:#{aTransactionMB.align2}"></h:outputLabel>
+										<h:outputText class="text_ui" value="#{aTransactionMB.chequedate}" style="display:#{aTransactionMB.align2}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+								
+
+				<h:outputText/></h:panelGrid> -->
+				<!-- <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" > -->
+				
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/><h:outputText/></p:panel><br/></center>
+  <div align="center" style="height:200;margin-left:150px;margin-top:150px;">
+		         <h:panelGrid class="label_ui" border="0" columns="3" style=" width: 200px;padding-top: 10px;font-family:'Verdana';" >
+<h:commandButton image="../../images/Printer.png" ><p:printer target="tab"></p:printer></h:commandButton>
+
+</h:panelGrid></div>
+	   
+   </div>                
+</h:form>
+
+</body>
+</ui:composition>

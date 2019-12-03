@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:ace="http://www.icefaces.org/icefaces/components">
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase view  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("purchaseView:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        
+        /* function checking(){
+        alert("hello");
+        } */
+        </script>
+</h:head>
+ 
+ <body onload="#{productRegisterFormMB.designViewOnload()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form id="purchaseView">
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right">
+<h:commandButton value="Translate" style="font-weight:bold;"  ajax="false"> 
+<rich:componentControl target="popup" operation="show" />
+</h:commandButton>&nbsp;
+<h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+<div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Lihat data Pembelian" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:300px;" align="left" bgcolor="#f4f4f4">
+
+
+<h:outputText  value="From Date" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="dari Tanggal" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="To Date " style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="hingga saat ini" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Product Name" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="nama Produk" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+
+
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+<tr><td height="350px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Product Design View" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText value="#{productRegisterFormMB.validate}" class="validation_ui"/>
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td align="left" >
+                    <rich:panel style="font-size:14px; width:490px" header="Search by Date"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:490px;height: 143px;" align="center">  
+	          
+	            <h:outputLabel value="From Date *"  class="label_ui" />
+	            <rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" datePattern="dd/MM/yyyy" value="#{productRegisterFormMB.date}" ></rich:calendar>
+	            <h:outputLabel value="To Date *"  class="label_ui" />
+	           <rich:calendar  inputStyle="height: 30px; width: 200px; font-size:14px;" datePattern="dd/MM/yyyy" value="#{productRegisterFormMB.expired_date}" ></rich:calendar>
+	            <h:outputText value="" /><h:commandButton class="button"  value="Find" action="#{productRegisterFormMB.designViewByDate}" ></h:commandButton> 
+	               </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                     <td align="left" >
+                    <rich:panel style="font-size:14px; width:490px" header="Search by Vendor Name"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:650px;height: 143px;" align="center">  
+	          <h:outputLabel value="Product Name *"  class="label_ui"/>	           
+	           <h:selectOneMenu id="a" value="#{productRegisterFormMB.product_name}" label="select one type"  style="font-size:16px;display:#{info.flag};" class="text_ui">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true"/>
+				   			 <f:selectItems  value="#{productRegisterFormMB.auto}" ></f:selectItems>
+				   			<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				    		<f:attribute value="#{info.product_name}" name="product"></f:attribute>
+				    	
+				 </h:selectOneMenu>	            
+	            <h:outputText value=""/>
+	             <h:commandButton  id="find" class="button"  onclick="showHideOrderLines(this);" value="Find" action="#{productRegisterFormMB.designViewByName}" >
+	       </h:commandButton> 
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px">
+                  </td></tr>
+                    <tr>
+                    <td>
+                  
+            
+    </td></tr>
+</table> 
+ 
+ <div style="height:250px ; width:1000; overflow-x:scroll; overflow-y:scroll;display:#{productRegisterFormMB.flag}" >
+                 <h:panelGrid style="display:#{productRegisterFormMB.flag}" >  
+                   
+                     <rich:dataTable  id="dataTable" var="info" value="#{productRegisterFormMB.domain2}" columnsWidth="135px,150px,150px,150px,50px,50px" >  
+         	
+  <h:column width="150px"  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">  Date  </span>      </f:facet>
+	            <h:outputText value="#{info.dates}"  class="label_ui">
+	            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+	            </h:outputText>  
+	        </h:column>        
+	        <h:column width="150px"  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">Product Name</span>      </f:facet>
+	            <h:outputText value="#{info.productName}"  class="label_ui"/>  
+	        </h:column>  
+  <h:column width="150px"  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">  Description  </span>      </f:facet>
+	            <h:outputText value="#{info.description}"  class="label_ui"/>  
+	        </h:column>  
+  
+  
+	   		<h:column  width="150px"  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;"> Status  </span>      </f:facet>
+	            <h:outputText class="label_ui" value="#{info.batch}" />  
+	        </h:column>  
+            <h:column width="150px"  headerText="view">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">  View </span>      </f:facet>  
+	   		  <div align="center">
+ 	         	         <h:panelGrid>
+ 	         	         
+ 	         	      <h:panelGroup >    
+ 	            <h:commandButton   image="/images/view.png" action="#{productRegisterFormMB.designViews}">
+	          <f:setPropertyActionListener target="#{productRegisterFormMB.product_name}" value="#{info.productName}" />
+	           </h:commandButton></h:panelGroup>
+	           </h:panelGrid></div>
+	        
+	        </h:column>
+	        
+	       <h:column width="150px"  headerText="view">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">  Delete </span>      </f:facet>  
+	   		  <div align="center">
+ 	         	         <h:panelGrid>
+ 	         	         
+ 	         	      <h:panelGroup >    
+ 	            <h:commandButton   image="/images/remove.png" action="#{productRegisterFormMB.designViewDelete}">
+	           <f:setPropertyActionListener target="#{productRegisterFormMB.product_name}" value="#{info.productName}" />
+	           </h:commandButton></h:panelGroup>
+	           </h:panelGrid></div>
+	        
+	        </h:column>
+	        
+	        
+ 	         	         
+ </rich:dataTable>
+ </h:panelGrid></div>
+  
+<div id="popup" style="display:#{productRegisterFormMB.flag2}">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{purchaseViewMB.cancel1()}"></h:commandButton>
+
+
+
+</h:panelGrid></div></div> 
+
+</td></tr>
+<tr><td style="height:50px;"></td></tr>             
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

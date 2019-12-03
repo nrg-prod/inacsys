@@ -1,0 +1,147 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase Acknowledgement </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+     
+
+<h:form>
+<table height="800px" width="800px" align="center" border="0" class="form_background">
+
+<tr><td  align="center">
+<br/>
+<br/>
+ 
+<table border="" style="border-style: solid;"   bgcolor="">
+
+<tr>
+                    <td align="center" >
+                  <p:panel id="panel" style="border:0px;">
+                  
+                  <table style="" align="center" border="0" >
+					<tr align="center">
+					<td align="center" style="color:#;font-size:20px;"  colspan="3">
+					<b><h:outputText value="PURCHASE ACKNOWLEDGEMENT" style="color:#;font-size:20px;"></h:outputText></b>
+					</td>
+					</tr>
+					
+					
+<tr>
+<td align="left" style="width:400px"><br /><br />
+<h:panelGrid columns="1"  cellpadding="2" cellspacing="2" >
+<h:outputText class="invoiceStyle"  style="font-weight: bold" value="Sumber Jaya 2"></h:outputText>
+<h:outputText class="invoiceStyle" value="Jalan Fachrudin No. 59"></h:outputText>
+<h:outputText class="invoiceStyle" value="Tanah Abang Bukit,Jakarta Pusat"></h:outputText>
+<h:outputText class="invoiceStyle" value="Ph.021-3141652, 0878 7720 6070"></h:outputText>
+<h:outputText class="invoiceStyle" value="Fax -"></h:outputText>
+<h:outputText class="invoiceStyle" value="Email.infoserasibedcover@yahoo.com"></h:outputText>
+<h:outputText class="invoiceStyle" value="Website.www.serasibedcover.com"></h:outputText>
+</h:panelGrid>
+</td>
+<td >
+<h:outputText class="invoiceStyle" value="Order Penjualan"  style="font-weight: bold;"></h:outputText>
+<h:panelGrid height="100" columns="2" style=" width: 298px; ">
+							<h:outputText class="invoiceStyle" value="No. Invoice"></h:outputText>
+							<h:outputText class="invoiceStyle" value=": #{purchaseOrderFromMB.orderNumber}"></h:outputText>
+								<span >Tanggal</span>
+							<h:outputText value=": #{purchaseOrderFromMB.tDate}" ></h:outputText>
+							<span > Number</span>
+							<h:outputText value=": #{purchaseOrderFromMB.firmName}" ></h:outputText>
+							<span >Pelanggan</span>
+							<h:outputText value=": #{purchaseOrderFromMB.vendor_phone_number}"></h:outputText>
+							</h:panelGrid>
+</td></tr>
+<tr><td colspan="2">
+<br/>
+<div  align="left">
+<h:panelGrid >
+                    			<p:dataTable  styleClass="invoiceStyle" id="dataTabl" var="info"  value="#{purchaseOrderFromMB.result4}"   style="font-family: 'HelveticaNeueLT Pro 55 Roman';width:760px;max-height:250px;">  
+       					  			<p:column  headerText="Name" >  
+	       							 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family: 'HelveticaNeueLT Pro 55 Roman';"> No </span>      </f:facet>
+	           						   <h:outputText value="#{info.product_ID}"   />
+	       							 </p:column>
+	        
+       					  		 
+	        
+	      							 
+	        
+	       							 <p:column  headerText="Name">  
+	       							 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family: 'HelveticaNeueLT Pro 55 Roman';">  Qty </span>      </f:facet>
+	           						 <h:outputText value="#{info.quantity1}"  />  
+	     						    </p:column>
+	     						    	
+       					  			<p:column  headerText="Name" >  
+	       							 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family: 'HelveticaNeueLT Pro 55 Roman';">  Nama Barang  </span>      </f:facet>
+	           						   <h:outputText value="#{info.product_name}"   />
+	       							 </p:column>
+	        						<p:column  headerText="Name">  
+	       							 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family: 'HelveticaNeueLT Pro 55 Roman';">  Harga   </span>      </f:facet>
+	            					<h:outputText value="IDR #{info.crosstotal1}" />  
+	        						</p:column> 
+	        
+	          
+	         						<p:column  headerText="Name">  
+	       							 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family: 'HelveticaNeueLT Pro 55 Roman';"> Jumlah  </span>      </f:facet>
+	           						 <h:outputText value="IDR #{info.marginPrice}" />  
+	       							 </p:column>  
+	     						</p:dataTable>
+	     					 </h:panelGrid>
+	     					 </div>
+<hr/>
+
+<table>
+<tr>
+<td  align="left" style="width:450px">Tanda Tenma</td>
+<td align="center">
+<br/>
+<h:panelGrid columns="2" cellpadding="3" cellspacing="5" style="width:300px">
+<h:outputText value="Grand Total"></h:outputText>
+<h:outputText value="IDR #{purchaseOrderFromMB.totalPrice}"> </h:outputText>
+</h:panelGrid>
+
+</td>
+<td></td>
+</tr></table>
+
+</td></tr></table>
+	              </p:panel>
+<table align="center">
+<tr>
+<td>
+<h:panelGrid columns="4"  align="center" border="0" style=" width: 200px;">
+<h:commandButton value="Ok"  class="button" action="#{purchaseViewMB.printok()}"></h:commandButton>
+									<h:commandButton value="Print"  class="button" >  <p:printer target="panel" /></h:commandButton>
+									
+								</h:panelGrid>
+
+
+</td>
+</tr></table>	
+		        
+                    </td>
+                  </tr></table>
+
+</td></tr>
+
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

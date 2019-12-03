@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+<p:panel header="#{loginMB.loginaccess.modulename} Details Form">
+<p:outputPanel id="dialogPanelEdit" rendered="#{loginMB.loginaccess.modulename=='Purchase Quote'}">
+    <h:form id="quotEdits">
+    <div style="height:20px"></div>
+    <table width="98%"><tr><td align="right">
+	<h:outputText value="PENDING FOR APPROVAL" styleClass="confirmTxt" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}"></h:outputText>
+	</td></tr></table>
+    <div style="height:20px" align="center"><h:outputText value="#{vendorRegisterFormMB.validate}" class="errorTxt"></h:outputText></div>
+    	<center><p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationDetailList}" widgetVar="quoteditInfo"  
+		id="edataTable" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+      	<p:column filterBy="#{info.productName}" style="height:25px" width="170" headerText="Product Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:inputHidden value="#{info.serialNo}"></h:inputHidden>
+      			<h:inputHidden value="#{info.quotationDetailsId}"></h:inputHidden>
+      			<h:selectOneMenu id="a"  label="select one type" value="#{info.productName}" valueChangeListener="#{vendorRegisterFormMB.editProductvalueChange}" style="font-size:14px;font-family:'Arial,san-serif';width:200px;height:25px;">
+				   	<f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue=""/>
+				   	<f:selectItems  value="#{vendorRegisterFormMB.productList}" ></f:selectItems>
+				   	<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+				    <p:ajax update=":center_content:dialogPanelEdit" process="@this" event="valueChange"> </p:ajax>
+				 </h:selectOneMenu>
+      		</div>
+      	</p:column>
+      	<p:column width="200" headerText="Vendor Name" style="height:25px" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:selectCheckboxMenu style="height:28px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;font-size:14px;" id="vendors" 
+				multiple="true" label="---Vendor Name---" filter="true" value="#{info.selectedVendors}" filterMatchMode="startsWith" panelStyle="width:260px">
+					<f:selectItems value="#{info.vendorList}" />
+					<p:ajax event="toggleSelect"></p:ajax>
+					<f:attribute name="product" value="#{info.productName}"></f:attribute>
+					<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+					<p:ajax update=":center_content:dialogPanelEdit" event="change"></p:ajax>
+				</p:selectCheckboxMenu>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.productCount}" width="120" style="height:25px" headerText="Product Count" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:inputText value="#{info.productCount}" id="pcount" style="width:100px"><p:ajax update="pcount" process="@this" partialSubmit="true"></p:ajax></p:inputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Delivery Date" style="height:25px" filterBy="#{info.deliveryDate}" width="180" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      		<p:calendar placeholder="Delivery Date" value="#{info.deliveryDate}" id="deldate" pattern="dd-MM-yyyy" style="line-height: normal;width:200px">
+					<p:ajax event="dateSelect" process="@this" update="deldate" partialSubmit="true"></p:ajax>
+			</p:calendar>
+      		</div>
+      	</p:column>
+      	<p:column headerText="" style="height:25px" width="30" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:commandButton action="#{vendorRegisterFormMB.removeButton}" icon="fa fa-trash" update="@form" process="@this" immediate="true">
+					<f:setPropertyActionListener value="#{info.quotationDetailsId}" target="#{vendorRegisterFormMB.quotationDetailsId}"></f:setPropertyActionListener>
+				</p:commandButton>
+      		</div>
+      	</p:column>
+     </p:dataTable></center><div style="height:5px"></div>
+     <table align="left" width="100%">
+		<tr><td width="1%"></td><td>
+		<p:commandButton action="#{vendorRegisterFormMB.addEditButton}" icon="fa fa-plus" update="center_content:dialogPanelEdit" process="@this">
+		</p:commandButton>
+		</td></tr>
+	</table> 
+	<div style="height:30px"></div>
+	<table align="center" width="100%">
+		<tr align="center"><td>
+		<p:commandButton action="#{vendorRegisterFormMB.updateQuotation}" value="Update" update="center_content:dialogPanelEdit" process="@this" immediate="true" 
+		onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}">
+		</p:commandButton>
+		<p:commandButton action="dashboard.xhtml?faces-redirect=true" value="Cancel" update="center_content:dialogPanelEdit" process="@this" immediate="true"
+		 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}">
+		</p:commandButton>
+		<p:commandButton action="dashboard.xhtml?faces-redirect=true" value="Close" update="center_content:dialogPanelEdit" process="@this" immediate="true"
+		 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}">
+		</p:commandButton>
+		</td></tr>
+	</table> 
+    </h:form>
+   </p:outputPanel>
+   
+	
+	
+<p:dialog header="CONGRATULATIONS...!!" widgetVar="updateConfirm" modal="true" width="40%" height="130"
+	resizable="false" appendTo="@(body)">
+	<div style="height:20px"></div><center>
+			<h:outputText value="Quotation has been successfully modified." styleClass="confirmTxt"/></center>
+	<div style="height:30px"></div>
+	<center><p:commandButton value="Ok" action="dashboard.xhtml?faces-redirect=true"
+				process="@this" immediate="true" update=":center_content" onsuccess="PF('updateConfirm').hide()">
+			</p:commandButton></center>
+</p:dialog>
+</p:panel>
+</ui:define>
+</ui:composition>

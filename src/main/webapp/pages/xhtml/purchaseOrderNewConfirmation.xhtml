@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+     xmlns:p="http://primefaces.org/ui">
+<ui:define name="content" >	
+ <!-- <h:head>
+ 
+<title> Inacsys | Purchase Order   </title>
+
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javascript" src="../../js/mycustom.js"></script>
+     <script type="text/javascript" src="../../js/mycustompurchase.js"></script>
+
+</h:head> -->
+ <h:body style="overflow-x:hidden;overflow-y:auto">
+ 
+   	<table border="0" class="form_background" align="center" width="100%" >
+   	<tr align="center"><td>
+ 	<div style="border:solid 0px #033C95;" align="center"> 
+ 	<p:panel style="width:700px;"  >                 
+	<h:form>     
+ <h:panelGrid class="labelTxt" columns="2"  style="font-size:14px; width:700px;" >
+	       
+	        <h:outputText value=" Purchase Order Number" style="font-style: normal;font-size:18px;color:#033C95;font-family:'Arial-san-serif'; font-weight: bold"/>
+	        
+	        	        <h:outputText value="#{purchaseOrderFromMB.orderNumber}" style="font-style: normal;font-size:18px;color:#033C95;font-family:'Arial-san-serif'; font-weight: bold"/>
+	        
+	        <!-- <h:commandButton class="button" action="home.xhtml?faces-redirect=true" value="Ok"  ></h:commandButton> -->  
+	        </h:panelGrid></h:form> </p:panel>
+	<h:form id="print">
+	
+	<p:panel id="panel" style="border:0px;">
+<table style="border:solid 2px #033C95;"><tr><td>
+
+	<table align="center" border="0" bgcolor="" width="730px">
+	<br/>
+	<br/>
+	
+		<tr >
+		<td align="left">
+		<h:panelGrid>
+		<!-- <p:graphicImage value="#{loginMB.logo}"></p:graphicImage> -->
+		
+		</h:panelGrid>
+		
+		</td>
+		
+		<td align="right">
+		<h:panelGrid >
+		<!-- <h:graphicImage  value="/images/invoicekam3.png" style="width:193px;height:121px;"/> -->
+		</h:panelGrid>
+		
+		</td>
+		
+		</tr>
+		
+		</table>
+		<table align="center" border="0" bgcolor="" width="730px" style="border-color: #033C95">
+		<tr><td>
+		</td></tr>
+		</table>
+		
+		<table align="center"  bgcolor="" width="730px" >
+		<tr><td align="left" height="100px"><hr align="left" size="2" width="310" style="background-color:#033C95;border:solid 1px #ffffff" />
+		<h:panelGrid border="0" style="border-color: white">
+		
+		<p>
+
+ </p>
+
+		
+		</h:panelGrid>
+		<hr align="left" size="2" width="310" style="background-color:#033C95;border:solid 1px #ffffff" />
+		</td>
+		<td align="right" height="100px"><hr align="right" size="2" width="300" style="background-color:#033C95;border:solid 1px #033C95" />
+		<h:panelGrid align="right" width="300px" columns="3" >
+		
+		<h:outputText value="PO number" class="labelTxt"></h:outputText><h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseOrderFromMB.orderNumber}" class="labelTxt"></h:outputText>
+				<h:outputText value="Date" class="labelTxt"></h:outputText><h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseOrderFromMB.s}" class="labelTxt"> <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+		
+				<h:outputText value="Due Date" class="labelTxt"></h:outputText><h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseOrderFromMB.s1}" class="labelTxt"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+				<h:outputText value="From" class="labelTxt"></h:outputText><h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseOrderFromMB.firmName}" class="labelTxt"></h:outputText>
+				<h:outputText value="Phone No" class="labelTxt"></h:outputText><h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseOrderFromMB.vendor_phone_number}" class="labelTxt"></h:outputText>
+		</h:panelGrid>
+		<hr align="right" size="2" width="300" style="background-color:#033C95;border:solid 1px #033C95" />
+		</td></tr>
+		
+		</table>
+
+
+<table width="600px"  >
+<tr align="center"><td><h:panelGrid>
+                     <p:dataTable id="dataTabl" var="info"  value="#{purchaseOrderFromMB.result4}"   columnsWidth="80px,100px,90px,150px,150px">  
+         	
+ 
+   
+  			
+	        
+	        <p:column  headerText="RollNo" width="30">  
+	            <f:facet name="header"> <span> No </span>      </f:facet>
+	            <div align="center">
+	            <h:outputText value="#{info.serialNo}"/>  </div>
+	        </p:column>
+	        <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span>  Product Name  </span>      </f:facet>
+	            <div align="center">   <h:outputText value="#{info.product_name}"/>
+	       </div>
+	        </p:column> 
+	        
+	        <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span>  Quantity </span>      </f:facet>
+	            <div align="center"> <h:outputText value="#{info.quantity1}"/><h:outputText value=" " />
+	           			 <h:outputText  value="#{info.unit}"></h:outputText>
+	      </div>
+	        </p:column>
+	        <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span>  Unit Price   </span>      </f:facet>
+	           <div align="center"> <h:outputText value="#{info.destinationCurrency}">
+	            
+	            </h:outputText>  &nbsp;  <h:outputText value="#{info.crosstotal1}">
+	            
+	            </h:outputText> 
+	          
+	            </div> 
+	        </p:column> 
+	        
+	          
+	         <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span>  Total Price  </span>      </f:facet>
+	       <div align="center">      <h:outputText value="#{info.destinationCurrency}">
+	            </h:outputText>  &nbsp; <h:outputText value="#{info.marginPrice}"/> 
+	        
+	     </div>
+	        </p:column>  
+	         
+  
+	          
+  
+	         
+ </p:dataTable> </h:panelGrid></td></tr>
+			<tr align="right"><td align="right" ><h:panelGrid width="250" align="right" border="" style="border-color:#806620;"> 
+			<br/><h:panelGroup>
+			<b><h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"  value="Grand Total: "></h:outputText>	
+		<h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" value="#{purchaseOrderFromMB.destinationCurrency}"></h:outputText>
+		 &nbsp;<h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" value="#{purchaseOrderFromMB.totalPrice1}"></h:outputText>
+		 </b>
+			</h:panelGroup>
+			<h:panelGroup>
+			<b><h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"  value="Base Currency : "></h:outputText>	
+		<h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" value="#{purchaseOrderFromMB.baseCurrency}"></h:outputText>
+		 &nbsp; <h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" value="#{purchaseOrderFromMB.totalPrice}"></h:outputText>
+		 </b>
+			</h:panelGroup>
+			
+			 </h:panelGrid>
+		</td></tr>
+		<tr><td><hr align="center" size="2" width="730" style="background-color:#033C95;border:solid 1px #033C95" /></td></tr>
+	</table>
+	
+	<table width="730px">
+	
+	
+	
+	
+	<tr align="left"><td width="150px"><!-- <h:outputText value="(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)"/> -->
+	</td>
+	<td width="150px"><!-- <h:outputText value="(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)"/> --> </td>
+	<td width="350px"></td>
+	<td width="150px" align="right"><!-- <h:outputText value="(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)"/> --> </td></tr>
+	</table>
+	<br /><br />
+</td></tr></table>
+ </p:panel>
+ 
+<table align="center" border="0"  width="680px" >
+<tr align="center">
+<td align="center">
+
+<h:panelGrid columns="2"  align="center" border="0" style=" width: 200px;height:100px">
+ <p:commandButton value="Ok"  action="purchaseOrderNewForm.xhtml?faces-redirect=true" actionListener="#{purchaseOrderFromMB.purchaseorderclose}" update=":center_content" process="@this"></p:commandButton>
+ <p:commandButton value="Print" >  <p:printer target="panel" /></p:commandButton>
+
+</h:panelGrid><br/><br/><br/><br/><br/>
+</td></tr>
+<tr><td align="center">
+
+               </td></tr>
+               
+</table>
+</h:form></div><table><tr></tr></table>
+
+</td></tr></table>
+</h:body>
+</ui:define>
+</ui:composition>

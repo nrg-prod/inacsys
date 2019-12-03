@@ -1,0 +1,156 @@
+
+body
+{
+background: rgb(235,241,246); /* Old browsers */
+background: -moz-linear-gradient(top, rgb(235,241,246) 0%, rgb(18,178,206) 0%, rgb(18,178,206) 2%, rgb(213,235,251) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(235,241,246)), color-stop(0%,rgb(18,178,206)), color-stop(2%,rgb(18,178,206)), color-stop(100%,rgb(213,235,251))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgb(235,241,246) 0%,rgb(18,178,206) 0%,rgb(18,178,206) 2%,rgb(213,235,251) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgb(235,241,246) 0%,rgb(18,178,206) 0%,rgb(18,178,206) 2%,rgb(213,235,251) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgb(235,241,246) 0%,rgb(18,178,206) 0%,rgb(18,178,206) 2%,rgb(213,235,251) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgb(235,241,246) 0%,rgb(18,178,206) 0%,rgb(18,178,206) 2%,rgb(213,235,251) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 ); /* IE6-9 */
+
+}
+.backgroundeffect
+{
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfe7fa+0,6393c1+100;Grey+Blue+3D */
+background: rgb(207,231,250); /* Old browsers */
+background: -moz-linear-gradient(45deg, rgba(207,231,250,1) 0%, rgba(99,147,193,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(207,231,250,1)), color-stop(100%,rgba(99,147,193,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(45deg, rgba(207,231,250,1) 0%,rgba(99,147,193,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(45deg, rgba(207,231,250,1) 0%,rgba(99,147,193,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(45deg, rgba(207,231,250,1) 0%,rgba(99,147,193,1) 100%); /* IE10+ */
+background: linear-gradient(45deg, rgba(207,231,250,1) 0%,rgba(99,147,193,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', endColorstr='#6393c1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.label_ui
+{
+	color:#91534d;
+	font-size:16px;
+	width: 200px;
+	font-family:'Helvetica Neue LT Pro 55';
+	font-weight: 500;
+	height: 30px;		
+}
+
+
+.text_ui
+{
+	color:black;
+	font-size:16px;
+	width: 200px;
+	font-family:'Helvetica Neue LT Pro 55';
+	font-weight: 500;
+	height: 30px;
+}
+
+.validation_ui
+{
+	color:red;
+	font-size:16px;
+	font-family:'Helvetica Neue LT Pro 55';
+	font-weight: 500
+}
+
+.header_ui
+{
+	color:#91534d;
+	font-size:18px;
+	font-weight: bolder;
+	font-family:'Helvetica Neue LT Pro 55';
+}
+
+.form_background
+{
+	 background-color:#FFFFFF;
+	 margin:0 auto;
+	  
+}
+
+.button_ui
+{
+height: 25px; width: 100px; font-family:'Helvetica Neue LT Pro 55';
+align:left;
+color:#91534d;
+}
+
+.filter1
+{
+	color:green;
+font-size:16px;	
+font-weight:bold;
+font-family:'Helvetica Neue LT Pro 55'
+}
+.filter2
+{
+	color:red;
+font-size:16px;	
+font-weight:bold;
+font-family:'Helvetica Neue LT Pro 55'
+}
+.filter3
+{
+color:#FFBF00;
+font-size:16px;	
+font-weight:bold;
+font-family:'Helvetica Neue LT Pro 55'
+}
+.allSides 
+{ 
+	width:650px;height:150px;background-color:#f3f2f2; box-shadow: 0 0 10px rgba(0,0,0,0.6); -moz-box-shadow: 0 0 10px rgba(0,0,0,0.6); -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6); -o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+ }
+ 
+ .button_tabl
+{
+	height: 18px; width: 20px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#91534d; background-color:#E6EBF5;font-family:cursive; 
+}
+.button_table
+{
+	height: 18px; width: 100px; font-size:14px;font-family:'Helvetica Neue LT Pro 55';color:#91534d; background-color:#E6EBF5;font-family:cursive; 
+}
+.button_ta
+{
+	height: 18px; width: 50px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#91534d; background-color:#E6EBF5;font-family:cursive; 
+}
+.button_table1
+{
+	height: 18px; width: 30px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#91534d; background-color:#E6EBF5;font-family:cursive; 
+}
+
+.button
+{
+	height: 30px; width: 100px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#91534d; background-color:#E6EBF5;font-family:cursive; 
+}
+.buttonSub
+{
+	height: 20px; width: 70px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#91534d; background-color:#E6EBF5;font-family:cursive; 
+}
+
+.label1_ui
+{
+font-size:16px;width: 200px;color:green;font-family:'Helvetica Neue LT Pro 55'; font-weight: 500;font-weight: bold;
+}
+.label2_ui
+{
+font-size:16px;width: 200px;color:red;font-family:'Helvetica Neue LT Pro 55'; font-weight: 500;font-weight: bold;
+}
+/*  .rf-p-hdr
+{
+	background: #84dbea;    
+} */
+/* 
+div.rf-p{        
+ border: 5px;        
+ background: blue;       
+}      
+
+div.rf-p-b {         
+ border: 0px;         
+ background-color: green;        
+ color: orange;        
+ font-size: 32px;      
+} */
+.rf-p-b
+{
+	background: #F5F5F5 ;    
+}

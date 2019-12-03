@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+	      <h:form>
+	      <p:tabView style="min-height:90%" activeIndex="0">
+	      <p:ajax event="tabChange"  listener="#{quickSaleMB.tabchange}" update="@form"/> 
+	      <p:tab title="Quick Sales">
+	  
+           <div align="right">
+         <p:commandButton styleClass="image-align" actionListener="#{quickSaleMB.quicksales}" value="Quick Sales"  style="height:28px;">
+        </p:commandButton>
+        <h:commandButton image="../../images/refresh.png" action="#{quickSaleViewMB.quicksaleview}"  style="margin-bottom:-9px;height:28px;"></h:commandButton>
+        </div><div style="height:5px;"></div>
+        <h:form id="qsform">
+        <p:dataTable id="dataTable" var="info" value="#{quickSaleViewMB.sales1}" style="font-family:'Verdana';width:100%;"  paginator="true" rows="10" 
+        pageLinks="10" paginatorPosition="top" paginatorAlwaysVisible="false" reflow="true"
+         filteredValue="#{quickSaleViewMB.filteredList}" widgetVar="qsInfo" emptyMessage="No information found with given criteria">  
+                     <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('qsInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+         	<p:column  headerText="Sales Order Date" filterBy="#{info.salesdateorder}" filterMatchMode="contains" width="160"
+											filterStyle="display:none">  
+	      <center>
+	            <h:outputText value="#{info.salesdateorder}"  class="label_ui">  <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText></center>
+	        </p:column> 
+	        
+ 
+	         <p:column  headerText="Sales Order Number" filterBy="#{info.salesnum}" filterMatchMode="contains"  width="160" 
+											filterStyle="display:none">  
+	       <center>
+	            <h:outputText value="#{info.salesnum}"  class="label_ui" >  </h:outputText></center>
+	        </p:column>
+	        <p:column  headerText="Payment Mode" filterBy="#{info.salesno}" filterMatchMode="contains"  width="100" 
+											filterStyle="display:none">  
+	       <center>
+	            <h:outputText value="#{info.salesno}"  class="label_ui" >  </h:outputText></center>
+	        </p:column>
+	         <p:column  headerText="Gross Total" filterBy="#{info.cross1}" filterMatchMode="contains" width="160"
+											filterStyle="display:none">  
+	        <center>
+	           <h:outputText value="Rp&nbsp;" class="label_ui"></h:outputText>
+	            <h:outputText value="#{info.cross1}"  class="label_ui"><f:converter converterId="com.inventory.util.UrlConverter" />  </h:outputText></center>
+	        </p:column>
+	        
+	    
+ 			 <p:column   headerText="Phone" width="100" >
+	   				   			 <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';"> Action  </span>      </f:facet>         
+	   			
+	           		<div align="center"> <p:commandButton  icon="fa fa-search" action="#{quickSaleMB.Quicksale}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.salesdateorder}"  target="#{salesViewMB.salesdateorder}"> </f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.cross1}"  target="#{salesViewMB.cross1}"> </f:setPropertyActionListener>
+	           </p:commandButton>&nbsp;
+	           <p:commandButton icon="fa fa-pencil"  action="#{salesViewMB.QuicksaleEdit}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	           
+	           </p:commandButton>&nbsp;
+	           <p:commandButton  icon="fa fa-remove" onclick="PF('confirm').show()">
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	           </p:commandButton>
+	           </div>  
+	        </p:column>
+	       
+	          
+ </p:dataTable>
+ <p:dialog header="Confirmation" widgetVar="confirm" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Are you sure,you wanted to delete this QuickSales Order?" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="Yes" action="#{salesViewMB.salesOrdercancelForm3}"
+						 process="@this" immediate="true" onsuccess="PF('confirm').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('confirm').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+        <p:dialog header="Success Message" widgetVar="confirmsu" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Salse Order is successfully deleted" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="OK" 
+						 onclick="PF('confirmsu').hide()" process="@this" immediate="true"
+						styleClass="button_ui"></p:commandButton>
+					
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+			<p:dialog header="Error Message" widgetVar="errormsg" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Salse Order Already Deleted" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="OK" 
+						 onclick="PF('errormsg').hide()" process="@this" immediate="true"
+						styleClass="button_ui"></p:commandButton>
+					
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+        </h:form>
+ 
+	      </p:tab>
+	      <p:tab title="Sales" >
+	      
+	     <div align="right">
+          <p:commandButton actionListener="#{salesOrderFormMB.salesorder}" value="Sales Order" style="height:28px;">
+         </p:commandButton>
+       <h:commandButton image="../../images/refresh.png" action="#{salesViewMB.salesView}" style="margin-bottom:-11px;height:28px;"></h:commandButton></div>
+       <div style="height:5px;"></div>
+	     
+       
+	     <p:dataTable id="dataTabl" var="info" widgetVar="salesInfo" value="#{salesViewMB.sales}" filteredValue="#{salesViewMB.filterList1}"  
+	    reflow="true" paginator="true" rows="10" pageLinks="10" paginatorPosition="top" paginatorAlwaysVisible="false"
+	    emptyMessage="No information found with given criteria" style="width:100%">
+    <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               <p:inputText id="globalFilter" onkeyup="PF('salesInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+        <p:column filterBy="#{info.salesOrderDate}" headerText="Date"  filterMatchMode="contains" filterStyle="display:none" style="width:80px">
+             <h:outputText  class="label_ui" value="#{info.salesOrderDate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>  
+        </p:column>         
+         <p:column filterBy="#{info.salesorder}" headerText="SO Number"  filterMatchMode="contains" filterStyle="display:none" style="width:100px">
+           <h:outputText  class="label_ui" value="#{info.salesorder}"></h:outputText> 
+        </p:column>           
+		<p:column filterBy="#{info.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="width:100px">
+           <h:outputText  class="label_ui" value="#{info.customerName}"></h:outputText>  
+        </p:column>
+		<p:column filterBy="#{info.phones}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="width:90px">
+           <h:outputText  class="label_ui" value="#{info.phones}"></h:outputText>    
+        </p:column>
+        <p:column filterBy="#{info.cross}" headerText="Total Amount"  filterMatchMode="contains" filterStyle="display:none" style="width:120px">
+           <h:outputText class="label_ui" value="Rp "/> 
+	            <h:outputText class="label_ui" value="#{info.cross}">  
+			<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+        </p:column>
+        <p:column filterBy="#{info.status2}" headerText="Payment"  filterMatchMode="contains" filterStyle="display:none" style="width:70px">
+           <h:outputText class="filter1" value="#{info.status2}" rendered="#{info.status2== 'paid'}" />
+		   <h:outputText class="filter2" value="#{info.status2}" rendered="#{info.status2== 'pending'}" />
+		   <h:outputText class="filter2" value="#{info.status2}" rendered="#{info.status2== 'unpaid'}" />   
+        </p:column>
+        <p:column filterBy="#{info.status}" headerText="Delivery Status"  filterMatchMode="contains" filterStyle="display:none" style="width:100px">
+           <h:outputText class="filter3" value="#{info.status}" rendered="#{info.status== 'insert'}" />
+		   <h:outputText class="filter3" value="#{info.status}" rendered="#{info.status== 'inprocess'}" />
+		   <h:outputText class="filter1" value="#{info.status}" rendered="#{info.status== 'Delivered'}" />
+		   <h:outputText class="filter2" value="#{info.status}" rendered="#{info.status== 'cancelled'}" />
+        </p:column>
+        <p:column headerText="RollNo" style="width:100px" >
+		<f:facet name="header">
+			<span
+				style="font-style: normal; font-size:10px; padding-top: 11px; font-family: 'Verdana';">
+				Action </span>
+		</f:facet>
+
+				<div align="center">
+					<p:commandButton icon="fa fa-search"
+						action="#{salesOrderFormMB.salesorderview}">
+						<f:setPropertyActionListener
+							target="#{salesViewMB.salereferencenumber}"
+							value="#{info.salesorder}"></f:setPropertyActionListener>
+						<f:setPropertyActionListener target="#{salesViewMB.customerName}" value="#{info.customerName}"></f:setPropertyActionListener>
+						<f:setPropertyActionListener target="#{salesViewMB.odate}" value="#{info.salesOrderDate}"></f:setPropertyActionListener>
+					
+					<f:setPropertyActionListener target="#{salesViewMB.totalPrice}" value="#{info.crossTotal}"></f:setPropertyActionListener>
+					</p:commandButton>
+					<h:panelGroup  rendered="#{info.status2=='pending' or info.status2=='paid'}" >
+	            <p:commandButton  icon="fa fa-pencil" onclick="PF('edits').show();">
+    </p:commandButton>
+	            <p:dialog header="Confirmation" widgetVar="edits" modal="true"
+			style="font-size:11px" resizable="false" appendTo="@(body)">
+			<p:outputPanel>
+				<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="It cannot be Edited! " />
+
+				</p:panelGrid>
+				<br></br>
+				<center>
+
+					<p:commandButton value="OK" onclick="PF('edits').hide()"
+						styleClass="button_ui"></p:commandButton>
+				</center>
+			</p:outputPanel>
+		</p:dialog>
+	             </h:panelGroup> 
+  
+     <h:panelGroup  rendered="#{info.status2=='unpaid'}" > 
+	            <p:commandButton icon="fa fa-pencil" action="#{salesViewMB.salesedit}">
+						<f:setPropertyActionListener
+							target="#{salesViewMB.salereferencenumber}"
+							value="#{info.salesorder}"></f:setPropertyActionListener>
+					</p:commandButton></h:panelGroup>
+					<h:panelGroup  rendered="#{info.status2!='unpaid' or info.status!='insert'}" >
+								
+	            <p:commandButton icon="fa fa-remove"  >
+        <!-- <rich:componentControl target="popup" operation="show" /> -->
+    </p:commandButton>
+    
+  
+	            
+	            <!--  <rich:popupPanel id="popup" modal="true" autosized="true" resizeable="false" height="100" width="300">
+        <f:facet name="header">
+            <h:outputText value="Message" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" >
+                X
+            </h:outputLink>
+        </f:facet >
+        <div align="center">
+        <h:outputLabel value="Non Cancellable" style="font-size:14px;font-style:bold;"></h:outputLabel><br/>
+     <h:outputLabel value=""></h:outputLabel>
+ 		<h:outputLabel value="Order has been Delivered" rendered="#{info.status=='Delivered' and info.status2=='unpaid'}" style="font-size:12px;"></h:outputLabel>
+ 		<h:outputLabel value="Order has been Delivered and Paid" rendered="#{info.status=='Delivered' and info.status2=='paid'}" style="font-size:12px;"></h:outputLabel>
+ 		<h:outputLabel value="Order has been Delivered and Started Partial Payment" rendered="#{info.status=='Delivered' and info.status2=='pending'}" style="font-size:12px;"></h:outputLabel>
+ 		<h:outputLabel value="Started Partial Payment" rendered="#{info.status2=='pending' and info.status!='Delivered'}" style="font-size:12px;"></h:outputLabel>
+ 		<h:outputLabel value="Paid" rendered="#{info.status2=='paid' and info.status!='Delivered'}" style="font-size:12px;"></h:outputLabel>
+ 		 </div>
+        <p rendered="">This order has been already Started Payment so it cannot be cancelled! 
+           
+        </p>
+    </rich:popupPanel> --></h:panelGroup> 
+    
+  
+    
+    <h:panelGroup  rendered="#{info.status2=='unpaid' and info.status=='insert'}" > 
+	           <p:commandButton icon="fa fa-remove" onclick="PF('conf').show();" >
+		<f:setPropertyActionListener
+			target="#{salesViewMB.salereferencenumber}"
+			value="#{info.salesorder}"></f:setPropertyActionListener>
+	</p:commandButton></h:panelGroup>
+			</div>
+			</p:column>
+			
+		</p:dataTable>
+		
+<p:dialog header="Confirmation" widgetVar="conf" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Are you sure,you wanted to delete this Sales Order?" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="Yes" action="#{salesViewMB.salesOrderdelete}"
+						 process="@this" immediate="true" onsuccess="PF('conf').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('conf').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+ 
+	      </p:tab>
+	      </p:tabView>
+	    </h:form>
+               
+ 	</ui:define>
+	</ui:composition>
+	

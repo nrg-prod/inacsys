@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys |Purchase Order Payments Status  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+function process(e){
+	alert("welcome")
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("purchasePay:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+      
+        </script>
+</h:head>
+ 
+ <body  style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form id="purchasePay" onkeypress="return process(event);">
+<table   border="0" class="form_background">
+<tr>
+<td>
+<!-- <ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+ --><br /><br />
+</td>
+
+</tr>
+
+
+
+
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+<tr><td height="350px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Purchase Payments" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText value="#{purchaseOrderPaymentMB.validate}" class="validation_ui"/>
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td align="center" >
+                    <rich:panel style="font-size:14px; width:490px" header="Search by Date" align="left" >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:490px;height: 143px;" align="center"> 	       
+	            <h:outputLabel value="From Date *"  class="label_ui" />	             
+	             <rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{purchaseOrderPaymentMB.s}"  ></rich:calendar>
+	            <h:outputText value="To Date *"  class="label_ui" /> 	         
+	            <rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{purchaseOrderPaymentMB.s1}"  ></rich:calendar>
+			<h:outputLabel></h:outputLabel>
+			<h:commandButton class="button" id="find" value="Find" action="#{purchaseOrderPaymentMB.purchaseOrderPayment}" /> 
+	            
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>                    
+                  </tr>
+                  <tr><td align="center" height="30px">
+                 <div style="height:250px ; width:900; overflow-x:scroll; overflow-y:scroll;display:#{purchaseOrderPaymentMB.flag}" align="center">
+                    <h:panelGrid style="display:#{purchaseOrderPaymentMB.flag}">
+                     <rich:dataTable id="dataTable" var="info"  value="#{purchaseOrderPaymentMB.result4}" columnsWidth="120px,150px,125px,155px,150px,205px,100px,80px">  
+         	
+ 
+   
+  
+	        
+	        <h:column  headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;">Date   </span>      </f:facet> 
+	            
+	            <h:outputText value="#{info.orderDate}"  class="label_ui">  
+	            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+	            </h:outputText>
+	        </h:column>  
+  
+  <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;">  Order Number  </span>      </f:facet>
+	            <h:outputText value="#{info.orderNumber}"  class="label_ui"/>  
+	        </h:column>  
+  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;"> Firm Name  </span>      </f:facet>
+	            <h:outputText class="label_ui" value="#{info.firmName}" />  
+	        </h:column>  
+  
+	   		<h:column  headerText="Phone">
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;"> Phone Number    </span>      </f:facet>  
+	           <h:outputText value="#{info.phonenumber}"  class="label_ui"/>  </h:column>  
+  
+   			<h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;"> Total Amount  </span>      </f:facet>
+	            <h:outputText value="Rp " class="label_ui"/>  
+	            <h:outputText value="#{info.totalPrice} " class="label_ui">
+	           
+	            </h:outputText>   
+	        </h:column>  
+  
+	        <h:column  headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;"> Outstanding Balance    </span>      </f:facet> 
+	            
+	            <h:outputText value="Rp "  class="label_ui"/> 
+	             <h:outputText value=" #{info.payableAmount} "  class="label_ui">
+	            
+	             </h:outputText> 
+	            
+	        </h:column>  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;">Status  </span>      </f:facet>
+	            <h:outputText class="filter1" value="#{info.status}" rendered="#{info.status=='paid'}"  />
+	            <h:outputText class="filter2" value="#{info.status}" rendered="#{info.status=='unpaid'}"  />
+	              <h:outputText class="filter2" value="#{info.status}" rendered="#{info.status=='pending'}"  />
+	            
+	        </h:column>  
+  
+	   		<h:column  headerText="Phone">
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;">View    </span>      </f:facet>  
+	             <div align="center">
+ 	            <h:commandButton   image="/images/view.png" action="#{purchaseViewMB.view1}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton></div> </h:column>  
+        
+ </rich:dataTable> 
+ 
+            </h:panelGrid></div></td></tr>
+                <tr><td align="center">
+               <div id="popup" style="display:#{purchaseOrderPaymentMB.flag1} ">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{purchaseOrderPaymentMB.cancel}"></h:commandButton>
+</h:panelGrid></div>
+   </div>	</td></tr>
+                  <tr>
+                  <td height="30px">
+                  </td></tr>                   
+</table> 
+</td></tr>
+<tr><td style="height:180px;"></td></tr> 
+</table> 
+</td></tr>
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

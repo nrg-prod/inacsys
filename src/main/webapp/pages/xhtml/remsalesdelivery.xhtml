@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Sales delivery  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table style="margin-top:-10" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1050px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}.</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+
+<table border="0"   bgcolor="">
+             <tr align="center"> <td align="center">   <h:outputText value="#{salesdeliveryMB.validate}" class="validation_ui"/></td></tr> 
+
+<tr>
+                    <td align="center" >
+                    </td>
+                  </tr>
+                  <tr>
+                  <td >
+                  <h:panelGrid style="display:#{salesdeliveryMB.flag}">
+             
+                  </h:panelGrid>
+                  </td></tr>
+                    <tr>
+                   <td><h:panelGrid style="display:#{salesdeliveryMB.flag}">
+                    <rich:dataTable id="dataTable" var="info"  value="#{salesdeliveryMB.result1}" columnsWidth="90px,180px,200px,200px,110px,120px,120px">  
+               	
+  <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">   Date   </span>      </f:facet>
+	            <h:outputText value="#{info.salesOrderDate}"  class="label_ui"/>  
+	        </h:column>
+   
+    <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Sales Order Number  </span>      </f:facet>
+	            
+	           <div align="center"> <h:outputText class="button_table" value="#{info.salesOrderNumber}"  >
+	          
+	           </h:outputText></div>  
+	        </h:column> 
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Customer Name   </span>      </f:facet>
+	            <h:outputText value="#{info.customerName}"  class="label_ui"/>  
+	        </h:column>  
+  
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Phone Number  </span>      </f:facet>
+	            <h:outputText value="#{info.phoneNumber}"  class="label_ui"/>  
+	        </h:column>
+  			<h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount  </span>      </f:facet>
+	         <h:outputText class="label_ui" value="IDR #{info.crossTotal}0" />    
+	        </h:column> 	
+	        <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Payment Status </span>      </f:facet>
+	            <h:outputText class="filter1" rendered="#{info.status2=='paid'}" value="#{info.status2}" />
+	            <h:outputText class="filter2" rendered="#{info.status2=='pending'}" value="#{info.status2}" />
+	            <h:outputText class="filter2" rendered="#{info.status2=='unpaid'}" value="#{info.status2}" />  
+	        </h:column>  
+  
+	   		 <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Delivery status  </span>      </f:facet>
+	         <div align="center"><h:commandButton class="button_tabl"  image="/images/deliveryicon.png" action="#{salesdeliveryMB.salesOrdercancelForm1()}">
+<f:setPropertyActionListener target="#{salesdeliveryMB.orderNumber}" value="#{info.salesOrderNumber}"></f:setPropertyActionListener>
+</h:commandButton> 
+	         
+	         </div>    
+	        </h:column> 
+	        
+          
+ </rich:dataTable> 
+  </h:panelGrid>
+            
+    </td></tr>
+    <tr>
+    <td height="450"></td></tr>
+    
+</table> 
+
+
+   
+
+
+</td></tr>
+
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

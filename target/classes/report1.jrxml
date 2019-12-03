@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b607449d-477d-46ac-829d-7e05fb0e42d8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="STUDENT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     student.FIRST_NAME AS student_firstname,
+     student.MIDDLE_NAME AS student_middlename,
+     student.LAST_NAME AS student_lastname
+    FROM
+     SM.T_STUDENT student
+     WHERE
+     student.STUDENT_ID = $P{STUDENT_ID}]]>
+	</queryString>
+	<field name="student_firstname" class="java.lang.String"/>
+	<field name="student_middlename" class="java.lang.String"/>
+	<field name="student_lastname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4be410a1-71c6-4cde-84ce-601c438907dc" x="0" y="0" width="555" height="28"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prudential form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="43eb6764-15a6-496c-9c8c-8e0ff637ff05" x="0" y="41" width="151" height="24"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Personal Info]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="147" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="43eb6764-15a6-496c-9c8c-8e0ff637ff05" x="0" y="0" width="112" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[First name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="416a95d6-f12e-4257-8779-1c1cb90da59f" x="134" y="0" width="184" height="13"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_firstname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="43eb6764-15a6-496c-9c8c-8e0ff637ff05" x="0" y="35" width="112" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Middle name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="416a95d6-f12e-4257-8779-1c1cb90da59f" x="134" y="35" width="184" height="13"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_middlename}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="416a95d6-f12e-4257-8779-1c1cb90da59f" x="136" y="64" width="184" height="13"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_lastname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="43eb6764-15a6-496c-9c8c-8e0ff637ff05" x="2" y="64" width="112" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Last name :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="43eb6764-15a6-496c-9c8c-8e0ff637ff05" x="0" y="17" width="151" height="24"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Parents Info]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

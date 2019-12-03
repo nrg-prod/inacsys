@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+<p:panel header="#{loginMB.loginaccess.modulename} Details Form">
+<p:outputPanel id="dialogPanelModify">
+
+					<h:form id="product-Modify">
+					<div style="height:10px"></div>
+					<table width="65%"><tr><td align="right">
+	<h:outputText value="PENDING FOR APPROVAL" styleClass="confirmTxt" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}"></h:outputText>
+	</td></tr></table>
+     <div style="height:10px"> <center><p:outputLabel value="#{productViewMB.validate}" styleClass="errorTxt"></p:outputLabel> </center></div>
+						<center><p:panelGrid columns="4" styleClass="ui-panelgrid-blank" style="height:250px;">
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Category " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:selectOneMenu value="#{productViewMB.categoryname}"
+									id="pcate" widgetVar="var1" styleClass="ui-selectdrop" style="height:27px">
+									<f:selectItem itemLabel="--- Select ---" itemValue="select" />
+									<f:selectItems value="#{productRegisterFormMB.categorytype}" />
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</h:selectOneMenu>
+							</h:panelGroup>
+
+							
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Product Code "
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productlimit}"
+									id="vproductLimit" styleClass="inputTxt"
+									onblur="productcode('center_content:product-reg:vproductLimit','pcodeicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Standard " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.product_standard}" 
+									id="prod-standard" styleClass="inputTxt">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Product Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productName}"
+									id="prod-name" styleClass="inputTxt"
+									onblur="productname('center_content:product-reg:prod-name','pnameicon')"
+									valueChangeListener="#{productRegisterFormMB.value}">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Actual Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.autual_price}" 
+									id="prod-actual-prize" styleClass="inputTxt"
+									onblur="productaprice('center_content:product-reg:prod-actual-prize','apriceicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Size " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{productViewMB.size_of_product}"
+									id="prod-size" styleClass="inputTxt"
+									onblur="productsize('center_content:product-reg:prod-size','psizeicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Market Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.market_price}"
+									id="prod-market-prize" styleClass="inputTxt"
+									onblur="productmprice('center_content:product-reg:prod-market-prize','mpriceicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Description " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.description}"
+									id="prod-desc" styleClass="inputTxt">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Unit " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:selectOneMenu value="#{productViewMB.unit}"
+									id="prod-unit" widgetVar="var2" styleClass="ui-selectdrop" style="height:27px"
+									>
+									<f:selectItem itemLabel="--- Select ---" itemValue="select" noSelectionOption="true"/>
+									<f:selectItem itemLabel="Cm" itemValue="Cm" />
+									<f:selectItem itemLabel="Dozen" itemValue="Dozen" />
+									<f:selectItem itemLabel="Gross" itemValue="Gross" />
+									<f:selectItem itemLabel="Inch" itemValue="Inch" />
+									<f:selectItem itemLabel="Kg" itemValue="Kg" />
+									<f:selectItem itemLabel="Kod" itemValue="Kod" />
+									<f:selectItem itemLabel="Meter" itemValue="Meter" />
+									<f:selectItem itemLabel="Ons" itemValue="Ons" />
+									<f:selectItem itemLabel="Piece" itemValue="Piece" />
+									<f:selectItem itemLabel="Roll" itemValue="Roll" />
+									<f:selectItem itemLabel="Yards" itemValue="Yards" />
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</h:selectOneMenu>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Vendor " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+							<p:inputText value="#{productViewMB.vendor}" readonly="true"
+									 styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+						</p:panelGrid></center>
+
+						<br></br><br></br><br></br><br></br>
+
+						<center>
+							
+							<p:commandButton value="Update" process="@this" onstart="PF('statusDialog').show();"
+							action="#{productViewMB.productEditSave}" onsuccess="PF('statusDialog').hide();"
+							update=":center_content:dialogPanelModify" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}">
+							</p:commandButton>
+							<p:commandButton action="dashboard.xhtml?faces-redirect=true" value="Cancel" update=":center_content:dialogPanelModify" process="@this" immediate="true"
+		 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}">
+		</p:commandButton>
+		<p:commandButton action="dashboard.xhtml?faces-redirect=true" value="Close" update=":center_content:dialogPanelModify" process="@this" immediate="true"
+		 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}">
+		</p:commandButton>
+							
+						</center>
+
+					</h:form>
+				</p:outputPanel>
+				
+				<p:dialog width="40%" height="130" header="CONGRATULATIONS...!!" widgetVar="productUpdateconf" modal="true"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:20px"></div>	<center>
+							<h:outputText value="Product has been successfully updated." styleClass="confirmTxt"/></center>
+				<div style="height:20px"></div>
+				<center><p:commandButton value="OK" oncomplete="PF('productUpdateconf').hide()" process="@this" immediate="true" update=":center_content" action="dashboard.xhtml?faces-redirect=true"
+							styleClass="button_ui"></p:commandButton></center>
+				
+			</p:dialog>
+				
+</p:panel>
+</ui:define>
+</ui:composition>

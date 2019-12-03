@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Quick Sale View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javascript" src="../../js/mycustom.js"></script>
+     <script type="text/javascript" src="../../js/mycustompurchase.js"></script>
+</h:head>
+ 
+ <body  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+ 
+		<h:form>
+			<table   border="0" class="form_background" width="100%">
+				
+
+
+
+<tr>
+
+<td height="200px" align="center">
+
+<table >
+
+  
+
+										<tr align="center">
+											<td align="center"><h:outputText  style="font-style: normal;font-size:18px;color:#F51313;font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+
+</td></tr>
+
+                    <tr align="center">
+                    <td height="50px"><h:outputText value="Quick Sale View" class="header_ui"/></td></tr>
+
+            
+</table> 
+<table><tr><td ><div style="height:200px ; width:600; overflow-x:scroll; overflow-y:scroll;display:#{quickSaleViewMB.flag}" align="center">
+<h:panelGrid style="display:#{quickSaleViewMB.flag} ;">
+                    <rich:dataTable id="dataTable" var="info"  value="#{quickSaleViewMB.sales1}"   columnsWidth="100px,156px,130px,50px,50px,50px,50px" style="font-family: 'HelveticaNeueLT Pro 55 Roman';">  
+         	<rich:column  headerText="Name" sortOrder="#{quickSaleViewMB.sortsOrders['salesdateorder']}" sortBy="#{info.salesdateorder}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Sales Order Date" render="dataTable" action="#{quickSaleViewMB.sort()}">
+	        <f:param name="sortProperty" value="salesdateorder"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{quickSaleViewMB.sortsOrders['salesdateorder']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{quickSaleViewMB.sortsOrders['salesdateorder']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.salesdateorder}"  class="label_ui">  <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+	        </rich:column> 
+	        
+ 
+	         <rich:column  headerText="Name" sortOrder="#{quickSaleViewMB.sortsOrders['salesnum']}" sortBy="#{info.salesnum}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Sales Order Number" render="dataTable" action="#{quickSaleViewMB.sort()}">
+	        <f:param name="sortProperty" value="salesnum"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{quickSaleViewMB.sortsOrders['salesnum']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{quickSaleViewMB.sortsOrders['salesnum']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.salesnum}"  class="label_ui">  </h:outputText>
+	        </rich:column>
+	        
+	         <rich:column  headerText="Name" sortOrder="#{quickSaleViewMB.sortsOrders['cross1']}" sortBy="#{info.cross1}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Gross Total" render="dataTable" action="#{quickSaleViewMB.sort()}">
+	        <f:param name="sortProperty" value="cross1"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{quickSaleViewMB.sortsOrders['cross1']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{quickSaleViewMB.sortsOrders['cross1']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	           <h:outputText value="Rp&nbsp;" class="label_ui"></h:outputText>
+	            <h:outputText value="#{info.cross1}"  class="label_ui"><f:converter converterId="com.inventory.util.UrlConverter" />  </h:outputText>
+	        </rich:column>
+	        
+	      <!--   <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Gross Total</span>      </f:facet>
+	            <h:outputText class="label_ui" value="Rp " />  
+	            <h:outputText class="label_ui" value=" #{info.crossTotal}" > 
+	           
+	            </h:outputText>	      
+	              </h:column> --> 
+	   		
+	        
+	        
+	       
+ 			 <h:column   headerText="Phone">
+	   				   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> View  </span>      </f:facet>         
+	   			
+	           		<div align="center"> <h:commandButton  image="/images/view.png" action="#{salesViewMB.salesView2}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.salesdateorder}"  target="#{salesViewMB.salesdateorder}"> </f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.cross1}"  target="#{salesViewMB.cross1}"> </f:setPropertyActionListener>
+	           </h:commandButton></div>  
+	        </h:column>
+	            <!--  <h:column   headerText="Phone">
+	   				   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Reprint  </span>      </f:facet>         
+	   			
+	           		<div align="center"> <h:commandButton  image="/images/new.jpg" action="#{salesViewMB.salesViewnew()}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.salesdateorder}"  target="#{salesViewMB.salesdateorder}"> </f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.cross1}"  target="#{salesViewMB.cross1}"> </f:setPropertyActionListener>
+	           </h:commandButton></div>  
+	        </h:column>
+	            -->
+          <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Edit  </span>      </f:facet>
+	            
+	           <div align="center"> <h:commandButton image="/images/edit.png"  action="#{salesViewMB.salesView4}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	           
+	           </h:commandButton></div>  
+	        </h:column> 
+	            
+	        
+	        
+	         
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Cancel  </span>      </f:facet>
+	            
+	           <div align="center">
+	            <h:commandButton class="button_tabl" image="/images/Cancel-icon.png"   action="#{salesViewMB.salesOrdercancelForm3}">
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	           </h:commandButton>
+	          
+	          </div>  
+	        </h:column> 
+	         
+ </rich:dataTable> </h:panelGrid>
+  </div>
+  <div id="popup" style="display:#{quickSaleViewMB.flagpop}">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px;">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<p:commandButton value="Ok" actionListener="#{quickSaleViewMB.quicksaleviewclose}" styleClass="kbutton_ui"></p:commandButton>
+
+
+
+</h:panelGrid></div></div> 
+
+ </td></tr>
+</table> 
+
+</td></tr>
+<tr><td style="height: 10px"></td></tr>
+
+<tr><td align="center">
+
+</td></tr>
+</table>
+<rich:popupPanel id="confirmation" width="250" height="150">
+<f:facet name="header">confirmation</f:facet>
+<h:panelGrid>
+      <h:panelGrid columns="2">
+       <h:graphicImage value="/images/remove.png" />
+	<h:outputText value="Are you sure?" style="FONT-SIZE: large;" />
+      </h:panelGrid>
+      <br></br> 
+<h:panelGroup >
+<center><input type="button" value="OK"
+	  onclick="#{rich:component('confirmation')}.hide();submit();return false" />
+	 <input type="button" value="Cancel"
+	  onclick="#{rich:component('confirmation')}.hide();return false" /></center>
+</h:panelGroup>
+</h:panelGrid>
+</rich:popupPanel>
+</h:form>
+
+</body>
+</ui:composition>

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Accounts Payable Liabilities  </title>
+ <link rel="stylesheet" href="../../css/css.css"></link>
+</h:head>
+ <body  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  border="0" class="form_background" style="width: 100%;" align="center">
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+<tr><td align="center">
+<h:outputText value= "Accounts Payable Liabilites"  class="header_ui"/>
+<br/>
+</td></tr>
+<tr >
+<td  align="center" colspan="2"><h:outputText value="" style="color:#FFFFFF;"/><h:outputText value="#{purchaseExpenseMB.validate}" class="validation_ui"/></td>
+</tr>
+<tr>
+                    <td align="center" >
+                    <rich:panel style="font-size:10px; width:365px;text-align:left" header="Search by Date"  >  
+	        <h:panelGrid  columns="2"  style="font-size:10px; width:420px;height: 110px;" align="center">  
+	           <h:outputLabel value="From Date *"  class="label_ui" />
+	          <rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{purchaseExpenseMB.fDate}"></rich:calendar>
+	           <h:outputLabel value="To Date *"  class="label_ui" />
+	           	<rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{purchaseExpenseMB.tDate}"></rich:calendar>
+	          <h:outputLabel></h:outputLabel>
+	          <h:commandButton class="button"  value="Search" id="find1" action="#{purchaseExpenseMB.purchaseExpense}"></h:commandButton> 
+	          </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                        <tr align="center"><td>
+                  <br/>
+                  <div style="height:200px ; width:550px; overflow-x:scroll; overflow-y:scroll;display:#{purchaseExpenseMB.flag}" align="center">
+<h:panelGrid style="display:#{purchaseExpenseMB.flag} ;" >
+                    <rich:dataTable id="dataTable" var="info"  value="#{purchaseExpenseMB.purchaseList}"   style="max-width:800px;max-height:250px ;font-size:14;" 
+    			 columnsWidth="40px,90px,150px,100px,150px" >  
+         	
+  			<h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  No  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </h:column> 
+	        
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.tDate}"  class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  </h:outputText>
+	        </h:column>
+	         <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Vendor Name </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </h:column> 
+	        <h:column  headerText="Name" width="1000">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Reason   </span>      </f:facet>
+	            <h:outputText value="#{info.reason}"  class="label_ui"/>  
+	        </h:column> 
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Amount  </span>      </f:facet>
+	         <h:panelGroup>
+<h:outputText  class="label_ui" value="&nbsp;"></h:outputText>
+	            <h:outputText value="#{info.amount}"  class="label2_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  </h:panelGroup>
+	        </h:column>
+	        
+ </rich:dataTable> </h:panelGrid></div>
+ <table >
+<tr ><td width="400"></td></tr>
+<tr align="right">
+<td align="right" >
+<p>
+<h:panelGrid columns="12" style="display:#{purchaseExpenseMB.flag} ;font-weight:bold;font-size:14">
+	<h:outputLabel  value="Total Amount"></h:outputLabel>
+	<h:panelGroup>
+	
+	<h:outputText value=":"></h:outputText>
+	 <h:outputText  value="Rp  "/> 
+	 <h:outputText  value="#{purchaseExpenseMB.tots}" class="label2_ui"> 
+	 <f:converter converterId="com.inventory.util.UrlConverter" />
+	 </h:outputText></h:panelGroup>
+	
+	 </h:panelGrid>
+	 </p>
+	 </td>
+	 </tr>
+	 </table> 
+ <div id="popup" style="display:#{purchaseExpenseMB.flag1}" align="center">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{purchaseExpenseMB.purchaseMenuCall()}" ></h:commandButton>
+
+
+
+</h:panelGrid></div>
+
+   
+
+  
+
+ 
+            
+   </div>
+                  
+                  </td></tr>
+  
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+<td align="center" >
+
+
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

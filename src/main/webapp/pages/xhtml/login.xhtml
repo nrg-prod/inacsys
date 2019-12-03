@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+ 	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title> Inacsys | Log IN</title>
+ 	<link rel="stylesheet" href="../../css/css.css"> </link>
+ 	<link rel="stylesheet" href="../../css/login-media.css"> </link>
+ 	
+ 	  <link rel="SHORTCUT ICON" href="../../images/Inacsys.png"></link>
+ 	  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+ 	<script type="text/javascript">
+ 	function pressevent(e){
+        e = e || window.event;
+        if (e.keyCode == 13){
+       		document.getElementById("myLogin:logbtn").click();
+            return false;
+        }
+        return true;
+        }
+	function login(){
+		PF('loginblockUI').show();
+		remotecommand();
+	}
+  	</script>
+  	<style>
+	.ui-button-text-only .ui-button-text{
+	padding: 0px 0px;
+    background: #2196F3;
+    color: #fff;
+    font-weight: bold;
+}
+	</style>
+</h:head> 
+<body style="overflow: hidden;min-height:100%;margin:0px">
+<h:form id="InacsysLogin">
+<div class="container-fluid" style="height:100vh;">
+<div class="row" style="background: #ffffff;height:100%">
+<div class="col-md-8">
+
+</div>
+<div class="col-md-4">
+<p:graphicImage value="../../images/loginlogo.jpg" styleClass="logoimg"></p:graphicImage>
+<div style="height:30px">
+</div>
+<h:outputText value="Sign in with your Inacsys account" styleClass="logintitle"></h:outputText>
+<div style="height:15px"></div>
+<div style="height:15px" align="center"><h:outputText value="#{loginMB.validate}" styleClass="errorTxt"></h:outputText></div>
+<center>
+<div style="height:10px"></div>
+<p:inputText placeholder="Username" id="username" value="#{loginMB.invusername}" styleClass="logininput" style="font-size:14px;box-shadow: none; width:80%"/>
+<p:password id="Password" value="#{loginMB.invpassword}" placeholder="Password" styleClass="logininput" style="font-size:14px;box-shadow: none; width:80%"/> 
+</center>
+<div style="height:20px"></div>
+<div style="height:30px;padding-left:30%">
+<p:commandButton action="#{loginMB.userLogin}" id="logbtn" styleClass="loginbtn" value="Sign in" update="@form"/>
+</div>
+</div>
+</div>
+</div>
+</h:form>
+</body>
+</ui:composition>

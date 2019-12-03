@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core" 
+xmlns:ui="http://java.sun.com/jsf/facelets" 
+xmlns:a4j="http://richfaces.org/a4j"
+xmlns:p="http://primefaces.org/ui"
+template="../../pages/xhtml/home.xhtml">
+<ui:define name="content" >	
+<p:panel header="QuickSales Order Form">
+<table align="center" border="0" class="form_background" style="width: 100%;">
+<tr>
+<td height="200px" align="center">
+<table align="center">
+<tr align="center">
+<td height="150">
+ <h:outputText value="#{quickSaleMB.validate1}" styleClass="errorTxt"/>
+                     <p:panel  id="tb" >
+                    <h:outputText value="#{quickSaleMB.validate2}" styleClass="errorTxt"/>
+                    <h:panelGrid style="height:10px"></h:panelGrid>
+                    
+                      <h:form>
+                      
+                      
+                      
+                      
+                      <h:panelGrid class="labelTxt"   columns="3" style=" width:400px;HEIGHT:50PX;   " align="center" >
+	         
+
+					 <h:outputText class="label_ui"></h:outputText><h:outputText  ></h:outputText><h:outputText class="label_ui" ></h:outputText>
+				  
+				  		<h:outputText class="labelTxt" value="Payment Type *"></h:outputText>
+				  		<h:outputText class="label_ui" style="width:50px;">
+				  		
+				  		
+				  		</h:outputText>
+  
+						 <h:selectOneMenu id="type" class="text_ui" value="#{quickSaleMB.paymentType}" style="height:27px">
+					   	 <f:selectItem  itemLabel="--- select ---" itemValue="" noSelectOption="true" />				   		
+						 <f:selectItem itemLabel="Cash" itemValue="Cash"/>
+						 <f:selectItem itemLabel="Card" itemValue="Card"/>
+						 <f:selectItem itemLabel="Cheque" itemValue="Cheque"/>
+						 <f:selectItem itemLabel="Transfer" itemValue="Transfer"/>	
+						 <f:ajax execute="type" render="@form"></f:ajax>			    
+						 </h:selectOneMenu>
+					 
+					</h:panelGrid>
+					<h:panelGrid columns="3" style=" width:400px;HEIGHT:80PX;" class="labelTxt"  align="center" rendered="#{quickSaleMB.paymentType =='Card'}">
+								<h:outputText value="Bank Name *&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui"  style="width:50px;"></h:outputText>
+								<p:inputText id="c1" styleClass="inputTxt"	value="#{quickSaleMB.newbankName}">
+												<f:ajax execute="c1" render="@form"></f:ajax>
+								</p:inputText>
+									
+								<h:outputText value="Card Number *&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui" style="width:50px;"></h:outputText>
+								<p:inputText id="c2" styleClass="inputTxt"	value="#{quickSaleMB.cardno}" >
+											<f:ajax execute="c2" render="@form"></f:ajax>
+								</p:inputText>
+
+					</h:panelGrid>
+					<h:panelGrid rendered="#{quickSaleMB.paymentType =='Transfer'}" class="labelTxt" columns="3" style="width:400px;HEIGHT:80PX;   " align="center">
+								<h:outputText value="Bank Name *&nbsp;&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui" style="width:50px;"></h:outputText>
+								<p:inputText id="tb1" styleClass="inputTxt"	value="#{quickSaleMB.tbankname}"  style="padding-right: 37px;">
+												<f:ajax execute="tb1" render="@form"></f:ajax>
+								</p:inputText>
+								<h:outputText value="Account No. *&nbsp;&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui" style="width:50px;"></h:outputText>
+								<p:inputText id="tb2" styleClass="inputTxt"	value="#{quickSaleMB.accountno}" style="padding-right: 37px;">
+												<f:ajax execute="tb2" render="@form"></f:ajax>
+								</p:inputText>
+					</h:panelGrid>
+					<h:panelGrid rendered="#{quickSaleMB.paymentType =='Cheque'}" class="labelTxt" columns="3" style="width:400px;HEIGHT:110PX;   " align="center">
+								<h:outputText value="Bank Name *&nbsp;&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui" style="width:50px;"></h:outputText>
+								<p:inputText id="ba1" styleClass="inputTxt"	value="#{quickSaleMB.bankName}">
+										<f:ajax execute="ba1" render="@form"></f:ajax>
+								</p:inputText>
+								<h:outputText value="Cheque No. *&nbsp;&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui" style="width:50px;"></h:outputText>
+								<p:inputText id="chh1" styleClass="inputTxt" value="#{quickSaleMB.chequeno}">
+										<f:ajax execute="chh1" render="@form"></f:ajax>
+								</p:inputText>
+								<h:outputText value="Cheque Date *&nbsp;&nbsp;" class="labelTxt"></h:outputText>
+								<h:outputText class="label_ui" style="width:50px;"></h:outputText>
+								<p:calendar datePattern="dd/MM/yyyy" value="#{quickSaleMB.chequedate}" id="chh2">
+										<p:ajax event="dateSelect" execute="chh2" immediate="true" process="@this"></p:ajax>
+								</p:calendar>
+					</h:panelGrid>
+					<h:panelGrid class="labelTxt" columns="3" style="width:400px;HEIGHT:50PX;   " align="center">
+								<h:outputText value="Currency * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"	class="labelTxt" />
+								<h:outputText class="label_ui" style="width:200px;"></h:outputText>
+								<h:selectOneMenu id="curr" style="font-size: 10px;  height: 27px; width: 200px;font-family:'Arial,san-serif'';"
+												value="#{quickSaleMB.currency}" label="select one vendor">
+										<f:selectItem itemLabel="--- select ---" noSelectOption="true" itemValue="" />
+										<f:selectItem itemLabel="AED" itemValue="AED" />
+										<f:selectItem itemLabel="IDR" itemValue="IDR" />
+										<f:selectItem itemLabel="INR" itemValue="INR" />
+										<f:selectItem itemLabel="MYR" itemValue="MYR" />
+										<f:selectItem itemLabel="USD" itemValue="USD" />
+										<f:ajax execute="curr" render="@form"></f:ajax>
+								</h:selectOneMenu>
+					</h:panelGrid>
+				</h:form>
+            <h:panelGrid style="height:20px"></h:panelGrid>
+            <h:form id="fo">
+            <h:outputText value="#{quickSaleMB.validate}" styleClass="errorTxt"/>
+            <h:panelGrid style="height:20"></h:panelGrid>
+            <p:dataTable  var="info" value="#{quickSaleMB.homeMBs}" >
+				<p:column width="30" headerText="No">
+					<f:facet name="header"> <span class="datatableTxt"> No  </span>      </f:facet>
+				
+					
+					<div align="center">
+						 <h:outputText  value="#{info.serialno}"/>
+						 </div>
+					</p:column>
+					
+					<p:column width="160" headerText="Item Name">
+					<f:facet name="header"> <span class="datatableTxt"> Product Name *</span>      </f:facet>
+					
+					<div align="center">
+					
+						 <h:outputText  value="#{info.productName}"  style="display:#{info.flag3};"/>
+						 <h:selectOneMenu id="a" value="#{info.productName}" label="select one type" valueChangeListener="#{quickSaleMB.valueChange}"  style="font-size:12px; display:#{info.flag}; width: 147px; " class="text_ui">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true"/>
+				   			 <f:selectItems value="#{quickSaleMB.batchProductName3}" ></f:selectItems>
+				   			<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				    		<f:attribute value="#{info.productName}" name="product"></f:attribute>
+				    		<f:ajax render="@form" execute="a"></f:ajax>
+				 </h:selectOneMenu></div>
+					</p:column>
+				
+					<p:column width="80" headerText="Price">
+					<f:facet name="header"> <span class="datatableTxt"> Price  </span>      </f:facet>
+					<div align="center">
+						
+						<h:panelGroup>
+						 <h:outputText id="pri" value="#{info.price}">
+						 <f:converter converterId="com.inventory.util.UrlConverter"/>
+						 </h:outputText></h:panelGroup>
+						
+						 </div>
+					</p:column>
+					
+					<p:column width="80" headerText="Price">
+	       <f:facet name="header">
+	        <h:outputText value="Quantity *" class="datatableTxt"></h:outputText>
+	       </f:facet>
+	    <div align="center">
+	   			
+						<h:outputText  value="#{info.quantity}" style="display:#{info.flag2};" />
+						 <h:outputText  value=" #{info.unit} "/>
+						 <h:inputText id="a1" valueChangeListener="#{quickSaleMB.quantityChange1}" value="#{info.quantity}"  style="font-size:16px; width: 60px; display:#{info.flag1}; " class="text_ui">
+	           			<f:attribute value="#{info.productName}" name="ram"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:attribute value="#{info.price}" name="price"></f:attribute>
+	          		 	<f:ajax render="@form" execute="a1"></f:ajax>
+	           			</h:inputText>
+	        </div>
+	      </p:column> 
+				
+					<p:column width="120" headerText="Discount">
+					<f:facet name="header"> <span class="datatableTxt"> Discount </span>      </f:facet>
+					<div align="center">
+					<h:selectOneMenu rendered="#{info.netAmount!=0}" style="font-size: 12px;width:60px; height: 20px; font-family: 'Arial,san-serif';display:#{info.dflag};" id="a3" valueChangeListener="#{quickSaleMB.discounttypeChange}">
+				   	 <f:selectItem  itemLabel="select" />
+				   		 <f:selectItem itemLabel="%" itemValue="%"/>
+				    <f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				    <f:ajax render="@form" execute="a3"></f:ajax>
+				 </h:selectOneMenu>
+				 <h:outputText  value="#{info.dicount} " rendered="#{info.netAmount!=0}"  style="display:#{info.dflag1};"/>
+				 <h:outputText  value="#{info.dicountAmount}" rendered="#{info.netAmount!=0}" style="display:#{info.dflag2};"/>
+				 &nbsp;&nbsp;&nbsp;
+				 <h:inputText class="text_ui" value="#{info.dicountAmount}" rendered="#{info.netAmount!=0}"
+				  id="a2" valueChangeListener="#{quickSaleMB.discountChange}" style="font-size:12px; width:30px;display:#{info.dflag3};">
+				 <f:attribute value="#{info.productName}" name="ram"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:attribute value="#{info.dicount}" name="discount"></f:attribute>
+	          		 	<f:attribute value="#{info.netAmount}" name="net"></f:attribute>
+	          		 	<f:ajax render="@form" execute="a2"></f:ajax>
+				 </h:inputText>
+				 </div>
+					</p:column>
+						<p:column width="120" headerText="Bar Code">
+					<f:facet name="header"> <span class="datatableTxt"> Barcode  </span>      </f:facet>
+					<div align="center">
+   						<h:outputText value="#{info.barcode1}" style="color:black;font-size:12px;display:#{info.barflag1};" width="100" height="50"/>
+   						 
+   						 <h:inputText id="ud"  valueChangeListener="#{quickSaleMB.barcodevaluechange}" style="display:#{info.barflag};width:100px;height:20px;">
+   						 <f:attribute value="#{info.productName}" name="ram"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:ajax render="@form" execute="ud"></f:ajax>
+   						 </h:inputText>	
+						 
+						 </div>
+					</p:column>
+					
+					<p:column width="120" headerText="Net Amount">
+					<f:facet name="header"> <span class="datatableTxt"> Net Amount  </span>      </f:facet>
+					<div align="center">
+					<h:panelGroup>
+						 <h:outputText  value="#{info.netAmount}">
+						  <f:converter converterId="com.inventory.util.UrlConverter"/>
+						 </h:outputText></h:panelGroup>
+						 </div>
+					</p:column>
+					<p:column width="60" headerText="Delete">
+					<f:facet name="header"> <span class="datatableTxt">Edit </span>      </f:facet>
+					<div align="center">
+						
+						 <h:commandButton id="aa" align="center" image="/images/edit.png" action="#{quickSaleMB.quickdelete}">
+							<f:setPropertyActionListener value="#{info.serialno}" target="#{quickSaleMB.serialno}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener value="#{info.productName}" target="#{quickSaleMB.productName}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener value="#{info.netAmount}" target="#{quickSaleMB.netAmount}"></f:setPropertyActionListener>
+							<f:ajax execute="aa" render="@form"></f:ajax>
+							</h:commandButton>
+						 </div>
+					</p:column>
+				</p:dataTable>
+				
+				
+				<table align="left"><tr><td>
+				<h:commandButton id="but1"  value="Add" action="#{quickSaleMB.redirectHome2}" image="/images/addimg.png">
+				<f:ajax render="@form" execute="but1"></f:ajax>
+				
+				</h:commandButton>
+				</td></tr></table><br/><table><tr>
+				<td width="700"></td>
+				<td align="right">
+				<h:panelGrid columns="3"  align="center" cellpadding="3" cellspacing="3">
+			<h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial-san-serif'"  value="Grand Total"></h:outputText>
+				<h:outputLabel  style="font-weight:bold;font-size:14px;font-family:'Arial-san-serif';padding-top:5px"  value="#{quickSaleMB.totalPrice}">
+				<f:converter converterId="com.inventory.util.UrlConverter" /></h:outputLabel>
+				
+				
+				</h:panelGrid>
+<!-- <h:outputLabel style="font-weight:bold;font-size:18;font-color:black"  value="Grand Total:"></h:outputLabel>
+<h:outputLabel style="font-weight:bold;font-size:20;font-color:black" value="Rp "/>
+				<h:outputLabel style="font-weight:bold;font-size:20;font-color:black" value="#{quickSaleMB.totalPrice}"></h:outputLabel> --></td>
+				</tr></table>
+			
+				</h:form>
+				<br/>
+			<center>
+				<h:panelGrid align="center" cellpadding="5" columns="2" style="align:center;">
+				<p:commandButton id="save1" value="Submit" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+				  action="#{quickSaleMB.confirm}" update="@form"></p:commandButton>
+				<p:commandButton   value="Cancel" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+				 action="#{quickSaleMB.quicksales}" update="@form"></p:commandButton>
+				</h:panelGrid>	</center>		
+				</p:panel><br></br><br></br><br></br>
+    </td></tr>
+</table> 
+
+</td></tr>
+
+
+
+</table>
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 	
+
+
+
+</p:panel>
+</ui:define>
+</ui:composition>

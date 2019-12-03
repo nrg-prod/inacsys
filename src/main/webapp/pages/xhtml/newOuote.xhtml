@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core" 
+xmlns:ui="http://java.sun.com/jsf/facelets" 
+xmlns:a4j="http://richfaces.org/a4j"
+xmlns:p="http://primefaces.org/ui"
+template="../../pages/xhtml/home.xhtml">
+<ui:define name="content" >	
+<style>
+.ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+    padding: 4.6em 11em;
+    }
+</style>
+<p:panel header="New Ouote Form">
+	<div class="row">
+	<table style="width: 100%;">
+		<tr>
+			<td width="35%"></td>
+			<td width="10%">
+ 				<h:outputText class="labelTxt" value="Customer Name *"></h:outputText>
+ 			</td>
+ 			<td>
+ 				<h:selectOneMenu  class="text_ui" style="height:27px;"  valueChangeListener="#{salesOrderFormMB.setCustomerDetails}">
+				<f:selectItem  itemLabel="--- Select Customer ---" itemValue="" />				   		
+				<f:selectItems value="#{salesOrderFormMB.customerlist}"/> 	 
+				<p:ajax process="@this" immediate="true" update="center_content"></p:ajax>		 	    
+				</h:selectOneMenu>
+ 			</td>
+ 		</tr>
+ 	</table>
+	</div>
+	<div style="height:2%"></div>
+	<div class="row">
+	<div class="col-md-12">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-5">
+			<h:outputText class="labelTxt" value="Customer Contact Details" style="font-weight:bold;" rendered="#{salesOrderFormMB.test}"></h:outputText>
+		</div>
+		<div class="col-sm-3"></div>
+  		<div class="col-sm-3">
+  			<h:outputText class="labelTxt" value="Customer Details" style="font-weight:bold;" rendered="#{salesOrderFormMB.test}"></h:outputText>
+  		</div>
+	</div>
+	</div>
+	<div style="height:2%"></div>
+	<div class="row">
+	<div class="col-md-12">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-5">
+			<h:outputText class="labelTxt" value="#{salesOrderFormMB.sales.customername1}" rendered="#{salesOrderFormMB.test}"></h:outputText>
+		</div>
+		<div class="col-sm-3"></div>
+  		<div class="col-sm-3">
+  			<h:outputText class="labelTxt" value="Business Name:" style="font-weight:bold;font-size:12px" rendered="#{salesOrderFormMB.test}"></h:outputText>
+  		</div>
+	</div>
+	</div>
+	<div style="height:2%"></div>
+	<div class="row">
+	<div class="col-md-12">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-5">
+			<h:outputText class="labelTxt" value="Tel :" rendered="#{salesOrderFormMB.test}" style="font-weight:bold;font-size:12px;"></h:outputText>
+			<h:outputText class="labelTxt" value="#{salesOrderFormMB.sales.phoneNumber}" style="font-size:12px" rendered="#{salesOrderFormMB.test}"></h:outputText>
+		</div>
+		<div class="col-sm-3"></div>
+  		<div class="col-sm-3">
+  			<h:outputText class="labelTxt" value="#{salesOrderFormMB.sales.businessname}" style="font-size:12px" rendered="#{salesOrderFormMB.test}"></h:outputText>
+  		</div>
+	</div>
+	</div>
+	<div style="height:2%"></div>
+	<div class="row">
+	<div class="col-md-12">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-5">
+			<h:outputText class="labelTxt" value="Mobile :" rendered="#{salesOrderFormMB.test}" style="font-weight:bold;font-size:12px;"></h:outputText>
+			<h:outputText class="labelTxt" value="#{salesOrderFormMB.sales.mobile}" style="font-size:12px" rendered="#{salesOrderFormMB.test}"></h:outputText>
+		</div>
+		<div class="col-sm-3"></div>
+  		<div class="col-sm-3">
+  			<h:outputText class="labelTxt" value="Address :" style="font-weight:bold;font-size:12px;" rendered="#{salesOrderFormMB.test}"></h:outputText>
+  		</div>
+	</div>
+	</div>
+	<div style="height:2%"></div>
+	<div class="row">
+	<div class="col-md-12">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-5">
+			<h:outputText class="labelTxt" value="Email :" rendered="#{salesOrderFormMB.test}" style="font-weight:bold;font-size:12px;"></h:outputText>
+			<h:outputText class="labelTxt" value="#{salesOrderFormMB.sales.email}" style="font-size:12px" rendered="#{salesOrderFormMB.test}"></h:outputText>
+		</div>
+		<div class="col-sm-3"></div>
+  		<div class="col-sm-3">
+  			<h:outputText class="labelTxt" value="#{salesOrderFormMB.sales.permanentaddress}" style="font-size:12px;" rendered="#{salesOrderFormMB.test}"></h:outputText> 
+  		</div>
+	</div>
+	</div>
+	<div style="height:2%"></div>
+	<div style="height:10px" align="center">
+	</div><div style="height:20px"></div>
+	<h:message for="table" style="color:red;font-size:11;margin-left: 475px;"></h:message>
+	<p:dataTable var="info" value="#{salesOrderFormMB.mblist}" columnsWidth="30px,150px,100px,70px,100px,40px" rendered="#{salesOrderFormMB.test}" id="table">
+		<p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.serialno}"/>
+			</div>
+		</p:column>
+		<p:column width="120" headerText="Product Name">
+			<f:facet name="header"> <span class="dataTableTxt"> Product-service Name </span> </f:facet>
+			<div align="center">
+				<h:selectOneMenu id="a" value="#{info.productName}"  label="select one type" valueChangeListener="#{salesOrderFormMB.onClickProductChange}" style="font-size:14px;font-family:'Arial,san-serif';width:200px;height:25px;">
+				   	<f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue=""/>
+				   	<f:selectItems value="#{salesOrderFormMB.prodlist}"></f:selectItems> 
+				   	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				   	<f:attribute value="#{info.productName}" name="product"></f:attribute>
+				    <f:ajax render="@form" execute="a"> </f:ajax>
+				 </h:selectOneMenu>
+			</div>
+		</p:column>
+		<p:column width="100" headerText="Unit Price">
+			<f:facet name="header"> <span class="dataTableTxt"> Unit Price  </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.unit}"/>
+			</div>
+		</p:column>
+		<p:column width="100" headerText="Quantity" >
+			<f:facet name="header"> <span class="dataTableTxt"> Quantity </span> </f:facet>
+			<div align="center">
+				<p:inputText style="width:100px" id="pcount" value="#{info.quantity}" valueChangeListener="#{salesOrderFormMB.onClickQuantityChange}"> 
+				<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				<f:attribute value="#{info.unit}" name="unit"></f:attribute>
+				<p:ajax update="in" process="@this"></p:ajax>
+				</p:inputText>
+			</div> 
+		</p:column>
+		<p:column width="100" headerText="Total Amount" >
+			<f:facet name="header"> <span class="dataTableTxt"> Total Amount </span> </f:facet>
+			<div align="center">
+			<h:outputText class="labelTxt" value="#{info.netAmount}" id="in"/> 
+			</div>
+		</p:column>
+	</p:dataTable>
+	<div style="height:5px;"></div>
+	<table align="left">
+		<tr>
+			<td>
+				<h:commandButton id="addbut"  value="Add" action="#{salesOrderFormMB.addNewRow}" image="/images/addimg.png" rendered="#{salesOrderFormMB.test}">
+				<f:ajax render="@form" execute="addbut"></f:ajax>
+				</h:commandButton>
+			</td> 
+		</tr>
+	</table>
+	<div style="height:30px;"></div>
+	<table align="center" width="100%">
+		<tr>
+			<td width="4%"></td>
+			<td width="4%">
+				<p:commandButton value="Submit" action="#{salesOrderFormMB.saveNewquote}" rendered="#{salesOrderFormMB.test}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" update="@form" process="@this" ></p:commandButton>
+			</td>
+		</tr>
+	</table>
+
+
+<p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="quotconfirm" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+	<h:form id="quos">
+		<center><div style="height:30px"></div>
+			<h:panelGrid columns="3" border="0" align="center">
+ 				<h:outputText value="Quotation has been successfully generated." styleClass="confirmTxt"></h:outputText>
+			</h:panelGrid></center>
+		<div style="height:20px"></div>
+		<center>
+			<p:commandButton value="Ok"  process="@this" action="#{salesOrderFormMB.getDataLoad}" immediate="true" update="center_content" oncomplete="PF('quotconfirm').hide()"></p:commandButton>
+		</center>			
+	</h:form>
+</p:dialog>
+
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+</p:dialog>
+
+</p:panel>
+</ui:define>
+</ui:composition>

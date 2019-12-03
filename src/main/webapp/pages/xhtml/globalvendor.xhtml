@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	 xmlns:b="http://bootsfaces.net/ui"
+	   xmlns:a4j="http://richfaces.org/a4j">
+	 <h:head>
+			 <link rel="stylesheet" href="../../css/css.css" ></link>  
+			 <style>
+			 .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+			     background-color: #fff;
+			 }
+			 .ui-datatable thead th, .ui-datatable tfoot td{
+			  		color: #fff ! important;
+			      background: #051C5F ! important;
+			      font-family: book antiqua;
+			 }
+			 </style>
+</h:head>
+ <h:body>
+ <h:form>
+	   <p:dataTable  var="venInfo"  widgetVar="vendorInfo" reflow="true"  
+                 emptyMessage="No information found with given criteria" paginator="true" rows="10"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15">
+ 
+        <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('vendorInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+        
+        <p:column filterBy="" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="" />
+        </p:column>
+        
+        </p:dataTable>
+        
+     </h:form>
+	</h:body>
+	 </ui:composition>

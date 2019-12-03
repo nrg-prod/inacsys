@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+   
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title>Employee Registration Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+
+ <body>
+
+
+<h:form>
+
+  
+
+
+<div align="center"><h:outputText value="#{employeeRegistrationFormMB.validate}"  class="errorTxt"/> </div>
+
+
+
+			<div align="center" >
+				<p:panel style="width:730px;">
+				<p:tabView id="tabviewid1" style="height:auto;border:1px !important;">
+				<p:tab title="Employee Details" style="width:840px;height:auto;">
+				<table align="center" cellpadding="3px" style="width:710px;">
+			<tr>
+				<td><h:outputText value="Employee Name " class="label_ui" for="emp_Name"></h:outputText><span style="color:red">*</span></td>
+				<td><p:inputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.name}" id="emp_Name" style="box-shadow:none">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText> <br></br>
+				<h:message for="emp_Name" style="color:red;font-size:11"></h:message></td>
+				<td><h:outputText value="Employee ID " class="label_ui" for="emp_Id"></h:outputText><span style="color:red">*</span></td>			
+				<td><h:outputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.employeeid}" id="emp_Id" ></h:outputText> <br />			
+				<h:message for="emp_Id" style="color:red;font-size:11"></h:message></td>	
+			</tr>	
+			<tr>
+				<td><h:outputText value="DOB " class="label_ui" for="emp_Dob"></h:outputText><span style="color:red">*</span></td>
+				<td><p:calendar locale="de" navigator="true" pattern="dd/MM/yyyy"
+							style="height: 20px; width: 200px; box-shadow:none;font-size:10px;line-height: normal;"
+							maxdate="#{currentDate}"
+							value="#{employeeRegistrationFormMB.dob}" id="emp_Dob" >
+							<p:ajax process="@this" immediate="true" update="@form" event="dateSelect"></p:ajax></p:calendar> <br></br>
+				<h:message for="emp_Dob" style="color:red;font-size:11"></h:message></td>
+				<td><h:outputText value="Email " class="label_ui" for="emp_Mail"></h:outputText><span style="color:red">*</span></td>			
+				<td><p:inputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.mailid}" id="emp_Mail" style="box-shadow:none">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText> <br />			
+				<h:message for="emp_Mail" style="color:red;font-size:11"></h:message></td>	
+			</tr>	
+			<tr>
+				<td><h:outputText value="Gender " class="label_ui" for="emp_Gender"></h:outputText><span style="color:red">*</span></td>
+				<td><h:selectOneRadio value="#{employeeRegistrationFormMB.gender}"
+							style="font-size:11px;" id="emp_Gender">
+							<f:selectItem itemValue="Male" itemLabel="Male"></f:selectItem>
+							<f:selectItem itemValue="Female" itemLabel="Female"></f:selectItem>
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+						</h:selectOneRadio> <br></br>
+				<h:message for="emp_Gender" style="color:red;font-size:11"></h:message></td>
+				
+				<td><h:outputText value="Designation " class="label_ui" for="emp_Desgin"></h:outputText><span style="color:red">*</span></td>			
+				<td><p:inputText styleClass="inputTxt" style="box-shadow:none"
+							value="#{employeeRegistrationFormMB.designation}" id="emp_Desgin">
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText><br />			
+				<h:message for="emp_Desgin" style="color:red;font-size:11"></h:message></td>	
+				
+				</tr>		
+					
+			<tr>
+				<td><h:outputText value="Entry Date" class="label_ui" for="emp_EDate"></h:outputText></td>
+				<td><p:calendar  style="box-shadow:none;line-height: normal;"
+							datePattern="dd/MM/yyyy" maxdate="#{currentDate}"
+							value="#{employeeRegistrationFormMB.entrydate}" id="emp_EDate">
+							<p:ajax process="@this" immediate="true" update="@form" event="dateSelect"></p:ajax></p:calendar><br></br>
+				<h:message for="emp_EDate" style="color:red;font-size:11"></h:message></td>
+				<td><h:outputText value="Join Date" class="label_ui" for="emp_JDate"></h:outputText></td>			
+				<td><p:calendar inputStyle="height: 20px; width: 200px; font-size:10px;line-height: normal;"
+							datePattern="dd/MM/yyyy" mindate="#{currentDate}" style="box-shadow:none"
+							value="#{employeeRegistrationFormMB.joindate}" id="emp_JDate">
+							<p:ajax process="@this" immediate="true" update="@form" event="dateSelect"></p:ajax></p:calendar><br />			
+				<h:message for="emp_JDate" style="color:red;font-size:11"></h:message></td>	
+			</tr>					
+			<tr>
+				<td><h:outputText value="Basic Salary " class="label_ui" for="emp_BSalary"></h:outputText><span style="color:red">*</span></td>
+				<td><p:inputText styleClass="inputTxt"	value="#{employeeRegistrationFormMB.basicsalary}" style="box-shadow:none" id="emp_BSalary">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText><br></br>
+				<h:message for="emp_BSalary" style="color:red;font-size:11"></h:message></td>
+				<td><h:outputText value="Bank Name" class="label_ui" for="emp_bank"></h:outputText></td>
+				<td><p:inputText styleClass="inputTxt" style="box-shadow:none"	value="#{employeeRegistrationFormMB.bankName}" id="emp_bank">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText><br></br>
+				<h:message for="emp_bank" style="color:red;font-size:11"></h:message></td>
+			</tr>				
+			<tr>
+				
+				<td><h:outputText value="Account Number" class="label_ui" for="emp_acc"></h:outputText></td>			
+				<td><p:inputText styleClass="inputTxt" style="box-shadow:none"
+							value="#{employeeRegistrationFormMB.accNo}" id="emp_acc">
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText><br />			
+				<h:message for="emp_acc" style="color:red;font-size:11"></h:message></td>	
+				<td><h:outputText value="Description" class="label_ui" for="emp_Desc"></h:outputText></td>
+				<td><p:inputTextarea styleClass="inputTxt" style="box-shadow:none;width:200px;"
+							value="#{employeeRegistrationFormMB.description}" id="emp_Desc">
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputTextarea><br></br>
+				<h:message for="emp_Desc" style="color:red;font-size:11"></h:message></td>
+			</tr>			
+			<tr>
+			<td><h:outputLabel value="Attachment" style="font-size:12px;" for="TPhoto"></h:outputLabel><span style="color:red">*</span></td>
+			<td><p:fileUpload  mode="advanced" style="width:200px;"
+     			 	 value="#{employeeRegistrationFormMB.empFile}" id="TPhoto"
+       				  fileUploadListener="#{employeeRegistrationFormMB.dummyAction}"
+      				 allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
+       </p:fileUpload>
+       <h:message for="TPhoto" style="color:red;font-size:11"></h:message></td>
+				
+				</tr>	
+		</table></p:tab></p:tabView>
+		<br/>
+			<p:tabView id="tabviewid" style="height:auto;border:1px !important;">
+				<p:tab title="Address" style="width:840px;height:320px;">
+				<table width="100%"><tr>
+				<td width="46%"><h:outputText value="Permanent Address" class="label_ui" style="font-weight: bold;"></h:outputText></td>
+				<td width="17%"><h:outputText value="Present Address" class="label_ui" style="font-weight: bold;"></h:outputText></td>
+				<td width="3%"><p:selectBooleanCheckbox style="width:10px" value="#{employeeRegistrationFormMB.tick}" 
+					valueChangeListener="#{employeeRegistrationFormMB.check}">
+					<p:ajax update="@form" process="@this"></p:ajax>
+					</p:selectBooleanCheckbox>
+					</td>
+				<td width="23%"><h:outputText value="Same as Permanent Address" class="label_ui"></h:outputText></td>
+				</tr></table>
+				<h:panelGrid class="label_ui" border="0" columns="4" style="width:690px;height:220px;" >
+				
+				<h:panelGroup><h:outputText value="Door No/Street Name" class="label_ui" for="emp_street"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.streetname}" id="emp_street" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<h:panelGroup><h:outputText value="Door No/Street Name" class="label_ui" for="emp_pstreet"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_streetname}" id="emp_pstreet" rendered="#{employeeRegistrationFormMB.showFlag}">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_streetname}" id="emp_pstreet1" rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"/>
+				<h:outputText></h:outputText>
+				<h:message for="emp_street" style="color:red;font-size:11"></h:message>
+				<h:outputText></h:outputText>
+				<h:message for="emp_pstreet" style="color:red;font-size:11"></h:message>
+						
+				<h:panelGroup><h:outputText value="City" class="label_ui" for="emp_city"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.city}" id="emp_city">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<h:panelGroup><h:outputText value="City" class="label_ui" for="emp_pcity"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_city}" id="emp_pcity" rendered="#{employeeRegistrationFormMB.showFlag}">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_city}" id="emp_pcity1" rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"/>
+				<h:outputText></h:outputText>
+				<h:message for="emp_city" style="color:red;font-size:11"></h:message>
+				<h:outputText></h:outputText>
+				<h:message for="emp_pcity" style="color:red;font-size:11"></h:message>
+				
+				<h:panelGroup><h:outputText value="Country" class="label_ui" for="emp_country"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<h:selectOneMenu class="text_ui" id="emp_country" style="width:200px;height:25px;" value="#{employeeRegistrationFormMB.country}" valueChangeListener="#{employeeRegistrationFormMB.statechange}">
+							<f:selectItem itemLabel="--Select--" noSelectionOption="true"></f:selectItem>
+							<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+							<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+							<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+							<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+							<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+							<f:ajax render="@form" execute="emp_country"></f:ajax>
+						</h:selectOneMenu>
+				<h:panelGroup><h:outputText value="Country" class="label_ui" for="emp_pcountry"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<h:selectOneMenu class="text_ui" id="emp_pcountry" style="width:200px;height:25px;" value="#{employeeRegistrationFormMB.present_country}" valueChangeListener="#{employeeRegistrationFormMB.statechange1}"
+				 rendered="#{employeeRegistrationFormMB.showFlag}">
+							<f:selectItem itemLabel="--Select--" noSelectionOption="true"></f:selectItem>
+							<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+							<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+							<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+							<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+							<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+							<f:ajax render="@form" execute="emp_pcountry"></f:ajax>
+				</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_country}" id="emp_pcountry1" rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"/>
+				<h:outputText></h:outputText>
+				<h:message for="emp_country" style="color:red;font-size:11"></h:message>
+				<h:outputText></h:outputText>
+				<h:message for="emp_pcountry" style="color:red;font-size:11"></h:message>
+					
+				<h:panelGroup><h:outputText value="Province/State" class="label_ui" for="emp_state"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<h:selectOneMenu class="text_ui" id="emp_state" style="width:200px;height:25px;" value="#{employeeRegistrationFormMB.state}">
+							<f:selectItem itemLabel="--Select--" itemValue="" noSelectionOption="true" ></f:selectItem>
+							<f:selectItems value="#{employeeRegistrationFormMB.stateist}"></f:selectItems>
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneMenu>
+				<h:panelGroup><h:outputText value="Province/State" class="label_ui" for="emp_pstate"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<h:selectOneMenu class="text_ui" id="emp_pstate" style="width:200px;height:25px;" value="#{employeeRegistrationFormMB.present_state}" rendered="#{employeeRegistrationFormMB.showFlag}">
+							<f:selectItem itemLabel="--Select--" itemValue="" noSelectionOption="true"></f:selectItem>
+							<f:selectItems value="#{employeeRegistrationFormMB.stateist1}"></f:selectItems>
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_state}" id="emp_pstate1" rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"/>	
+				<h:outputText></h:outputText>
+				<h:message for="emp_state" style="color:red;font-size:11"></h:message>
+				<h:outputText></h:outputText>
+				<h:message for="emp_pstate" style="color:red;font-size:11"></h:message>
+				
+				<h:panelGroup><h:outputText value="Postal Code" class="label_ui" for="emp_postcode"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" id="emp_postcode" value="#{employeeRegistrationFormMB.postalcode}"  >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<h:panelGroup><h:outputText value="Postal Code" class="label_ui" for="emp_ppostcode"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" id="emp_ppostcode" value="#{employeeRegistrationFormMB.present_postalcode}"  rendered="#{employeeRegistrationFormMB.showFlag}">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeRegistrationFormMB.present_postalcode}"  rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"></p:inputText>
+				<h:outputText></h:outputText>
+				<h:message for="emp_postcode" style="color:red;font-size:11"></h:message>
+				<h:outputText></h:outputText>
+				<h:message for="emp_ppostcode" style="color:red;font-size:11"></h:message>
+				<h:panelGroup><h:outputText value="Phone Number " class="label_ui" for="emp_Phone"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<h:panelGroup>
+				<p:inputText styleClass="inputTxt"  value="#{employeeRegistrationFormMB.code}" style="box-shadow:none;width:50px" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<p:inputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.phno}" id="emp_Phone" style="box-shadow:none;width:150px" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				</h:panelGroup>	
+				<h:panelGroup><h:outputText value="Phone Number " class="label_ui" for="emp_pPhone"></h:outputText>			
+				<h:outputText style="color:red" value="*"></h:outputText></h:panelGroup>
+				<h:panelGroup>
+				<p:inputText styleClass="inputTxt"  value="#{employeeRegistrationFormMB.present_code}" style="box-shadow:none;width:50px" rendered="#{employeeRegistrationFormMB.showFlag}" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none;width:50px" value="#{employeeRegistrationFormMB.present_code}"  rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"></p:inputText>
+				<p:inputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.present_phno}" id="emp_pPhone"  style="box-shadow:none;width:150px" rendered="#{employeeRegistrationFormMB.showFlag}">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+				<p:inputText styleClass="inputTxt" style="box-shadow:none;width:150px" value="#{employeeRegistrationFormMB.present_phno}"  rendered="#{employeeRegistrationFormMB.hiddenFlag}" readonly="true"></p:inputText>
+				</h:panelGroup>	
+				
+				<h:outputText></h:outputText>
+				<h:message for="emp_Phone" style="color:red;font-size:11"></h:message>
+				<h:outputText></h:outputText>
+				<h:message for="emp_pPhone" style="color:red;font-size:11"></h:message>
+				
+				</h:panelGrid>
+				</p:tab>
+				<p:tab title="Documents" style="width:auto;height:auto;">	
+				<table width="100%">
+					<tr>
+						<td width="50%">
+							<h:outputText value="Passport" class="label_ui" for="emp_passport"></h:outputText>
+						</td>
+						<td width="50%">
+							<h:outputText value="Expiry Date" class="label_ui" for="p_edate"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td width="50%">
+							<p:fileUpload  mode="advanced" style="width:200px;" value="#{employeeRegistrationFormMB.passportFile}" id="passport" 
+							fileUploadListener="#{employeeRegistrationFormMB.dummyAction3}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" >
+       						</p:fileUpload>
+						</td>
+						<td width="50%">
+							<p:calendar placeholder="Date" value="#{employeeRegistrationFormMB.passport_date}" id="pdate" datePattern="dd/MM/yyyy" style="line-height: normal;width:219px;height: 25px;" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')"></p:calendar>
+						</td>
+					</tr>
+					<tr>
+						<td width="50%">
+							<h:outputText value="EmiratesID" class="label_ui" for="emirates"></h:outputText>
+						</td>
+						<td width="50%">
+							<h:outputText value="Expiry Date" class="label_ui" for="emirates_date"></h:outputText>
+						</td>						
+					</tr>
+					<tr>
+						<td width="50%">
+							<p:fileUpload  mode="advanced" style="width:200px;" value="#{employeeRegistrationFormMB.emiratesFile}" id="emirates"
+							 fileUploadListener="#{employeeRegistrationFormMB.dummyAction4}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" >
+       						</p:fileUpload>
+						</td>
+						<td width="50%">
+							<p:calendar placeholder="Date" value="#{employeeRegistrationFormMB.emirates_date}" id="emirates_date" datePattern="dd/MM/yyyy" style="line-height: normal;width:219px;height: 25px;" ></p:calendar>
+						</td>
+					</tr>
+					<tr>
+						<td width="50%">
+							<h:outputText value="Driving Licence" class="label_ui" for="licence"></h:outputText>
+						</td>
+						<td width="50%">
+							<h:outputText value="Expiry Date" class="label_ui" for="licence_date"></h:outputText>
+						</td>						
+					</tr>
+					<tr>
+						<td width="50%">
+							<p:fileUpload  mode="advanced" style="width:200px;" value="#{employeeRegistrationFormMB.licenceFile}" id="licence" 
+							fileUploadListener="#{employeeRegistrationFormMB.dummyAction5}"	allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" >
+       						</p:fileUpload>
+						</td>
+						<td width="50%">
+							<p:calendar placeholder="Date" value="#{employeeRegistrationFormMB.licence_date}" id="dddate" datePattern="dd/MM/yyyy" style="line-height: normal;width:219px;height: 25px;" ></p:calendar>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:inputText placeholder="Documents Name" id="dname" styleClass="inputTxt" value="#{employeeRegistrationFormMB.otherFilename}" style="box-shadow:none"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:fileUpload  mode="advanced" style="width:200px;" value="#{employeeRegistrationFormMB.otherFile}" id="other" 
+							fileUploadListener="#{employeeRegistrationFormMB.dummyAction6}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" >
+       						</p:fileUpload>
+						</td>
+					</tr>
+				</table>				
+				
+				</p:tab>
+			</p:tabView>	
+			<br/><br/>
+			<h:message for="dataTable" style="color:red;font-size:11"></h:message>
+			<br/>
+			<p:tabView id="tabviewid2" style="height:auto;border:1px !important;">
+				<p:tab title="Qualification" style="width:840px;height:auto;">
+				<p:dataTable var="inf" value="#{employeeRegistrationFormMB.qualificationlist}" widgetVar="VendorInfo" id="dataTable" reflow="true">
+					<p:column headerText="Course Name" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<h:outputText value="#{inf.serialNo}" style="display:none;"></h:outputText>
+						<p:inputText style="width:110px;" value="#{inf.course}"></p:inputText>
+					</p:column>
+					<p:column headerText="Year of passing" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:inputText style="width:110px;"  value="#{inf.yearofpassing}"></p:inputText>
+					</p:column>
+					<p:column headerText="School/ University" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:inputText style="width:110px;"  value="#{inf.university}"></p:inputText>
+					</p:column>
+					<p:column headerText="Medium of instruction" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:inputText style="width:110px;"  value="#{inf.medium}"></p:inputText>
+					</p:column>
+					<p:column headerText="Certificate Upload" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<center><p:commandButton icon="fa fa-upload" onclick="PF('uploadDialog1').show()" >
+						<f:setPropertyActionListener value="#{inf.serialNo}" target="#{employeeRegistrationFormMB.serialNo}"></f:setPropertyActionListener>
+						</p:commandButton></center>
+					</p:column>
+					<p:column width="6%" headerText="" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+					 <p:commandButton icon="fa fa-trash" action="#{employeeRegistrationFormMB.delteQualify}" update="dataTable">
+					<f:setPropertyActionListener value="#{inf.serialNo}" target="#{employeeRegistrationFormMB.serialNo}"></f:setPropertyActionListener>
+					</p:commandButton>
+					</p:column>
+					<f:facet name="footer">
+					<div align="left">
+					<p:commandButton update="dataTable" process="@this" action="#{employeeRegistrationFormMB.addQualifications}" icon="fa fa-plus"></p:commandButton>
+					</div></f:facet>
+				</p:dataTable>
+			</p:tab></p:tabView>
+				
+				<br/>
+				<h:message for="dataTable1" style="color:red;font-size:11"></h:message>
+			  <br/>
+			  <p:tabView id="tabviewid3" style="height:auto;border:1px !important;">
+				<p:tab title="Experience" style="width:840px;height:auto;">
+				<p:dataTable  value="#{employeeRegistrationFormMB.educationlist}"  var="info" widgetVar="VendorInfo" id="dataTable1" reflow="true">
+					<p:column headerText="Company Name" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+					<h:outputText value="#{info.serialNo1}" style="display:none;"></h:outputText>
+						<p:inputText style="width:90px;" value="#{info.companyName}"></p:inputText>
+					</p:column>
+					<p:column headerText="From Date" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:calendar inputStyle="height: 20px; width: 90px; font-size:10px;line-height: normal;"
+							datePattern="dd/MM/yyyy"  style="box-shadow:none"
+							value="#{info.fromDate}" id="emp_fDate"></p:calendar>
+					</p:column>
+					<p:column headerText="To Date" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:calendar inputStyle="height: 20px; width: 90px; font-size:10px;line-height: normal;"
+							datePattern="dd/MM/yyyy"  style="box-shadow:none"
+							value="#{info.toDate}" id="emp_tDate"></p:calendar>
+					</p:column>
+					<p:column headerText="Contact Name" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:inputText style="width:90px;" value="#{info.contactName}"></p:inputText>
+					</p:column>
+					<p:column headerText="Contact Number" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:inputText style="width:90px;" value="#{info.contactNumber}"></p:inputText>
+					</p:column>
+					<p:column headerText="Certificate Upload" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+						<p:inputText style="width:90px;display:none;" value="#{info.expCertificate_path}"></p:inputText>
+						<center> <p:commandButton icon="fa fa-upload" onclick="PF('uploadDialog').show()" >
+						<f:setPropertyActionListener value="#{info.serialNo1}" target="#{employeeRegistrationFormMB.serialNo}"></f:setPropertyActionListener>
+					</p:commandButton></center>
+					</p:column>
+					<p:column width="6%" headerText="" style="font-style: normal;font-size:12px;padding-top:10px;font-family:'Arial,san-serif';color:white;">
+					<p:commandButton icon="fa fa-trash" action="#{employeeRegistrationFormMB.delteExperience}" update="dataTable1">
+					<f:setPropertyActionListener value="#{info.serialNo1}" target="#{employeeRegistrationFormMB.serialNo}"></f:setPropertyActionListener>
+					</p:commandButton>
+					</p:column>
+					<f:facet name="footer">
+					<div align="left">
+					<p:commandButton  update="dataTable1" process="@this" action="#{employeeRegistrationFormMB.addExperiences}" icon="fa fa-plus"></p:commandButton>
+				</div>	</f:facet>
+				</p:dataTable>
+				</p:tab></p:tabView>
+			
+				</p:panel>
+			</div>
+			<div align="center">
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+<p:commandButton id="save" value="Submit" styleClass="button_ui"  action="#{employeeRegistrationFormMB.save}" update="@form"></p:commandButton> 
+<p:commandButton id="reset" value="Reset" styleClass="button_ui"  update="@form" action="#{employeeRegistrationFormMB.reset}"></p:commandButton>
+<p:commandButton  id="cancel" value="Cancel" styleClass="button_ui"  action="#{employeeRegistrationFormMB.employeeformclose}"></p:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+</h:panelGrid>
+</div><br/><br/><br/>
+<p:confirmDialog header="Confirmation" message="Employee Register successfully"  widgetVar="cd" style="font-size:11px" >
+<center>
+
+<p:commandButton value="Ok" styleClass="kbutton_ui" action="#{employeeRegistrationFormMB.employeeformclose}" onclick="PF('cd').hide()"></p:commandButton>
+</center>
+</p:confirmDialog>
+  
+ 
+<p:dialog header="File Upload" widgetVar="uploadDialog1" position="center">
+<h:message for="empfile"></h:message><br/>
+<p:fileUpload  mode="advanced" style="width:480px;"
+       value="#{employeeRegistrationFormMB.empQual_File}" id="Attach"
+       fileUploadListener="#{employeeRegistrationFormMB.dummyAction1}"
+       allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" ></p:fileUpload>
+       <br/>
+      <center> <p:commandButton value="Ok" styleClass="kbutton_ui" action="#{employeeRegistrationFormMB.saveQual_file}" onclick="PF('uploadDialog1').hide()"></p:commandButton></center>
+       
+</p:dialog> 
+
+ <p:dialog header="File Upload" widgetVar="uploadDialog" position="center">
+ <h:message for="empfile1"></h:message><br/>
+<p:fileUpload  mode="advanced" style="width:480px;"
+       value="#{employeeRegistrationFormMB.empexpFile}" id="Attach1"
+       fileUploadListener="#{employeeRegistrationFormMB.dummyAction2}"
+       allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" ></p:fileUpload>
+       <br/>
+      <center> <p:commandButton value="Ok" styleClass="kbutton_ui" action="#{employeeRegistrationFormMB.saveExp_file}" onclick="PF('uploadDialog').hide()"></p:commandButton></center>
+       
+</p:dialog>  
+      
+</h:form>
+
+</body>
+</ui:composition>	

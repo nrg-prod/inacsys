@@ -1,0 +1,205 @@
+.img{
+	background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 600px;
+    width: 100%;
+    background-image:url('../images/loginpage.jpg');
+}
+.logoimg{
+	 width: 50%;
+    padding-top: 10%;
+    padding-left: 27px;
+}
+.logintitle{
+	 font-size: 12px;
+    font-family: 'Segoe UI','Segoe','SegoeUI-Regular-final',Tahoma,Helvetica,Arial,sans-serif;
+    padding-top:16%;
+    padding-left: 15px;
+}
+.logininput { 
+	
+    width: 300px;
+    margin-bottom: 10px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    color: #000;
+    font-family:'Arial,san-serif' !important;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+   -moz-transition: box-shadow .5s ease;
+    -o-transition: box-shadow .5s ease;
+    -ms-transition: box-shadow .5s ease;
+}
+.loginbtn {
+    display: inline-block;
+    padding: 6px 12px;
+  	font-size: 13px;
+    font-weight: 400;
+    width:50%;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0px;
+}
+.ui-selectcheckboxmenu-header .ui-inputfield {
+    padding: 1px 20px 1px 2px;
+    background: #ffffff;
+}
+.container-fluid
+{
+	height:100%;
+	width:50%;
+}
+.row
+{
+	height:110%;
+	width:200%;
+}
+.errorTxt{
+	font-size: 12px;
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 9px;
+    font-family:'Arial, sans-serif'!important;
+}
+
+@media only screen and (max-width:667px)
+{
+	.container-fluid
+{
+	height:100%;
+	width:100%;
+}
+.img{
+	background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 600px;
+    width: 100%;
+    background-image:url('../images/00.jpg');
+}
+.logoimg{
+	 width: 45%;
+    padding-top: 5%;
+    padding-left: 25%;
+}
+
+.logintitle{
+	font-size: 15px;
+    font-family: 'Segoe UI','Segoe','SegoeUI-Regular-final',Tahoma,Helvetica,Arial,sans-serif;
+    padding-top:10%;
+    padding-left: 50px;
+}
+.loginbtn {
+    display: inline-block;
+    padding: 6px 12px;
+  	font-size: 15px;
+    font-weight: 400;
+    width:50%;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    background-color: #0090ff;
+    border: 1px solid transparent;
+    border-radius: 0px;
+}
+.errorTxt{
+	font-size: 12px;
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 9px;
+    font-family:'Arial, sans-serif'!important;
+}
+}
+@media only screen and (max-width:667px)
+{
+ .col-md-8 {
+   
+    height:1%;
+    width: 50%;
+    
+  }
+   .col-md-4
+{
+	background-color: #ffffff;
+	height:100%;
+	float:left;
+	width: 50%;
+	padding-top:25%;
+}
+}
+@media only screen and (min-width: 738px) {
+  .col-md-1,
+  .col-md-2,
+  .col-md-3,
+  .col-md-4,
+  .col-md-5,
+  .col-md-6,
+  .col-md-7,
+  .col-md-8,
+  .col-md-9,
+  .col-md-10,
+  .col-md-11,
+  .col-md-12 {
+    float: left;
+  }
+  .col-md-12 {
+    width: 100%;
+  }
+  .col-md-11 {
+    width: 91.66666666666666%;
+  }
+  .col-md-10 {
+    width: 83.33333333333334%;
+  }
+  .col-md-9 {
+    width: 75%;
+  }
+  .col-md-8 {
+   
+    height:100%;
+    width: 70%;
+  }
+  .col-md-7 {
+    width: 58.333333333333336%;
+  }
+  .col-md-6 {
+    width: 50%;
+  }
+  .col-md-5 {
+    width: 41.66666666666667%;
+  }
+  .col-md-4 {
+    width: 39.33333333333333%;
+  }
+  .col-md-3 {
+    width: 25%;
+  }
+  .col-md-2 {
+    width: 16.666666666666664%;
+  }
+  .col-md-1 {
+    width: 8.333333333333332%;
+  }
+  .col-md-4
+{
+	background-color: #ffffff;
+	height:100%;
+	float:left;
+	width: 30%;
+}
+  
+}
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Inacsys | Sales Payment</title>
+		
+		<link rel="stylesheet" href="../../css/css.css">
+		</link>
+	</h:head>
+
+	<body>
+
+
+		<h:form>
+			<table>
+
+			
+				<tr>
+
+
+					<td align="center">
+						<table border="0px" bgcolor="">
+
+							<tr>
+								<td align="center"><h:outputText
+										value="#{accountinReMB.validate}"
+										class="errorTxt"/></td>
+							</tr>
+
+							<tr>
+								<td> 
+										<h:panelGrid class="labelTxt" border="0" cellspacing="7"
+											columns="4" style="font-size:10px; width:680px;"
+											align="center" cellpadding="3">
+											<h:outputText class="labelTxt" value="Order Date"></h:outputText>
+											<h:outputText value="#{accountinReMB.salesorderdate}"  class="labelTxt">
+												<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+											</h:outputText>
+											<h:outputText class="labelTxt" value="Order Number"></h:outputText>
+											<h:outputText value="#{accountinReMB.salereferencenumber}"  class="labelTxt"/>
+
+											<h:outputText />
+											<h:outputText />
+											<h:outputText />
+											<h:outputText />
+											<h:outputText class="labelTxt" value="Total Amount" />
+											<h:panelGroup>
+												
+												<h:outputText value="#{accountinReMB.totalamount}"  class="labelTxt">
+													<f:converter converterId="com.inventory.util.UrlConverter" />
+												</h:outputText>
+											</h:panelGroup>
+											<h:outputText class="labelTxt" value="Paid Amount"></h:outputText>
+											<h:panelGroup>
+												
+												<h:outputText value="#{accountinReMB.paidamount}" class="labelTxt">
+													<f:converter converterId="com.inventory.util.UrlConverter" />
+												</h:outputText>
+											</h:panelGroup>
+											<h:outputText />
+											<h:outputText />
+											<h:outputText />
+											<h:outputText />
+											<h:outputText class="labelTxt" value="Balance Amount"></h:outputText>
+											<h:panelGroup>
+												
+												<h:outputText value="#{accountinReMB.balanceamount}" class="labelTxt">
+													<f:converter converterId="com.inventory.util.UrlConverter" />
+												</h:outputText>
+											</h:panelGroup>
+											
+											<h:outputText class="labelTxt" value="Pay Amount">
+											</h:outputText>
+											
+											<p:inputText styleClass="inputTxt">
+											</p:inputText>
+											
+											<h:outputText class="labelTxt" value="Payment Mode"
+												style="display:#{accountinReMB.payflag1}"></h:outputText>
+											<h:selectOneMenu class="text_ui"
+												value="#{accountinReMB.paymentType}" 
+												valueChangeListener="#{accountinReMB.paymentmodechange}"
+												style="display:#{accountinReMB.payflag1};font-family:'Arial,san-serif'">
+												<f:selectItem itemLabel="---Select--" itemValue="" />
+												<f:selectItem itemLabel="Cash" itemValue="Cash" />
+												<f:selectItem itemLabel="Card" itemValue="Card" />
+												<f:selectItem itemLabel="Cheque" itemValue="Cheque" />
+												<f:selectItem itemLabel="Transfer" itemValue="Transfer" />
+												<p:ajax update="@form" event="valueChange" process="@this"></p:ajax>
+											</h:selectOneMenu>
+											<h:outputText class="labelTxt" value="Payment Mode"
+												style="display:#{accountinReMB.payflag};"></h:outputText>
+											<h:outputText class="labelTxt"
+												value="#{accountinReMB.paymentType}"
+												style="display:#{accountinReMB.payflag};"></h:outputText>
+<h:panelGroup>
+											<h:outputText class="labelTxt" value="Account Type"></h:outputText>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:selectOneMenu value="#{accountinReMB.accountType}"
+												style="width:200px;height:25px;display:#{accountinReMB.acflag};font-family:'Arial,san-serif' !important;font-size:12px"
+												valueChangeListener="#{accountinReMB.accountTypeChange}">
+												<f:selectItem itemLabel="---Select Account Type---" itemValue="select" />
+												<f:selectItem itemLabel="Bank" itemValue="Bank" />
+												<f:selectItem itemLabel="Other Current Assets" itemValue="Other Current Assets" />
+												<p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+											</h:selectOneMenu>
+											<h:outputText class="labelTxt"
+												value="#{accountinReMB.accountType}"
+												style="display:#{accountinReMB.acflag1};"></h:outputText>
+										</h:panelGroup>
+
+										<h:panelGroup    style=" max-width: 10px;" >
+											<h:outputLabel class="labelTxt" style="max-width: 10px;" value="Account Description"></h:outputLabel>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:selectOneListbox id="acdesc"
+												style="height:auto;max-height:200px;min-height:25px; width: 200px;display:#{accountinReMB.acflag};font-family:'Arial,san-serif'!important;font-size:12px;"
+												value="#{accountinReMB.accountdescriptionvalue}">
+												<f:selectItem itemLabel="---Select Account Description---" itemValue=""></f:selectItem>
+												<f:selectItems value="#{accountinReMB.accountDescription}"></f:selectItems>
+												<p:ajax update="acdesc" process="@this"></p:ajax>
+											</h:selectOneListbox>
+											<h:outputText class="labelTxt"
+												value="#{accountinReMB.accountdescriptionvalue}"
+												style="display:#{accountinReMB.acflag1};"></h:outputText>
+										</h:panelGroup>
+										</h:panelGrid>
+										
+										<h:panelGrid rendered="#{accountinReMB.paymentType=='Card'}"
+											class="labelTxt" border="0" cellspacing="9" columns="4"
+											style="font-size:10px; width:680px;display:#{accountinReMB.payflag2};"
+											align="right" cellpadding="3">
+											<h:outputLabel
+												value="Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+												class="labelTxt"></h:outputLabel>
+											<h:inputText class="text_ui" id="bank"
+												value="#{accountinReMB.bankname}"><p:ajax update="bank" process="@this"></p:ajax></h:inputText>
+											<h:outputLabel
+												value="Card Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+												class="labelTxt"></h:outputLabel>
+											<h:inputText class="text_ui" value="#{accountinReMB.cardno}" id="cardno">
+											<p:ajax update="cardno" process="@this"></p:ajax></h:inputText>
+
+										</h:panelGrid>
+										<h:panelGrid rendered="#{accountinReMB.paymentType=='Cheque'}"
+											class="labelTxt" cellspacing="7" columns="4"
+											style="width:673px;display:#{accountinReMB.payflag3};"
+											align="center" cellpadding="3">
+											<h:outputLabel
+												value="Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+												class="labelTxt"></h:outputLabel>
+											<h:inputText class="text_ui" id="bankna"
+												value="#{accountinReMB.bankname}"><p:ajax update="bankna" process="@this"></p:ajax></h:inputText>
+											<h:outputLabel
+												value="Cheque Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+												class="labelTxt"></h:outputLabel>
+											<h:inputText class="text_ui" id="chequeno"
+												value="#{accountinReMB.chequeno}"><p:ajax update="chequeno" process="@this"></p:ajax></h:inputText>
+											<h:outputLabel value=" Cheque Date" class="labelTxt"></h:outputLabel>
+											<p:calendar datePattern="MM/dd/yyyy"   value="#{accountinReMB.chequedate}" id="chedate">
+											<p:ajax update="chedate" event="dateSelect" process="@this"></p:ajax>
+											</p:calendar>
+										</h:panelGrid>
+										<h:panelGrid
+											rendered="#{accountinReMB.paymentType=='Transfer'}"
+											class="labelTxt" border="0" cellspacing="9" columns="4"
+											style="width:675px;display:#{accountinReMB.payflag4};"
+											align="center" cellpadding="3">
+											<h:outputLabel
+												value="Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+												class="labelTxt"></h:outputLabel>
+											<h:inputText class="text_ui" id="bankname"
+												value="#{accountinReMB.bankname}"><p:ajax update="bankname" process="@this"></p:ajax></h:inputText>
+											<h:outputLabel
+												value="Account Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+												class="labelTxt"></h:outputLabel>
+											<h:inputText class="text_ui" value="#{accountinReMB.accno}" id="accno">
+											<p:ajax update="accno" process="@this"></p:ajax></h:inputText>
+											
+										</h:panelGrid>
+									
+
+										<center>
+										
+											<p:commandButton icon="fa fa-credit-card" value="Pay" 
+												action="#{accountinReMB.payNowAccount}" update="@form" process="@this"></p:commandButton>
+
+
+										</center>
+									</td>
+							</tr>
+
+						</table>
+					</td>
+				</tr>
+
+				
+
+			</table>
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="salespay2" appendTo="@(body)" modal="true" width="650px" height="120" resizable="false" draggable="false">
+					<div style="height:30px;"></div>
+					<center>
+					<h:outputText
+						value="Succesfully paid  #{accountinReMB.remaining} for  Sales Order #{accountinReMB.salereferencenumber}" class="confirmTxt"/></center>
+					<div style="height:30px;"></div>
+				</p:dialog>
+			
+		</h:form>
+
+	</body>
+</ui:composition>

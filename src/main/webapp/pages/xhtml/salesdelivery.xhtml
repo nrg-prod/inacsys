@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Sales delivery  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("salesDel:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body onload="#{salesdeliveryMB.salesdeliveryDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="salesDel">
+<table   border="0" class="form_background" align="center" width="100%">
+
+
+<tr>
+
+<td height="200px" align="center">
+
+
+<table border="0"   bgcolor="">
+<tr align="center"><td  colspan="2"><h:outputText value="Sales Delivery" class="header_ui"/><br/><br/></td></tr>
+             <tr align="center"> <td align="center">   <h:outputText value="#{salesdeliveryMB.validate}" class="validation_ui"/></td></tr> 
+
+<tr> <td align="center">
+                   
+                  
+                   <rich:panel style="font-size:14px; width:365px;text-align:left" header="Search by Sales Reference Number"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:370px;height: 100px;" align="center">  
+	        
+	            <h:outputLabel value="Sales Reference Number *"  class="label_ui" />
+	            
+	             
+	           
+	           
+	           <h:selectOneMenu onkeypress="return process(event);" class="text_ui"  value="#{salesdeliveryMB.salesIdReference}"  label="select one group">
+				   	 <f:selectItem  itemLabel="--- select ---" itemValue=""/>
+				   		 <f:selectItems value="#{salesdeliveryMB.result}" />
+				    
+				 </h:selectOneMenu>
+	           
+	           
+	           
+	            
+	           
+	            <h:outputText value="" /><h:commandButton class="button" id="find"  value="Find" action="#{salesdeliveryMB.salesdeliveryMB}" /> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	    </rich:panel></td></tr>
+                   
+                  <tr>
+                  <td >
+                  <h:panelGrid style="display:#{salesdeliveryMB.flag}">
+             
+                  </h:panelGrid>
+                  </td></tr>
+                    <tr>
+                   <td>
+                   <div style="height:100px ; width:700; overflow-x:scroll; overflow-y:scroll;display:#{salesdeliveryMB.flag}" align="center">
+                   <h:panelGrid style="display:#{salesdeliveryMB.flag}">
+                    <rich:dataTable id="dataTable" var="info"  value="#{salesdeliveryMB.result1}" columnsWidth="80px,160px,125px,100px,110px,100px,100px">  
+               	
+  <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">   Date   </span>      </f:facet>
+	            <h:outputText value="#{info.salesOrderDate}"  class="label_ui"> <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText>
+	        </h:column>
+   
+    <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Sales Order Number  </span>      </f:facet>
+	            
+	           <div align="center"> <h:outputText class="button_table" value="#{info.salesOrderNumber}"  >
+	          
+	           </h:outputText></div>  
+	        </h:column> 
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Customer Name   </span>      </f:facet>
+	            <h:outputText value="#{info.customerName}"  class="label_ui"/>  
+	        </h:column>  
+  
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Phone Number  </span>      </f:facet>
+	            <h:outputText value="#{info.phoneNumber}"  class="label_ui"/>  
+	        </h:column>
+  			<h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount  </span>      </f:facet>
+	         <h:outputText class="label_ui" value="Rp  "/>  
+	         <h:outputText class="label_ui" value="#{info.crossTotal}  "> 
+	        
+	         </h:outputText>   
+	        </h:column> 	
+	        <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Payment Status </span>      </f:facet>
+	            <h:outputText class="filter1" rendered="#{info.status2=='paid'}" value="#{info.status2}" />
+	            <h:outputText class="filter2" rendered="#{info.status2=='pending'}" value="#{info.status2}" />
+	            <h:outputText class="filter2" rendered="#{info.status2=='unpaid'}" value="#{info.status2}" />  
+	        </h:column>  
+  
+	   		
+	        
+	          
+   
+	        
+	       
+  
+  
+	        
+	       
+  
+	   		
+  
+	          <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Make Delivery</span>      </f:facet>
+	         <div align="center"><h:commandButton class="button_table" image="/images/deliveryicon.png" style="width:20px" action="#{salesdeliveryMB.salesOrdercancelForm1}"/></div>    
+	        </h:column> 
+          
+ </rich:dataTable> 
+  </h:panelGrid></div>
+            
+    </td></tr>
+   
+    
+</table> 
+
+
+</td></tr>
+
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

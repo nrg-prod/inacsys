@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+	<style>
+		.dateTimeField input {
+	width:219px;
+	
+}
+	</style>
+	<h:body>																																
+				<p:panel header="File Upload">
+					<table  align="center" cellpadding="10" cellspacing="10">
+						<tr >
+							<td >
+								<p:calendar placeholder="Date" styleClass="dateTimeField" value="#{employeeRegistrationFormMB.docDate}" id="hrdate" datePattern="dd/MM/yyyy" style="line-height: normal;" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')">
+								<p:ajax process="@this" immediate="true" update="@form" event="dateSelect"></p:ajax>
+								</p:calendar>
+								<br/>
+							</td>
+							<td >
+								<p:inputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.docFilename}" id="hrfilename" style="width:219px;height: 25px" placeholder="File Name "  >						
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>	
+							</td>
+						
+							
+						
+							<td >
+								<h:selectOneMenu  widgetVar="var3" value="#{employeeRegistrationFormMB.docFiletype}" id="hrfiletype" style="border-radius:0px;height: 25px;width: 219px;" styleClass="ui-selectdrop">
+									<f:selectItem itemLabel="--- File Type---" itemValue="select"></f:selectItem>
+									<f:selectItem itemLabel="Pdf" itemValue="Pdf"></f:selectItem>
+									<f:selectItem itemLabel="Excel" itemValue="Excel"></f:selectItem>
+									<f:selectItem itemLabel="Doc" itemValue="Doc"></f:selectItem>
+									<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</h:selectOneMenu>
+							</td>	
+							<td >
+								<p:inputText styleClass="inputTxt" value="#{employeeRegistrationFormMB.docDescription}" id="hrdesc" style="width:219px;height: 25px" placeholder="Description">							
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax></p:inputText>
+							</td>
+						</tr>
+						<tr><td><h:message for="hrdate" class="errorTxt"></h:message></td><td>
+						<h:message for="hrfilename" class="errorTxt"></h:message>	
+						</td><td><h:message for="hrfiletype" class="errorTxt"></h:message>
+						</td><td><h:message for="hrdesc" class="errorTxt"></h:message></td></tr>
+						</table >
+						<table style="width:50%;height:30%;" align="center" cellpadding="10" cellspacing="10">
+						<tr>
+						
+							<td>
+							<p:dataTable id="file" value="#{employeeRegistrationFormMB.uploadlist}"  var="upld" style="width:100%;">
+								<p:column headerText="Upload" width="100%">
+								<h:inputHidden value="#{upld.serialNo}"></h:inputHidden>
+								<p:fileUpload  mode="advanced"  value="#{employeeRegistrationFormMB.empFile1}" id="DName" fileUploadListener="#{employeeRegistrationFormMB.dummyAction11}"
+      				 			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
+       							</p:fileUpload>
+       							
+       							</p:column>
+       						</p:dataTable><br/>  
+       						<p:commandButton id="but2" style="margin-top: -17px;" value="Add" process="@this" update="@form" action="#{employeeRegistrationFormMB.addFileUpload}" icon="fa fa-plus"></p:commandButton>
+							</td>							
+						</tr>
+										
+					</table>	
+					<center>
+						<p:commandButton value="Submit"  update="center_content" process="@this"  action="#{employeeRegistrationFormMB.docUpload}" styleClass="ui-priority-primary" />
+					</center>			
+					<p:dialog widgetVar="docSuccess" styleClass="confirmDlg" appendTo="@(body)" header="Conformation Box" width="600px" height="120" modal="true" resizable="false">
+					<center>
+					<div style="height:30px;"></div>
+					<h:outputText value="Successfully Saved" styleClass="confirmTxt"></h:outputText>
+					<div style="height:30px;"></div>
+					<p:commandButton value="Ok"  update="center_content" process="@this"  action="#{employeeRegistrationFormMB.hrFileUpload}" styleClass="ui-priority-primary" />
+					</center>
+					</p:dialog>
+					</p:panel>
+			</h:body> 
+	</ui:define>
+</ui:composition>

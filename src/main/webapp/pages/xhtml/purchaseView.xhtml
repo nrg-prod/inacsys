@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../../pages/xhtml/home.xhtml"
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:ace="http://www.icefaces.org/icefaces/components">
+ <h:head>
+
+ <title> Inacsys | Purchase view  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("purchaseView:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        
+        /* function checking(){
+        alert("hello");
+        } */
+        </script>
+</h:head>
+ 
+ <body  style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form id="purchaseView">
+<table   border="0" class="form_background" align="center">
+<tr>
+
+<td height="10px" align="center">
+<br/>
+<table align="center">
+
+  
+<tr><td height="20px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Purchase View" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText value="#{purchaseViewMB.validate}" class="validation_ui"/>
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td align="left" >
+                    <rich:panel style="font-size:14px; width:365px" header="Search by Date"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:370px;height: 110px;" align="center">  
+	          
+	            <h:outputLabel value="From Date *"  class="label_ui" />
+	            <rich:calendar inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{purchaseViewMB.orderDate}" ></rich:calendar>
+	            <h:outputLabel value="To Date *"  class="label_ui" />
+	           <rich:calendar  inputStyle="height: 20px; width: 200px; font-size:10px;" datePattern="dd/MM/yyyy" value="#{purchaseViewMB.toDate}" ></rich:calendar>
+	            <h:outputText value="" /><h:commandButton class="button"  value="Find" action="#{purchaseViewMB.purchaseView}" ></h:commandButton> 
+	               </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                     <td align="left" >
+                    <rich:panel style="font-size:14px; width:365px" header="Search by Vendor Name"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:370px;height: 110px;" align="center">  
+	          <h:outputLabel value="Vendor Name *"  class="label_ui"/>	           
+	            <h:inputText class="text_ui"     label="Company Name" value="#{purchaseViewMB.vendorPhoneNumber}"  onkeypress="return process(event);"/> 
+	            
+	            <h:outputText value="" /> <h:commandButton  id="find" class="button"  onclick="showHideOrderLines(this);" value="Find" action="#{purchaseViewMB.purchaseView1}" >
+	       </h:commandButton> 
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="10px">
+                  </td></tr>
+                    <tr>
+                    <td>
+                  
+            
+    </td></tr>
+</table> 
+ <div style="height:200px ; width:700; overflow-x:scroll; overflow-y:scroll;display:#{purchaseViewMB.flag}" >
+                 <h:panelGrid style="display:#{purchaseViewMB.flag}" >  
+                   
+                     <rich:dataTable  id="dataTable" var="info"  value="#{purchaseViewMB.result4}" >  
+         	
+  <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['orderDate']}" sortBy="#{info.orderDate}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Date" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="orderDate"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseViewMB.sortsOrders['orderDate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseViewMB.sortsOrders['orderDate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>  
+	            
+	        </rich:column>
+	        
+	 <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['orderNumber']}" sortBy="#{info.orderNumber}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Order Number" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="orderNumber"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['orderNumber']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['orderNumber']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderNumber}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>  
+	            
+	        </rich:column>   
+	        <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['firmName']}" sortBy="#{info.firmName}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Firm Name " execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="firmName"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['firmName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['firmName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.firmName}"></h:outputText>  
+	            
+	        </rich:column>      
+ 
+                <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['tot']}" sortBy="#{info.tot}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Total Amount " execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="tot"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['tot']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['tot']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	          <h:outputText class="label_ui" value="Rp "/>
+	            <h:outputText  class="label_ui" value="#{info.tot}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	            
+	        </rich:column> 
+   			
+	        <h:column width="150px" headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;"> Payment Status    </span>      </f:facet> 
+	            
+	            <h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='pending'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='unpaid'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter1" rendered="#{info.status2=='paid'}"/>  
+	        </h:column>  
+  
+	   		<h:column  width="150px"  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">Delivery Status   </span>      </f:facet>
+	                <h:outputText  value="#{info.status3}"  class="filter1" rendered="#{info.status3=='delivered'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter3" rendered="#{info.status3=='Waiting'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter3" rendered="#{info.status3=='inprocess'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter2" rendered="#{info.status3=='cancelled'}"/>  
+	        
+	        </h:column>  
+  
+	   		
+	        
+	          <h:column width="150px"  headerText="view">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">  View </span>      </f:facet>  
+	   		  <div align="center">
+ 	         	         <h:panelGrid>
+ 	         	         
+ 	         	      <h:panelGroup rendered="#{info.status!='cancelled'}">    
+ 	            <h:commandButton   image="/images/view.png" action="#{purchaseViewMB.view}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton></h:panelGroup>
+	           
+	        
+	        
+	        <h:panelGroup rendered="#{info.status=='cancelled'}">
+	        
+	        <h:commandButton   image="/images/view.png" action="#{purchaseViewMB.view}">
+	             <rich:componentControl target="popup" operation="show" />
+	             </h:commandButton>
+	        <div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Lihat data Pembelian" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:300px;" align="left" bgcolor="#f4f4f4">
+
+
+<h:outputText  value="Order Already cancelled" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+
+
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+	        
+	        
+	        </h:panelGroup>
+	        
+	        </h:panelGrid></div>
+	        
+	        </h:column>
+	     
+	        <h:column width="150px"  headerText="Phone">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">  Edit  </span>      </f:facet>  
+ 	          <div align="center">
+ 	         	          <h:panelGrid rendered="#{info.status=='inserted'}">
+ 	            <h:commandButton   image="/images/edit.png" style="width:20px" action="#{purchaseViewMB.editpurchase}" rendered="#{info.status4=='in2'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton>
+	           <h:outputText  value="Payment start"  class="label_ui" rendered="#{info.status4=='in1'}"/>
+	           <h:outputText  value="Non Editable"  class="label_ui" rendered="#{info.status4=='out'}"/>
+	           </h:panelGrid>
+	           <h:outputText  value="Cancelled"  class="label_ui" rendered="#{info.status=='cancelled'}"/>
+				</div>
+	        </h:column>
+	        
+	        
+	        <h:column width="150px"  headerText="Phone">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">  Cancel  </span>      </f:facet>  
+ 	          <div align="center">
+ 	          <h:panelGrid rendered="#{info.status=='inserted'}">
+ 	            <h:commandButton   image="/images/Cancel-icon.png" style="width:20px" action="#{purchaseViewMB.cancel}" rendered="#{info.status4=='in2'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton>
+	            <h:commandButton   image="/images/Cancel-icon.png" style="width:20px" action="#{purchaseViewMB.cancel}" rendered="#{info.status4=='in1'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton>
+	           <h:outputText  value="Non Cancellable"  class="label_ui" rendered="#{info.status4=='out'}"/>
+	           </h:panelGrid>
+	           <h:outputText  value="Cancelled"  class="label_ui" rendered="#{info.status=='cancelled'}"/>
+	           </div>
+	        </h:column>
+          
+ </rich:dataTable>
+ </h:panelGrid></div>
+ 
+  <div style="height:200px ; width:700; overflow-x:scroll; overflow-y:scroll;display:#{purchaseViewMB.flag1};" align="center"><h:panelGrid  style="display:#{purchaseViewMB.flag1}">
+                   
+                     
+                   
+            
+                      <rich:dataTable id="dataTable1" var="info"  value="#{purchaseViewMB.purchases}" >  
+                      
+         	
+ <rich:column  headerText="Name" sortOrder="#{purchaseViewMB.sortsOrders['orderDate']}" sortBy="#{info.orderDate}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" value="Date" render="dataTable1" action="#{purchaseViewMB.sort()}">
+	        <f:param name="sortProperty" value="orderDate"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{purchaseViewMB.sortsOrders['orderDate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{purchaseViewMB.sortsOrders['orderDate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.orderDate}"  class="label_ui">  <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+	        </rich:column> 
+	        
+	        
+	     
+ <rich:column  headerText="Name" sortOrder="#{purchaseViewMB.sortsOrders['orderNumber']}" sortBy="#{info.orderNumber}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" value="Order Number" render="dataTable1" action="#{purchaseViewMB.sort()}">
+	        <f:param name="sortProperty" value="orderNumber"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{purchaseViewMB.sortsOrders['orderNumber']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{purchaseViewMB.sortsOrders['orderNumber']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.orderNumber}"  class="label_ui">  </h:outputText>
+	        </rich:column> 
+	        
+  <rich:column  headerText="Name" sortOrder="#{purchaseViewMB.sortsOrders['firmName']}" sortBy="#{info.firmName}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" value="Firm Name" render="dataTable1" action="#{purchaseViewMB.sort}">
+	        <f:param name="sortProperty" value="firmName"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{purchaseViewMB.sortsOrders['firmName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{purchaseViewMB.sortsOrders['firmName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.firmName}"  class="label_ui">  </h:outputText>
+	        </rich:column> 
+	        
+  
+   <rich:column  headerText="Name" sortOrder="#{purchaseViewMB.sortsOrders['tota']}" sortBy="#{info.tota}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;color:#fff;;font-family:'Helvetica Neue LT Pro 55';color:white" value="Total Amount" render="dataTable1" action="#{purchaseViewMB.sort}">
+	        <f:param name="sortProperty" value="tota"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{purchaseViewMB.sortsOrders['tota']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{purchaseViewMB.sortsOrders['tota']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="Rp " class="label_ui"/>
+	            <h:outputText value="#{info.tota}" class="label_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText> 
+	        </rich:column> 
+	          
+  
+   			<!-- <h:column width="150px" headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;"> Total Amount  </span>      </f:facet>
+	            <h:outputText value="IDR" class="label_ui"/>
+	            <h:outputText value="#{info.tota}" class="label_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	        </h:column>   -->
+  
+	        <h:column width="150px" headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;"> Payment Status    </span>      </f:facet> 
+	            
+	            <h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='pending'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='unpaid'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter1" rendered="#{info.status2=='paid'}"/>  
+	        </h:column>  
+  
+	   		<h:column  width="150px"  headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">Delivery Status   </span>      </f:facet>
+	                <h:outputText  value="#{info.status3}"  class="filter1" rendered="#{info.status3=='delivered'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter3" rendered="#{info.status3=='Waiting'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter3" rendered="#{info.status3=='inprocess'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter2" rendered="#{info.status3=='cancelled'}"/>  
+	        
+	        </h:column>  
+  
+	   		<!-- <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">Approval Status  </span>      </f:facet>
+	            <h:outputText value="#{info.approvalStatus}" class="label_ui"/>  
+	        </h:column>   -->
+	        
+	          <h:column  width="150px" headerText="view">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">  Action </span>      </f:facet>  
+ 	         	        <div align="center"> <h:panelGrid>
+ 	         	         
+ 	         	          
+ 	            <h:commandButton   image="/images/view.png" action="#{purchaseViewMB.view}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton></h:panelGrid></div>
+	        
+	        
+	        </h:column>
+	        
+	      
+	        
+	        
+	        <h:column width="150px"  headerText="Phone">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">  Edit  </span>      </f:facet>  
+ 	          <div align="center">
+ 	             <h:panelGrid rendered="#{info.status=='inserted'}">
+ 	            <h:commandButton   image="/images/edit.png" style="width:20px" action="#{purchaseViewMB.editpurchase1}" rendered="#{info.status4=='in2'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton>
+	           <h:outputText  value="Payment start"  class="label_ui" rendered="#{info.status4=='in1'}"/>
+	           <h:outputText  value="Non Editable"  class="label_ui" rendered="#{info.status4=='out'}"/>
+	           </h:panelGrid>
+	           <h:outputText  value="Cancelled"  class="label_ui" rendered="#{info.status=='cancelled'}"/>
+	           </div>
+	        </h:column>
+	        
+	        
+	        <h:column width="150px"  headerText="Phone">  
+	   		 <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:10px;padding-top:10px;color:#fff;;">  Cancel  </span>      </f:facet>  
+ 	          <div align="center">
+ 	            <h:panelGrid rendered="#{info.status=='inserted'}">
+ 	            <h:commandButton   image="/images/Cancel-icon.png" style="width:20px" action="#{purchaseViewMB.cancel}" rendered="#{info.status4=='in2'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton>
+	            <h:commandButton   image="/images/Cancel-icon.png" style="width:20px" action="#{purchaseViewMB.cancel}" rendered="#{info.status4=='in1'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton>
+	           <h:outputText  value="Non Cancellable"  class="label_ui" rendered="#{info.status4=='out'}"/>
+	           </h:panelGrid>
+	           <h:outputText  value="Cancelled"  class="label_ui" rendered="#{info.status=='cancelled'}"/>
+	           </div>
+	        </h:column>
+          
+ </rich:dataTable>
+ 
+ 
+ 
+ 
+ 
+ </h:panelGrid></div>
+ 
+<div id="popup" style="display:#{purchaseViewMB.flag2}">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{purchaseViewMB.cancel1()}"></h:commandButton>
+
+
+
+</h:panelGrid></div></div> 
+
+</td></tr>
+<tr><td style="height:10px;"></td></tr>             
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

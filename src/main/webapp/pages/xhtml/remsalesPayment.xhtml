@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Sales payment  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{salesViewMB.salesDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table style="margin-top:-10"  align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="/pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1050px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}.</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+
+
+ <table border="0"   bgcolor="">
+             <tr align="center"> <td align="center">   <h:outputText  style="font-style: normal;font-size:18px;color:#F51313"/></td></tr> 
+
+<tr>
+                    <td align="left" >
+                    
+	    
+	     <rich:panel style="font-size:14px; width:490px" header="Sales view Order Number"  >  
+                    
+                    <h:panelGrid  columns="2"  style="font-size:14px; width:490px;height: 123px;" align="center">  
+	          
+	            <h:outputLabel value="Buyer Name"  class="label_ui" />
+	           
+	             <h:selectOneMenu class="text_ui"  value="#{salesViewMB.buyerName}" onchange="submit()" valueChangeListener="#{salesViewMB.changeDrop}" label="select one customer Name">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{salesViewMB.result1}" />
+				    
+				 </h:selectOneMenu>
+				  <h:outputLabel value="Sale Order Number"  class="label_ui" />
+	            
+				 <h:selectOneMenu class="text_ui"  value="#{salesPaymentMB.salesIdReference}"  label="select one group">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{salesViewMB.result2}" />
+				    
+				 </h:selectOneMenu>
+	           
+	            <h:outputText value="" /><h:commandButton class="button"  value="Find" action="#{salesPaymentMB.SalesPayment2()}" /> 
+	            
+	            
+	            
+	        </h:panelGrid>
+	        </rich:panel>
+	    
+	    
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px">
+                  </td></tr>
+                    <tr>
+                   <td>
+                     <h:panelGrid style="display:#{salesPaymentMB.flag}" >
+                   <rich:dataTable id="dataTable" var="info"  value="#{salesPaymentMB.result}" columnsWidth="100px,180px,150px,120px,120px">  
+         	
+ 
+   
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Date  </span>      </f:facet>
+	            <h:outputText value="#{info.salesOrderDate}"  class="label_ui"/>  
+	        </h:column>  
+  
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Sales Order Number </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.salesOrderNumber}"  class="label_ui"/>  
+	        </h:column>  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Customer Name </span>      </f:facet>
+	            <h:outputText value="#{info.customerName}" class="label_ui"  />  
+	        </h:column>  
+  
+	   		<h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Phone Number  </span>      </f:facet>
+	         <h:outputText class="label_ui"  value="#{info.phoneNumber}"/>    
+	        </h:column> 
+	        <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Total Amount  </span>      </f:facet>
+	         <h:outputText class="label_ui"  value="IDR #{info.crossTotal}0"/>    
+	        </h:column> 
+	        <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Outstanding Balance  </span>      </f:facet>
+	         <h:outputText class="label_ui"  value="IDR #{salesPaymentMB.totalPrice}0"/>    
+	        </h:column> 
+	        
+	        <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Payment Status  </span>      </f:facet>
+	         <h:outputText class="filter1"  value="#{info.status2}" rendered="#{info.status2=='paid'}"/>    
+			<h:outputText class="filter2"  value="#{info.status2}" rendered="#{info.status2=='pending'}"/></h:column>
+	       <h:outputText class="filter2"  value="#{info.status2}" rendered="#{info.status2=='unpaid'}"/>
+	          <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> View  </span>      </f:facet>
+	            
+	           <div align="center"> <h:commandButton  image="/images/view.png" action="#{salesViewMB.salesView2()}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesOrderNumber}"></f:setPropertyActionListener>
+	           </h:commandButton></div>  
+	        </h:column>  
+   
+  
+          
+ </rich:dataTable></h:panelGrid>
+            
+    </td></tr>
+    
+</table>
+</td></tr>
+
+<tr><td style="height: 250px"></td></tr>
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

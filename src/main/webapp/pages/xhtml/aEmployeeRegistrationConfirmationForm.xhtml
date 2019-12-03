@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title>Employee Registration Confirmation</title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+
+ <body style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table align="center">
+
+  
+
+
+
+<tr>
+                    <td align="center" style="padding-top: 20">
+             
+	             <p:panel style="width:700px; height:310px" >
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="11"   columns="4"  style="font-size:14px; width:680px;" align="center" cellpadding="5">
+	                <h:outputText value="Employee Name" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.name}"></h:outputText>
+							<h:outputText value="Employee ID" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.employeeid}"></h:outputText>
+							<h:outputText value="DOB" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.dob1}"></h:outputText>
+							<h:outputText value="Email" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.mailid}"></h:outputText>
+							<h:outputText value="Gender" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.gender}"></h:outputText>
+							<h:outputText value="Phone Number" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.phno}"></h:outputText>
+							<h:outputText value="Address" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.address}"></h:outputText>
+							<h:outputText value="Qualification" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.qualification}"></h:outputText>
+							<h:outputText value="Entry Date" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.entrydate1}"></h:outputText>
+							<h:outputText value="Join Date" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.joindate1}"></h:outputText>
+							<h:outputText value="Basic Salary" class="label_ui"></h:outputText>
+							<h:panelGroup>
+							
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.basicsalary}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/>
+							</h:outputText></h:panelGroup>
+							<h:outputText value="Designation" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.designation}"></h:outputText>
+							
+							<h:outputText value="Bank Name" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.bankName}"></h:outputText>
+							<h:outputText value="Account Number" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.accNo}"></h:outputText>
+							
+							<h:outputText value="Description" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.description}"></h:outputText>	
+							<!-- <h:outputText value="Free Lancer" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeRegistrationFormMB.freelancer}"></h:outputText> -->
+									</h:panelGrid></p:panel>
+			  
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px; padding-top: 14px;" >
+
+<p:commandButton id="confirm" value="Confirm" styleClass="button_ui"  action="#{employeeRegistrationFormMB.save}" onclick="PF('cd').show()"></p:commandButton> 
+<p:commandButton  id="cancel" value="Cancel" styleClass="button_ui" action="#{employeeRegistrationFormMB.employeeformclose}"></p:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid>
+	   
+                    </td>
+                  </tr>
+                    </table> 
+
+
+
+
+
+<p:confirmDialog header="Confirmation" message="Employee Register successfully"  widgetVar="cd" style="font-size:11px">
+<center>
+
+<p:commandButton value="Ok" styleClass="kbutton_ui" action="#{employeeRegistrationFormMB.employeeformclose}" onclick="PF('cd').hide()"></p:commandButton>
+</center>
+</p:confirmDialog>
+          
+
+</h:form>
+
+</body>
+</ui:composition>		

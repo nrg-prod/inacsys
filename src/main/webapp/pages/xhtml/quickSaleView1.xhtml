@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Product View </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <body onload="#{productRegisterFormMB.dropDown()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+     
+
+<h:form>
+<table style="margin: -10 auto; " 	align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+<tr>
+<td>
+<table style="width:1030px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome, #{loginMB.invusername}.</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+</table> 
+</td>
+</tr>
+
+<tr><td height="580px" align="center">
+<br/>
+<br/>
+<table border="0"   bgcolor="">
+
+<tr>
+                    <td align="center" >
+                   
+	              <rich:panel style="width:900px; font-family: 'HelveticaNeueLT Pro 55 Roman';">
+	            <h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText id="reg" value="Quick Sale view" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:900px;font-family: 'HelveticaNeueLT Pro 55 Roman';">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:990px;" align="center" cellpadding="3">
+	          				<h:outputText class="label_ui" value="Customer Name"></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.customername}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+	          				
+	          				<h:outputText class="label_ui" value="Phone number" />
+							<h:outputText  value="#{quickSaleViewMB.phnumber}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+						<h:outputText class="label_ui"  value="Date" ></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.date}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							<h:outputText class="label_ui" value="Gross Total" />
+							<h:outputText  value="IDR #{quickSaleViewMB.grossTotal}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							<h:outputText class="label_ui" value="Delivery Date"></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.deliverdate}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+	          				<h:outputText class="label_ui" value="Mail Id" />
+							<h:outputText  value="#{quickSaleViewMB.mailid}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+						<h:outputText class="label_ui"  value="Sales Number" ></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.salesno}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+								<h:outputText class="label_ui"  value="Shipping Address" ></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.shippingaddress}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							
+								<h:outputText class="label_ui" value="Description"></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.description}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							</h:panelGrid></rich:panel>
+	<!-- <h:outputText class="label_ui" value="Product Name"></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.productName}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+	          				<h:outputText class="label_ui" value="Selling Price"></h:outputText>
+							<h:outputText  value="#{quickSaleViewMB.sellingprice}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+	          				 -->
+		        <div style="height: 70"></div>
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;font-family: 'HelveticaNeueLT Pro 55 Roman';" >
+
+<h:outputText/><h:outputText/><h:outputText value="aaa" style="color:white"/>
+<h:commandButton id="reject" value="Ok" class="button_ui"  action="home.xhtml?faces-redirect=true"></h:commandButton>
+ 
+<h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid>
+	   
+                    </td>
+                  </tr></table>
+<br/><br/>
+<br/><br/>
+</td></tr>
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

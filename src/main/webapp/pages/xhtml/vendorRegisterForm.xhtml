@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="content" >
+	<style type="text/css">
+	p {
+   		 margin: 0 0 0px!important;
+	}
+	
+	</style>
+ <body>
+	<p:panel header="Vendor Registeration Form" style="min-height:100%;width:100%;" >
+					<div style="height:5px;"></div>
+<h:form id="ven">
+	<h:outputText id="msg" style="text-align:center;"></h:outputText>
+	<h:message for="msg" style="color:red"></h:message>
+<center>
+<div class="ui-g">
+ <div class="ui-g-12 ui-md-6 ui-lg-3">
+			<p:inputText placeholder="Firm Name *" value="#{vendorRegisterFormMB.vendorPhoneNumber}" id="vfname" styleClass="inputTxt" onblur="vendorname('center_content:ven:vfname','vfnameicon')">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p id="vfnameicon" ></p>
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-3">
+			<p:inputText placeholder="Fax Number" value="#{vendorRegisterFormMB.faxVendor}" id="vFaxNo" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p id="vFaxNoicon"  ></p>
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-3">
+			<p:calendar placeholder="Expire Date" value="#{vendorRegisterFormMB.venExdate}" pattern="dd/MM/yyyy"   >
+			<p:ajax event="dateSelect" process="@this" immediate="true" update="@form"></p:ajax> 
+			</p:calendar>
+			<p id="vftypeicon"></p>
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-3">
+			<p:inputText placeholder="Website" value="#{vendorRegisterFormMB.website}" styleClass="inputTxt" id="vweb">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p id="vwebicon" ></p>
+	</div>
+
+
+
+
+	<div class="ui-g-12 ui-md-6 ui-lg-3">	
+			<p:inputText placeholder="Trade Licence Number" id="tradelicno" value="#{vendorRegisterFormMB.venLicence}" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p id="vlicenseicon" ></p>
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-3">	
+			<p:inputText placeholder="Nature Of Business" value="#{vendorRegisterFormMB.natureofbusiness}" id="vNoB" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p id="vNoBicon"  ></p>
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-3">	
+			<p:inputText placeholder="Person Incharge" value="#{vendorRegisterFormMB.peresonIncharge}" id="vpinc" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>	
+			<p id="vpincicon" ></p>							
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-3">	
+			<p:inputText placeholder="Email ID *" value="#{vendorRegisterFormMB.email_ID_vendor}" id="vemail" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p id="vemailicon" ></p>
+		</div>
+
+
+
+	<div class="ui-g-12 ui-md-6 ui-lg-3">
+	<p:inputText placeholder="Telephone Number *" value="#{vendorRegisterFormMB.firmName}" id="vtpno" styleClass="inputTxt" onblur="phonenumber('center_content:ven:vtpno','vtpnoicon')">
+	<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+	</p:inputText>
+	<p id="vtpnoicon"></p>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-3">
+	<h:selectOneMenu  style="border-radius:0px;height: 30px;width: 200px;" widgetVar="var1" value="#{vendorRegisterFormMB.venType}" >	
+		<f:selectItem itemLabel="--- Vendor Type---" itemValue="" />
+		<f:selectItem itemLabel="Trading" itemValue="Trading"></f:selectItem> 
+       	<f:selectItem itemLabel="Non-Trading" itemValue="Non-Trading"></f:selectItem> 
+       	<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+	</h:selectOneMenu>
+	<p id="vstateicon"></p>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-3">
+		<p:inputText styleClass="inputTxt" value="#{vendorRegisterFormMB.venCode}" readonly="true"></p:inputText>
+		<p id="vstateicon1" ></p>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-3">
+	<p:inputTextarea placeholder="Description" value="#{vendorRegisterFormMB.note}" styleClass="inputTxt" id="vnote">
+	<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+	</p:inputTextarea>	
+	<p id="vstateicon2"></p>
+	</div>
+
+
+
+	<div class="ui-g-12 ui-md-6 ui-lg-3">	
+			<h:selectOneMenu id="patyp" style="border-radius:0px;height: 30px;width: 200px;" valueChangeListener="#{vendorRegisterFormMB.venTypes}" value="#{vendorRegisterFormMB.payment}">
+					<f:selectItem itemLabel="--- Payment Type---" itemValue="" />
+					<f:selectItem itemLabel="Cash" itemValue="Cash" />
+					<f:selectItem itemLabel="Credit" itemValue="Credit"/>
+					<p:ajax immediate="true" event="valueChange" update=":center_content" process="@this"></p:ajax>
+			</h:selectOneMenu>
+			<p id="venty"  ></p>
+		</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-3">	
+		<h:selectOneMenu id="days" style="border-radius:0px;height: 30px;width:170px;" rendered="#{vendorRegisterFormMB.payment=='Credit'}" value="#{vendorRegisterFormMB.cash}" >
+				<f:selectItem itemLabel="--- Payment Days---" itemValue="" />
+				<f:selectItems value="#{vendorRegisterFormMB.daylist}"></f:selectItems> 
+				<p:ajax immediate="true" update="@form" process="@this"></p:ajax>  
+		</h:selectOneMenu>
+		<p:commandButton icon="fa fa-plus" action="#{vendorRegisterFormMB.dialog}" rendered="#{vendorRegisterFormMB.payment=='Credit'}" ></p:commandButton>
+		<p id="vdays" ></p>
+		</div>
+<div class="ui-g-12 ui-md-6 ui-lg-3"></div>
+<div class="ui-g-12 ui-md-6 ui-lg-3"></div>
+</div>
+
+
+<div class="container-fluid">
+<div class="row">
+<p:tabView id="tabviewid" style="border:1px !important;">
+			<p:tab title="Address" id="address">
+			<div class="row" style="margin-top: 5px;">
+	<div class="col-sm-6 ">
+	<div class="col-sm-12 ">
+	<h:outputText value="Present Address" class="labelTxt"></h:outputText>
+	 <p:inputTextarea placeholder="Street " value="#{vendorRegisterFormMB.address}" id="vaddr" styleClass="inputTxt form-control" style="border-radius: 0px">
+					<p:ajax rocess="@this" immediate="true" update="@form"></p:ajax>
+	</p:inputTextarea>
+					<p id="vaddricon" style="margin: 0 0 5px!important;"></p>
+	 </div>
+	 <div class="row">
+	 <div class="col-sm-12 ">
+	 <div class="col-sm-6 ">
+	 	<p:inputText placeholder="City " value="#{vendorRegisterFormMB.city}" id="vcity" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+		</p:inputText>
+	 <p  id="vcityicon" style="margin: 0 0 5px!important;"></p>
+	 </div>
+	 <div class="col-sm-6 ">
+	<h:selectOneMenu value="#{vendorRegisterFormMB.country_ID}" valueChangeListener="#{vendorRegisterFormMB.selectState}"  id="vcoun" widgetVar="var1" styleClass="input-sm" style="border-radius:0px;height: 30px;width: 200px;">	
+					<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+					<f:selectItem itemLabel="India" itemValue="India"></f:selectItem> 
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+       				<p:ajax process="@this" immediate="true" update="vstate"></p:ajax> 
+					</h:selectOneMenu>
+	  <p id="vcounicon" style="margin: 0 0 5px!important;"></p>
+	 </div>
+	 </div>
+	 </div>
+	  <div class="row">
+	 <div class="col-sm-12">
+	  <div class="col-sm-6">
+	 <p:inputText styleClass="inputTxt  input-sm" placeholder="Postal Code" value="#{vendorRegisterFormMB.venPostalcode}" id="vpostal">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+	</p:inputText>
+					<p id="cuscityicon" style="margin: 0 0 5px!important;"/>
+	 </div>
+	 <div class="col-sm-6">
+	<h:selectOneMenu placeholder="State"  value="#{vendorRegisterFormMB.state}" id="vstate" styleClass="input-sm" style="border-radius:0px;height: 30px;width: 200px;">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{vendorRegisterFormMB.stateList}"></f:selectItems>
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+					<p id="cstateicon" style="margin: 0 0 5px!important;"/>
+	 </div>
+	 </div>
+	 </div>
+	</div>
+	<div class="col-sm-6 ">
+	<div class="col-sm-12 ">
+	<h:outputText value="Permanent Address" class="labelTxt"></h:outputText>&nbsp;&nbsp;
+	<p:selectBooleanCheckbox valueChangeListener="#{vendorRegisterFormMB.checkBoxValueChange}" value="{vendorRegisterFormMB.venBox}">
+		<p:ajax event="valueChange" update=":center_content" process="@this"></p:ajax>
+	</p:selectBooleanCheckbox>&nbsp;&nbsp;
+	<h:outputText value="Same as Present Address" class="labelTxt"></h:outputText> 
+		<p:inputTextarea placeholder="Street" value="#{vendorRegisterFormMB.venAddress1}" rendered="#{vendorRegisterFormMB.showFlag}" id="vaddr1" styleClass="form-control" style="border-radius: 0px">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputTextarea>
+					<p:inputTextarea placeholder="Street" readonly="true" value="#{vendorRegisterFormMB.venAddress1}" rendered="#{vendorRegisterFormMB.hiddenFlag}" id="vaddr2" styleClass="form-control" style="border-radius: 0px">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputTextarea>
+					<p id="caddricon"  style="margin: 0 0 5px!important;"/>	
+	 </div>
+	<div class="row">
+	<div class="col-sm-12 ">
+	<div class="col-sm-6 ">
+			<p:inputText styleClass="inputTxt  input-sm" placeholder="City " rendered="#{vendorRegisterFormMB.showFlag}" value="#{vendorRegisterFormMB.venCity1}" id="vcity1">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+			<p:inputText styleClass="inputTxt  input-sm" placeholder="City " readonly="true" rendered="#{vendorRegisterFormMB.hiddenFlag}" value="#{vendorRegisterFormMB.venCity1}" id="vcity2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>	 <p style="margin: 0 0 5px!important;"></p>
+	 </div>
+	 <div class="col-sm-6 ">
+	 <h:selectOneMenu value="#{vendorRegisterFormMB.venCountry1}" rendered="#{vendorRegisterFormMB.showFlag}" valueChangeListener="#{vendorRegisterFormMB.selectState1}" 
+					styleClass="input-sm" id="vcountry1" widgetVar="var2" style="border-radius:0px;height: 30px;width: 200px;">
+					<f:selectItem itemLabel="--Select Country--" itemValue="select"></f:selectItem>
+       				<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      				<p:ajax process="@this" immediate="true" update="vstate1"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt  input-sm" placeholder="Country *"  readonly="true" rendered="#{vendorRegisterFormMB.hiddenFlag}" value="#{vendorRegisterFormMB.venCountry1}" id="vcountry2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+	  <p style="margin: 0 0 5px!important;"></p>
+	 </div>
+	 </div>
+	</div>
+	
+	<div class="row">
+	 <div class="col-sm-12">
+	 <div class="col-sm-6">
+			<p:inputText styleClass="inputTxt  input-sm" placeholder="Postal Code"  value="#{vendorRegisterFormMB.venPostalcode1}" rendered="#{vendorRegisterFormMB.showFlag}" id="vpostal1">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt  input-sm" placeholder="Postal Code" readonly="true" value="#{vendorRegisterFormMB.venPostalcode1}" rendered="#{vendorRegisterFormMB.hiddenFlag}"  id="vpostal2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="margin: 0 0 5px!important;"/>
+	 </div>
+	 <div class="col-sm-6">
+	<h:selectOneMenu placeholder="State" styleClass="input-sm" value="#{vendorRegisterFormMB.venState1}" id="vstate1" rendered="#{vendorRegisterFormMB.showFlag}" style="border-radius:0px;height: 30px;width: 200px;">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{vendorRegisterFormMB.stateList1}"></f:selectItems> 
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt  input-sm" placeholder="State"  value="#{vendorRegisterFormMB.venState1}" readonly="true" rendered="#{vendorRegisterFormMB.hiddenFlag}" id="vstate2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" />
+	 </div>
+	 </div>
+	</div>
+	</div>
+	</div>
+			</p:tab>
+</p:tabView>
+</div>			
+</div>
+
+<div style="height:40px"></div>
+	
+	</center>	
+	<div class="row">
+  <div class="col-sm-12">				
+		<center>
+			<p:commandButton value="Submit" onclick="vendorValidation()" ></p:commandButton>
+			<p:commandButton value="Reset"  process="@this" immediate="true" update="center_content" action="#{vendorRegisterFormMB.reset}" ></p:commandButton>
+			<p:commandButton id="hidenBtn" update="center_content" process="@this" immediate="true" action="#{vendorRegisterFormMB.vendorRegister}" style="display:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+		</center></div></div><br></br><br></br>
+			<p:dialog header="CONGRATULATIONS...!!"  widgetVar="confirm" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)" responsive="true">
+			<center><div style="height:20px"></div>
+			<div class="ui-fluid">
+ 							<h:outputText value="Vendor Registration has been successfully completed." styleClass="confirmTxt"></h:outputText>
+							</div></center><div style="height:20px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="center_content" oncomplete="PF('confirm').hide()"
+								action="#{vendorRegisterFormMB.vendorDirect}" ></p:commandButton></center>						
+			<br /></p:dialog>								
+       	</h:form>
+       	
+       	<div class="modal fade" id="dayModel" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+       	<p:dialog header="NEW FORM" id="diaog" widgetVar="confirm1" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)" responsive="true">
+				<p:outputPanel id="daypanelid">
+				<h:form id="form2">
+				<center><h:outputText value="#{vendorRegisterFormMB.validate}" class="errorTxt" ></h:outputText>
+				<p id="vendaysss" ></p>
+				<div class="ui-fluid">
+				<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-3,ui-grid-col-1,ui-grid-col-5">
+				<h:outputText ></h:outputText>
+					<h:outputText value="Days" class="labelTxt"></h:outputText>
+					<p:inputText id="neww" styleClass="inputTxt" value="#{vendorRegisterFormMB.newcash}">
+					<p:ajax process="@this" immediate="true" update="neww"></p:ajax> 
+					</p:inputText> 
+				</p:panelGrid>
+				</div>
+						<p:commandButton value="Save" onclick="vendornewvalidation()" style=" margin-top: 15px;"></p:commandButton>
+						<p:commandButton id="hid" update="center_content:daypanelid" process="@this" immediate="true" action="#{vendorRegisterFormMB.vendorRegistercash}" style="display:none"></p:commandButton>
+				</center>	
+				</h:form>				
+				</p:outputPanel> 
+			</p:dialog>	
+			
+			</div>
+			</div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   </p:dialog>
+       	 </p:panel>
+       		
+			
+       	<p:remoteCommand action="#{vendorRegisterFormMB.namecheck}" name="vendornamecheck"></p:remoteCommand>
+      </body>
+     </ui:define>
+    </ui:composition>
+  
+    

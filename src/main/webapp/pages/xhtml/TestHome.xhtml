@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+	<h:head>
+	<title>Inacsys</title>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link type="text/css" rel="stylesheet" href="../../layout.resource/css/animate.css9faa.css" />
+            <link type="text/css" rel="stylesheet" href="../../layout.resource/css/layout-turquoise.css9faa.css" />
+            <script type="text/javascript" src="../../layout.resource/js/layout.js9faa.js"></script>
+        	<link rel="SHORTCUT ICON" href="../../images/Inacsys.png"></link>
+        	<link rel="stylesheet" href="../../css/menu.css" ></link> 
+            <link rel="stylesheet" type="text/css" href="../../css/css.css"></link>
+			<link rel="stylesheet" href="../../css/bootstrap.min.css"></link>
+ 			<script src="../../js/bootstrap.min.js"></script>
+    		<link href="../../css/font-awesome.min.css" rel="stylesheet"></link>
+   <style type="text/css">
+      .ui-layout-north, .ui-layout-south{
+          overflow-y: hidden ! important;
+      }
+      
+/*       Top header menu color
+ */      
+      .ui-layout-north{
+     background: #051C5F  !important;
+     }
+      .ui-widget-header{
+          background: #051C5F  ! important;
+              font-family: 'Arial,san-serif';
+              color:#fff;
+   }
+      .ui-dialog .ui-dialog-titlebar-close span, .ui-dialog .ui-dialog-titlebar-minimize span, .ui-dialog .ui-dialog-titlebar-maximize span{
+      background-color: #fff;
+      }
+      .ui-menu .ui-menuitem-text{
+      font-family: book Antiqua;
+      }
+    .ui-layout-west{
+             background: #051C5F  ! important;
+      
+     }
+    
+    .ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer{
+      background: #F5F5F5 !important;
+     }
+     .ui-paginator.ui-paginator-top{
+      background: #F5F5F5 !important;
+     }
+     .boxshadow {
+    position: relative;
+    -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
+    -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    padding: 10px;
+    background: white;
+}
+ .ui-fileupload-buttonbar{
+    background: #fff ! important;
+    font-family: book Antiqua;
+    color: #fff;
+    width:480px;
+    border:0px;
+}
+.ui-tabs.ui-tabs-top>.ui-tabs-nav {
+ background: #fff ! important;
+}
+.ui-selectcheckboxmenu-header {
+    margin-bottom: .3em;
+    padding: .3em 0 .3em .4em;
+    background: -webkit-linear-gradient(top,#f6f7f9 0,#ebedf0 100%) !important;
+    border: 1px solid #d9d9d9;
+}
+.ui-selectcheckboxmenu-multiple-container {
+    clear: left;
+    cursor: pointer;
+    list-style-type: none;
+    margin: 0;
+    min-height: 24px;
+    overflow: hidden;
+    min-width: 100px;
+}
+.ui-selectcheckboxmenu {
+    display: block;
+    position: relative;
+    width: 200px;
+    height: 25px;
+    zoom: 1;
+    cursor: pointer;
+    border-radius: 0px;
+}
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger .ui-icon {
+    position: relative;
+    top: 50%;
+    margin-top: -8px;
+    left:-50%;
+}
+.ui-selectcheckboxmenu-multiple-container .ui-inputfield {
+    padding: 0 22px 0 0;
+    border: 0;
+    outline: none;
+    height: 28px !important;
+}
+label {
+    display: inline;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-label {
+display: block;
+width: auto;
+border: none;
+cursor: pointer;
+background: none;
+}
+.ui-corner-right{
+	border-top-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.ui-datatable-footer{
+	border:0px;
+	background-color: #fff !important;
+	background: #ffffff !important;
+}
+.ui-datatable .ui-datatable-footer{
+	background: #ffffff !important;
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+    padding: 4px 10px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: groove;
+    font-family: 'Arial,sans-serif' !important;
+    font-size: 14px;
+    height:25px !important;
+}
+</style>
+   <script type="text/javascript" src="../../js/mycustom.js"></script>
+     <script type="text/javascript" src="../../js/mycustompurchase.js"></script>
+           <style type="text/css">
+               .main-content {
+                   padding: 0;
+               }
+           </style></h:head><body class="main-body">
+        
+        <div class="layout-wrapper menu-layout-static">
+
+    <div class="topbar clearfix">
+        <div class="topbar-left">            
+            <div class="logo">
+            </div>
+        </div>
+        
+        <div class="topbar-right">
+            <a id="menu-button" href="#" style="color:white">
+                <i class="fa fa-bars"></i>
+            </a>
+            
+             <a id="topbar-menu-button" href="#" style="color:white;font-size:30px">
+                <i class="fa fa-user"></i>
+            </a>
+            
+            <ul class="topbar-items fadeInDown animated">
+                <li>
+                    <a href="">
+                        <i class="topbar-icon fa fa-fw fa-user" style="color:white;font-size:30px"></i>
+                        <span class="topbar-item-name" style="font-size: 14px;margin-top: 5px;">User Details</span>
+                    </a>
+                    <ul class="poseidon-menu animated">
+                    
+                        <li role="menuitem" class="clientlid">
+                           
+                                <span >Client ID</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>:</span>&nbsp;&nbsp;&nbsp;<h:outputText value="#{loginMB.clientName}" ></h:outputText>
+                          
+                        </li>
+                        <li role="menuitem" class="clientlid">
+                          
+                                <span>User Name</span>&nbsp;&nbsp;<span>:</span>&nbsp;&nbsp;&nbsp;<h:outputText value="#{loginMB.userName}" ></h:outputText>
+                            
+                        </li>
+                        <li role="menuitem" class="clientlid">
+                          
+                                <span>User Type</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>:</span>&nbsp;&nbsp;&nbsp;<h:outputText value="#{loginMB.userType}" ></h:outputText>
+                           
+                        </li>
+                       
+                    </ul>
+                </li>
+                 <li style="margin-top: 4px;">
+                 <h:form id="globasearchlform">
+                       <p:inputText value="#{loginMB.purchaseorder.golbalnamesearch}" placeholder="Search"
+											style="font-size:12px"></p:inputText> &nbsp;
+										<p:commandButton icon="fa fa-search" value="Go"
+											onclick="globalBlockUI();"></p:commandButton>
+											 <p:remoteCommand name="globalsearchblockUI" action="#{loginMB.globalSearch}"></p:remoteCommand>
+				 </h:form>
+                    </li>
+            </ul> 
+        </div>
+    </div>
+<h:form id="menuform">
+ 
+        <div class="layout-menu-container">
+       
+                   <div class="search-input">
+                        <h:form>
+                       <p:inputText value="#{loginMB.purchaseorder.golbalnamesearch}" placeholder="Search"
+											style="font-size:12px" type="input"></p:inputText> &nbsp;
+										<p:commandButton icon="fa fa-search" value="Go"
+											onclick="globalBlockUI();"></p:commandButton>
+											 <p:remoteCommand name="globalsearchblockUI" action="#{loginMB.globalSearch}"></p:remoteCommand>
+				 </h:form>
+                    </div> 
+               
+        
+        <ui:include src="../../pages/xhtml/menu.xhtml" />
+           <script id="menuform:menu" type="text/javascript">PrimeFaces.cw("Poseidon","me",{id:"menuform:menu"});</script>
+        </div>
+</h:form>
+            
+            <div class="layout-main">
+               
+                <div class="layout-main-content">
+         <h:form  enctype="multipart/form-data" id="center_content">
+   					
+					<p:remoteCommand name="remoteDialog" action="#{vendorRegisterFormMB.hideDialogBox}"	update=":center_content"></p:remoteCommand>
+					<p:remoteCommand name="remoteDialog1" action="#{productRegisterFormMB.hideDialogBox}" update=":center_content"></p:remoteCommand>
+					<p:remoteCommand name="remoteDialog2" update=":center_content"></p:remoteCommand>
+					<ui:insert name="content">
+					</ui:insert>
+				</h:form>
+                </div>
+    
+    
+            </div>
+        </div>
+        </body>
+</ui:composition>

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Purchase Return View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head> 
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table border="0" class="form_background" align="center">
+
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="10px" align="center">
+
+<table align="center">
+
+  
+<tr><td height="200px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Purchase Return View" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+
+               
+                    <tr>
+                    <td>            
+    </td></tr>
+</table> 
+  <div style="height:200px ; width:560px; overflow-x:scroll; overflow-y:scroll;display:#{purchaseReturnFormMB.flag1}" align="center">
+<h:panelGrid style="display:#{purchaseReturnFormMB.flag1}">
+  <rich:dataTable  columnsWidth="150px,150px,150px,80px" id="dataTabl"  height="50px" var="info"  value="#{purchaseReturnFormMB.mb2}" enableContextMenu="false"
+   reRender="dynamicScroller"
+  rowClasses="datatable-odd,datatable-even"  >
+  <rich:column  headerText="Name" sortOrder="#{purchaseReturnFormMB.sortsOrders['orderDate']}" sortBy="#{info.orderDate}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Purchase Date" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{purchaseReturnFormMB.sort}">
+	            <f:param name="sortProperty" value="orderDate"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseReturnFormMB.sortsOrders['orderDate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseReturnFormMB.sortsOrders['orderDate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderDate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>  
+	            
+	        </rich:column>
+ 
+  <rich:column  headerText="Name" sortOrder="#{purchaseReturnFormMB.sortsOrders['orderNumber']}" sortBy="#{info.orderNumber}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Purchase Order Number" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{purchaseReturnFormMB.sort}">
+	            <f:param name="sortProperty" value="orderNumber"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseReturnFormMB.sortsOrders['orderNumber']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseReturnFormMB.sortsOrders['orderNumber']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderNumber}"></h:outputText>  
+	            
+	        </rich:column>
+  
+  <rich:column  headerText="Name" sortOrder="#{purchaseReturnFormMB.sortsOrders['vendorPhoneNumber']}" sortBy="#{info.vendorPhoneNumber}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Vendor Name" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{purchaseReturnFormMB.sort}">
+	            <f:param name="sortProperty" value="vendorPhoneNumber"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseReturnFormMB.sortsOrders['vendorPhoneNumber']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseReturnFormMB.sortsOrders['vendorPhoneNumber']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.vendorPhoneNumber}"></h:outputText>  
+	            
+	        </rich:column>
+  
+  
+     <h:column   headerText="Phone" width="80px">
+	   		 <f:facet name="header"> <span style="font-size:10px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  View   </span>      </f:facet>
+	         
+	           <div align="center"> <h:commandButton class="button_tabl"  image="/images/view.png"   action="#{purchaseReturnFormMB.viewPurchaseReturnDetail}">
+	             <f:setPropertyActionListener target="#{purchaseReturnFormMB.porderNo}" value="#{info.orderNumber}" />
+	           </h:commandButton></div> 
+	        </h:column>
+	   	
+<!--  </rich:dataTable> --></rich:dataTable> </h:panelGrid></div>
+ 
+
+</td></tr>
+
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+ <div id="popup" style="display:#{purchaseReturnFormMB.flag4}">
+	<div id="logo">	
+		<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<p:commandButton value="Ok" actionListener="#{purchaseReturnFormMB.purchasereturnviewclose}" styleClass="kbutton_ui"></p:commandButton>
+</h:panelGrid></div></div>         
+</td></tr>
+</table>
+</h:form>
+</body>
+</ui:composition>

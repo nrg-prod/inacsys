@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<head>
+<script type="text/javascript" src="../../js/mycustompurchase.js"/>
+</head>
+	<ui:define name="content">		
+
+						<div style="height:5px;"></div>
+						<center>
+			<p:dataTable var="info" 
+				value="#{userCreateMB.userCreateDataBean.userlist}"
+				widgetVar="userInfo" id="dataTable" style="width:98%"
+				emptyMessage="No information found with given criteria"
+				paginator="true" paginatorAlwaysVisible="false" reflow="true"
+				rows="10" paginatorPosition="top"
+				pageLinks="5">
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+
+						<p:inputText id="globalFilter" onkeyup="PF('userInfo').filter()"
+							style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column filterBy="#{info.clientNumber}" width="80"
+					headerText="Client" filterMatchMode="contains"
+					filterStyle="display:none">
+					<h:outputText class="label_ui" style="display:none;"
+						value="#{info.userID}" />
+					<h:outputText class="label_ui" value="#{info.clientNumber}" />
+				</p:column>
+				<p:column filterBy="#{info.createUserName}" width="100"
+					headerText="User Name" filterMatchMode="contains"
+					filterStyle="display:none">
+					<h:outputText value="#{info.createUserName}">
+					</h:outputText>
+				</p:column>
+				<p:column filterBy="#{info.createUserPwd}" width="100"
+					headerText="Password" filterMatchMode="contains"
+					filterStyle="display:none">
+					<h:outputText class="label_ui" value="#{info.createUserPwd}">
+					</h:outputText>
+				</p:column>
+			<p:column filterBy="#{info.createUserPhone}" width="100"
+					headerText="Phone Number" filterMatchMode="contains"
+					filterStyle="display:none">
+					<h:outputText class="label_ui" value="#{info.createUserPhone}">
+					</h:outputText>
+				</p:column>
+
+				<p:column filterBy="#{info.createUserMail}" width="120"
+					headerText="Email ID" filterMatchMode="contains"
+					filterStyle="display:none">
+					<h:outputText class="label_ui" value="#{info.createUserMail}">
+					</h:outputText>
+				</p:column>
+				<p:column filterBy="#{info.userType}" width="80"
+					headerText="User Type" filterMatchMode="contains"
+					filterStyle="display:none">
+					<h:outputText class="label_ui" value="#{info.userType}">
+					</h:outputText>
+				</p:column>
+				<p:column width="100" headerText="Action">
+
+					<div align="center">
+						
+						<p:commandLink value="Edit" action="#{userCreateMB.userDetails}"
+							update=":center_content:dialogPanelModify"
+							oncomplete="PF('userDialogModify').show();" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+
+							<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.createUserPhone}"
+								value="#{info.createUserPhone}" />
+							<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.createUserName}"
+								value="#{info.createUserName}" />
+								<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.clientNumber}"
+								value="#{info.clientNumber}" />
+								<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.userID}"
+								value="#{info.userID}" />
+						</p:commandLink>
+						&nbsp;
+						<p:commandLink value="Delete" oncomplete="PF('cd').show()" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+							<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.createUserPhone}"
+								value="#{info.createUserPhone}" />
+							<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.createUserName}"
+								value="#{info.createUserName}" />
+								<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.clientNumber}"
+								value="#{info.clientNumber}" />
+								<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.userID}"
+								value="#{info.userID}" />
+						</p:commandLink>
+						
+					</div>
+				</p:column>
+
+			</p:dataTable>
+		</center>
+
+<p:dialog header="Confirmation" widgetVar="cd" modal="true" width="40%" height="120"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this User?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:30px"></div>
+					<p:commandButton value="Yes" action="#{userCreateMB.userDelete}"
+						onsuccess="PF('cd').hide()" process="@this" immediate="true"
+						oncomplete="PF('cd1su').show()"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd').hide()"
+							></p:commandButton>
+						</center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="cd1su" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="User has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+				<center>
+				<p:commandButton value="OK"  action="#{userCreateMB.userView}" update=":center_content:dataTable"
+						 onclick="PF('cd1su').hide()" process="@this" immediate="true"
+						></p:commandButton></center>
+			</p:dialog>
+	
+		 	
+<!-- User Modify -->
+			<p:dialog header="User Modify" id="dlguserModify" appendTo="@(body)"
+				widgetVar="userDialogModify" modal="true" height="auto" width="530px" resizable="false">
+				<p:outputPanel id="dialogPanelModify">
+				<h:form id="venModify"><div style="height:15px"></div>
+					<table align="center">
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="User Name" styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							<p:inputText value="#{userCreateMB.userCreateDataBean.createUserName}" id="nameerr">
+								<p:ajax update="@form" process="@this"></p:ajax>
+							</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="nameerr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Phone Number" styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							<p:inputText value="#{userCreateMB.userCreateDataBean.createUserPhone}" id="phnoerr">
+								<p:ajax update="@form" process="@this"></p:ajax>
+							</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="phnoerr"
+									styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Email-Id" styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							<p:inputText value="#{userCreateMB.userCreateDataBean.createUserMail}" id="mailerr">
+								<p:ajax update="@form" process="@this"></p:ajax>
+					</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="mailerr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Password" styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							<p:inputText value="#{userCreateMB.userCreateDataBean.createUserPwd}" id="pwderr">
+<p:ajax update="@form" process="@this"></p:ajax>
+</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="pwderr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="User Type" styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							 <h:selectOneMenu value="#{userCreateMB.userCreateDataBean.userType}"
+							     style="border-radius:0px;height: 27px;width: 200px;" id="utype" widgetVar="var2" >									
+									<f:selectItem itemLabel="--- Select UserType---" itemValue="select" />
+       								<f:selectItem itemLabel="Maker" itemValue="Maker"></f:selectItem>
+       								<f:selectItem itemLabel="Maker/Authorizer" itemValue="Maker/Authorizer"></f:selectItem>
+      								<p:ajax immediate="true" process="@this" event="valueChange"></p:ajax>
+								</h:selectOneMenu></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="utype"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Department"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:selectCheckboxMenu id="errdepartment"
+									style="height:28px;border-radius:1px;font-family:'Arial,san-serif';padding:0px 10px 9px 6px !important;font-weight:normal !important;font-size:14px;"
+									multiple="true" label="---Departments---" filter="true"
+									value="#{userCreateMB.userCreateDataBean.selectedDepartments}"
+									filterMatchMode="startsWith" panelStyle="width:260px">
+									<f:selectItems value="#{userCreateMB.userCreateDataBean.departmentList}" />
+									<p:ajax update="@form" process="@this" event="toggleSelect"></p:ajax>
+									<p:ajax event="change"
+										></p:ajax>
+								</p:selectCheckboxMenu></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="errdepartment"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Menus"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:selectCheckboxMenu
+									style="height:28px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;padding:0px 10px 9px 6px !important;font-size:14px;"
+									id="errmenu" multiple="true" label="---Menus---"
+									filter="true" value="#{userCreateMB.userCreateDataBean.selectedMenus}"
+									filterMatchMode="startsWith" panelStyle="width:260px">
+									<f:selectItems value="#{userCreateMB.userCreateDataBean.menuList}" />
+									<p:ajax update="@form" process="@this" event="toggleSelect"></p:ajax>
+									<p:ajax event="change"></p:ajax>
+								</p:selectCheckboxMenu></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="errmenu"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						</table>
+					
+<br/><br/><br/><br/>
+						<center>
+
+							<p:commandButton value="Update" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+								action="#{userCreateMB.userUpdate}"
+				
+								update=":center_content:dialogPanelModify"></p:commandButton>
+
+						</center>
+					</h:form>
+
+				</p:outputPanel>
+
+			</p:dialog> 
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="userUpdate" modal="true"
+				  style="font-size:11px" resizable="false" width="45%" height="130px"
+				appendTo="@(body)">
+				<div style="height:20px"></div>
+				<center>
+							<h:outputText value="User Information has been successfully modified." styleClass="confirmTxt"/>
+							</center>
+					<div style="height:20px"></div><center>
+					
+								<p:commandButton value="OK" onclick="PF('userUpdate').hide();" action="#{userCreateMB.userView}"  
+						 update=":center_content" process="@this" 
+							></p:commandButton>
+						</center>
+			</p:dialog>
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   </p:dialog>
+	</ui:define>
+</ui:composition>

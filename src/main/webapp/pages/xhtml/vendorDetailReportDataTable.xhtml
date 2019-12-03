@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+</h:head>
+
+ <h:form id="vrform">
+ <p:growl id="msgs" showDetail="true" />
+ <p:dataTable id="dt" var="vendordrp" value="#{reportMB.vendorReportlist1}"  selectionMode="single" widgetVar="vendorInfo1" paginator="true" rowKey="#{vendordrp.allrepVendorName}" rows="10" style="font-size:11px"
+  emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <f:facet name="header">
+            <p:outputPanel>
+               
+                <p:inputText id="globalFilter" onkeyup="PF('vendorInfo1').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+ </f:facet>
+ 
+ <p:ajax event="rowDblselect" listener="#{reportMB.onRowSelect}" update="@all" />
+ 
+ <p:column filterBy="#{vendordrp.allrepVendorName}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;font_family:Verdana">
+            <h:outputText value="#{vendordrp.allrepVendorName}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{vendordrp.allvendorphNo}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;font_family:Verdana">
+            <h:outputText value="#{vendordrp.allvendorphNo}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{vendordrp.totquantity}" headerText="Total Quantity"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;font_family:Verdana">
+            <h:outputText value="#{vendordrp.totquantity}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{vendordrp.totalprice}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;font_family:Verdana">
+            <h:outputText value="#{vendordrp.totalprice}" class="text_ui"/>
+</p:column>
+ 
+ </p:dataTable>
+ 
+ <p:spacer height="15px;"></p:spacer>
+ 
+ 
+ <p:dataTable rendered="#{reportMB.vendorDetailFlag}" id="dt1" var="detvendor" value="#{reportMB.vendorReportList3}" paginator="true"  rows="10" 
+   emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" >
+ <p:column headerText="PO Number" style="color:white;font-size:10px;font-weight:bold">
+ <h:outputText value="#{detvendor.detailPONumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Product" style="color:white;font-size:11px;font-weight:bold;font_family:Verdana">
+ <h:outputText value="#{detvendor.detailProduct}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Quantity" style="color:white;font-size:11px;font-weight:bold;font_family:Verdana"> 
+ <h:outputText value="#{detvendor.detailQuan}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Selling Price" style="color:white;font-size:11px;font-weight:bold;font_family:Verdana">
+ <h:outputText value="#{detvendor.sellingPrice}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Total Amount" style="color:white;font-size:11px;font-weight:bold;font_family:Verdana">
+ <h:outputText value="#{detvendor.netAmount}" class="text_ui"></h:outputText>
+ </p:column>
+ <f:facet name="footer">
+ <div align="right">
+ <h:outputText value="Grand Total: #{reportMB.totAmount}" style="font-size:12px;color:#222222;"></h:outputText>
+ </div>
+ </f:facet>
+ </p:dataTable>
+ 
+</h:form>
+
+</ui:composition>

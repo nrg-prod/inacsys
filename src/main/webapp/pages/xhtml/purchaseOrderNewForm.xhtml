@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../../pages/xhtml/home.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://primefaces.org/ui">
+<ui:define name="content" >		
+<body>
+<p:panel header="Purchase Order Form" id="panelID" style="min-height:100%">
+<table   border="0" class="form_background" align="center">
+
+<tr>
+
+<td height="300px" align="left">
+<table align="left">
+<!-- <tr><td align="center"><h:outputText  style="font-style: normal;font-size:18px;color:#F51313;font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+
+</td></tr> -->
+
+                    <tr align="center">
+                    <td>
+                     <p:panel id="tb">
+<!--                     <h:panelGrid style="height:20"></h:panelGrid>
+ -->                     
+                       <p:panel align="center">
+                       <table width="85%">
+                       <tr align="center"><td><h:outputText value="#{purchaseOrderFromMB.validate1}" styleClass="errorTxt"/> </td></tr>
+                       </table><div style="height:10px"></div>
+	          <table width="85%">
+	        
+ <tr><td><p:calendar placeholder="Date *" value="#{purchaseOrderFromMB.orderDate}" pattern="dd/MM/yyyy" id="date"  label="Date" style="line-height: normal;">
+ <p:ajax update="date" event="dateSelect" process="@this" immediate="true"></p:ajax>
+ </p:calendar> </td>
+ 
+ 
+ <td><p:calendar placeholder="Estimated Delivery Date *" pattern="dd/MM/yyyy" value="#{purchaseOrderFromMB.targentDate}"  id="ate"  label="Date" style="line-height: normal;">
+<p:ajax update="ate" event="dateSelect" process="@this" immediate="true"></p:ajax>
+ </p:calendar> </td>
+ 
+ 
+ <td>
+  
+ <h:selectOneMenu id="v1" valueChangeListener="#{purchaseOrderFromMB.changeProduct}" style="font-size: 11px; height: 27px; width: 200px;  font-family:'Arial,san-serif';" value="#{purchaseOrderFromMB.vendorname}" >
+				   	<f:selectItem  itemLabel="--- Select Vendor---" noSelectOption="true" itemValue=""/>
+				    <f:selectItem  itemLabel="+ Add New" itemValue="add"/>
+				   	<f:selectItems value="#{purchaseOrderFromMB.drop}" ></f:selectItems>
+				    <p:ajax event="valueChange" update="@form" process="@this"></p:ajax>
+				 </h:selectOneMenu></td>
+				  <td>
+				  <h:selectOneMenu id="curr" style="font-size: 10px;  height: 27px; width: 200px;font-family:'Arial,san-serif'';" value="#{purchaseOrderFromMB.destinationCurrency}"  label="select one vendor">
+				   	<f:selectItem  itemLabel="--- Select Currency---" noSelectOption="true" itemValue="" />
+				   	<f:selectItem itemLabel="AED" itemValue="AED"/>
+				   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+				   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+				   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+				   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+				    <f:ajax execute="curr" render="@form"></f:ajax>
+			</h:selectOneMenu>
+				  </td>
+				</tr></table>
+            </p:panel>
+            
+          
+            <h:form id="fo">
+            
+            <h:outputText value="#{purchaseOrderFromMB.validate}" styleClass="errorTxt"/>
+            <h:panelGrid style="height:20"></h:panelGrid>
+            <div>
+            <p:dataTable  var="info" value="#{purchaseOrderFromMB.homeMBs}" columnsWidth="40px,150px,100px,70px,100px,40px">
+				
+					<p:column width="40" headerText="No">
+					
+					<f:facet name="header"> <span class="dataTableTxt"> No  </span>      </f:facet>
+				
+					
+					<div align="center">
+						 <h:outputText  value="#{info.serialno}" class="labelTxt"/>
+						 </div>
+					</p:column>
+					
+					<p:column width="150" headerText="Item Name">
+					<f:facet name="header"> <span class="dataTableTxt"> Product Name *</span>      </f:facet>
+					
+					<div align="center">
+					
+						 <h:outputText  value="#{info.product_name}"/>
+						 <h:selectOneMenu id="a" value="#{info.product_name}" label="select one type" valueChangeListener="#{purchaseOrderFromMB.valueChange}" style="font-size:14px;font-family:'Arial,san-serif';display:#{info.flag};width:200px;height:25px;">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue=""/>
+				   			 <f:selectItems  value="#{purchaseOrderFromMB.productlist}" ></f:selectItems>
+				   			<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				    		<f:attribute value="#{info.product_name}" name="product"></f:attribute>
+				    		<f:ajax render="@form" execute="a"> </f:ajax>
+				 </h:selectOneMenu></div>
+					</p:column>
+					<p:column width="100" headerText="Price">
+					<f:facet name="header"> <span class="dataTableTxt"> Price  </span>      </f:facet>
+					<div align="center">
+						 <h:outputText  value="#{info.price}" class="labelTxt"/>
+						 </div>
+					</p:column>
+						<p:column width="90" headerText="Quantity">
+						<f:facet name="header"> <span class="dataTableTxt"> Quantity * </span>      </f:facet>
+					<h:outputText value=" " />
+						 <div align="center">
+						 <h:outputText  value="#{info.quantity}" style="display:#{info.flag2};" class="labelTxt"/><h:outputText value=" " />
+						 <h:outputText  value="#{info.unit}" style="display:#{info.uflag2};" class="labelTxt"/></div>
+						 <p:inputText id="a1" valueChangeListener="#{purchaseOrderFromMB.quantityChange1}"   style="font-size:10px; width:50px;display:#{info.flag1};" styleClass="labelTxt">
+	           			<f:attribute value="#{info.product_name}" name="udhaya"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:ajax render="@form" execute="a1"> </f:ajax>
+	           			</p:inputText><h:outputText value=" " />
+	           			 <h:outputText  value="#{info.unit}" style="display:#{info.uflag1};" class="labelTxt"/>
+	           			 
+					</p:column>
+					
+					<p:column width="150" headerText="Net Amount">
+					<f:facet name="header"> <span class="dataTableTxt"> Net Amount  </span>      </f:facet>
+					<div align="center">
+						 <h:outputText  value="#{info.netAmount}" class="labelTxt"/>
+						 </div>
+					</p:column>
+					
+					
+					<p:column width="40" headerText="Net Amount">
+					<f:facet name="header"> <span class="dataTableTxt"> Edit  </span>      </f:facet>
+					<div align="center"> <h:commandButton id="edit"  image="/images/edit.png"  action="#{purchaseOrderFromMB.edit}">
+	            <f:setPropertyActionListener value="#{info.serialno}" target="#{purchaseOrderFromMB.serialno}"></f:setPropertyActionListener>
+	           		 <f:setPropertyActionListener value="#{info.product_name}" target="#{purchaseOrderFromMB.product_name}"></f:setPropertyActionListener> 
+							<f:setPropertyActionListener value="#{info.netAmount}" target="#{purchaseOrderFromMB.netAmount}"></f:setPropertyActionListener>
+	          		 	<f:ajax render="@form" execute="edit"> </f:ajax>
+	           			
+	           </h:commandButton></div> 
+					</p:column>
+				</p:dataTable></div>
+				<table align="left"><tr><td></td><td>
+				<h:commandButton id="but1"  value="Add" action="#{purchaseOrderFromMB.redirectHome2}" image="/images/addimg.png">
+				<f:ajax render="@form" execute="but1"></f:ajax>
+				
+				</h:commandButton>
+				</td>
+				<td width="730"></td>
+				<td align="right"><h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" value="Total Price:"></h:outputLabel>
+				<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" value="#{purchaseOrderFromMB.totalPrice1}"></h:outputLabel> </td>
+				
+				</tr></table>
+				
+				
+				
+				</h:form><br/>
+				<br/>
+				</p:panel>
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+</table>
+<center><p:commandButton id="save1" value="Submit"  action="#{purchaseOrderFromMB.purchaseConfirm}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+ update="@form" process="@this">
+				</p:commandButton>
+				<p:commandButton  value="Cancel" id="cancel1" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+				 actionListener="#{purchaseOrderFromMB.purchaseorderclose}" update="@form" process="@this">
+				</p:commandButton></center>	<br></br><br></br><br></br>
+				
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					 <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   			</p:dialog> 	
+   					
+
+
+<p:dialog header="Vendor Registeration Form" widgetVar="addvendor" id="vendorReg"
+				min-height="100%" width="80%" modal="true" resizable="false"
+				position="center" appendTo="@(body)">
+ <p:outputPanel id="dialogPanel">
+    <h:form id="ven">
+    <h:outputText id="msg"></h:outputText>
+    <h:message for="msg" style="color:red"></h:message>			
+				
+		<table width="95%">
+	<tr>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Firm Name *" value="#{purchaseOrderFromMB.vendorPhoneNumber}" id="vfname" styleClass="inputTxt" onblur="vendorname('center_content:ven:vfname','vfnameicon')">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Fax Number" value="#{purchaseOrderFromMB.faxVendor}" id="vFaxNo" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:calendar placeholder="Expire Date" value="#{purchaseOrderFromMB.venExdate}" datePattern="dd/MM/yyyy" style="line-height: normal;width:210px">
+			<p:ajax event="dateSelect" process="@this" immediate="true" update="@form"></p:ajax> 
+			</p:calendar>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Website" value="#{purchaseOrderFromMB.website}" styleClass="inputTxt" id="vweb">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="15%" style="height:20px"><p id="vfnameicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="vTaxNoicon"  style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="vftypeicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="vwebicon" style="padding:1px;margin:0px"></p></td> 
+	</tr>
+	
+</table>
+<table width="95%" style="height:20px;">
+	<tr>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Trade Licence Number" value="#{purchaseOrderFromMB.venLicence}" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Nature Of Business" value="#{purchaseOrderFromMB.natureofbusiness}" id="vNoB" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>		
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Person Incharge" value="#{purchaseOrderFromMB.peresonIncharge}" id="vpinc" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>								
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Email ID *" value="#{purchaseOrderFromMB.email_ID_vendor}" id="vemail" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="15%" style="height:20px"><p id="vFaxNoicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="vNoBicon"  style="padding:1px;margin:0px"></p></td>		
+		<td width="15%" style="height:20px"><p id="vpincicon" style="padding:1px;margin:0px"></p></td> 
+		<td width="15%" style="height:20px"><p id="vemailicon" style="padding:1px;margin:0px"></p></td>
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr>	
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Telephone Number *" value="#{purchaseOrderFromMB.firmName}" id="vtpno" styleClass="inputTxt" onblur="phonenumber('center_content:ven:vtpno','vtpnoicon')">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Company" value="#{purchaseOrderFromMB.venCompany}" id="vcompany" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+		</td>		
+		<td width="15%" style="height:20px;">			
+			<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{purchaseOrderFromMB.venType}">	
+				<f:selectItem itemLabel="--- Vendor Type---" itemValue="" />
+				<f:selectItem itemLabel="Trading" itemValue="Trading"></f:selectItem> 
+       			<f:selectItem itemLabel="Non-Trading" itemValue="Non-Trading"></f:selectItem> 
+       			<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+			</h:selectOneMenu>
+		</td>
+		<td width="15%" style="height:20px;">
+		<p:inputText styleClass="labelTxt" value="#{purchaseOrderFromMB.venCode}" readonly="true"></p:inputText>
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>		
+		<td width="15%" style="height:20px"><p id="vtpnoicon"  style="padding:1px;margin:0px"></p></td>	
+		<td width="15%" style="height:20px"><p id="vstateicon" style="padding:1px;margin:0px"></p></td>	
+		<td width="15%" style="height:20px"><p id="vstateicon1" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="vstateicon2" style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr>	
+		<td width="15%" style="height:20px;">
+		<h:selectOneMenu id="patyp" style="border-radius:0px;height: 25px;width: 200px;" valueChangeListener="#{purchaseOrderFromMB.venTypes}" value="#{purchaseOrderFromMB.payment}">
+				<f:selectItem itemLabel="--- Payment Type---" itemValue="select" />
+				<f:selectItem itemLabel="Cash" itemValue="Cash" />
+				<f:selectItem itemLabel="Credit" itemValue="Credit"/>
+				<p:ajax immediate="true" event="valueChange" update=":center_content:dialogPanel" process="@this"></p:ajax>
+		</h:selectOneMenu>
+		</td>
+		<td width="20%" style="height:20px;">
+		<h:selectOneMenu id="days" style="border-radius:0px;height: 25px;width: 200px;" rendered="#{purchaseOrderFromMB.payment=='Credit'}" value="#{purchaseOrderFromMB.cash}">
+				<f:selectItem itemLabel="--- Payment Days---" itemValue="select" />
+				<f:selectItems value="#{purchaseOrderFromMB.daylist}"></f:selectItems> 
+				<p:ajax immediate="true" update=":center_content:dialogPanel" event="valueChange" process="@this"></p:ajax>  
+		</h:selectOneMenu>
+		</td>
+		<td width="19%" style="height:20px;"></td>
+		<td width="15%" style="height:20px;"></td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>		
+		<td width="15%" style="height:20px"><p id="venty"  style="padding:1px;margin:0px"></p></td>	
+		<td width="15%" style="height:20px"><p id="vdays" style="padding:1px;margin:0px"></p></td>	
+		<td width="15%" style="height:20px"><p id="vstateicon11" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="vstateicon21" style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr> 
+		
+		<td width="56%" style="height:20px;"></td>
+	</tr>
+				
+</table>		
+<table width="95%">
+	<tr>
+		<td>
+			<p:tabView id="tabviewid" style="width:98%;height:230px;border:1px !important;">
+			<p:tab title="Address" id="address" style="min-height:300px;">
+			<table width="100%">
+			<tr>
+				<td width="50%">
+					<h:outputText value="Present Address" class="labelTxt"></h:outputText>
+				</td>
+				<td width="15%">
+					<h:outputText value="Permanent Address" class="labelTxt"></h:outputText>
+				</td>
+				<td width="3%">
+					<p:selectBooleanCheckbox valueChangeListener="#{purchaseOrderFromMB.checkBoxValueChange}" value="{purchaseOrderFromMB.venBox}">
+					<p:ajax event="valueChange" update="@form" process="@this"></p:ajax>
+					</p:selectBooleanCheckbox></td>
+				<td width="20%"> 
+					<h:outputText value="Same as Present Address" class="labelTxt"></h:outputText></td>
+				<td width="17%"></td>
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="50%">
+					<p:inputTextarea placeholder="Street " value="#{purchaseOrderFromMB.address}" id="vaddr" style="width:409px">
+					<p:ajax rocess="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputTextarea>
+					<p id="vaddricon" style="padding:1px;margin:0px"></p>
+				</td>
+				<td width="50%">
+					<p:inputTextarea placeholder="Street" value="#{purchaseOrderFromMB.venAddress1}" rendered="#{purchaseOrderFromMB.showFlag}" id="vaddr1" styleClass="inputTxt" style="width:409px">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputTextarea>
+					<p:inputTextarea placeholder="Street" readonly="true" value="#{purchaseOrderFromMB.venAddress1}" rendered="#{purchaseOrderFromMB.hiddenFlag}" id="vaddr2" styleClass="inputTxt" style="width:409px">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputTextarea>
+					<p id="caddricon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="21%" style="height:10px">
+					<p:inputText placeholder="City " value="#{purchaseOrderFromMB.city}" id="vcity" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					
+				</td>
+				<td width="21%" style="height:10px">
+					<h:selectOneMenu value="#{purchaseOrderFromMB.country_ID}" valueChangeListener="#{purchaseOrderFromMB.selectState}" style="border-radius:0px;height: 25px;width: 200px;" id="vcoun" widgetVar="var1">	
+					<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+					<f:selectItem itemLabel="India" itemValue="India"></f:selectItem> 
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+       				<p:ajax process="@this" immediate="true" update="vstate"></p:ajax> 
+					</h:selectOneMenu>						
+				</td>		
+				<td width="8%"></td>		
+				<td width="21%" style="height:10px">
+					<p:inputText styleClass="inputTxt" placeholder="City " rendered="#{purchaseOrderFromMB.showFlag}" value="#{purchaseOrderFromMB.venCity1}" id="vcity1">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt" placeholder="City " readonly="true" rendered="#{purchaseOrderFromMB.hiddenFlag}" value="#{purchaseOrderFromMB.venCity1}" id="vcity2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				<br/>
+				</td>
+				<td width="21%"  style="height:10px">
+					<h:selectOneMenu value="#{purchaseOrderFromMB.venCountry1}" rendered="#{purchaseOrderFromMB.showFlag}" valueChangeListener="#{purchaseOrderFromMB.selectState1}" 
+					style="border-radius:0px;height: 25px;width: 200px;" id="vcountry1" widgetVar="var2" >
+					<f:selectItem itemLabel="--Select Country--" itemValue="select"></f:selectItem>
+       				<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      				<p:ajax process="@this" immediate="true" update="vstate1"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" placeholder="Country *"  readonly="true" rendered="#{purchaseOrderFromMB.hiddenFlag}" value="#{purchaseOrderFromMB.venCountry1}" id="vcountry2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				<br/>
+				</td>
+				<td width="8%"  style="height:10px"></td>
+			</tr>
+			<tr>
+				<td width="21%" style="height:10px"><p id="vcityicon" style="padding:1px;margin:0px"></p></td>
+				<td width="21%" style="height:10px"><p id="vcounicon" style="padding:1px;margin:0px"></p></td>				
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="21%">
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code" value="#{purchaseOrderFromMB.venPostalcode}" onblur="city('center_content:cus:ccity','cuscityicon')" id="vpostal">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+				<td width="21%">
+					<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{purchaseOrderFromMB.state}" id="vstate">
+					<f:selectItem itemLabel="--- Select State---" itemValue="select" />
+					<f:selectItems value="#{purchaseOrderFromMB.stateList}"></f:selectItems>
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+				<td width="8%"></td>
+				<td width="21%">
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code"  value="#{purchaseOrderFromMB.venPostalcode1}" rendered="#{purchaseOrderFromMB.showFlag}" onblur="city('center_content:cus:ccity','cuscityicon')" id="vpostal1">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code" readonly="true" value="#{purchaseOrderFromMB.venPostalcode1}" rendered="#{purchaseOrderFromMB.hiddenFlag}" onblur="city('center_content:cus:ccity','cuscityicon')" id="vpostal2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="font-size: 10px; color: red;padding:2px;" />
+				</td>
+				<td width="21%">	
+					<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{purchaseOrderFromMB.venState1}" id="vstate1" rendered="#{purchaseOrderFromMB.showFlag}">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{purchaseOrderFromMB.stateList1}"></f:selectItems> 
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" placeholder="State"  value="#{purchaseOrderFromMB.venState1}" readonly="true" rendered="#{purchaseOrderFromMB.hiddenFlag}" onblur="city('center_content:cus:ccity','cuscityicon')" id="vstate2">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" /></td><td width="8%">
+				</td>
+			</tr>
+			</table>
+			</p:tab>
+			<p:tab title="Notes" style="height:300px;">
+			<table width="100%"  style="height:162px;">
+			<tr>
+				<td width="60%">
+					<p:inputTextarea placeholder="Note" value="#{purchaseOrderFromMB.note}" styleClass="inputTxt" id="vnote">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputTextarea>
+					<p id="vnoteicon"  style="padding:1px;margin:0px"></p>
+					<span id="cnoteicon" style="font-size: 10px; color: red;padding:2px;" /></td></tr></table>
+			</p:tab>
+			</p:tabView>
+		</td>
+		</tr>
+	</table> 			
+</h:form>	
+
+			<center> <p:commandButton value="Submit" onclick="vendorValidation1()"></p:commandButton>
+    <p:commandButton value="Reset"  process="@this" immediate="true" update="center_content:dialogPanel"
+								action="#{purchaseOrderFromMB.reset1}" ></p:commandButton>
+							<p:commandButton id="hidenBtn1"  process="@this" update="@form"
+								immediate="true" action="#{purchaseOrderFromMB.vendorRegister}"
+								style="display:none" ></p:commandButton>
+    
+    </center>
+
+
+   
+</p:outputPanel>			
+</p:dialog>
+ <p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="confirm" modal="true"
+							width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+<h:form id="ven1">
+<center><div style="height:10px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Vendor Registration has been successfully completed."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:40px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="@form" oncomplete="PF('confirm').hide()"
+								action="#{purchaseOrderFromMB.vendorConfirm}" ></p:commandButton></center>						
+						<br /><br /></h:form></p:dialog>
+ 
+</p:panel>
+	<p:remoteCommand action="#{purchaseOrderFromMB.namecheck}"
+				name="vendornamecheck"></p:remoteCommand>
+				
+					<p:dialog header="NEW FORM" id="diaog" widgetVar="confirm1" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+				<p:outputPanel id="daypanelid">
+				<h:form id="form2">
+				<table>
+				<tr>
+				<td>
+				<h:outputText value="#{purchaseOrderFromMB.validate}" class="errorTxt" style="margin-left: 230px;"></h:outputText>
+				</td>
+				</tr>
+				</table>
+				<table><tr>
+						<td><br />
+							<h:outputText value="Days" class="labelTxt" style="margin-left: 150px;"></h:outputText>
+						</td>
+						<td width="5%"></td>
+						<td><br />
+							<p:inputText id="venday" styleClass="inputTxt" value="#{purchaseOrderFromMB.newcash}">
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+							</p:inputText> 
+						</td>
+					</tr>										
+				</table>				
+						<p:commandButton value="Reset" process="@this" update="center_content:daypanelid" immediate="true"  action="#{purchaseOrderFromMB.reset2}" style="margin-left:22%;margin-top:4%;" >
+						</p:commandButton>
+						<p:commandButton value="Save" process="@this"  update=":center_content:daypanelid" action="#{purchaseOrderFromMB.vendorRegistercash}"  >
+						</p:commandButton>
+						<p:commandButton update="@form" value="Cancel" oncomplete="PF('confirm1').hide()"></p:commandButton>
+				</h:form>				
+				</p:outputPanel> 
+			</p:dialog>		
+</body>
+</ui:define>
+</ui:composition>

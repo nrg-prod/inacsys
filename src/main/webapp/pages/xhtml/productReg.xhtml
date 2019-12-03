@@ -1,0 +1,843 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+	
+	       <ui:define name="content">
+	      <p:growl id="messages"></p:growl>
+
+		
+			<div align="right">
+		
+
+				<p:commandButton action="#{categoryRegistrationMB.getcategoryRegistrationForm}"
+					value="Category Registration">
+				</p:commandButton>
+
+				<p:commandButton action="#{productRegisterFormMB.loadDialogBox}"
+					value="Product Registration"
+					update=":center_content:product-dialogPanel"
+					oncomplete="PF('productDialog').show();">
+				</p:commandButton>
+						
+				<h:commandButton image="../../images/refresh.png"
+					style="margin-bottom: -9px;height: 26px;"
+					action="#{loginMB.product}">
+				</h:commandButton>
+			</div><div style="height:5px;"></div>
+		<h:outputText value="#{productViewMB.message}"
+					class="validation_ui" style="align:center;margin-left:+320px;" />
+	
+			<h:panelGrid id="dataTableview">
+			<p:dataTable id="dataTable" var="info" widgetVar="ProductViewListS"
+				value="#{productViewMB.finalList}"
+				
+				style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+				
+				paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+
+						<p:inputText id="globalFilter"
+							onkeyup="PF('ProductViewListS').filter()"
+							style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Entry Date" width="100" filterBy="#{info.date}"
+					filterMatchMode="contains" filterStyle="display:none">
+
+					<h:outputText value="#{info.date}" class="label_ui">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Product Name"  filterBy="#{info.productName}" width="140"
+					filterMatchMode="contains" filterStyle="display:none">
+					<center>
+					<h:outputText value="#{info.productName}" class="label_ui" /></center>
+				</p:column>
+				<p:column headerText="Brand Name" filterMatchMode="contains" width="120"
+					filterStyle="display:none" filterBy="#{info.brand}"><center>
+					<h:outputText value="#{info.brand}" class="label_ui" /></center>
+				</p:column>
+
+				<p:column headerText="Category" width="120" filterMatchMode="contains" 
+					filterStyle="display:none" filterBy="#{info.categoryname}"><center>
+					<h:outputText value="#{info.categoryname}" class="label_ui" /></center>
+				</p:column>
+				<p:column headerText="Product Code" filterMatchMode="contains" width="140"
+					filterStyle="display:none" filterBy="#{info.productlimit}"><center>
+					<h:outputText value="#{info.productlimit}" class="label_ui" /></center>
+				</p:column>
+				<p:column headerText="Unit" width="80" filterMatchMode="contains"
+					filterStyle="display:none" filterBy="#{info.unit}">
+					<h:outputText value="#{info.unit}" class="label_ui" />
+				</p:column>
+
+				<p:column headerText="Buying Price" width="140" filterMatchMode="contains"
+					filterStyle="display:none" filterBy="#{info.actual}">
+					<h:outputText class="label_ui" value="Rp " />
+					<h:outputText class="label_ui" value="#{info.actual}">
+						<f:converter converterId="com.inventory.util.UrlConverter" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Opening Stock" width="100">
+					<div align="center">
+						<h:inputText value="#{info.openingStock}"
+							class="inputcls"></h:inputText>
+						<h:commandButton value="ADD"
+							action="#{productViewMB.openingStocks}"
+							
+							style="font-size:8 !important;height:19px;width:28px;padding-left:4px;">
+							<f:setPropertyActionListener
+								target="#{productViewMB.productName}"
+								value="#{info.productName}" />
+							<f:setPropertyActionListener
+								target="#{productViewMB.openingStock}"
+								value="#{info.openingStock}" />
+							<f:setPropertyActionListener
+								target="#{productViewMB.autual_price}"
+								value="#{info.autual_price}" />
+						</h:commandButton>
+					</div>
+				</p:column>
+
+				<p:column headerText="Action" width="120">
+					<div align="center">
+						<p:commandButton icon="fa fa-search"
+							action="#{productViewMB.productReject}"
+							oncomplete="PF('productDialogV').show();"
+							update=":center_content:dialogPanelView">
+
+							<f:setPropertyActionListener
+								target="#{productViewMB.productName}"
+								value="#{info.productName}" />
+						</p:commandButton>&nbsp;
+						<p:commandButton icon="fa fa-pencil"
+							action="#{productViewMB.productEdit}"
+							onblur="#{productRegisterFormMB.dropDown()}"
+							oncomplete="PF('productDialogM').show();"
+							update=":center_content:dialogPanelModify">
+							<f:setPropertyActionListener
+								target="#{productViewMB.productName}"
+								value="#{info.productName}" />
+						</p:commandButton>&nbsp;
+						<p:commandButton icon="fa fa-remove"
+							action="#{productViewMB.productRemove}"
+							oncomplete="PF('productDialogD').show();"
+							update=":center_content:dialogPanelDelete">
+							<f:setPropertyActionListener
+								target="#{productViewMB.productName}"
+								value="#{info.productName}" />
+						</p:commandButton>
+					</div>
+				</p:column>
+
+				
+			</p:dataTable>
+		</h:panelGrid>
+
+
+
+		<div style="margin-left:80px">
+
+<!-- Add opening stock -->
+<p:dialog  header="confirmation" appendTo="@(body)"  rendered="#{productViewMB.openingFlag}"
+widgetVar="confirmOPS" modal="true"  height="100px" width="200px">
+<p:outputLabel value="Opening Stock Added Successfully !"></p:outputLabel>
+<p:outputPanel><p:commandButton value="Ok" oncomplete="PF('confirmOPS').hide();"></p:commandButton>
+</p:outputPanel>
+</p:dialog>
+
+<!-- product View -->
+
+			<p:dialog header="Product View" id="dlgview" appendTo="@(body)"
+				widgetVar="productDialogV" modal="true" 
+				height="300px" width="700px" resizable="false">
+				<p:outputPanel id="dialogPanelView">
+
+					<h:form id="product-view">
+						<h:outputText id="msg"></h:outputText>
+						<h:message for="msg" style="color:red"></h:message>
+						
+						<p:panelGrid style="height:220px" columns="4" styleClass="ui-panelgrid-blank">
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{productViewMB.categoryname}" readonly="true"
+									id="pcate"  styleClass="ui-selectdrop">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Brand " for="vBrandNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.brand}" readonly="true"
+									id="vBrandNo" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Product Code " 
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productlimit}" readonly="true"
+									id="vproductLimit" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Standard " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.product_standard}" readonly="true"
+									id="prod-standard" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Product Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productName}" readonly="true"
+									id="prod-name" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Actual Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="Rp #{productViewMB.autual_price}" readonly="true"
+									id="prod-actual-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Size " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.size_of_product}" readonly="true"
+									id="prod-size" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Market Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="Rp #{productViewMB.market_price}" readonly="true"
+									id="prod-market-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.description}" readonly="true"
+									id="prod-desc" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.unit}" readonly="true"
+									id="prod-unit" styleClass="ui-selectdrop">
+							
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Vendor " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.vendor}" readonly="true"
+									id="vendor-id"  styleClass="ui-selectdrop">
+									
+								</p:inputText>
+
+							</h:panelGroup>
+						</p:panelGrid>
+
+						<br></br><br></br>
+
+						<center>
+							
+							<p:commandButton value="Ok" 
+								
+								onclick="PF('productDialogV').hide();">
+							</p:commandButton>
+							
+						</center>
+
+					</h:form>
+				</p:outputPanel>
+				</p:dialog>
+<!-- //product Modify -->
+	<p:dialog header="Product Modify" id="dlgModify" appendTo="@(body)"
+				widgetVar="productDialogM" modal="true" 
+				height="300px" width="700px" resizable="false">
+				<p:outputPanel id="dialogPanelModify">
+
+					<h:form id="product-Modify">
+					<center><p:outputLabel value="#{productViewMB.validate}"  style="font-size: 10px; color: red"></p:outputLabel> </center>
+						<p:panelGrid  style="height:220px" columns="4" styleClass="ui-panelgrid-blank">
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneMenu value="#{productViewMB.categoryname}"
+									id="pcate" widgetVar="var1" styleClass="ui-selectdrop">
+									<f:selectItem itemLabel="--- Select ---" itemValue="select" />
+									<f:selectItems value="#{productRegisterFormMB.categorytype}" />
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@all"></p:ajax>
+								</p:selectOneMenu>
+								<p  />
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Brand " for="vBrandNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.brand}"
+									id="vBrandNo" styleClass="inputTxt">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@all"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Product Code "
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productlimit}"
+									id="vproductLimit" styleClass="inputTxt"
+									onblur="productcode('center_content:product-reg:vproductLimit','pcodeicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Standard " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.product_standard}" 
+									id="prod-standard" styleClass="inputTxt">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Product Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productName}"
+									id="prod-name" styleClass="inputTxt"
+									onblur="productname('center_content:product-reg:prod-name','pnameicon')"
+									valueChangeListener="#{productRegisterFormMB.value}">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p  />
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Actual Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.autual_price}" 
+									id="prod-actual-prize" styleClass="inputTxt"
+									onblur="productaprice('center_content:product-reg:prod-actual-prize','apriceicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Size " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{productViewMB.size_of_product}"
+									id="prod-size" styleClass="inputTxt"
+									onblur="productsize('center_content:product-reg:prod-size','psizeicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Market Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.market_price}"
+									id="prod-market-prize" styleClass="inputTxt"
+									onblur="productmprice('center_content:product-reg:prod-market-prize','mpriceicon')">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.description}"
+									id="prod-desc" styleClass="inputTxt">
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneMenu value="#{productViewMB.unit}"
+									id="prod-unit" widgetVar="var2" styleClass="ui-selectdrop"
+									onchange="dropDownUnit('var2','puniticon','center_content:product-reg:prod-unit')">
+									<f:selectItem itemLabel="--- Select ---" itemValue="select" />
+									<f:selectItem itemLabel="Cm" itemValue="Cm" />
+									<f:selectItem itemLabel="Dozen" itemValue="Dozen" />
+									<f:selectItem itemLabel="Gross" itemValue="Gross" />
+									<f:selectItem itemLabel="Inch" itemValue="Inch" />
+									<f:selectItem itemLabel="Kg" itemValue="Kg" />
+									<f:selectItem itemLabel="Kod" itemValue="Kod" />
+									<f:selectItem itemLabel="Meter" itemValue="Meter" />
+									<f:selectItem itemLabel="Ons" itemValue="Ons" />
+									<f:selectItem itemLabel="Piece" itemValue="Piece" />
+									<f:selectItem itemLabel="Roll" itemValue="Roll" />
+									<f:selectItem itemLabel="Yards" itemValue="Yards" />
+									<p:ajax event="valueChange" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:selectOneMenu>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Vendor " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+							<p:inputText value="#{productViewMB.vendor}" readonly="true"
+									 styleClass="inputTxt">
+									
+								</p:inputText>
+								
+
+								<p />
+							</h:panelGroup>
+						</p:panelGrid>
+
+						<br></br>
+
+						<center>
+							
+							<p:commandButton value="Update" process="@this"
+							action="#{productViewMB.productEditSave}"
+							update=":center_content:dialogPanelModify">
+							</p:commandButton>
+							
+							
+						</center>
+
+					</h:form>
+				</p:outputPanel>
+				</p:dialog>
+<p:dialog header="Confirmation" widgetVar="productUpdateconf" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Your Changes Updated Successfully" />
+							
+					</p:panelGrid>
+					<br></br><center>
+					
+						<p:commandButton value="OK" oncomplete="PF('productUpdateconf').hide()" onclick="PF('productDialogM').hide();"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+
+
+
+
+<!-- product Delete -->
+
+			<p:dialog header="Product Delete" id="dlgdelete" appendTo="@(body)"
+				widgetVar="productDialogD" modal="true" 
+				height="300px" width="700px" resizable="false">
+				<p:outputPanel id="dialogPanelDelete">
+
+					<h:form id="product-delete">
+						
+						<p:panelGrid columns="4">
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{productViewMB.categoryname}" readonly="true"
+									id="pcate"  styleClass="ui-selectdrop">
+								</p:inputText>
+								<p />
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Brand " for="vBrandNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.brand}" readonly="true"
+									id="vBrandNo" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Product Code " 
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productlimit}" readonly="true"
+									id="vproductLimit" styleClass="inputTxt">
+									
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Standard " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.product_standard}" readonly="true"
+									id="prod-standard" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Product Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productName}" readonly="true"
+									id="prod-name" styleClass="inputTxt">
+									
+								</p:inputText>
+								<p />
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Actual Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="Rp #{productViewMB.autual_price}" readonly="true"
+									id="prod-actual-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Size " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.size_of_product}" readonly="true"
+									id="prod-size" styleClass="inputTxt">
+									
+								</p:inputText>
+								<p></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Market Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="Rp #{productViewMB.market_price}" readonly="true"
+									id="prod-market-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.description}" readonly="true"
+									id="prod-desc" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.unit}" readonly="true"
+									id="prod-unit" styleClass="ui-selectdrop">
+								
+								</p:inputText>
+								<p ></p>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Vendor " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.vendor}" readonly="true"
+									id="vendor-id"  styleClass="ui-selectdrop">
+									
+
+								</p:inputText>
+
+								<p  />
+							</h:panelGroup>
+						</p:panelGrid>
+
+						<br></br>
+
+						<center>
+							
+							<p:commandButton value="Delete" immediate="true" process="@this"
+								onclick="PF('prodelete').show();"
+								 >
+							</p:commandButton>
+							<p:commandButton value="Cancel" immediate="true"
+								onclick="PF('productDialogD').hide();" update="@all"
+								 >
+							</p:commandButton>
+							
+						</center>
+
+					</h:form>
+				</p:outputPanel>
+				</p:dialog>
+					<p:dialog header="Confirmation" widgetVar="prodelete" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Are you sure,you wanted to delete this Product?" />
+							
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="Yes" action="#{productViewMB.remove1}"
+						process="@this" immediate="true" 
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('prodelete').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+			
+				<p:dialog header="Success Message" widgetVar="productDeleteconf" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Product has been Deleted Successfully" />
+							
+					</p:panelGrid>
+					<br></br><center>
+					
+						<p:commandButton value="OK" oncomplete="PF('productDeleteconf').hide()" onclick="PF('productDialogD').hide();"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+
+<!-- //product registration -->
+			<p:dialog  header="Product Registration Form" id="dlg" appendTo="@(body)"  
+widgetVar="productDialog" height="220px" width="65%" visible="#{productRegisterFormMB.productFlag}">
+<p:outputPanel id="product-dialogPanel">
+  	
+				<h:form id="product-reg">
+			<center><p:outputLabel value="#{productRegisterFormMB.validate}" style="font-size: 10px; color: red"></p:outputLabel></center>
+				<p:panel rendered="#{productRegisterFormMB.productSuccessFlag}">
+				<p:outputLabel value="Successfully saved" style="font-weight:normal"></p:outputLabel>&nbsp;
+				<p:outputLabel value="#{productRegisterFormMB.product_name}" style="color:#0B49FF"></p:outputLabel>
+				</p:panel>
+<p:panelGrid columns="4" style="text-align:left" layout="grid"
+ rendered="#{!productRegisterFormMB.productSuccessFlag}" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank">
+
+				
+				<h:panelGroup>
+				<p:selectOneMenu style="border-radius:0px;"  value="#{productRegisterFormMB.category}"  id="pcate" widgetVar="var1" styleClass="ui-selectdrop" >
+  	 			<f:selectItem  itemLabel="--- Select Category---" itemValue="select"/>
+  	 			 <f:selectItems value="#{productRegisterFormMB.categorytype}" />	
+  	  			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+  				</p:selectOneMenu>
+  				<p id="pcateicon" />
+				</h:panelGroup>
+
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Brand"  value="#{productRegisterFormMB.brand}" id="vBrandNo" styleClass="inputTxt" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pbrandicon"/>
+				</h:panelGroup>
+
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Product Code *"  value="#{productRegisterFormMB.productlimit}" id="vproductLimit" styleClass="inputTxt" onblur="productcode('center_content:product-reg:vproductLimit','pcodeicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pcodeicon" ></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Standard" value="#{productRegisterFormMB.product_standard}" id="prod-standard" styleClass="inputTxt" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pstandicon" />
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Product Name *" value="#{productRegisterFormMB.product_name}" id="prod-name" styleClass="inputTxt" onblur="productname('center_content:product-reg:prod-name','pnameicon')" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pnameicon" />
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Actual Price *" value="#{productRegisterFormMB.autual_price}" id="prod-actual-prize" styleClass="inputTxt" onblur="productaprice('center_content:product-reg:prod-actual-prize','apriceicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="apriceicon"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Size *" value="#{productRegisterFormMB.size_of_product}" id="prod-size" styleClass="inputTxt" onblur="productsize('center_content:product-reg:prod-size','psizeicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="psizeicon"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Market Price *" value="#{productRegisterFormMB.market_price}" id="prod-market-prize" styleClass="inputTxt" onblur="productmprice('center_content:product-reg:prod-market-prize','mpriceicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="mpriceicon"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Description" value="#{productRegisterFormMB.description}" id="prod-desc" styleClass="inputTxt" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				</h:panelGroup>
+				
+					<h:panelGroup>
+				<p:selectOneMenu style="border-radius:0px;"  value="#{productRegisterFormMB.unit}"  id="prod-unit" widgetVar="var2" styleClass="ui-selectdrop" >
+  	 			<f:selectItem  itemLabel="--- Select Unit---" itemValue="select"/>
+  	  			 <f:selectItem  itemLabel="Cm" itemValue="Cm"/>
+				   		 <f:selectItem  itemLabel="Dozen" itemValue="Dozen"/>
+				   		  <f:selectItem  itemLabel="Gross" itemValue="Gross"/>
+				   		  <f:selectItem  itemLabel="Inch" itemValue="Inch"/>
+				   		   <f:selectItem  itemLabel="Kg" itemValue="Kg"/>
+				   		  <f:selectItem  itemLabel="Kod" itemValue="Kod"/>
+				   		 <f:selectItem  itemLabel="Meter" itemValue="Meter"/>
+				   		  <f:selectItem  itemLabel="Ons" itemValue="Ons"/>
+				   		 <f:selectItem  itemLabel="Piece" itemValue="Piece"/>
+				   		  <f:selectItem  itemLabel="Roll" itemValue="Roll"/> 
+				   		  <f:selectItem  itemLabel="Yards" itemValue="Yards"/>
+  	  			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+  				</p:selectOneMenu>
+  				<p id="puniticon"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:selectOneMenu style="border-radius:0px;"  value="#{productRegisterFormMB.industry}"  id="vendor-id" widgetVar="var3" styleClass="ui-selectdrop" >
+  	 			<f:selectItem  itemLabel="--- Select Vendor---" itemValue="select"/>
+				   		 <f:selectItems value="#{productRegisterFormMB.ven}" />  	  			
+  				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+  				
+  				</p:selectOneMenu>
+  				
+  				<p id="pvendoricon"/>
+				</h:panelGroup>
+			</p:panelGrid>
+
+<br></br>
+				
+				<center> 
+				<p:commandButton id="hidenBtn" value="Submit" process="@this" immediate="true" action="#{productRegisterFormMB.conform}"  
+				style="display:none" update=":center_content:product-dialogPanel">
+				</p:commandButton>
+				<p:commandButton value="Submit" rendered="#{!productRegisterFormMB.productSuccessFlag}" onclick="productValidation()">
+				</p:commandButton>
+				<p:commandButton value="Reset" process="@this" immediate="true" rendered="#{!productRegisterFormMB.productSuccessFlag}" onclick="productclear()">
+				</p:commandButton>
+			 <p:commandButton  value="OK" process="@this" immediate="true"  oncomplete="PF('productDialog').hide();"  update=":center_content:product-dialogPanel"
+				 rendered="#{productRegisterFormMB.productSuccessFlag}"></p:commandButton>
+				</center>
+				
+</h:form>
+</p:outputPanel>
+</p:dialog>
+<p:remoteCommand action="#{productRegisterFormMB.productcheck}" name="productnamecheck" ></p:remoteCommand>
+           </div>
+         
+             	
+               
+ 	</ui:define>
+	</ui:composition>
+	

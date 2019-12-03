@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Stock View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table  border="0" class="form_background" align="center">
+<tr>
+
+<td align="center" height="50px">
+
+<table align="center">
+
+  
+<tr><td height="50px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Quick Sales Return View" class="header_ui"/><br/><br/></td></tr>
+</table>
+
+<table border="0"   bgcolor="">
+
+
+
+                  <tr>
+                  <td height="10px">
+                  </td></tr>
+                  
+</table> 
+  <div style="height:220px ; width:470px; overflow-x:scroll; overflow-y:scroll;display:#{quickSaleMB.flag1}" align="center">
+<h:panelGrid style="display:#{quickSaleMB.flag1}">
+  <rich:dataTable  columnsWidth="150px,150px,150px,80px" id="dataTabl"  height="50px" var="info"  value="#{quickSaleMB.mb2}" enableContextMenu="false"
+   reRender="dynamicScroller"
+  rowClasses="datatable-odd,datatable-even"  >
+  <rich:column  headerText="Name" sortOrder="#{quickSaleMB.sortsOrders['orderDate']}" sortBy="#{info.orderDate}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Sales Order Date" render="dataTabl" action="#{quickSaleMB.sort()}">
+	        <f:param name="sortProperty" value="orderDate"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{quickSaleMB.sortsOrders['orderDate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{quickSaleMB.sortsOrders['orderDate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.orderDate}"  class="label_ui">  <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+	        </rich:column>
+  <rich:column  headerText="Name" sortOrder="#{quickSaleMB.sortsOrders['orderNumber']}" sortBy="#{info.orderNumber}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Sales Order Number" render="dataTabl" action="#{quickSaleMB.sort()}">
+	        <f:param name="sortProperty" value="orderNumber"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{quickSaleMB.sortsOrders['orderNumber']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{quickSaleMB.sortsOrders['orderNumber']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.orderNumber}"  class="label_ui">  </h:outputText>
+	        </rich:column>
+  
+  
+  <!-- <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';">  Sales Order No   </span>      </f:facet>
+	            <h:outputText value="#{info.orderNumber}"  class="label_ui"/>  
+	        </h:column> -->
+  
+  <!-- <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';">  Vendor Name   </span>      </f:facet>
+	            <h:outputText value="#{info.vendorPhoneNumber}"  class="label_ui"/>  
+	        </h:column> -->
+     <h:column   headerText="Phone" width="80px">
+	   		 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';">  View   </span>      </f:facet>
+	         
+	           <div align="center"> <h:commandButton class="button_tabl"  image="/images/view.png"   action="#{quickSaleMB.viewSalesReturnDetail}">
+	             <f:setPropertyActionListener target="#{quickSaleMB.porderNo}" value="#{info.orderNumber}" />
+	           </h:commandButton></div> 
+	        </h:column>
+	   	
+<!--  </rich:dataTable> --></rich:dataTable> </h:panelGrid></div>
+ 
+
+</td></tr>
+
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+ <div id="popup" style="display:#{quickSaleMB.flag2}">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px;">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<p:commandButton value="Ok" actionListener="#{quickSaleMB.qsreturnviewclose}" styleClass="kbutton_ui"></p:commandButton>
+
+
+
+</h:panelGrid></div></div> 
+          
+</td></tr>
+</table>
+</h:form>
+</body>
+</ui:composition>

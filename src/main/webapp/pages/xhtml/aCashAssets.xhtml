@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Cash Assets  </title>
+ <link rel="stylesheet" href="../../css/css.css"></link>
+</h:head>
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;"><h:form>
+<table style="margin-top:-10"  align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+</tr><tr>
+<td align="left"> 
+<ui:include src="/pages/xhtml/templates/menunew.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr><td align="center" >
+ <table border="0px"   bgcolor="">
+<tr>
+<td>
+<table style="width:1030px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+</td>
+</tr></table> 
+</td>
+</tr>
+<tr><td height="400px" align="center">
+<table border="0"   bgcolor="">
+<tr><td  align="center">
+<h:outputText value= "Cash Assets"  class="header_ui"/>
+<br/><br/>
+</td></tr>
+<tr >
+<td  align="center" colspan="2"><h:outputText value="" style="color:#FFFFFF;"/><h:outputText value="#{cashAssetMB.validate}" class="validation_ui"/></td>
+</tr>
+
+<tr>
+                    <td align="center" >
+                    <rich:panel style="font-size:14px; width:490px" header="Search by Date" align="left" >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:490px;height: 143px;" align="center">  
+	           <h:outputLabel value="From Date"  class="label_ui" />
+	          <rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;"  value="#{cashAssetMB.fDate}"></rich:calendar>
+	           <h:outputLabel value="To Date"  class="label_ui" />
+	           	<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;"  value="#{cashAssetMB.tDate}"></rich:calendar>
+	          <h:outputLabel></h:outputLabel>
+	          <h:commandButton class="button"  value="Search" id="find1"  action="#{cashAssetMB.cashAsset}"></h:commandButton> 
+	          </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  
+                  <tr><td>
+                  <br/>
+                  <div style="height:250px ; width:900px; overflow-x:scroll; overflow-y:scroll;display:#{cashAssetMB.flag}" align="center">
+<h:panelGrid style="display:#{cashAssetMB.flag} ;" >
+                    <rich:dataTable id="dataTable" var="info"  value="#{cashAssetMB.cashList}"   style="max-width:800px;max-height:250px ;font-size:14;" 
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row" columnsWidth="40px,150px,200px,200px" >  
+         	
+  			<h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  No  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </h:column> 
+	        
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.sDate}"  class="label_ui"/>  
+	        </h:column>
+	         <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Client Name  </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </h:column> 
+	        
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Reason   </span>      </f:facet>
+	            <h:outputText value="#{info.reason}"  class="label_ui"/>  
+	        </h:column> 
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Amount  </span>      </f:facet>
+	            <h:outputText value="#{info.amount}"  class="label1_ui"/>  
+	        </h:column>
+ </rich:dataTable> </h:panelGrid></div>
+ <div id="popup" style="display:#{cashAssetMB.flag1}" align="center">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{cashAssetMB.cashMenuCall()}" ></h:commandButton>
+
+
+
+</h:panelGrid></div>
+
+   
+
+  
+
+ 
+            
+   </div>
+                  
+                  </td></tr>
+                  
+                  <tr>
+                  <td height="30px">
+                  </td></tr>
+                    <tr>
+                    <td>
+    </td></tr>
+</table> 
+</td></tr>
+<tr><td style="height:180px;"></td></tr>
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;width:1040px;text-align:center;padding:5px;align:center; background-color:#12b2ce;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+</body>
+</ui:composition>

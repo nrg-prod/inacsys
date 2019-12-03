@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+#header {
+    background-color:#3053A6;
+    color:white;
+    text-align:center;
+    padding:1px;
+    width:948px;
+}
+#nav {
+    padding:5px;
+    width:934px;
+    background-color:white ;
+    float:left;
+}
+#footer {
+    background-color:#3053A6;
+    color:white;
+    clear:both;
+    width:940px;
+    text-align:center;
+   padding:5px;	 	 
+}
+.modules{
+cursor:pointer;
+ color:#0000FF;
+    font: bold;
+    font-size:20px;
+    padding:2px;
+    text-decoration: underline;
+}	
+.subm{
+cursor:pointer;
+ color:#5882FA;
+    padding:2px;
+   margin-left: 80px;
+    text-decoration: underline;
+font-size: 17px;
+}
+.submsub
+{
+cursor:pointer;
+ color:#9b111e;
+    padding:2px;
+   margin-left: 140px;
+    text-decoration: underline;
+font-size: 15px;
+}
+.ssteps
+{
+ color:#0000FF;
+    font-style: italic;	
+    padding:02px;
+    font-size: 14px;
+   margin-left: 210px;
+
+}
+
+
+.steps{
+ color:#0000FF;
+    font-style: italic;	
+    padding:02px;
+    font-size: 14px;
+   margin-left: 120px;
+}
+
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body style=" width:950px ;margin:0px auto;" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+<script src="../../js/inventorymanual.js"></script>
+
+<div  id="header">
+<h4> USER'S MANUAL</h4>
+</div>
+
+<div id="nav"  style="width:900; border-style: dotted; border-color:#0431B4">
+<br/>
+
+
+<div id="change">
+<ul type="disc">
+<li >
+<p id="clickme1" class="modules" >ENGLISH</p>
+</ul>
+<div id="me1">
+<p id="clickme2"  class="subm">Fill in Master Data</p>
+<div id="me2"   class="steps"  >
+<ul type="square"> <li >
+&nbsp;&nbsp;Master Data includes Vendor, Products & Customers. </li><br/>
+<li >
+	&nbsp;&nbsp;User registration module and fill in the form.</li>
+</ul>
+</div>
+<p id="clickme3" class="subm">Making Purchases & Stock In</p>
+<div id="me3"  class="steps">
+<ul type="square"> 
+ <li>&nbsp;&nbsp; Go to [Purchase – Purchase Order] choose which Vendor to purchase and fill in all required information’s </li><br/>
+ <li >&nbsp;&nbsp; After PO form is generated, need to be approved by Admin from Admin’s reminders</li><br/>
+<li> &nbsp;&nbsp; After PO is approved, need to generate invoice from [Invoice – Purchase Invoice] and choose the correct IPO number</li><br/>
+ <li >&nbsp;&nbsp; From [Purchase – Purchase View] user can check the purchase delivery status and payment status  (still pending now)</li><br/>
+<li > &nbsp;&nbsp; To change payment status to PAID, go to [Payment – Payable] select the correct IPO number and input the payment that has been made (full payment/partial)</li><br/>
+<li > &nbsp;&nbsp; To change delivery status to DELIVERED, go to [Purchase – Make Delivery] select the correct IPO number and click action button</li><br/>
+<li > &nbsp;&nbsp; Each PO will be closed when the status is Paid & Delivered</li><br/>
+<li > &nbsp;&nbsp; After the PO is delivered, we need to input the purchases to stock through [Stocks – Stock in] and select the correct IPO number</li>
+</ul></div>
+<p id="clickme4" class="subm">Making Sales Order</p>
+<div id="me4"  class="steps">
+<ul type="square"> 
+ <li>&nbsp;&nbsp; Go to [Sales – Sales Order] and choose customer to sell to, fill in the form </li><br/>
+ <li >&nbsp;&nbsp; After sales order is made, we can check through [Sales – Sales View] for delivery & payment status (still pending)</li><br/>
+<li> &nbsp;&nbsp; Before receiving payment, need to generate invoice through [Invoice – Sales Invoice] and select the correct SON number</li><br/>
+ <li >&nbsp;&nbsp; To change payment status go to [Payment – Receivable] choose the correct SON number and input the Received payment (full/partial)</li><br/>
+<li > &nbsp;&nbsp; To change delivery status go to [Sales – Make Delivery] choose the correct SON number and click action button</li><br/>
+<li > &nbsp;&nbsp; Every Sales made automatically deduct the Stock</li><br/>
+<li > &nbsp;&nbsp; If any customer came to return their Sales, can use [Sales – Sales Return] to process</li><br/>
+<li > &nbsp;&nbsp; For walk in customers, can use [Sales – Quick Sales] to quickly generate Sales Invoice</li>
+</ul></div>
+
+<p id="clickme5" class="subm">View Reports</p>
+<div id="me5"  class="steps">
+<ul type="square"> 
+ <li>&nbsp;&nbsp; User can check daily/weekly/monthly Sales and Purchase report through [Report] module</li><br/>
+ <li >&nbsp;&nbsp;For Profit & Loss Statement can be viewed through [Accounts – Profit & Loss]</li>
+</ul></div>
+
+
+<p id="clickme6" class="subm">Register & Create Payroll for Employee</p>
+<div id="me6"  class="steps">
+<ul type="square"> 
+ <li>&nbsp;&nbsp; To register employee data, use [Accounts – Payroll – Employee Registration] and fill all required informations</li><br/>
+ <li >&nbsp;&nbsp;To input payroll data (bonus, late charge and etc) use [Accounts – Payroll – Payroll form]</li><br/>
+  <li >&nbsp;&nbsp;To generate payroll slip use [Accounts – Payroll – Payroll View]</li>
+</ul></div>
+
+<p id="clickme7" class="subm">Input Transaction (Income/Expenses)</p>
+<div id="me7"  class="steps">
+<ul type="square"> 
+ <li>&nbsp;&nbsp; To input income or expense outside Purchases & Sales user can go to [Accounts – Transaction Form] and fill in the required informations</li>
+ 
+</ul></div>
+
+</div>
+<hr color="blue">
+</div>
+<br/>
+<div  id="change1">
+<ul>
+<li type=disc>
+<p id="clickme6"  class="modules">BAHASA INDONESIA</p></ul>
+<div id="me6"    >
+<p id="clickme7"  class="subm">Memasukan Master Data</p>
+<div id="me7"   class="steps">
+<ul type="square"> <li >
+&nbsp;&nbsp;Master Data terdiridari Vendor, Produk&Pelanggan </li><br/>
+<li >
+	&nbsp;&nbsp;Gunakanmodulpendaftarandanisiformulir yang telahtersedia.</li>
+</ul>
+</div>
+
+
+
+<p id="clickme8" class="subm">Membuatpembelianbarangdanmemasukanbarang (stock in)</p>
+<div id="me8"   class="steps">
+<ul type="square"> 
+ <li>&nbsp;&nbsp; Melalui [Pembelian – Order Pembelian] pilihmaumembelidari vendor yang sudahdidaftardanisiinformasi yang dibutuhkan </li><br/>
+ <li >&nbsp;&nbsp; SetelahFormulir PO dannomor IPO keluar, harus di setujuioleh admin yang dapatdiaksesmelaluipengingat di halamanmuka</li><br/>
+<li> &nbsp;&nbsp; Setelah PO sudahdisetujui, harusmembuat invoice dari [Invoice – Invoice Pembelian] danpilihnomor IPO yang ingindibuatkan invoice</li><br/>
+ <li >&nbsp;&nbsp; Dari [Pembelian – Lihat Data Pembelian] penggunadapatmengecek status pengirimandan status pembayarandarisemua PO (sekarangmasih pending)</li><br/>
+<li > &nbsp;&nbsp; Untukmerubah status pembayaranmenjadi PAID, pergike [Pembayaran – Pembayaran] pilihnomor IPO yang ingindibayardanmasukanjumlah yang telahterbayar (bisalunas/DP)</li><br/>
+<li > &nbsp;&nbsp;Untukmerubah status pengirimanmenjadi DELIVERED, pergike [Pembelian – BuatPengiriman] pilihnomor IPO dankliktombol action</li><br/>
+<li > &nbsp;&nbsp; Setiap PO akanselesaijika status sudahdibayardanterkirim.</li><br/>
+<li > &nbsp;&nbsp; Setelah Proses pembelianselesai, harusmemasukan stock kedalam system melalui [Stocks – Stock Masuk] danpilihnomor IPO</li>
+</ul>
+</div>
+
+<p id="clickme9" class="subm">Membuatpenjualanbarang</p>
+<div id="me9"   class="steps">
+	<ul type="square"> 
+ <li>&nbsp;&nbsp; Pergike [Penjualan – Order Penjualan] danpilihpelanggan yang sudahterdaftardanisiinformasi yang dibutuhkan</li><br/>
+ <li >&nbsp;&nbsp;Setelah Order penjualantelahdibuatdannomor SON keluar, dapat di check melalui [Penjualan – Lihat data Penjualan] untukmelihat status pembayarandan status pengiriman(masih pending)</li><br/>
+<li> &nbsp;&nbsp; Sebelummenerimapembayaran, harusmembuat invoice terlebihdahulumelalui [Invoice – Invoice Penjualan] danpilihnomor SON yang ingindibuatkan invoice</li><br/>
+ <li >&nbsp;&nbsp;Untukmerubah status pembayaranharusmelalui [Pembayaran – Penerimaan] pilihnomor SON danmasukanpembayaran yang telahditerima (lunas/DP)</li><br/>
+<li > &nbsp;&nbsp; Untukmerubah status pengirimanharusmelalui [Penjualan – BuatPengiriman] pilihnomor SON dankliktombol action</li><br/>
+<li > &nbsp;&nbsp;Setiappenjualan yang dibuatakanmengurangistoksecaraotomatis</li><br/>
+<li > &nbsp;&nbsp;Jikaadapelanggan yang inginmengembalikanbarang, gunakanmodul [Penjualan – Sales Return] untukdiproses</li><br/>
+<li > &nbsp;&nbsp;Untukpelanggan yang tidakterdaftar, dapatmenggunakanmodul [Penjualan – PenjualanLangsung] untukmembuat sales invoice dengancepat</li>
+</ul>
+</div>
+<p id="clickme10" class="subm">Lihatlaporan</p>
+<div id="me10"   class="steps">
+	<ul type="square"> 
+ <li>&nbsp;&nbsp;Penggunadapatmembuatlaporanharian/mingguan/bulananuntukpembeliandanpenjualanmelaluimodul [Laporan]</li><br/>
+ <li >&nbsp;&nbsp;Untukmelihatlaporanlabadanrugidapatdilihatmelalui [Akutansi – LabadanRugi]</li>
+
+</ul>	
+</div>
+<p id="clickme11" class="subm">Mendaftarkandanmembuat Slip Gajiuntukkaryawan</p>
+<div id="me11"   class="steps">
+	<ul type="square"> 
+ <li>&nbsp;&nbsp;Untukpendaftaran data karyawan, gunakan [Akutansi – Penggajian – PendaftaranKaryawan] danisiinformasi yang dibutuhkan</li><br/>
+ <li >&nbsp;&nbsp;Untukmenginput data gajikaryawanseperti (bonus, potongantelat, dll) gunakan [Akutansi – Penggajian – Formulirpenggajian)</li><br/>
+<li>&nbsp;&nbsp;UntukMembuat slip gaji, gunakan [Akutansi – Penggajian – Lihat Data Penggajian]</li>
+</ul>		
+</div>
+
+<p id="clickme12" class="subm">MemasukanTransaksi (pemasukan&pengeluaran)</p>
+<div id="me12"   class="steps">
+		<ul type="square"> 
+ <li>&nbsp;&nbsp;Untukmenginputpemasukandanpengeluaran (Uang ATK, Uangmakan, rental, dll) diluardaripembeliandanpenjualan, penggunadapatmenggunakanmodul [Akutansi – Transaksi – FormulirTransaksi] dantinggalisiformulir yang sudahtersedia</li>
+ 
+
+</ul>		
+</div>
+
+<br/>
+</div>
+</div>
+
+
+</div>
+<br/>
+<div id="footer" >
+Copyright © 
+<a   style="color:white"  href="http://neotural.com/"> www.neotural.com</a>
+
+</div>
+
+
+</body>
+</html>

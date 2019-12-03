@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+
+<h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase Approval  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{invoicePurhcaseMB.checkPage()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+
+<h:form>
+<table style="margin: -10 auto;width: 1050px" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+
+<div style="height: 600" align="center">
+<div style="height: 100" align="center"></div>
+<div  style="color: blue;background-color: #3053A6;width: 500;border-radius:20" align="center">
+<table align="center" cellpadding="15">
+<tr align="center"><td align="center">
+<h:outputLabel style="color:white" value="Upload the purchase approval document for #{invoicePurhcaseMB.s}"></h:outputLabel>  </td></tr>
+<tr><td align="center"><h:outputText style="color:red" value="#{invoicePurhcaseMB.validate}"></h:outputText> </td></tr>
+<tr><td>
+
+ 
+<rich:fileUpload fileUploadListener="#{invoicePurhcaseMB.listener}"
+                        stopButtonClass="file-upload-stop-button"
+                        addButtonClass="file-upload-button" listHeight="0" listWidth="0"
+                        id="upload"  allowFlush="true" maxFileQuantity="10">
+                        <a4j:ajax event="uploadcomplete" 
+                            render="info, imgs" />
+                    </rich:fileUpload> </td></tr>
+                    
+                    <tr></tr><tr><td align="center"><h:commandButton class="button" value="ok" action="#{invoicePurhcaseMB.redirecthome}"></h:commandButton> </td></tr></table>
+
+</div>
+
+
+</div>
+</td>
+
+</tr>
+
+</table>
+
+    </h:form>
+
+</body>
+</ui:composition>

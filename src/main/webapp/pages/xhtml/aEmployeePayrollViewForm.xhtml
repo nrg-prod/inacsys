@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Employee PaySlip   </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+
+ <body  style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;overflow: hidden;">
+
+<h:form>
+<table  style="width: 100%; "  align="center" border="0" class="form_background">
+
+<tr>
+
+<td height="280px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center">
+<p:panel id="tab">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:10px; width:740px;" align="center" cellpadding="10">
+	                      <h:outputText value="Payroll Date" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.todayDate}"></h:outputText>
+	                       <h:outputText value="Employee Name"  class="labelTxt"  ></h:outputText>
+							<h:outputText class="labelTxt"  value="#{employeePayrollViewFormMB.name}"></h:outputText>
+							<h:outputText value="Employee Id" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt"  value="#{employeePayrollViewFormMB.employeeid}"></h:outputText>
+							<h:outputText value="Designation" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.designation}" ></h:outputText>
+							<h:outputText value="Basic Salary" class="labelTxt" ></h:outputText>
+							<h:panelGroup>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currency}"></h:outputText>&nbsp;
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.basicsalary}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+							<h:outputText value="Month" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt"  value="#{employeePayrollViewFormMB.month}"></h:outputText>
+							<h:outputText value="Year" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.year}"></h:outputText>	
+							<h:outputText value="Working Days" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.workingdays}"></h:outputText>
+							<h:outputText value="Commission" class="labelTxt" ></h:outputText>
+							<h:panelGroup><h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currency}"></h:outputText>&nbsp;
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.commission}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+								<h:outputText value="Over Time Amount" class="labelTxt" ></h:outputText>
+								<h:panelGroup>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currency}"></h:outputText>&nbsp;
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.overtime}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+								<h:outputText value="Loan Advance" class="labelTxt" ></h:outputText>
+								<h:panelGroup>
+								<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currency}"></h:outputText>&nbsp;
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.advanceamount}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+							<h:outputText value="Total Salary" class="labelTxt" ></h:outputText>
+							<h:panelGroup>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currency}"></h:outputText>&nbsp;
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.totalsalary}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>	</h:panelGroup>	
+							<h:outputText value="Currency" class="labelTxt" ></h:outputText>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currency}"></h:outputText>
+							<h:outputText value="Base Currency" class="labelTxt" ></h:outputText>
+							<h:panelGroup>
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.baseCurrency}"></h:outputText>&nbsp;
+							<h:outputText class="labelTxt" value="#{employeePayrollViewFormMB.currencyAmount}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>	</h:panelGroup>					
+							</h:panelGrid>
+			     </p:panel><center>
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+
+<h:commandButton value="Print"  class="button" >  <p:printer target="tab" /></h:commandButton>
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></center>
+	   
+                   </td></tr> 
+                   
+                                    
+</table> 
+
+</td></tr>
+<tr><td style="height: 10px"></td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

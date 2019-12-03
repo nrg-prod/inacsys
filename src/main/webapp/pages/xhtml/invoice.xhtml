@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+	       <ui:define name="content">
+	      <p:growl id="messages"></p:growl>
+	     <div style="margin-top:38%;margin-left:123px">
+	    	  
+	     <div class="ui-grid ui-grid-responsive">
+	     <div class="ui-grid-row">
+        <div class="ui-grid-col-6">
+         <p:commandLink actionListener="#{invoicePurhcaseMB.purchaseinvoice}">
+        <div class="asdf asdff">
+		<i class="fa fa-credit-card" style="color: #fff;"></i>
+       
+        <p class="font" style="font-size: 9px;color: #fff;margin-top: 25px;margin-bottom: 0px;">Purchase Invoice</p>
+         </div>
+          </p:commandLink>      
+        </div>
+        <div class="ui-grid-col-6">
+         <p:commandLink actionListener="#{invoiceSalesMB.salesinvoice}">
+        <div class="asdf asdff">
+        <i class="fa fa-users" style="color: #fff;"></i>
+        
+        <p class="font" style="font-size: 9px;color: #fff;margin-top: 25px;margin-bottom: 0px;">Sales Invoice</p>
+       </div>
+        </p:commandLink>
+        </div>
+    
+</div>
+</div>
+	          
+           </div>
+          
+             	
+               
+ 	</ui:define>
+	</ui:composition>
+	

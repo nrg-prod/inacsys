@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Purchase Order Edit  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{purchaseOrderFromMB.purchaseDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+
+
+
+
+
+
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+  
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center"><h:outputText value="#{purchaseViewMB.validate1}" class="validation_ui"/>
+</td></tr>
+<tr>
+                    <td align="center">
+                   
+	              <rich:panel style="width:490px;" id="tab" >
+	            <h:panelGrid class="label_ui"    style=" width:560px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText id="reg" value="Purchase Edit" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:490px;">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="2"  style="font-size:14px; width:560;" align="center" cellpadding="3">
+	          <h:outputText class="label_ui" value="Product Name"></h:outputText>
+	           
+				<h:outputText class="label_ui" value="#{purchaseViewMB.purchaseProductName}"></h:outputText>
+				 <h:outputText class="label_ui" value="Quantity"></h:outputText>
+				<h:inputText class="text_ui" value="#{purchaseViewMB.purchaseQuantity}"></h:inputText>
+				
+	         		</h:panelGrid>
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+<p:commandButton styleClass="button_ui" id="sav" value="Update"  action="#{purchaseViewMB.updatePurchase}"/>
+<p:commandButton styleClass="button_ui" id="save" value="Cancel" actionListener="#{purchaseViewMB.purchaseviewclose}"/>
+</h:panelGrid>
+</rich:panel>
+	   
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="150">
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+</body>
+</ui:composition>

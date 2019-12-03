@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
+		
+
+   		<context:component-scan base-package="com.inacsys.*"/>  
+   		
+      <!--  <jee:jndi-lookup id="inacsysDS" jndi-name="InacsysJNDI" expected-type="javax.sql.DataSource" />   
+       -->
+      
+      
+       <context:property-placeholder location="classpath*:status.properties"/>
+      
+      
+   <bean id="inacsysDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://35.166.255.46:3306/InacsysDB" /> 
+		<property name="username" value="root"/>
+		<property name="password" value="AJdata@123"/>
+	</bean>  
+ 	 
+ 	 	<bean id="entityManagerFactory"  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    	<property name="persistenceUnitName" value="inacsys-pu" />  
+	    <property name="dataSource" ref="inacsysDS" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="database" value="MYSQL" />
+				<property name="generateDdl" value="true" />
+				
+			</bean>
+		</property>
+		
+		
+		<property name="jpaProperties">
+      		<props>
+         		<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+         		<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+         		<prop key="hibernate.hbm2ddl.auto">update</prop> 
+   				<prop key="hibernate.show_sql">true</prop> 
+      		</props>
+   		</property>  
+	</bean>	
+	
+  <!-- <context:property-placeholder location="file:///${Filepath}/Filepath.properties" />   -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+ <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		
+</bean>
+<bean class="com.inacsys.service.SpringApplicationContext"></bean>
+ 
+ <bean id="service" class="com.inacsys.service.DemoServiceImpl">
+ </bean>
+ 
+</beans>

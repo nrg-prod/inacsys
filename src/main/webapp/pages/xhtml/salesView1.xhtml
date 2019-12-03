@@ -1,0 +1,684 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+
+
+		<title>Inacsys | Sales Order View</title>
+		<link rel="stylesheet" href="../../css/css.css"></link>
+<style>
+.ui-dialog .ui-dialog-titlebar {
+    padding: 0px 7px 1px 9px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close, .ui-dialog .ui-dialog-titlebar-minimize, .ui-dialog .ui-dialog-titlebar-maximize {
+    float: right;
+    margin: 0px;
+    padding:0px;
+    top: 0px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+.ui-dialog .ui-dialog-titlebar-close span, .ui-dialog .ui-dialog-titlebar-minimize span, .ui-dialog .ui-dialog-titlebar-maximize span {
+    background-color: #fff;
+    margin: 6px 0px 0px 0px;
+}
+</style>
+	</h:head>
+
+	<h:body style="overflow-x: hidden; ">
+
+		<table align="center" border="0" class="form_background" width="100%">
+			<tr align="center">
+				<td align="center">
+					<div align="center" style="border: solid 0px #033C95; width: 100%;">
+						<h:form id="print">
+							<h:panelGrid columns="4" align="right" border="0"
+								style="margin-right:-730px">
+								<h:commandButton image="../../images/Printer.png">
+									<p:printer target="panel" />
+								</h:commandButton>
+							</h:panelGrid>
+							<p:panel id="panel" style="border:0px;">
+								<table style="border: solid 4px #033C95;">
+									<tr>
+										<td>
+
+											<!-- <table border="0" bgcolor="" width="730px">
+												<tr>
+													<td align="left"><h:panelGrid>
+															<p:graphicImage value="#{loginMB.logo}"></p:graphicImage>
+
+														</h:panelGrid></td>
+
+													<td align="right"><h:panelGrid>
+															<h:graphicImage  value="/images/invoicekam3.png" style="width:193px;height:121px;"/>
+														</h:panelGrid></td>
+
+												</tr>
+
+											</table> -->
+											<table align="center" border="0" bgcolor="" width="730px"
+												style="border-color: #033C95">
+												<tr>
+													<td></td>
+												</tr>
+											</table>
+
+											<table align="center" bgcolor="" width="730px">
+												<tr>
+													<td align="left" height="100px"><hr align="left"
+															size="2" width="310"
+															style="background-color: #033C95; border: solid 1px #ffffff" />
+														<h:panelGrid border="0" style="border-color: white">
+
+															<p></p>
+
+
+														</h:panelGrid>
+														<hr align="left" size="2" width="310"
+															style="background-color: #033C95; border: solid 1px #ffffff" />
+													</td>
+													<td align="right" height="100px"><h:outputText
+															value="SO Status" style="font-size:14px;font-family:'Arial,san-serif'"
+															rendered="#{salesViewMB.purchaseOrder.status == 'Delivered'}"></h:outputText>&nbsp;<h:outputText
+															value=":" style="font-size:14px;font-family:'Arial,san-serif'"
+															rendered="#{salesViewMB.purchaseOrder.status == 'Delivered'}"></h:outputText>&nbsp;
+														<h:outputText value="DELIVERED"
+															style="color:green;font-size:14px;font-family:'Arial,san-serif'"
+															rendered="#{salesViewMB.purchaseOrder.status == 'Delivered'}"></h:outputText>
+														<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></h:outputText>
+														<hr align="right" size="2" width="300"
+															style="background-color: #033C95; border: solid 1px #033C95" />
+														<h:panelGrid align="right" width="250px" columns="3"
+															style="font-family:Verdana;font-size:11px;">
+		
+		<h:outputText value="Invoice" class="labelTxt"></h:outputText>
+		<h:outputText value=" : " class="labelTxt"></h:outputText>
+															<h:outputText value="#{salesViewMB.salereferencenumber}"
+																class="labelTxt"></h:outputText>
+		<h:outputText value="Date" class="labelTxt"></h:outputText><h:outputText value=" : " class="labelTxt"></h:outputText>
+															<h:outputText value="#{salesViewMB.odate}"
+																class="labelTxt">
+																<f:convertDateTime pattern="dd/MM/yyyy" class="label_ui"></f:convertDateTime>
+															</h:outputText>
+		<h:outputText value="Due Date" class="labelTxt"></h:outputText><h:outputText value=" : " class="labelTxt"></h:outputText>
+															<h:outputText value="#{salesViewMB.tardate}"
+																class="labelTxt">
+																<f:convertDateTime pattern="dd/MM/yyyy" class="label_ui"></f:convertDateTime>
+															</h:outputText>
+		
+		<h:outputText value="Customer Name" class="labelTxt"></h:outputText><h:outputText value=" : " class="labelTxt"></h:outputText>
+															<h:outputText value="#{salesViewMB.customerName}"
+																class="labelTxt"></h:outputText>
+															<!-- Phone Number
+		<h:outputText value=":&nbsp;#{salesOrderFormMB.custPhNo}"></h:outputText> -->
+														</h:panelGrid>
+														<hr align="right" size="2" width="300"
+															style="background-color: #033C95; border: solid 1px #033C95" />
+													</td>
+												</tr>
+
+											</table>
+
+
+											<table width="730px">
+												<tr align="center">
+													<td><h:panelGrid>
+
+															<p:dataTable id="dataTable" var="info"
+																value="#{salesViewMB.resulfinal}">
+
+
+
+																<p:column width="30" headerText="RollNo">
+
+																	<f:facet name="header">
+																		<span
+																			class="datatableTxt"> No </span>
+																	</f:facet>
+																	<div align="left">
+																		<h:outputText value="#{info.serialNo}"
+																			/>
+																	</div>
+																</p:column>
+
+
+																<p:column width="100" headerText="Name">
+																	<f:facet name="header">
+																		<span
+																			class="datatableTxt"> Product Name </span>
+																	</f:facet>
+																	<div align="left">
+																		<h:outputText value="#{info.product_name}"
+																			/>
+																	</div>
+																</p:column>
+
+
+
+																<p:column width="100" headerText="Address">
+																	<f:facet name="header">
+																		<span
+																			class="datatableTxt"> Quantity </span>
+																	</f:facet>
+																	<div align="left">
+																		<h:outputText 
+																			value="#{info.quantity} ">
+																		</h:outputText>
+																		<h:outputText value="#{info.unit}"></h:outputText>
+																	</div>
+																</p:column>
+
+																<p:column width="100" headerText="Phone">
+																	<f:facet name="header">
+																		<span
+																			class="datatableTxt">
+																			Price / Unit </span>
+																	</f:facet>
+																	<div align="left">
+																		<h:outputText 
+																			value="#{info.currency}">
+
+																		</h:outputText>&nbsp;
+																		<h:outputText 
+																			value="#{info.sellingPrice}">
+
+																		</h:outputText>
+																	</div>
+																</p:column>
+																<p:column width="100" headerText="Phone">
+																	<f:facet name="header">
+																		<span
+																			class="datatableTxt">
+																			Discount </span>
+																	</f:facet>
+																	<div align="left">
+																		<h:outputText 
+																			value="#{info.currency}">
+
+																		</h:outputText>&nbsp;
+																		<h:outputText 
+																			value="#{info.discountzAmount}">
+																			
+																		</h:outputText>
+																	</div>
+																</p:column>
+																<p:column width="100" headerText="Phone">
+																	<f:facet name="header">
+																		<span
+																			class="datatableTxt">
+																			Total </span>
+																	</f:facet>
+																	<div align="left">
+																		<h:outputText 
+																			value="#{info.currency}">
+
+																		</h:outputText>&nbsp;
+																		<h:outputText 
+																			value="#{info.totalPrice}">
+																		</h:outputText>
+																	</div>
+																</p:column>
+
+															</p:dataTable>
+														</h:panelGrid></td>
+												</tr>
+												<tr>
+													<td align="right"><br />
+														<table align="center" bgcolor="">
+															<tr>
+																<td align="left"><h:panelGrid align="left"
+																		columns="3"
+																		style="border-color:#806620;font-family:'Arial,san-serif'">
+																		<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																			value="Shipping Company"></h:outputLabel>
+																		<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																			value=":"></h:outputLabel>
+																		<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																			value="#{salesViewMB.shipcompany}"></h:outputLabel>
+
+																		<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																			value="Shipping Cost"></h:outputLabel>
+																		<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																			value=":"></h:outputLabel>
+																		<h:panelGrid columns="2">
+																			<h:outputText 
+																			value="#{salesViewMB.currency}" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"></h:outputText>
+																			<h:outputLabel
+																				style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																				value="#{salesViewMB.shipcost}">
+																				<f:converter
+																					converterId="com.inventory.util.UrlConverter" />
+																			</h:outputLabel>
+																		</h:panelGrid>
+																	</h:panelGrid></td>
+																<td align="right" width="100"></td>
+																<td align="right">
+																	<table>
+																		<tr>
+																			<td align="left"><h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="Gross Total"></h:outputLabel></td>
+																			<td align="left"><h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value=":"></h:outputLabel></td>
+																			<td align="right"><h:outputText 
+																			value="#{salesViewMB.currency}" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"></h:outputText>&nbsp;<h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="#{salesViewMB.crossTotal}">
+																					<f:converter
+																						converterId="com.inventory.util.UrlConverter" />
+																				</h:outputLabel></td>
+																		</tr>
+																		<tr>
+																			<td align="left">
+																				<!-- <h:outputLabel style="font-weight:bold;font-size:10px" value="Discount Type"></h:outputLabel> -->
+																			</td>
+																			<td align="left"></td>
+
+																		</tr>
+
+
+																		<tr>
+																			<td align="left"><h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="Grand Total"></h:outputLabel></td>
+																			<td align="left"><h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value=":"></h:outputLabel></td>
+																			<td align="right"><h:outputText 
+																			value="#{salesViewMB.currency}" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"></h:outputText>&nbsp;<h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="#{salesViewMB.crossTotal1}">
+																					<f:converter
+																						converterId="com.inventory.util.UrlConverter" />
+																				</h:outputLabel></td>
+																		</tr>
+																		
+																			<tr>
+																			<td align="left">
+																				<!-- <h:outputLabel style="font-weight:bold;font-size:10px" value="Discount Type"></h:outputLabel> -->
+																			</td>
+																			<td align="left"></td>
+
+																		</tr>
+
+
+																		<tr>
+																			<td align="left"><h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="Base Currency"></h:outputLabel></td>
+																			<td align="left"><h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value=":"></h:outputLabel></td>
+																			<td align="right">
+																				<h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="#{salesViewMB.baseCurrency}">
+																				</h:outputLabel>
+																				<h:outputLabel
+																					style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"
+																					value="#{salesViewMB.currencyAmount}">
+																					<f:converter
+																						converterId="com.inventory.util.UrlConverter" />
+																				</h:outputLabel>
+																				</td>
+																		</tr>
+
+																	</table>
+
+																</td>
+															</tr>
+														</table></td>
+												</tr>
+												<tr>
+													<td><hr align="center" size="2" width="730"
+															style="background-color: #033C95; border: solid 1px #033C95" /></td>
+												</tr>
+											</table>
+										<br/>
+											<!-- <table width="730px">
+												<tr>
+													<td align="left"><br />
+													<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta,"/></td>
+												</tr>
+												<tr align="left">
+													<td width="150px">
+														<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dibuat Oleh,"/>
+													</td>
+													<td width="150px">
+														<h:outputText value="&nbsp;&nbsp;Yang Mengetahui,"/>
+													</td>
+													<td width="350px"></td>
+													<td width="150px" align="right">
+														<h:outputText value="Diterima Oleh,&nbsp;&nbsp;"/>
+													</td>
+												</tr>
+
+
+
+
+
+											</table> <br /> -->
+										
+										</td>
+									</tr>
+								</table>
+
+							</p:panel>
+
+						</h:form>
+					</div>
+					<table>
+						<tr></tr>
+					</table> <h:form id="sr">
+						<p:tabView activeIndex="0" rendered="#{salesViewMB.approvalStatus=='Approved'}">
+
+							<p:tab title="SO Status">
+
+								<h:panelGroup style="margin-left:-450px">
+									<h:outputText value="Category" styleClass="labelTxt"></h:outputText>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <h:selectOneMenu id="type" value="#{salesOrderFormMB.categoryType}"
+										class="text_ui"
+										valueChangeListener="#{salesOrderFormMB.valueChange1}">
+										<f:selectItem itemLabel="--- select ---" itemValue=""
+											noSelectOption="true" />
+										<f:selectItem itemLabel="Sales delivery"
+											itemValue="Sales delivery" />
+										<f:selectItem itemLabel="Sales return"
+											itemValue="Sales return" />
+										<f:selectItem itemLabel="Sales invoice"
+											itemValue="Sales invoice" />
+										<p:ajax process="@this" update="@form" event="valueChange"></p:ajax>
+									</h:selectOneMenu>
+
+								</h:panelGroup>
+								<h:panelGrid style="align:center"
+									rendered="#{salesOrderFormMB.salesreturnFlag}">
+									<table align="center">
+										<tr align="center">
+											<td align="center"><div align="center">
+													<h:outputLabel id="text3" class="errorTxt"
+														value="#{salesReturnFormMB.tempValidate}"></h:outputLabel>
+												</div></td>
+										</tr>
+									</table>
+									<p:dataTable id="dataTable1" var="info"
+										value="#{salesReturnFormMB.resulfinal1}">
+
+
+										<p:column headerText="Phone" style="width:50px">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													No </span>
+											</f:facet>
+											<h:outputText value="#{info.serialNo}" />
+										</p:column>
+
+										<p:column headerText="Name" style="width:100px">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Product Name </span>
+											</f:facet>
+											<h:outputText value="#{info.product_name}"/>
+										</p:column>
+
+										<p:column headerText="Name" style="width:100px">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Quantity </span>
+											</f:facet>
+											<h:outputText value="#{info.quantity}"/>
+											<h:outputText value=" "></h:outputText>
+											<h:outputText value="#{info.unit}"/>
+										</p:column>
+										<p:column>
+											<f:facet name="header" style="width:30px">
+												<span class="datatableTxt"></span>
+											</f:facet>
+
+											<h:selectBooleanCheckbox id="check" value="#{info.priroty}"
+												valueChangeListener="#{salesReturnFormMB.checkBox}">
+
+												<f:selectItem itemValue="1" itemLabel=" " />
+												<f:ajax render="@form" execute="check"></f:ajax>
+												<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+												<f:attribute value="#{info.tempFlag1}" name="flag1"></f:attribute>
+												<f:attribute value="#{info.tempFlag2}" name="flag2"></f:attribute>
+												<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+												<f:attribute value="#{info.unit}" name="unit"></f:attribute>
+												<f:attribute value="#{info.rollID}" name="rolls"></f:attribute>
+												<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+												<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+												<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+
+											</h:selectBooleanCheckbox>
+
+										</p:column>
+										<p:column headerText="Address" style="width:150px">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Normal Return </span>
+											</f:facet>
+
+											<h:inputText id="text1"
+												valueChangeListener="#{salesReturnFormMB.nrChange}"
+												style="display:#{info.tempFlag1};height: 20px; width: 100px; font-size:10px;font-family:'Arial,san-serif'; color:#04368C; background-color:#ffffff;"
+												value="#{info.nr}">
+												<f:ajax execute="text1" render="@form"></f:ajax>
+												<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+												<f:attribute value="#{info.tempFlag1}" name="flag1"></f:attribute>
+												<f:attribute value="#{info.tempFlag2}" name="flag2"></f:attribute>
+												<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+												<f:attribute value="#{info.rollID}" name="rolls"></f:attribute>
+												<f:attribute value="#{info.unit}" name="unit"></f:attribute>
+												<f:attribute value="#{info.priroty}" name="pri"></f:attribute>
+												<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+												<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+												<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+											</h:inputText>
+										</p:column>
+										<p:column headerText="Address" style="width:150px">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Damage Return </span>
+											</f:facet>
+
+											<h:inputText id="text2"
+												valueChangeListener="#{salesReturnFormMB.drChange}"
+												style="display:#{info.tempFlag1};height: 20px; width: 100px; font-size:10px;font-family:'Arial,san-serif'; color:#04368C; background-color:#ffffff;"
+												value="#{info.dr}">
+												<f:ajax execute="text2" render="@form"></f:ajax>
+												<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+												<f:attribute value="#{info.tempFlag1}" name="flag1"></f:attribute>
+												<f:attribute value="#{info.tempFlag2}" name="flag2"></f:attribute>
+												<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+												<f:attribute value="#{info.priroty}" name="pri"></f:attribute>
+												<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+												<f:attribute value="#{info.rollID}" name="rolls"></f:attribute>
+												<f:attribute value="#{info.unit}" name="unit"></f:attribute>
+												<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+												<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+											</h:inputText>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+
+								<div style="height: 15px;"></div>
+								<h:panelGrid>
+									<p:dataTable id="dataTable" var="info"
+										value="#{accountinReMB.resu}"
+										rendered="#{salesOrderFormMB.salespaymentFlag}">
+
+
+
+
+										<p:column headerText="Product name">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Date </span>
+											</f:facet>
+											<h:outputText value="#{info.startDate}">
+												<f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+												<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+												<f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+											</h:outputText>
+										</p:column>
+
+										<p:column headerText="RollNo" width="100">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Order Number </span>
+											</f:facet>
+
+											<h:outputText value="#{info.i0022.i0021.salesOrderNumber}"
+												/>
+										</p:column>
+
+										<p:column headerText="Address">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Customer Name </span>
+											</f:facet>
+											<h:outputText
+												value="#{info.i0022.i0021.customerName}" />
+										</p:column>
+
+										<p:column headerText="Address">
+											<f:facet name="header">
+												<span class="datatableTxt">Total
+													Amount</span>
+											</f:facet>
+											
+											<h:outputText value="#{info.payableAmount}">
+												<f:converter converterId="com.inventory.util.UrlConverter" />
+											</h:outputText>
+										</p:column>
+
+										<p:column headerText="Phone">
+											<f:facet name="header">
+												<span class="datatableTxt">Amount
+													Received </span>
+											</f:facet>
+											
+											<h:outputText value="#{info.paidAmount}">
+												<f:converter converterId="com.inventory.util.UrlConverter" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Address">
+											<f:facet name="header">
+												<span class="datatableTxt">Outstanding
+													Amount </span>
+											</f:facet>
+											
+											<h:outputText value="#{info.balanceAmount}">
+												<f:converter converterId="com.inventory.util.UrlConverter" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Address" width="100">
+											<f:facet name="header">
+												<span class="datatableTxt">
+													Action </span>
+											</f:facet>
+											<div align="center">
+												<p:commandButton styleClass="button_ui" value="Receive"
+													action="#{accountinReMB.paymentpage}" update="@form" immediate="true">
+													<f:setPropertyActionListener value="#{info.balanceAmount}" target="#{accountinReMB.balanceamount}"></f:setPropertyActionListener>
+													</p:commandButton>
+											</div>
+										</p:column>
+
+									</p:dataTable>
+								</h:panelGrid>
+
+
+							</p:tab>
+						</p:tabView>
+						<div style="height: 10px;"></div>
+						<div style="margin-left: -10px">
+							<p:commandButton value="Submit" styleClass="button_ui" rendered="#{salesViewMB.approvalStatus=='Approved'}"
+								action="#{salesOrderFormMB.submit}" update="@form"></p:commandButton>
+						</div>
+					</h:form> 
+					<p:dialog appendTo="@(body)" widgetVar="payDialog" header="CONGRATULATIONS...!!"
+						width="600px" height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="Already Paid" class="confirmTxt"></h:outputText>
+							  <div style="height:30px;"></div>
+						</center>
+					</p:dialog>
+					<p:dialog appendTo="@(body)" widgetVar="salesreturn" header="CONGRATULATIONS...!!"
+						width="600px" height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="Product has been successfully returned." class="confirmTxt"></h:outputText>
+							  <div style="height:30px;"></div>
+						</center>
+					</p:dialog> <p:dialog appendTo="@(body)" widgetVar="sdelivery" header="Alert" width="600px"
+						height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="This Sales order has been already delivered." class="confirmTxt"></h:outputText>
+							<div style="height: 30px;"></div>
+							
+						</center>
+					</p:dialog> <p:dialog appendTo="@(body)" widgetVar="sdelivery1" header="CONGRATULATIONS...!!" width="600px"
+						height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="#{salesViewMB.salereferencenumber} has been successfully delivered." class="confirmTxt"/>
+							<div style="height: 30px;"></div>
+							
+						</center>
+					</p:dialog> <p:dialog appendTo="@(body)" widgetVar="salesreturn1" header="Confirmation"
+						width="600px" height="120" modal="true" resizable="false"
+						draggable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="Sales should be delivered." class="confirmTxt" />
+							<div style="height: 30px;"></div>
+						
+						</center>
+					</p:dialog> <p:dialog appendTo="@(body)" widgetVar="salesinv" header="CONGRATULATIONS...!!" width="600px"
+						height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:20px;"></div>
+							<h:outputText value="Sales invoice(#{salesViewMB.salereferencenumber}) has been successfully generated." class="confirmTxt" />
+							<div style="height: 30px;"></div>
+							
+						</center>
+					</p:dialog> <p:dialog appendTo="@(body)" widgetVar="salesinv1" header="Alert" width="600px"
+						height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="Sales invoice was already generated."
+								class="confirmTxt" />
+							<div style="height: 30px;"></div>
+							
+						</center>
+					</p:dialog> <p:dialog appendTo="@(body)" widgetVar="salespay1" header="Alert" width="600px"
+						height="120" modal="true" resizable="false">
+						<center>
+							  <div style="height:30px;"></div>
+							<h:outputText value="Sales invoice should be generated."
+								class="confirmTxt" />
+							  <div style="height:30px;"></div>
+						</center>
+					</p:dialog>
+
+				</td>
+			</tr>
+		</table>
+	</h:body>
+
+</ui:composition>

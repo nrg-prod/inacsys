@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:define name="content">
+		<style>
+.ui-panel .ui-panel-content {
+	border: 0;
+	background: none;
+	padding: 1px;
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+    padding: 4px 10px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: groove;
+    font-family: 'Arial,sans-serif' !important;
+    font-size: 14px;
+    height: 25px !important;
+    text-align: center;
+}
+</style>
+<p:panel header="Bill Payment Form" closable="true">
+<p:ajax event="close" listener="#{aTransactionMB.expensepanelcloseListener}" update="center_content" process="@this" immediate="true" partialSubmit="true"></p:ajax>
+	<p:outputPanel style="background:#f4f5f8; height: 230px;" id="topPanel" >
+				<div class="ui-grid ui-grid-responsive">
+						<div class="ui-grid-row" >
+							<div class="ui-grid-col-6" align="left">
+							
+							</div>
+							<div class="ui-grid-col-3" align="center" ></div>
+							<div class="ui-grid-col-3" align="center" >
+								<h:outputText value="Bill no."  class="labelTxt"></h:outputText>
+								<br />
+								<h:outputText value="#{aTransactionMB.aTransaction.refNo}" styleClass="labelTxt" style="width:100%">
+								</h:outputText>
+							</div>
+						</div>
+					<div class="ui-grid-row" style="padding-top:0px;padding-left: 55px;">
+							<div class="ui-grid-col-3" align="left" >
+								<h:outputText value="Vendor Name" class="labelTxt" ></h:outputText>
+							<p:inputText value="#{aTransactionMB.aTransaction.vendorName}" readonly="true" style="background:#fff" styleClass="inputTxt"  id="vendorName">
+							</p:inputText>
+								
+								
+							</div>
+							<div class="ui-grid-col-3">
+							<h:outputText value="Deposit Account" class="labelTxt" ></h:outputText>
+								<h:selectOneMenu  value="#{aTransactionMB.aTransaction.fromAccount}" id="depositacnt"
+									style=" width: 80%;height:28px;" valueChangeListener="#{aTransactionMB.accounttypeValueChange}">
+									<f:selectItem itemLabel="---Choose a Account---" itemValue=""></f:selectItem>
+									<f:selectItem itemLabel="+ Add New" itemValue="add"></f:selectItem>
+									<f:selectItems value="#{aTransactionMB.aTransaction.filteredaccountList}"></f:selectItems>
+									<p:ajax process="@this" event="valueChange" update="@form"></p:ajax>
+								</h:selectOneMenu><br/>
+								<h:message for="depositacnt" styleClass="errorTxt"></h:message>
+							</div>
+							
+							<div class="ui-grid-col-3">
+							<h:outputText value="Currency Type" class="labelTxt" ></h:outputText>
+								<h:selectOneMenu class="text_ui" value="#{aTransactionMB.aTransaction.currencyType}" id="paycurr" style="width:200px;height:28px;" valueChangeListener="#{aTransactionMB.paymentcurrencyTypeValueChange}">
+									<f:selectItem itemLabel="---Select Currency Type---" itemValue="" noSelectionOption="true"/>
+									<f:selectItem itemLabel="AED" itemValue="AED"/>
+								   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+								   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+								   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+								   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+									<p:ajax update="center_content " process="@this" immediate="true" event="valueChange"></p:ajax>
+								</h:selectOneMenu><br/>
+								<h:message for="paycurr" styleClass="errorTxt"></h:message>
+							</div>
+					</div>
+					<br />
+					<div class="ui-grid-row" style="padding-top: 0px;padding-left: 55px;">
+							<div class="ui-grid-col-3" >
+								<h:outputText value="Mailing address" class="labelTxt" ></h:outputText>
+    							<p:inputTextarea
+    							style="background:#ffffff;width: 80%;" value="#{aTransactionMB.aTransaction.mailingAddress}" readonly="true" >
+    							<p:ajax process="@this" event="valueChange"></p:ajax>
+    							</p:inputTextarea>
+							</div>
+							
+							<div class="ui-grid-col-3" >
+								<h:outputText value="Payment date" class="labelTxt"  ></h:outputText><br />
+								<p:calendar value="#{aTransactionMB.aTransaction.paydate}" pattern="dd/MM/yyyy" style="line-height: normal;width:210px;background:#fff" id="paymentdate">
+							</p:calendar>
+							</div>
+							
+					</div>
+				</div>
+			</p:outputPanel>
+			<div style="height:10px"></div>
+			<div style="height:20px"><center><h:message for="datatable" styleClass="errorTxt"></h:message></center></div>
+			<div style="height:10px"></div>
+			
+			<center>
+				<p:dataTable id="datatable" var="info" rowIndexVar="rowIndex" editable="true" editMode="cell" value="#{aTransactionMB.aTransaction.paymentdataTableList}"
+					style="font-size:10;width:98%;">
+					<p:column headerText="No" width="5%">
+						<div align="center">
+							 #{rowIndex+1}
+						</div>
+						<h:outputLabel value="#{info.index}" style="display:none;"></h:outputLabel>
+					</p:column>
+					<p:column headerText="DESCRIPTION" width="18%">
+						<div align="center">
+							<h:outputText value="#{info.refNo} (#{info.billDate})" styleClass="labelTxt" style="width:100%">
+							<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+							</h:outputText>
+						</div>
+					</p:column>
+					<p:column headerText="DUE DATE" width="10%">
+						<div align="center">
+							<p:outputLabel value="#{info.dueDate}" styleClass="labelTxt" style="width:100%">
+							<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+							</p:outputLabel>
+						</div>
+					</p:column>
+					<p:column headerText="ORIGINAL AMOUNT" width="15%">
+						<div align="center">
+							<h:outputLabel value="#{info.baseCurrency}" styleClass="labelTxt" >
+							</h:outputLabel>&nbsp;<h:outputLabel value="#{info.amount}" styleClass="labelTxt" >
+							<f:converter converterId="com.inventory.util.UrlConverter"/>
+							</h:outputLabel>
+						</div>
+					</p:column>
+					<p:column headerText="OPEN BALANCE" width="15%">
+						<div align="center">
+							<h:outputLabel value="#{info.baseCurrency}" styleClass="labelTxt" >
+							</h:outputLabel>&nbsp;<p:outputLabel value="#{info.balAmount}" styleClass="labelTxt"
+								style="width:100%" >
+								<f:converter converterId="com.inventory.util.UrlConverter"/>
+								</p:outputLabel>
+						</div>
+					</p:column>
+					<p:column headerText="PAYMENT" width="22%">
+						<div align="center">
+							<pe:inputNumber value="#{info.payAmount}" styleClass="inputTxt"
+								style="width:100%" id="datatable"
+								valueChangeListener="#{aTransactionMB.balanceChange}">
+								<f:attribute name="rowIndex" value="#{rowIndex+1}"></f:attribute>
+								<f:attribute name="initialbalance"
+									value="#{info.balAmount}"></f:attribute>
+								<f:ajax render="@form" execute="datatable" event="valueChange"></f:ajax>
+							</pe:inputNumber>
+
+						</div>
+					</p:column>
+				</p:dataTable>
+				<div style="height: 10px"></div>
+				<table width="98%">
+					<tr>
+						<td width="70%"></td>
+						<td width="28%"><h:outputText value="Total :&nbsp;"
+								styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+								<h:outputText styleClass="labelTxt" style="font-weight:bold;font-size:18px" value="#{aTransactionMB.aTransaction.currencyType}"></h:outputText>&nbsp;
+								<h:outputText styleClass="labelTxt" style="font-weight:bold;font-size:18px" id="totalamount" value="#{aTransactionMB.aTransaction.receiveAmount}">
+								<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+								
+						</td>
+					</tr>
+					<tr>
+						<td width="70%"></td>
+						<td width="28%"><h:outputText value="Base Currency :&nbsp;"
+								styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+								<h:outputText styleClass="labelTxt" style="font-weight:bold;font-size:18px" value="#{aTransactionMB.aTransaction.baseCurrency}"></h:outputText>&nbsp;
+								<h:outputText styleClass="labelTxt" style="font-weight:bold;font-size:18px" value="#{aTransactionMB.aTransaction.currencyAmount}">
+								<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+								
+						</td>
+					</tr>
+				</table>
+			</center>
+			<div style="height: 50px"></div>
+				
+			<center>
+				<p:commandButton value="Make Payment" actionListener="#{aTransactionMB.expenseMakePayment}" update="@form" process="@this"
+				 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+				<p:commandButton value="Cancel" action="#{aTransactionMB.accountExpensesPage}" ajax="false"></p:commandButton>
+			</center>
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+</p:panel>
+<p:dialog header="CONGRATULATIONS...!!"  widgetVar="payconfirm" modal="true" width="600px" height="140px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0" align="center">
+ 							<h:outputText value="The Pay amount has been successfully paid." styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:20px"></div>
+	<center>
+	<h:commandButton value="Ok" id="okbtn" style="padding:0px" class="kbutton_ui" onclick="PF('payconfirm').hide();" action="accountsExpensestransactionform.xhtml?faces-redirect=true">
+		<f:ajax render="@form" execute="okbtn"></f:ajax>
+	</h:commandButton>
+	</center>						
+			</p:dialog>	
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:graphicImage value="../../images/loadingimg.gif"
+					style="width:80px" />
+			</p:dialog>
+			<p:dialog widgetVar="addAccount" header="Account" modal="true" width="65%" 
+ 				height="420px" resizable="false" appendTo="@(body)">
+			<p:outputPanel id="panels">
+			<h:form id="form"><div style="height:10px;"></div>
+			<div style="height:30px;">
+			<center><h:outputText value="#{accountsMB.accountsDatabean.validate}" style="font-size:14px" styleClass="errorTxt"></h:outputText> </center></div>
+			<table width="100%">
+			<tr><td width="5%" height="50px"></td>
+			<td width="15%" height="50px">
+			<h:outputText class="labelTxt" value="Account Type"></h:outputText>	
+			</td>
+			<td width="30%" height="50px">
+			<h:selectOneMenu value="#{accountsMB.accountsDatabean.account_type}" style="width:200px;height:25px;"
+					id="type" >
+					<f:selectItem itemLabel="Select Account Type" noSelectionOption="true" itemValue=""></f:selectItem>
+				    <f:selectItem itemLabel="Cash" itemValue="Cash"></f:selectItem>
+	                <f:selectItem itemLabel="Bank" itemValue="Bank"></f:selectItem>
+					<f:selectItem itemLabel="Credit Card" itemValue="Credit Card"></f:selectItem>
+					<p:ajax update="center_content:panels" process="@this" event="valueChange" partialSubmit="true"
+					 listener="#{accountsMB.accountChange}"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Name"></h:outputLabel>
+			</td>
+			<td width="35%" height="50px">
+			<p:inputText styleClass="inputTxt"  id="detName" value="#{accountsMB.accountsDatabean.account_name}">
+					<p:ajax update="detName" process="@this"></p:ajax>
+			</p:inputText></td></tr>
+			<tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"><h:message for="type" styleClass="errorTxt"></h:message></td>
+			<td width="15%"></td><td width="35%" height="20px"><h:message for="detName" styleClass="errorTxt"></h:message></td></tr>
+			<tr><td width="5%"></td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Detail Type"></h:outputLabel>
+			</td>
+			<td width="35%" height="50px">
+				<h:selectOneMenu value="#{accountsMB.accountsDatabean.detailType}" valueChangeListener="#{accountsMB.typeChange}" style="width:200px;height:25px;"
+					id="type1">
+					<f:selectItem itemLabel="Select Detail Type" noSelectionOption="true" itemValue=""></f:selectItem>
+					<f:selectItems value="#{accountsMB.accountsDatabean.types}"></f:selectItems>
+					<p:ajax update="center_content:panels center_content:detpanels" process="@this" event="valueChange" partialSubmit="true"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Currency"></h:outputLabel>
+			</td>
+			<td height="50px" width="35%">
+				<h:selectOneMenu class="text_ui" value="#{accountsMB.accountsDatabean.currency}" id="curr" style="width:200px;height:28px;" valueChangeListener="#{accountsMB.currencyTypeValueChange}">
+					<f:selectItem itemLabel="---Select Currency Type---" itemValue="" noSelectionOption="true"/>
+					<f:selectItem itemLabel="AED" itemValue="AED"/>
+				   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+				   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+				   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+				   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+					<p:ajax update="center_content:panels" process="@this" immediate="true" event="valueChange" partialSubmit="true"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			</tr><tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"><h:message for="type1" styleClass="errorTxt"></h:message></td>
+			<td width="15%" height="20px"></td><td width="35%" height="20px"><h:message for="curr" styleClass="errorTxt"></h:message></td></tr>
+			<tr><td width="5%"></td>
+			<td width="15%" height="50px">
+				<h:outputLabel class="labelTxt" value="Base Currency"></h:outputLabel>
+			</td>
+			<td width="35%" height="50px">
+				<h:panelGroup>
+				<h:outputLabel class="labelTxt" value="#{accountsMB.accountsDatabean.baseCurrency}"></h:outputLabel>
+				<h:outputLabel class="labelTxt" value="#{accountsMB.accountsDatabean.currencyAmount}"></h:outputLabel></h:panelGroup>
+			</td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Default Tax Code" rendered="#{aTransactionMB.aTransaction.country == 'India'}"></h:outputLabel>
+			</td>
+			<td height="50px" width="35%">
+				<h:selectOneMenu value="#{accountsMB.accountsDatabean.taxes}" style="width:200px;height:28px;" id="taxs" rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+					<f:selectItem itemLabel="---Select Tax---" itemValue="select" noSelectionOption="true"></f:selectItem>
+					<f:selectItem itemLabel="Exempt IGST" itemValue="Exempt IGST"></f:selectItem>
+					<f:selectItem itemLabel="5.0% GST" itemValue="5% GST"></f:selectItem>
+					<f:selectItem itemLabel="18.0% IGST" itemValue="18% IGST"></f:selectItem>
+					<f:selectItem itemLabel="Exempt GST" itemValue="Exempt GST"></f:selectItem>
+					<f:selectItem itemLabel="0% IGST" itemValue="0% IGST"></f:selectItem>
+					<f:selectItem itemLabel="28.0% GST" itemValue="28% GST"></f:selectItem>
+					<f:selectItem itemLabel="12.0% GST" itemValue="12% GST"></f:selectItem>
+					<f:selectItem itemLabel="0% GST" itemValue="0% GST"></f:selectItem>
+					<f:selectItem itemLabel="Out of Scope" itemValue="Out of Scope"></f:selectItem>
+					<f:selectItem itemLabel="28.0% IGST" itemValue="28% IGST"></f:selectItem>
+					<f:selectItem itemLabel="12.0% IGST" itemValue="12% IGST"></f:selectItem>
+					<f:selectItem itemLabel="18.0% GST" itemValue="18% GST"></f:selectItem>
+					<f:selectItem itemLabel="5.0% IGST" itemValue="5% IGST"></f:selectItem>
+					<p:ajax update="@form" process="@this" immediate="true"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			</tr><tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"></td>
+			<td width="15%" height="20px"></td><td width="35%" height="20px"></td></tr>
+			<tr>
+			<td width="5%" height="20px"></td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Balance" rendered="#{accountsMB.flag}"></h:outputLabel>
+			</td>
+			<td height="50px" width="35%">
+				<p:inputText styleClass="inputTxt" id="bal" value="#{accountsMB.accountsDatabean.balance}" rendered="#{accountsMB.flag}"
+						valueChangeListener="#{accountsMB.amountChange}">
+					<p:ajax update=":center_content:panels" process="@this" immediate="true" event="valueChange" partialSubmit="true"></p:ajax>
+				</p:inputText>
+			</td>
+			</tr>
+			<tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"><h:message for="bal" styleClass="errorTxt" rendered="#{accountsMB.flag}"></h:message></td>
+			<td width="15%" height="20px"></td><td width="35%" height="20px"></td></tr>
+			</table><div style="height:5px"></div>
+			<hr style="width:90%;align:center;border:1px solid #ccc	;"/>
+			<center>
+				<p:commandButton value="Save" icon="fa fa-database" action="#{accountsMB.saveAccount}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+					update="center_content:panels" process="@this"></p:commandButton>
+				<p:commandButton value="Clear" icon="fa fa-remove" update="center_content:panels" process="@this" partialSubmit="true"
+					actionListener="#{accountsMB.cancel}">
+					
+					</p:commandButton>
+			</center>
+			</h:form>
+			</p:outputPanel>
+ 	</p:dialog> 
+ 	
+ 	<p:dialog widgetVar="addDetailTypeDlg" header="Detail Type Form" modal="true" width="35%" 
+ 				height="200px" resizable="false" appendTo="@(body)">
+			<p:outputPanel id="detpanels">
+			<h:form id="form1">
+			<div style="height:30px;">
+			<center><h:outputText value="#{accountsMB.accountsDatabean.validate}" styleClass="errorTxt"></h:outputText> </center></div>
+			<center>
+			<table width="100%">
+			<tr><td width="10%" height="50px"></td>
+			<td width="25%" height="50px">
+			<h:outputText class="labelTxt" value="Detail Type"></h:outputText>	
+			</td>
+			<td width="60%" height="50px">
+			<p:inputText value="#{accountsMB.accountsDatabean.newdetailType}" id="dettype">
+			<p:ajax update="dettype" process="@this"></p:ajax>
+			</p:inputText>
+			</td><td width="5%" height="50px"></td></tr>
+			<tr>
+			<td width="10%" height="50px"></td>
+			<td width="25%" height="50px">
+			<h:outputLabel class="labelTxt" value="Report Type"></h:outputLabel>
+			</td>
+			<td width="60%" height="50px">
+			<p:selectOneRadio value="#{accountsMB.accountsDatabean.reportType}" id="reptype" styleClass="labelTxt" style="width:100%;font-size:14px">
+			<f:selectItem itemLabel="Profit and Loss" itemValue="Profit and Loss"></f:selectItem>
+			<f:selectItem itemLabel="Balance Sheet" itemValue="Balance Sheet"></f:selectItem>
+			<p:ajax update="@form" process="@this"></p:ajax>
+			</p:selectOneRadio>
+			</td><td width="5%" height="50px"></td></tr>
+			</table><div style="height:20px"></div>
+			<p:commandButton value="Save" icon="fa fa-database" action="#{accountsMB.saveDetailType}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+					update="center_content:detpanels" process="@this"></p:commandButton>
+				<p:commandButton value="Clear" icon="fa fa-remove" resetValues="true" update="center_content:detpanels" process="@this" partialSubmit="true" action="#{accountsMB.detailregclear}">
+				</p:commandButton>
+			</center>
+			</h:form>
+			</p:outputPanel>
+			</p:dialog>
+			
+			<p:dialog header="CONGRATULATIONS...!!"  widgetVar="detailconfirm" modal="true" width="40%" height="120px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:15px"></div>
+							<h:panelGrid columns="3" border="0" align="center">
+ 							<h:outputText value="Successfully saved" styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:20px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="center_content" oncomplete="PF('detailconfirm').hide();PF('addAccount').show();"
+								></p:commandButton></center>						
+			</p:dialog>	
+ 	<p:dialog header="CONGRATULATIONS...!!"  widgetVar="confirm" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:15px"></div>
+							<h:panelGrid columns="3" border="0" align="center">
+ 							<h:outputText value="This Transaction has been successfully completed." styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:30px"></div>
+	<center><p:commandButton value="Ok" actionListener="#{aTransactionMB.makepaymentaccounttypeconfirm(accountsMB.accountsDatabean.account_name1)}" process="@this" immediate="true" update="center_content" oncomplete="PF('confirm').hide()"
+								></p:commandButton></center>						
+			</p:dialog>	
+</ui:define>
+</ui:composition>

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 
+
+Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-
+
+transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase Order Cancel  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <body background="../../images/brown.jpg" 
+
+style="background-attachment: fixed;background-position: 50% 
+
+50%; background-size:cover;">
+
+
+<h:form>
+<table style="margin-top:-10px" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include 
+
+src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1050px;"><tr><td align="left"><p style="font-
+
+family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome 
+
+#{loginMB.invusername}</p> </td><td 
+
+align="right"><h:commandButton action="#{loginMB.logout()}" 
+
+value="Logout" style="font-weight:bold;"  
+
+ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+      <tr align="center"> <td align="center">   <h:outputText value="#{purchaseOrderCancelMB.validate}" class="validation_ui"/></td></tr> 
+
+<tr>
+                    <td align="left" >
+                    
+                    <rich:panel style="font-size:14px; width:600px" header="Search"  >  
+	        <h:panelGrid  columns="9"  style="font-size:14px; width:600px;height: 143px;" align="center">  
+	           &nbsp;<h:outputText  />&nbsp;<h:outputText  />&nbsp;<h:outputText  />
+	            <h:outputLabel value="Order Number"  class="label_ui" />
+	             &nbsp;
+	            <h:inputText class="text_ui"   value="#{purchaseOrderCancelMB.s}"  required="true" label="Order Number" title="IPO is the formate" >
+	            
+	            </h:inputText> 
+	            <h:outputText  />
+	            <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	            <h:outputText value="Status"  class="label_ui" /> 
+	           &nbsp;<h:inputText class="text_ui"     label="Order Number" />
+				
+ <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	          
+	           &nbsp;
+	            <h:outputText value="" /><h:commandButton class="button" id="find" value="Find" action="#{purchaseOrderCancelMB.purchaseOrdercancel()}"  /> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px"></td></tr>
+                    <tr>
+                   <td> <h:panelGrid style="display:#{purchaseOrderCancelMB.flag}">
+                    <rich:dataTable id="dataTable" var="info"  value="#{purchaseOrderCancelMB.purchaselist}" columnsWidth="250px,250px,250px,245px">  
+         	
+ 
+   
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Product Name   </span>      </f:facet>
+	            <h:outputText value="#{info.i0031.i0001.productName}"  class="label_ui"/>  
+	        </h:column>  
+  
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Firm Name  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.i0031.i0025.firmName}"  class="label_ui" />  
+	        </h:column>  
+  
+	   		<h:column   headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Quantity </span>      </f:facet>
+	            <h:outputText class="label_ui" value="#{info.i0015.quantity}" />  
+	        </h:column>  
+  
+	   		<h:column   headerText="Phone"><div align="center"> <h:commandButton class="button_table"   value="Remove" action="#{purchaseOrderCancelMB.conform()}" /></div>  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Click me  </span>      </f:facet>
+	            
+	        </h:column>  
+  
+          
+ </rich:dataTable> 
+  </h:panelGrid>
+            
+    </td></tr>
+    <tr>
+    <td height="350"></td>
+    </tr>
+                   
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

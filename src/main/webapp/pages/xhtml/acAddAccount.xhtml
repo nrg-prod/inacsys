@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title> Inacsys | Transaction Form  </title>
+<link rel="stylesheet" href="../../css/css.css">
+</link>
+<script>
+PrimeFaces.widget.Dialog.prototype.applyFocus = function() {
+	 var firstInput = this.jq.find(':not(:submit):not(:button):input:visible:enabled:first');
+	 if(!firstInput.hasClass('hasDatepicker')) {
+	    firstInput.focus();
+	 }
+	};
+</script>
+<style>
+#ADD{
+	background-color: gray;
+	color: white;
+}
+
+.verticalLine {
+  border-left: 3px solid #2196f3;
+  height:100%;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding: 1px 4px 6px 6px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close span{
+    display: block;
+    margin: 6px 3px 1px 7px;
+}
+/* .ui-calendar .ui-inputfield .ui-widget .ui-state-default .ui-corner-all .hasDatepicker
+{
+    width: 110px !important;
+}
+#j_idt4:tran_date_input{
+    width: 110px !important;
+} */
+</style>
+</h:head>
+<body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover; overflow: hidden;">
+<p:panel id="panelID">
+<div style="height:20px;"></div>
+			<center><h:outputText value="#{accountsMB.accountsDatabean.validate}" style="color:red;" class="labelTxt"></h:outputText> </center>
+			<br/>
+			<h:panelGrid columns="4" cellpadding="10" cellspacing="5" style="height:300px; width:100%;">
+				<h:outputLabel class="labelTxt" value="Account Type"></h:outputLabel>			
+				<h:selectOneMenu value="#{accountsMB.accountsDatabean.account_type}" style="width:200px;height:25px;"
+					id="type" valueChangeListener="#{accountsMB.accountChange}">
+					<f:selectItems value="#{accountsMB.accountsDatabean.accountType}"></f:selectItems>
+					<p:ajax update="type" process="@this" event="valueChange" immediate="true"
+						></p:ajax>
+				</h:selectOneMenu>
+				<h:outputLabel class="labelTxt" value="Name"></h:outputLabel>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" readonly="true" id="detName" value="#{accountsMB.accountsDatabean.account_name}">
+					<p:ajax update="detName" process="@this"></p:ajax>
+					</p:inputText>
+					<br/>
+					<h:message for="detName" styleClass="errorTxt"></h:message>
+				</h:panelGroup>
+				<h:outputLabel></h:outputLabel><h:outputLabel ></h:outputLabel>
+				<h:outputLabel ></h:outputLabel><h:outputLabel></h:outputLabel>
+				<h:outputLabel class="labelTxt" value="Detail Type"></h:outputLabel>
+				<h:selectOneListbox style="width:240px;height:auto;" valueChangeListener="#{accountsMB.typeChange}">
+					<f:selectItems value="#{accountsMB.accountsDatabean.types}"></f:selectItems>
+					<p:ajax update="center_content" process="@this"></p:ajax>
+				</h:selectOneListbox>
+				
+				<h:outputLabel class="labelTxt" value="Balance"></h:outputLabel>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" id="bal" value="#{accountsMB.accountsDatabean.balance}" 
+						valueChangeListener="#{accountsMB.amountChange}">
+					<p:ajax update="center_content" process="@this" ></p:ajax>
+					</p:inputText>
+					<br/>
+					<h:message for="bal" styleClass="errorTxt"></h:message>
+				</h:panelGroup>
+			</h:panelGrid>
+			<br/>
+			<center>
+				<p:commandButton value="Save" icon="fa fa-database" action="#{accountsMB.saveAccount}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+					update="center_content" process="@this"></p:commandButton>
+				<p:commandButton value="Cancel" icon="fa fa-remove" update="center_content" process="@this"
+					actionListener="#{accountsMB.cancel}">
+					
+					</p:commandButton>
+			</center>
+			</p:panel>
+
+</body>
+</ui:composition>

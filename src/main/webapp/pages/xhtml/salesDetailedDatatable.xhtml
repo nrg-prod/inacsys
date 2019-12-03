@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+</h:head>
+
+ <h:form id="vrform">
+ <p:growl id="msgs" showDetail="true" />
+ <p:dataTable id="dt" var="salesdrp"  selectionMode="single" value="#{SalesReportMB.salesReportList3}"   widgetVar="purchaseInfo1" paginator="true"  rows="10" rowKey="#{salesdrp.customerName}"
+ style="font-size:11px" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <f:facet name="header">
+            <p:outputPanel>
+               
+                <p:inputText id="globalFilter" onkeyup="PF('purchaseInfo1').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+ </f:facet>
+  <p:ajax event="rowDblselect" listener="#{SalesReportMB.onRowSelectEvent1}" update="@all" />
+ <p:column filterBy="#{salesdrp.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{salesdrp.customerName}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{salesdrp.phonenumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{salesdrp.phonenumber}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{salesdrp.quantity}" headerText="Quantity"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{salesdrp.quantity}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{salesdrp.sellprice}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{salesdrp.sellprice}" class="text_ui"/>
+</p:column>
+ </p:dataTable>
+  <p:dataTable rendered="#{SalesReportMB.salesdetailFlag1}"  value="#{SalesReportMB.salesReportList4}" id="dt1" var="detsales"  paginator="true"  rows="10" 
+  emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <p:column headerText="SO Number" style="color:white;font-size:10px;font-weight:bold;width:80px;">
+ <h:outputText value="#{detsales.orderNumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Product Name" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detsales.productName}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Quantity" style="color:white;font-size:11px;font-weight:bold"> 
+ <h:outputText value="#{detsales.quantity}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Product Price" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detsales.sellprice}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Delivery Status" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detsales.deliverystatus}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Payment Status" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detsales.paymentstatus}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Return Status" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detsales.returnstatus}" class="text_ui"></h:outputText>
+ </p:column>
+ 
+ </p:dataTable>
+ </h:form>
+
+</ui:composition>

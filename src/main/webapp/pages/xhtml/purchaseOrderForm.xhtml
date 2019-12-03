@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+
+<title> Inacsys | Purchase Order Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{purchaseOrderFromMB.purchaseDrop()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right">
+<h:commandButton value="Translate" style="font-weight:bold;"  ajax="false"> 
+<rich:componentControl target="popup" operation="show" />
+</h:commandButton>&nbsp;
+<h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+<div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Order Penjualan" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:300px;" align="left" bgcolor="#f4f4f4">
+<h:outputText value="Date" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Tanggal" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Estimated Delivery Date" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Perkiraan Tanggal Penyerahan" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Vendor" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Vendor" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Product Name" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Nama Produk" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Price" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="harga" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Quantity" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="kuantitas" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Net Amount" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Jumlah bersih" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+<h:outputText  value="Edit" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="sunting" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center"><h:outputText value="#{purchaseOrderFromMB.validate}" class="validation_ui"/>
+</td></tr>
+<tr>
+                    <td align="center">
+                   
+	              <rich:panel style="width:920px;" id="tab" >
+	            <h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText id="reg" value="Purchase Order Form" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:920px;">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:990px;" align="center" cellpadding="3">
+	          <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/> 
+	            <h:outputText class="label_ui" value="Vendor Name"></h:outputText>
+				<h:selectOneMenu class="text_ui"  value="#{purchaseOrderFromMB.vendor_phone_number}" onchange="submit()" valueChangeListener="#{purchaseOrderFromMB.changeDrop}"  label="select one vendor number">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{purchaseOrderFromMB.drop}" />
+				    
+				 </h:selectOneMenu>
+				
+			
+				
+				<h:outputText class="label_ui" value="Product Name" />
+				<h:selectOneMenu class="text_ui" value="#{purchaseOrderFromMB.product_name}"   label="select one product name">
+				   	 <f:selectItem itemValue="Select" itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{purchaseOrderFromMB.productName}" />
+				    
+				 </h:selectOneMenu>
+				
+				 
+				<h:outputText class="label_ui" value="Order Date" ></h:outputText>
+				<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" value="#{purchaseOrderFromMB.orderDate}" size="30" maxlength="10" id="date"  label="Date"></rich:calendar>
+				<h:outputText class="label_ui"  value="Estimated Delivery Date"></h:outputText>
+				<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" value="#{purchaseOrderFromMB.targentDate}" size="30" maxlength="10" id="tardate"  label="Targentdate"></rich:calendar>
+				
+				<h:outputText class="label_ui" value="Quantity"></h:outputText>
+				<h:inputText class="text_ui" value="#{purchaseOrderFromMB.quantity}" size="30" maxlength="10" id="quantity"  label="Quantity" >
+				</h:inputText>
+				
+				<h:outputText class="label_ui"  value="Due Date"></h:outputText>
+				<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" value="#{purchaseOrderFromMB.dueDate}" size="30" maxlength="10" id="tardate1"  label="Targentdate"></rich:calendar>
+                       	           				</h:panelGrid>
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+
+<h:commandButton class="button" id="save"  value="Save"  action="#{purchaseOrderFromMB.puruchaseOrder}" />
+<h:commandButton class="button" id="reset" value="Reset" action="#{purchaseOrderFromMB.reset}"  />
+<h:commandButton class="button"  id="cancel" value="Cancel" action="#{reportMB.redirect1}"/></h:panelGrid>
+</rich:panel>
+	   
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="150">
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

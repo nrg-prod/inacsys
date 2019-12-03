@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content" >	
+<body onload="#{productRegisterFormMB.dropDown()}" >
+ 
+ <h:form id="product-reg">
+			<p:panel header="Product Registration Form" style="min-height:100%;width:100%;" >
+
+						    <div align="center" style="height:100%;">
+ 					
+							 
+							 
+							 
+  	
+			
+<p:panelGrid columns="2" style="text-align:center;align:center;width:44%;" layout="grid"  styleClass="ui-panelgrid-blank" 
+  columnClasses="ui-grid-col-6,ui-grid-col-6">
+							 
+							 
+				<h:panelGroup>
+				<h:selectOneMenu   value="#{productRegisterFormMB.category}" valueChangeListener="#{productRegisterFormMB.categoryValueChange}" style="border-radius:0px;height: 29px;width: 200px;" id="pcate" widgetVar="var1">
+  	 			<f:selectItem  itemLabel="--- Select Category---" itemValue="select"/>
+  	 			<f:selectItem  itemLabel="+ Add New" itemValue="addnew"/>
+  	 			<f:selectItems value="#{productRegisterFormMB.categorytype}" />	
+  	  			<p:ajax process="@this" immediate="true" update="center_content:categid" event="valueChange"></p:ajax>
+  				</h:selectOneMenu>
+  				<p id="pcateicon" style="padding:2px;"/>
+				</h:panelGroup>
+				
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Product Code *"  value="#{productRegisterFormMB.productlimit}" id="vproductLimit" styleClass="inputTxt" onblur="productcode('center_content:product-reg:vproductLimit','pcodeicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pcodeicon" style="padding:2px;"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Standard" value="#{productRegisterFormMB.product_standard}" id="prod-standard" styleClass="inputTxt" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pstandicon" style="padding:2px;"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Product Name *" value="#{productRegisterFormMB.product_name}" id="prod-name" styleClass="inputTxt" onblur="productname('center_content:product-reg:prod-name','pnameicon')" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="pnameicon" style="padding:2px;"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Actual Price *" value="#{productRegisterFormMB.autual_price}" id="prod-actual-prize" styleClass="inputTxt" onblur="productaprice('center_content:product-reg:prod-actual-prize','apriceicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="apriceicon" style="padding:2px;"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Size " value="#{productRegisterFormMB.size_of_product}" id="prod-size" styleClass="inputTxt">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="psizeicon" style="padding:2px;"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Market Price *" value="#{productRegisterFormMB.market_price}" id="prod-market-prize" styleClass="inputTxt" onblur="productmprice('center_content:product-reg:prod-market-prize','mpriceicon')">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<p id="mpriceicon" style="padding:2px;"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:inputText placeholder="Description" value="#{productRegisterFormMB.description}" id="prod-desc" styleClass="inputTxt" >
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				</h:panelGroup>
+				
+					<h:panelGroup>
+				<h:selectOneMenu style="border-radius:0px;height: 29px;width: 200px;"  value="#{productRegisterFormMB.unit}"  id="prod-unit" widgetVar="var2" styleClass="ui-selectdrop" >
+  	 			<f:selectItem  itemLabel="--- Select Unit---" itemValue="select"/>
+  	  			 <f:selectItem  itemLabel="Cm" itemValue="Cm"/>
+				   		 <f:selectItem  itemLabel="Dozen" itemValue="Dozen"/>
+				   		  <f:selectItem  itemLabel="Gross" itemValue="Gross"/>
+				   		  <f:selectItem  itemLabel="Inch" itemValue="Inch"/>
+				   		   <f:selectItem  itemLabel="Kg" itemValue="Kg"/>
+				   		  <f:selectItem  itemLabel="Kod" itemValue="Kod"/>
+				   		 <f:selectItem  itemLabel="Meter" itemValue="Meter"/>
+				   		  <f:selectItem  itemLabel="Ons" itemValue="Ons"/>
+				   		 <f:selectItem  itemLabel="Piece" itemValue="Piece"/>
+				   		  <f:selectItem  itemLabel="Roll" itemValue="Roll"/> 
+				   		  <f:selectItem  itemLabel="Yards" itemValue="Yards"/>
+				   		   <f:selectItem  itemLabel="Others" itemValue="Others"/>
+  	  			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+  				</h:selectOneMenu>
+  				<p id="puniticon" style="padding:2px;"></p>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<h:selectOneMenu style="border-radius:0px;height: 30px;width: 200px;"  value="#{productRegisterFormMB.industry}" id="vendor-id" widgetVar="var3" styleClass="ui-selectdrop" >
+  	 			<f:selectItem  itemLabel="--- Select Vendor---" itemValue="select"/>
+				   		 <f:selectItems value="#{productRegisterFormMB.ven}" />  	  			
+  				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+  				
+  				</h:selectOneMenu>
+  				
+  				<p id="pvendoricon" style="padding:2px;"/>
+				</h:panelGroup>
+			</p:panelGrid> <br/>
+				<center>	
+			 <p:commandButton id="hidenBtn" value="Submit" process="@this" immediate="true" action="#{productRegisterFormMB.conform}" style="display:none;">
+				</p:commandButton> 
+			 <p:commandButton value="Submit"  onclick="productValidation()" style="margin-left:-50px;">
+				</p:commandButton> 
+				<p:commandButton value="Reset" process="@this" immediate="true" update=":center_content" action="#{productRegisterFormMB.reset}">
+				</p:commandButton>
+			 
+				</center>
+				
+				</div>
+				
+				
+				<p:dialog header="CONGRATULATIONS...!!" widgetVar="categorySuccess" modal="true" width="50%"  height="120px"
+				 resizable="false"
+				appendTo="@(body)">
+				<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Category Registration has been successfully completed."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:30px"></div>
+						
+			</p:dialog>
+				<p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="confirm" modal="true"
+							width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+<center><div style="height:20px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Product Registration has been successfully completed."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:30px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="center_content" oncomplete="PF('confirm').hide()"
+								action="#{productRegisterFormMB.reset}" ></p:commandButton></center>						
+						</p:dialog>	
+					
+				</p:panel>
+				 </h:form>
+				<p:dialog header="Inacsys | Category Registration Form" resizable="false" appendTo="@(body)" modal="true" widgetVar="categoryRegDialog" width="30%" height="190px">
+<div style="height:10px"></div>
+<p:outputPanel id="categid">
+<h:form>
+<center>
+<div style="height:15px"><h:outputText value="#{productRegisterFormMB.validate2}" class="errorTxt"/></div></center>
+<center><h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="2"  style="font-size:10px; width:380px;height:80px" align="center" cellpadding="3">
+	            <h:outputText class="labelTxt" value="Category Type *"></h:outputText>
+				<p:inputText styleClass="inputTxt" value="#{productRegisterFormMB.category1}"  size="30"  id="Name" valueChangeListener="#{productRegisterFormMB.value1}">
+			<p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+				</p:inputText>
+				
+				
+				<h:outputText class="labelTxt" value="Description"></h:outputText>
+				<p:inputText styleClass="inputTxt" value="#{productRegisterFormMB.description1}" size="30" id="brand" label="Brand">
+				
+				<p:ajax update="@form" process="@this"></p:ajax></p:inputText>
+				
+				</h:panelGrid></center>
+				<div style="height:25px"></div><div style="height:25px"><center>
+				<p:commandButton id="save" value="Save" action="#{productRegisterFormMB.categoryregister}" update="center_content:categid center_content:product-reg:pcate" process="@this"></p:commandButton> 
+<p:commandButton id="reset" update="@form"  value="Reset"  action="#{productRegisterFormMB.reset1}" process="@this"></p:commandButton>
+<p:commandButton  id="cancel" update="@form" value="Cancel" oncomplete="PF('categoryRegDialog').hide()"></p:commandButton></center>
+				</div>
+				</h:form>
+				</p:outputPanel>
+				</p:dialog>
+<p:remoteCommand action="#{productRegisterFormMB.productcheck}" name="productnamecheck" ></p:remoteCommand>
+<p:remoteCommand action="#{productRegisterFormMB.productcodecheck}" name="productcodecheck" ></p:remoteCommand>
+
+ </body>
+     </ui:define>
+    </ui:composition>
+  

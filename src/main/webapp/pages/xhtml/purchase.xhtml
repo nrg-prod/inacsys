@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+	
+  <ui:define name="content">
+  <div style="min-height:90%">
+  <div style="height:5px;"></div>
+  <table width="100%"><tr> <td width="1%"> </td>
+  <td width="91%"> <p:commandButton icon="fa fa-plus" action="#{loginMB.purchaseorderpage}" value="New" ajax="false" style="font-size:14px;"></p:commandButton></td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{purchaseViewMB.purchaseView}" ajax="false"></p:commandButton></td>
+
+	</tr></table> 
+	 <center><div style="height:25px;">
+						<center><h:outputText value="#{purchaseViewMB.validate}" class="errorTxt"></h:outputText></center>
+						</div>
+        <p:dataTable id="dataTable" var="info"  widgetVar="purchaseInfo" value="#{purchaseViewMB.result4}" 
+               reflow="true" style="width:99%" filteredValue="#{purchaseViewMB.purchaseOrder.filterList}"
+							emptyMessage="No information found with given criteria">
+        <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('purchaseInfo').filter()" style="width:20%;height:25px;backgroud:#ffffff"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+        
+         <p:column width="40" headerText="No">
+								<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+								<div align="center">
+									<h:outputText class="labelTxt" value="#{info.serialno3}"/>
+								</div>
+			</p:column>
+         <p:column filterBy="#{info.orderDate}" headerText="Date"  filterMatchMode="contains" filterStyle="display:none" width="90">
+            <div align="center">
+            <h:inputHidden  value="#{info.purchaseid}"></h:inputHidden>
+            <h:outputText value="#{info.orderDate}">
+            <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+            </h:outputText></div>
+        </p:column>
+        <p:column filterBy="#{info.orderNumber}" headerText="PO Number"  filterMatchMode="contains" filterStyle="display:none" width="120">
+             <div align="center">
+            <h:outputText value="#{info.orderNumber}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText></div>
+        </p:column>
+        <p:column filterBy="#{info.firmName}" headerText="Firm Name"  filterMatchMode="contains" filterStyle="display:none" style="width:100px;">
+             <div align="center">
+            <h:outputText value="#{info.firmName}"/></div>
+        </p:column>
+        <p:column filterBy="#{info.currency}" headerText="Amount"  filterMatchMode="contains" filterStyle="display:none" style="width:90px;">
+            <div align="center"><h:outputText value="#{info.baseCurrency}"></h:outputText> &nbsp;<h:outputText value="#{info.currency}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+            </div>
+        </p:column>
+        <p:column filterBy="#{info.status2}" headerText="Payment"  filterMatchMode="contains" filterStyle="display:none" style="width:100px;">
+           		 <div align="center"><h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='pending'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='unpaid'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter1" rendered="#{info.status2=='paid'}"/>
+	            <h:outputText  value="#{info.status2}"  class="filter1" rendered="#{info.status2=='Paid'}"/>
+	             <h:outputText  value="#{info.status2}"  class="filter2" rendered="#{info.status2=='Partial'}"/>
+	            </div>
+        </p:column>
+         <p:column filterBy="#{info.status3}" headerText="Delivery"  filterMatchMode="contains" filterStyle="display:none" style="width:140px;">
+             <div align="center"><h:outputText  value="#{info.status3}"  class="filter1" rendered="#{info.status3=='delivered'}" />
+	            <h:outputText  value="#{info.status3}"  class="filter3" rendered="#{info.status3=='Waiting'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter3" rendered="#{info.status3=='inprocess'}"/>
+	            <h:outputText  value="#{info.status3}"  class="filter2" rendered="#{info.status3=='cancelled'}"/> </div>
+        </p:column>
+         <p:column headerText="Approval" filterBy="#{info.approveStatus}" width="140" filterMatchMode="contains" filterStyle="display:none">
+      <center><h:outputText value="Waiting for Approval" rendered="#{info.approveStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approveStatus}" rendered="#{info.approveStatus!='draft'}">
+      </h:outputText></center>
+      </p:column>
+         <p:column filterBy="#{info.firmName}" headerText="View"  filterMatchMode="contains" filterStyle="display:none" width="50">
+         <div align="center">
+ 	              <h:panelGroup rendered="#{info.status!='cancelled'}">    
+ 	            <p:commandButton  icon="fa fa-search" action="#{purchaseOrderFromMB.purchaseorderview}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	              <f:setPropertyActionListener target="#{purchaseViewMB.approveStatus}" value="#{info.approveStatus}" />
+	          <f:setPropertyActionListener target="#{purchaseViewMB.purchaseid}" value="#{info.purchaseid}" />
+	          <f:setPropertyActionListener target="#{purchaseViewMB.currency}" value="#{info.currency}" />
+	          <f:setPropertyActionListener target="#{purchaseViewMB.baseCurrency}" value="#{info.baseCurrency}" />
+	           </p:commandButton></h:panelGroup>
+	          <h:panelGroup rendered="#{info.status=='cancelled'}">
+	        
+	        <p:commandButton  icon="fa fa-search" onclick="PF('confirm').show()" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+	          </p:commandButton>
+	          </h:panelGroup>
+	         </div>
+	          
+         </p:column>
+         <p:column filterBy="#{info.firmName}" headerText="Edit"  filterMatchMode="contains" filterStyle="display:none" style="width:70px;">
+         
+          <div align="center">
+ 	         	          <h:panelGroup rendered="#{info.status=='inserted'}" >
+ 	            <p:commandButton  icon="fa fa-pencil" action="#{purchaseViewMB.purchaseorderedit}"
+ 	            onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{info.status4=='in2' and info.approveStatus!='draft'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	              <f:setPropertyActionListener target="#{purchaseViewMB.purchaseid}" value="#{info.purchaseid}" />
+	              <f:setPropertyActionListener target="#{purchaseViewMB.currency}" value="#{info.currency}" />
+	          <f:setPropertyActionListener target="#{purchaseViewMB.baseCurrency}" value="#{info.baseCurrency}" />
+	           </p:commandButton>
+	           <h:outputText  value="Payment start"  class="dlabelTxt" rendered="#{info.status4=='in1'}"/>
+	           <h:outputText  value="Non Editable"  class="dlabelTxt" rendered="#{info.status4=='out'}"/>
+	           </h:panelGroup>
+	           <h:outputText  value="Cancelled"  class="dlabelTxt" rendered="#{info.status=='cancelled'}"/>
+				</div></p:column>
+         <p:column filterBy="#{info.firmName}" headerText="Remove"  filterMatchMode="contains" filterStyle="display:none" style="width:80px;">
+         <div align="center">
+ 	          <h:panelGroup rendered="#{info.status=='inserted'}">
+ 	            <p:commandButton  icon="fa fa-remove" action="#{purchaseViewMB.purchaseordercancel}"
+ 	            onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{info.status4=='in2' and info.approveStatus!='draft'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	            <f:setPropertyActionListener target="#{purchaseViewMB.purchaseid}" value="#{info.purchaseid}" />
+	             <f:setPropertyActionListener target="#{purchaseViewMB.currency}" value="#{info.currency}" />
+	          <f:setPropertyActionListener target="#{purchaseViewMB.baseCurrency}" value="#{info.baseCurrency}" />
+	           </p:commandButton>
+	            <p:commandButton  icon="fa fa-remove" style="width:20px"
+	            onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" action="#{purchaseViewMB.purchaseordercancel}" rendered="#{info.status4=='in1' and info.approveStatus!='draft'}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	              <f:setPropertyActionListener target="#{purchaseViewMB.purchaseid}" value="#{info.purchaseid}" />
+	               <f:setPropertyActionListener target="#{purchaseViewMB.currency}" value="#{info.currency}" />
+	          <f:setPropertyActionListener target="#{purchaseViewMB.baseCurrency}" value="#{info.baseCurrency}" />
+	           </p:commandButton>
+	           <h:outputText  value="Non Cancellable"  class="dlabelTxt" rendered="#{info.status4=='out'}"/>
+	           </h:panelGroup>
+	           <h:outputText  value="Cancelled"  class="dlabelTxt" rendered="#{info.status=='cancelled'}"/>
+	           </div>
+         </p:column>
+        </p:dataTable>  <br/> <br/></center>
+		<div style="height:100px"></div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+ 					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+			</p:dialog> 	
+		
+		<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Purchase Order has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				
+				</div><center><p:commandButton value="Ok" action="#{purchaseViewMB.purchaseView}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						></p:commandButton></center>
+			</p:dialog>
+        <p:dialog widgetVar="confirm" header="Alert" width="40%" height="120" modal="true" resizable="false" appendTo="@(body)">
+        <div style="height:50px"></div>
+        <center>
+		<h:outputText  value="This purchase order already cancelled" styleClass="confirmTxt"></h:outputText>
+		</center>
+        </p:dialog>
+        
+       
+        </div>
+        </ui:define>
+        </ui:composition>

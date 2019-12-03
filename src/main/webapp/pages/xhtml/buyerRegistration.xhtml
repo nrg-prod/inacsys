@@ -1,0 +1,730 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content" >	
+  	<body >
+	<p:panel header="Customer Registeration Form" style="min-height:100%;width:100%;" rendered="#{!salesOrderFormMB.newFlag}">
+	<div style="height:5px;"></div>
+<h:form id="cus">
+	<h:outputText id="msg" style="text-align:center;"></h:outputText>
+	<h:message for="msg" style="color:red"></h:message>
+<center>
+<table width="95%">
+	<tr>
+		<td width="1%" style="height:20px;">
+			<p:inputText placeholder="Title" value="#{salesOrderFormMB.customerTitle}" style="width: 45px;" id="ctitle" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="ctitle"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="First Name *" value="#{salesOrderFormMB.customername}" id="cfname" styleClass="inputTxt" onblur="customername('center_content:cus:cfname','cnameicon')">
+			<p:ajax process="@this" immediate="true" update="cfname"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Middle Name" value="#{salesOrderFormMB.customerMiddleName}" id="cmname" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="cmname"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Last Name" value="#{salesOrderFormMB.customerLastName}" styleClass="inputTxt" id="clname">
+			<p:ajax process="@this" immediate="true" update="clname"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText styleClass="inputTxt" placeholder="Email *"  value="#{salesOrderFormMB.email}" id="cemail">
+			<p:ajax process="@this" immediate="true" update="cemail"></p:ajax>
+			</p:inputText>
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="3%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="cnameicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="cemailicon" style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr>
+		<td width="1%" style="height:20px;">
+			<p:inputText placeholder="Code" id="cuspcode" value="#{salesOrderFormMB.code}" styleClass="inputTxt" readonly="true" style="width:45px">
+			<p:ajax process="@this" immediate="true" update="cuspcode"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Mobile *" value="#{salesOrderFormMB.phonenumber}" id="cusmno" styleClass="inputTxt" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')">
+			<p:ajax process="@this" immediate="true" update="cusmno"></p:ajax>
+			</p:inputText>
+		</td>		
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Phone Number" value="#{salesOrderFormMB.custMobile}" id="cuspno" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="cuspno"></p:ajax>
+			</p:inputText>								
+		</td>
+		<td width="15%" style="height:20px;">
+			<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var3" value="#{salesOrderFormMB.categoryName}" id="ccate">	
+				<f:selectItem itemLabel="--- Select Category---" itemValue="select"></f:selectItem>
+				<f:selectItem itemLabel="Personal" itemValue="Personal"></f:selectItem>
+				<f:selectItem itemLabel="Company" itemValue="Company"></f:selectItem> 
+				<f:selectItem itemLabel="Others" itemValue="Store"></f:selectItem>
+       			<p:ajax process="@this" immediate="true" update="ccate"></p:ajax> 
+			</h:selectOneMenu>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Other" value="#{salesOrderFormMB.other}" id="other" styleClass="inputTxt">
+			<p:ajax process="@this" immediate="true" update="other"></p:ajax>
+			</p:inputText>								
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="3%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="cuspnoicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="custmnoicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="ccateicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p  style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr>
+		<td width="15%" style="height:20px;">
+			<p:inputText value="#{salesOrderFormMB.cusCode}" styleClass="inputTxt" readonly="true" style="width: 250px;"></p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:calendar placeholder="Date " value="#{salesOrderFormMB.salesorderdate}" datePattern="dd/MM/yyyy" style="line-height: normal;width:210px" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')" 	id="cdate">
+			<p:ajax event="dateSelect" process="@this" immediate="true" update="cdate"></p:ajax> 
+			</p:calendar>
+		</td>
+		<td width="15%" style="height:20px;">
+			<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{salesOrderFormMB.cusType}" id="custype">	
+				<f:selectItem itemLabel="--- Customer Type---" itemValue="" noSelectionOption="true"/>
+				<f:selectItem itemLabel="Trading" itemValue="Trading"></f:selectItem> 
+       			<f:selectItem itemLabel="Non-Trading" itemValue="Non-Trading"></f:selectItem> 
+       			<p:ajax process="@this" immediate="true" update="custype"></p:ajax> 
+			</h:selectOneMenu>
+		</td>		
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Website"  id="web" styleClass="inputTxt" value="#{salesOrderFormMB.website}">
+			<p:ajax process="@this" immediate="true" update="web"></p:ajax>
+			</p:inputText>								
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="18%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="cdateicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="cwebicon"  style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr>
+		<td width="15%" style="height:20px;">
+			<p:inputText value="#{salesOrderFormMB.faxnumber}" styleClass="inputTxt" style="width: 250px;" placeholder="Fax Number" id="cfax">
+			<p:ajax process="@this" immediate="true" update="cfax"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText value="#{salesOrderFormMB.cusLicence}" styleClass="inputTxt" style="width: 200px;" placeholder="Trade Licence Number" id="tlic">
+			<p:ajax process="@this" immediate="true" update="tlic"></p:ajax>
+			</p:inputText>
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputText placeholder="Company"  id="comp" styleClass="inputTxt" value="#{salesOrderFormMB.company}">
+			<p:ajax process="@this" immediate="true" update="comp"></p:ajax>
+			</p:inputText>								
+		</td>
+		<td width="15%" style="height:20px;">
+			<p:inputTextarea placeholder="Description"  id="cnote" styleClass="inputTxt" value="#{salesOrderFormMB.note}">
+			<p:ajax process="@this" immediate="true" update="cnote"></p:ajax>
+			</p:inputTextarea>								
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="15%" style="height:20px"><p id="cfaxicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr>
+		<td width="28%" style="height:20px;">
+			<h:selectOneMenu id="patyp" style="border-radius:0px;height: 25px;width: 250px;" valueChangeListener="#{salesOrderFormMB.venTypes}" value="#{salesOrderFormMB.type}">
+					<f:selectItem itemLabel="--- Payment Type---" itemValue="" />
+					<f:selectItem itemLabel="Cash" itemValue="Cash" />
+					<f:selectItem itemLabel="Credit" itemValue="Credit"/>
+					<p:ajax immediate="true" event="valueChange" update=":center_content" process="@this"></p:ajax>
+			</h:selectOneMenu>
+		</td>
+		<td width="16%" style="height:20px;">
+			<h:selectOneMenu id="days" style="border-radius:0px;height: 25px;width:200px;" rendered="#{salesOrderFormMB.type == 'Credit'}" value="#{salesOrderFormMB.cash}" >
+				<f:selectItem itemLabel="--- Payment Days---" itemValue="" />
+				<f:selectItems value="#{salesOrderFormMB.daylist}"></f:selectItems> 
+				<p:ajax immediate="true" update="@form" process="@this"></p:ajax>  
+		</h:selectOneMenu>	
+		</td>
+		<td width="2%" style="height:20px;">
+			<p:commandButton icon="fa fa-plus" action="#{salesOrderFormMB.dialog}" rendered="#{salesOrderFormMB.type == 'Credit'}"></p:commandButton>							
+		</td>
+		<td width="47%" style="height:20px;">
+											
+		</td>
+	</tr>
+</table>
+<table width="95%">
+	<tr>
+		<td width="18%" style="height:20px"><p id="clicenseicon" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="paytype" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p id="creday" style="padding:1px;margin:0px"></p></td>
+		<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td> 
+	</tr>
+</table>
+<table width="95%" style="height:20px;">
+	<tr> 
+		
+		<td width="56%" style="height:20px;"></td>
+	</tr>
+				
+</table>
+<div style="height:3px;"></div>
+<table width="95%">
+	<tr>
+		<td>
+			<p:tabView id="tabviewid" style="width:98%;height:230px;border:1px !important;">
+			<p:tab title="Address" id="address" style="min-height:300px;">
+			<table width="100%">
+			<tr>
+				<td width="50%">
+					<h:outputText value="Present Address" class="labelTxt"></h:outputText>
+				</td>
+				<td width="15%">
+					<h:outputText value="Permanent Address" class="labelTxt"></h:outputText>
+				</td>
+				<td width="3%">
+					<p:selectBooleanCheckbox valueChangeListener="#{salesOrderFormMB.checkBoxValueChange}" value="#{salesOrderFormMB.sameCheckBox}">
+					<p:ajax event="valueChange" update=":center_content" process="@this"></p:ajax>
+					</p:selectBooleanCheckbox></td>
+				<td width="20%"> 
+					<h:outputText value="Same as Present Address" class="labelTxt"></h:outputText></td>
+				<td width="17%"></td>
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="50%">
+					<p:inputTextarea placeholder="Street" value="#{salesOrderFormMB.shipingaddress}" id="saddr" style="width:418px">
+					<p:ajax rocess="@this" immediate="true" update="saddr"></p:ajax>
+					</p:inputTextarea>
+					<p id="caddricon" style="padding:1px;margin:0px"></p>
+				</td>
+				<td width="50%">
+					<p:inputTextarea placeholder="Street" value="#{salesOrderFormMB.permanentaddress}" rendered="#{salesOrderFormMB.showFlag}" id="saddr1" styleClass="inputTxt" style="width:418px">
+					<p:ajax process="@this" immediate="true" update="saddr1"></p:ajax>
+					</p:inputTextarea>
+					<p:inputTextarea placeholder="Street" readonly="true" value="#{salesOrderFormMB.permanentaddress}" rendered="#{salesOrderFormMB.hiddenFlag}" id="saddr2" styleClass="inputTxt" style="width:418px">
+					<p:ajax process="@this" immediate="true" update="saddr2"></p:ajax>
+					</p:inputTextarea>
+					<p id="caddricon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="23%" style="height:10px">
+					<p:inputText placeholder="City " value="#{salesOrderFormMB.presentCity}" id="ccity1" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="ccity1"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="23%" style="height:10px">
+					<h:selectOneMenu value="#{salesOrderFormMB.presentcountryID}" valueChangeListener="#{salesOrderFormMB.counSelectValueChange1}" style="border-radius:0px;height: 25px;width: 200px;" id="ccoun1" widgetVar="var1">	
+					<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+					<f:selectItem itemLabel="India" itemValue="India"></f:selectItem> 
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+       				<p:ajax process="@this" immediate="true" update="center_content"></p:ajax> 
+					</h:selectOneMenu>						
+				</td>		
+				<td width="4%"></td>		
+				<td width="23%" style="height:10px">
+					<p:inputText styleClass="inputTxt" placeholder="City " rendered="#{salesOrderFormMB.showFlag}" value="#{salesOrderFormMB.city}" id="ccity">
+					<p:ajax process="@this" immediate="true" update="ccity"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt" placeholder="City " readonly="true" rendered="#{salesOrderFormMB.hiddenFlag}" value="#{salesOrderFormMB.city}">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				<br/>
+				</td>
+				<td width="23%"  style="height:10px">
+					<h:selectOneMenu value="#{salesOrderFormMB.countryID}" rendered="#{salesOrderFormMB.showFlag}" valueChangeListener="#{salesOrderFormMB.counSelectValueChange}" 
+					style="border-radius:0px;height: 25px;width: 200px;" id="ccoun" widgetVar="var2" >
+					<f:selectItem itemLabel="--Select Country--" itemValue=""></f:selectItem>
+       				<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      				<p:ajax process="@this" immediate="true" update="cstate"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" placeholder="Country *"  readonly="true" rendered="#{salesOrderFormMB.hiddenFlag}" value="#{salesOrderFormMB.countryID}" >
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				<br/>
+				</td>
+				<td width="4%"  style="height:10px"></td>
+			</tr>
+			<tr>
+				<td width="21%" style="height:10px"><p id="cuscityicon" style="padding:1px;margin:0px"></p></td>
+				<td width="21%" style="height:10px"><p id="ccounicon" style="padding:1px;margin:0px"></p></td>				
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="23%">
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code" value="#{salesOrderFormMB.prePostCode}" id="cpcode1">
+					<p:ajax process="@this" immediate="true" update="cpcode1"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+				<td width="23%">
+					<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{salesOrderFormMB.presentstate}" id="cstate1">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{salesOrderFormMB.stateList1}"></f:selectItems>
+					<p:ajax process="@this" immediate="true" update="cstate1"></p:ajax>
+					</h:selectOneMenu>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+				<td width="4%"></td>
+				<td width="23%">
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code"  value="#{salesOrderFormMB.perPostCode}" rendered="#{salesOrderFormMB.showFlag}" id="cpcode">
+					<p:ajax process="@this" immediate="true" update="cpcode"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code" readonly="true" value="#{salesOrderFormMB.perPostCode}" rendered="#{salesOrderFormMB.hiddenFlag}">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="font-size: 10px; color: red;padding:2px;" />
+				</td>
+				<td width="23%">	
+					<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{salesOrderFormMB.state}" id="cstate" rendered="#{salesOrderFormMB.showFlag}">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{salesOrderFormMB.stateList}"></f:selectItems> 
+					<p:ajax process="@this" immediate="true" update="cstate"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" placeholder="State"  value="#{salesOrderFormMB.state}" readonly="true" rendered="#{salesOrderFormMB.hiddenFlag}" >
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" /></td><td width="4%">
+				</td>
+			</tr>
+			</table>
+			</p:tab>
+			</p:tabView>
+		</td>
+		</tr>
+	</table>
+	<div style="height:70px"></div>
+	
+	</center>					
+		<center>
+			<p:commandButton value="Submit" onclick="customerValidation()"  style="margin-left:-66px;"></p:commandButton>
+			<p:commandButton value="Reset" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"  process="@this" update="center_content" action="#{salesOrderFormMB.reset}" ></p:commandButton>
+			<p:commandButton id="hidenBtn" update="@form" process="@this" immediate="true" action="#{salesOrderFormMB.buyerRegister}" style="display:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+		</center><br></br><br></br><br></br>								
+       	</h:form>
+       	 </p:panel>
+       	 <p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="confirm" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+		<center><div style="height:20px"></div>
+ 			<h:outputText value="Customer Registeration has been successfully completed." styleClass="confirmTxt" rendered="#{!salesOrderFormMB.newFlag}"></h:outputText>
+ 			<h:outputText value="Member Registeration has been successfully completed." styleClass="confirmTxt" rendered="#{salesOrderFormMB.newFlag}"></h:outputText>
+			</center>
+			<div style="height:20px"></div>
+		<center><p:commandButton value="Ok"  process="@this" immediate="true" update="center_content" oncomplete="PF('confirm').hide()" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+		action="#{salesOrderFormMB.redirectbuyerRegister}" ></p:commandButton></center>						
+			
+		</p:dialog>
+       	 <p:panel header="Member Registeration Form" style="min-height:100%;width:100%;" id="memberpanel" rendered="#{salesOrderFormMB.newFlag}">
+       	 <p:panelGrid columns="4" styleClass="ui-panelgrid-blank" style="height:170px;width:100%">
+       	 <h:panelGroup>
+       	 <p:inputText styleClass="inputTxt" placeholder="Unit Name" value="#{salesOrderFormMB.businessname}" id="unitname">
+       	 <p:ajax process="@this"  update="unitname"></p:ajax>
+       	 </p:inputText><br></br>
+       	 <h:message for="unitname" style="font-size:11px;color:red"></h:message></h:panelGroup>
+       	 <h:panelGroup>
+       	 <p:inputText styleClass="inputTxt" placeholder="Unit Owner's Name" value="#{salesOrderFormMB.custName}" id="ownername">
+       	 <p:ajax process="@this" update="ownername"></p:ajax>
+       	 </p:inputText><br></br>
+       	 <h:message for="ownername" style="font-size:11px;color:red"></h:message></h:panelGroup>
+       	 <p:inputText styleClass="inputTxt" placeholder="Owner's Father Name" value="#{salesOrderFormMB.customername}" id="fathername">
+       	 <p:ajax process="@this" update="fathername"></p:ajax>
+       	 </p:inputText>
+     
+       	 <p:calendar id="dob"  placeholder="Date of Birth" pattern="dd/MM/yyyy" style="line-height: normal;width:210px" maxdate="#{currentDate}" value="#{salesOrderFormMB.salesorderdate}">
+       	 <p:ajax event="dateSelect" process="@this" update="dob"></p:ajax></p:calendar>
+       	 <h:panelGroup>
+       	 <p:inputText id="phonenumber" styleClass="inputTxt" placeholder="Phone Number" value="#{salesOrderFormMB.custMobile}">
+       	 <p:ajax process="@this" update="phonenumber"></p:ajax>
+       	 </p:inputText><br></br>
+       	 <h:message for="phonenumber" style="font-size:11px;color:red"></h:message></h:panelGroup>
+       	 <p:inputText id="emailid" styleClass="inputTxt" placeholder="Email ID" value="#{salesOrderFormMB.custEmailId}">
+       	 <p:ajax process="@this" update="emailid"></p:ajax>
+       	 </p:inputText>
+       	 <p:calendar id="daterecepit" styleClass="inputTxt" placeholder="Date of Receipt" datePattern="dd/MM/yyyy"  maxdate="#{currentDate}" value="#{salesOrderFormMB.deliverydate}" style="line-height: normal;width:210px">
+       	 <p:ajax event="dateSelect" process="@this" update="daterecepit"></p:ajax></p:calendar>
+       
+       	  <h:panelGroup>
+		       	  <p:calendar id="dateofjoin" styleClass="inputTxt" placeholder="Date of Join" datePattern="dd/MM/yyyy"  value="#{salesOrderFormMB.dateOfJoin}" style="line-height: normal;width:210px">
+		       	 <p:ajax event="dateSelect" process="@this" update="dateofjoin"></p:ajax></p:calendar><br></br>
+		       	 <h:message for="dateofjoin" style="font-size:11px;color:red"></h:message></h:panelGroup>
+       	 <h:panelGroup>
+       	 <table><tr><td>
+       	 <h:outputText value="Unit in Partnership" class="labelTxt"></h:outputText></td><td width="15px"></td>
+       	<td><p:selectOneRadio style="font-size:12px" value="#{salesOrderFormMB.type}" id="typeofnominee" >
+        	<f:selectItem itemLabel="Yes" itemValue="Yes" />
+        	<f:selectItem itemLabel="No" itemValue="No" />
+        	<p:ajax  process="@this" update="typeofnominee tabviewpartnerShip"></p:ajax>
+    	</p:selectOneRadio></td>
+    	</tr></table>
+       	 </h:panelGroup>
+       	 <p:inputText styleClass="inputTxt" value="#{salesOrderFormMB.cusCode}" readonly="true"></p:inputText>
+       	 </p:panelGrid>
+       	 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" style="height:70px;width:100%">
+       	  <h:outputText value="Photo" class="labelTxt"></h:outputText>
+       	 <p:fileUpload id="photo" mode="advanced" auto="true" skinSimple="true" value="#{salesOrderFormMB.photoUploadFile}" 
+       	 fileUploadListener="#{salesOrderFormMB.dummyAction}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:-21px">
+       	 </p:fileUpload>
+       	  <h:outputText value="Propritor Photo" class="labelTxt"></h:outputText>
+       	 	<p:fileUpload  mode="advanced" auto="true"   skinSimple="true" value="#{salesOrderFormMB.attachmentFile}"
+       	 	fileUploadListener="#{salesOrderFormMB.dummyAction1}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:-21px"/>
+       	  <h:outputText value="Nominee Photo" class="labelTxt"></h:outputText>
+       	 <p:fileUpload  mode="advanced" auto="true" skinSimple="true" value="#{salesOrderFormMB.nomineePhoto}"
+       	  fileUploadListener="#{salesOrderFormMB.dummyAction2}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:-21px"/>
+       	 
+       	 </p:panelGrid>
+       	 
+       	 
+       	 <p:tabView id="tabviewpartnerShip" style="width:98%;height:200px;border:1px !important;" >
+			<p:tab title="Partner Ship" id="partnerTab" style="min-height:200px;" rendered="#{salesOrderFormMB.type == 'Yes'}">
+			
+			<table width="100%">
+			<tr>
+				<td width="23%" style="height:10px">
+					<p:inputText placeholder="Partner Name"  id="partnerName" styleClass="inputTxt" value="#{salesOrderFormMB.partnerShipName}">
+					<p:ajax process="@this" immediate="true" update="partnerName"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="23%" style="height:10px">
+					<p:inputText placeholder="Partner Father Name" id="partnerFName" styleClass="inputTxt" value="#{salesOrderFormMB.partnerFnamerelation}">
+					<p:ajax process="@this" immediate="true" update="partnerFName"></p:ajax>
+					</p:inputText>					
+				</td>		
+				<td width="4%"></td>		
+				<td width="23%" style="height:10px">
+						 <p:calendar id="partnerdob"  placeholder="Date of Birth" pattern="dd/MM/yyyy" style="line-height: normal;width:210px" maxdate="#{currentDate}" 
+							 value="#{salesOrderFormMB.pnDOB}">
+	       	 					<p:ajax event="dateSelect" process="@this" update="partnerdob"></p:ajax>
+       	 				</p:calendar>
+				<br/>
+				</td>
+				<td width="23%"  style="height:10px">
+				 <p:inputText id="partneremailid" styleClass="inputTxt" placeholder="Email ID" value="#{salesOrderFormMB.pnEmailID}">
+				       	 <p:ajax process="@this" update="partneremailid"></p:ajax>
+				     </p:inputText>
+				<br/>
+				</td>
+				<td width="4%"  style="height:10px"></td>
+			</tr>
+			</table>
+			<br/>
+		<table  width="100%">
+			<tr>
+			<td width="23%" style="height:10px">
+			 <p:inputText id="partnerPhonenumber1" styleClass="inputTxt" placeholder="Phone Number 1" value="#{salesOrderFormMB.pnPhoneNumber1}">
+				       	 <p:ajax process="@this" update="partnerPhonenumber1"></p:ajax>
+				   </p:inputText>
+			</td>
+				
+			<td width="23%" style="height:10px">
+			
+					 <p:inputText id="partnerPhonenumber2" styleClass="inputTxt" placeholder="Phone Number 2" value="#{salesOrderFormMB.pnPhoneNumber2}">
+				       	 <p:ajax process="@this" update="partnerPhonenumber2"></p:ajax>
+				     </p:inputText>
+			</td>
+			<td width="4%"  style="height:10px"></td>
+			
+				<td width="50%" style="height:10px">
+
+					<p:inputTextarea placeholder="Address"  id="paddr" style="width:418px" value="#{salesOrderFormMB.pnAddress}">
+						<p:ajax rocess="@this" immediate="true" update="paddr"></p:ajax>
+					</p:inputTextarea>
+					
+
+				</td>
+			
+			</tr>
+			</table>
+			</p:tab>
+			
+			<p:tab title="Nominee" id="nomineeTab" style="min-height:200px;" rendered="#{salesOrderFormMB.type == 'No'}">
+			
+			<table width="100%">
+			<tr>
+				<td width="23%" style="height:10px">
+					<p:inputText placeholder="Nominee's Name"  id="nomineeName" styleClass="inputTxt" value="#{salesOrderFormMB.partnerShipName}">
+					<p:ajax process="@this" immediate="true" update="nomineeName"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="23%" style="height:10px">
+					<p:inputText placeholder="Nominee's RelationShip"  id="nomineeRelation" styleClass="inputTxt" value="#{salesOrderFormMB.partnerFnamerelation}">
+					<p:ajax process="@this" immediate="true" update="nomineeRelation"></p:ajax>
+					</p:inputText>					
+				</td>		
+				<td width="4%"></td>		
+				<td width="23%" style="height:10px">
+						 <p:calendar id="nomineedob"  placeholder="Date of Birth" pattern="dd/MM/yyyy" value="#{salesOrderFormMB.pnDOB}"
+						 style="line-height: normal;width:210px" maxdate="#{currentDate}" >
+       	 					<p:ajax event="dateSelect" process="@this" update="nomineedob"></p:ajax>
+       	 					</p:calendar>
+				<br/>
+				</td>
+				<td width="23%"  style="height:10px">
+				 <p:inputText id="nomineeemailid" styleClass="inputTxt" placeholder="Email ID" value="#{salesOrderFormMB.pnEmailID}">
+				       	 <p:ajax process="@this" update="nomineeemailid"></p:ajax>
+				     </p:inputText>
+				<br/>
+				</td>
+				<td width="4%"  style="height:10px"></td>
+			</tr>
+			</table>
+			<br/>
+		<table  width="100%">
+			<tr>
+			<td width="23%" style="height:10px">
+			 <p:inputText id="nomineePhonenumber1" styleClass="inputTxt" placeholder="Phone Number 1" value="#{salesOrderFormMB.pnPhoneNumber1}">
+				       	 <p:ajax process="@this" update="nomineePhonenumber1"></p:ajax>
+				     </p:inputText>
+			</td>
+				
+			<td width="23%" style="height:10px">
+			
+					 <p:inputText id="nomineePhonenumber2" styleClass="inputTxt" placeholder="Phone Number 2" value="#{salesOrderFormMB.pnPhoneNumber2}">
+				       	 <p:ajax process="@this" update="nomineePhonenumber2"></p:ajax>
+				     </p:inputText>
+			</td>
+			<td width="4%"  style="height:10px"></td>
+			
+				<td width="50%" style="height:10px">
+
+					<p:inputTextarea placeholder="Address" id="nomineeaddr" style="width:418px" value="#{salesOrderFormMB.pnAddress}">
+						<p:ajax rocess="@this" immediate="true" update="nomineeaddr"></p:ajax>
+					</p:inputTextarea>
+					
+
+				</td>
+			
+			</tr>
+			</table>
+			</p:tab>
+			
+			
+			</p:tabView>
+     
+       	 
+       	 <p:tabView id="tabviewadress" style="width:98%;height:230px;border:1px !important;">
+			<p:tab title="Address" id="addressTab" style="min-height:300px;">
+			<table width="100%">
+			<tr>
+				<td width="50%">
+					<h:outputText value="Present Address" class="labelTxt"></h:outputText>
+				</td>
+				<td width="15%">
+					<h:outputText value="Permanent Address" class="labelTxt"></h:outputText>
+				</td>
+				<td width="3%">
+					<p:selectBooleanCheckbox valueChangeListener="#{salesOrderFormMB.checkBoxValueChange}" value="#{salesOrderFormMB.sameCheckBox}">
+					<p:ajax event="valueChange" update=":center_content" process="@this"></p:ajax>
+					</p:selectBooleanCheckbox></td>
+				<td width="20%"> 
+					<h:outputText value="Same as Present Address" class="labelTxt"></h:outputText></td>
+				<td width="17%"></td>
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="50%">
+					<p:inputTextarea placeholder="Street" value="#{salesOrderFormMB.shipingaddress}" id="saddr" style="width:418px">
+					<p:ajax rocess="@this" immediate="true" update="saddr"></p:ajax>
+					</p:inputTextarea>
+					<p id="caddricon" style="padding:1px;margin:0px"></p>
+				</td>
+				<td width="50%">
+					<p:inputTextarea placeholder="Street" value="#{salesOrderFormMB.permanentaddress}" rendered="#{salesOrderFormMB.showFlag}" id="saddr1" styleClass="inputTxt" style="width:418px">
+					<p:ajax process="@this" immediate="true" update="saddr1"></p:ajax>
+					</p:inputTextarea>
+					<p:inputTextarea placeholder="Street" readonly="true" value="#{salesOrderFormMB.permanentaddress}" rendered="#{salesOrderFormMB.hiddenFlag}" id="saddr2" styleClass="inputTxt" style="width:418px">
+					<p:ajax process="@this" immediate="true" update="saddr2"></p:ajax>
+					</p:inputTextarea>
+					<p id="caddricon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="23%" style="height:10px">
+					<p:inputText placeholder="City " value="#{salesOrderFormMB.presentCity}" id="ccity1" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="ccity1"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="23%" style="height:10px">
+					<h:selectOneMenu value="#{salesOrderFormMB.presentcountryID}" valueChangeListener="#{salesOrderFormMB.counSelectValueChange1}" style="border-radius:0px;height: 25px;width: 200px;" id="ccoun1" widgetVar="var1">	
+					<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+					<f:selectItem itemLabel="India" itemValue="India"></f:selectItem> 
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+       				<p:ajax process="@this" immediate="true" update="center_content"></p:ajax> 
+					</h:selectOneMenu>						
+				</td>		
+				<td width="4%"></td>		
+				<td width="23%" style="height:10px">
+					<p:inputText styleClass="inputTxt" placeholder="City " rendered="#{salesOrderFormMB.showFlag}" value="#{salesOrderFormMB.city}" id="ccity">
+					<p:ajax process="@this" immediate="true" update="ccity"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt" placeholder="City " readonly="true" rendered="#{salesOrderFormMB.hiddenFlag}" value="#{salesOrderFormMB.city}">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				<br/>
+				</td>
+				<td width="23%"  style="height:10px">
+					<h:selectOneMenu value="#{salesOrderFormMB.countryID}" rendered="#{salesOrderFormMB.showFlag}" valueChangeListener="#{salesOrderFormMB.counSelectValueChange}" 
+					style="border-radius:0px;height: 25px;width: 200px;" id="ccoun" widgetVar="var2" >
+					<f:selectItem itemLabel="--Select Country--" itemValue=""></f:selectItem>
+       				<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      				<p:ajax process="@this" immediate="true" update="cstate"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" placeholder="Country *"  readonly="true" rendered="#{salesOrderFormMB.hiddenFlag}" value="#{salesOrderFormMB.countryID}" >
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				<br/>
+				</td>
+				<td width="4%"  style="height:10px"></td>
+			</tr>
+			<tr>
+				<td width="21%" style="height:10px"><p id="cuscityicon" style="padding:1px;margin:0px"></p></td>
+				<td width="21%" style="height:10px"><p id="ccounicon" style="padding:1px;margin:0px"></p></td>				
+			</tr>
+			</table>
+			<table width="100%">
+			<tr>
+				<td width="23%">
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code" value="#{salesOrderFormMB.prePostCode}" id="cpcode1">
+					<p:ajax process="@this" immediate="true" update="cpcode1"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+				<td width="23%">
+					<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{salesOrderFormMB.presentstate}" id="cstate1">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{salesOrderFormMB.stateList1}"></f:selectItems>
+					<p:ajax process="@this" immediate="true" update="cstate1"></p:ajax>
+					</h:selectOneMenu>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" />
+				</td>
+				<td width="4%"></td>
+				<td width="23%">
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code"  value="#{salesOrderFormMB.perPostCode}" rendered="#{salesOrderFormMB.showFlag}" id="cpcode">
+					<p:ajax process="@this" immediate="true" update="cpcode"></p:ajax>
+					</p:inputText>
+					<p:inputText styleClass="inputTxt" placeholder="Postal Code" readonly="true" value="#{salesOrderFormMB.perPostCode}" rendered="#{salesOrderFormMB.hiddenFlag}">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cuscityicon" style="font-size: 10px; color: red;padding:2px;" />
+				</td>
+				<td width="23%">	
+					<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{salesOrderFormMB.state}" id="cstate" rendered="#{salesOrderFormMB.showFlag}">
+					<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{salesOrderFormMB.stateList}"></f:selectItems> 
+					<p:ajax process="@this" immediate="true" update="cstate"></p:ajax>
+					</h:selectOneMenu>
+					<p:inputText styleClass="inputTxt" placeholder="State"  value="#{salesOrderFormMB.state}" readonly="true" rendered="#{salesOrderFormMB.hiddenFlag}" >
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" /></td><td width="4%">
+				</td>
+			</tr>
+			</table>
+			</p:tab>
+			</p:tabView>
+     
+			<br></br>
+			<div class="ui-g">
+			<p:selectBooleanCheckbox value="#{salesOrderFormMB.purchaseCheck}" id="termscondition">
+			<p:ajax update="termscondition" process="@this" ></p:ajax></p:selectBooleanCheckbox>
+			<h:outputText value="Terms of Agreement" class="labelTxt" style="margin-left:10px"></h:outputText>
+			</div>
+			<h:message for="termscondition" style="font-size:11px;color:red"></h:message>
+			<br></br><br></br>
+			<center>
+			<p:commandButton value="Submit" process="@this" action="#{salesOrderFormMB.memberAssociation}"  ></p:commandButton>
+			<p:commandButton value="Reset" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"  process="@this" update="center_content" action="#{salesOrderFormMB.reset}" ></p:commandButton>
+			</center>
+       	 </p:panel>
+       	<p:dialog header="NEW FORM" id="diaog" widgetVar="confirm1" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+				<p:outputPanel id="daypanelid1">
+				<h:form id="form2">
+				<table>
+				<tr>
+				<td>
+				<h:outputText value="#{salesOrderFormMB.validate}" class="errorTxt" style="margin-left: 276px;"></h:outputText>
+				<p id="vendaysss"  style="padding:1px;margin:0px;margin-left: 276px;"></p>
+				</td>
+				</tr>
+				</table><div style="height:15px"></div>
+				<table><tr>
+						<td><br />
+							<h:outputText value="Days" class="labelTxt" style="margin-left: 177px;"></h:outputText>
+						</td>
+						<td width="5%"></td>
+						<td><br />
+							<p:inputText id="neww" styleClass="inputTxt" value="#{salesOrderFormMB.newcash}">
+							<p:ajax process="@this" immediate="true" update="neww"></p:ajax> 
+							</p:inputText> 
+						</td>
+					</tr>										
+				</table>			
+				<center>
+						<p:commandButton value="Save" onclick="vendornewvalidation()" style=" margin-top: 15px;"></p:commandButton>
+						<p:commandButton id="hid" update="center_content:daypanelid1" process="@this" immediate="true" action="#{salesOrderFormMB.vendorRegistercash}" style="display:none"></p:commandButton>
+				</center>	
+				</h:form>				
+				</p:outputPanel> 
+			</p:dialog>		
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   </p:dialog> 
+       	<p:remoteCommand action="#{salesOrderFormMB.cusnamecheck}" name="customernamecheck"></p:remoteCommand>  	
+      </body>
+     </ui:define>
+    </ui:composition>
+  
+    

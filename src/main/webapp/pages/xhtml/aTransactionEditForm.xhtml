@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+     xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title> Inacsys | Transaction Edit Form  </title>
+<link rel="stylesheet" href="../../css/css.css">
+</link>
+<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+
+</h:head>
+<body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover; overflow: auto;">
+<h:form>
+<table  style="margin: 0 auto; width: 100%"  align="center" border="0" class="form_background">
+
+<tr>
+
+<td height="300px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="#{aTransactionMB.validate}" class="validation_ui"/>
+</td></tr>
+<tr>
+                    <td align="center">
+                 
+	             <p:panel style="width:730px;">
+	              <h:panelGrid class="labelTxt" border="0"  cellspacing="10"   columns="4"  style="font-size:10px; width:730px;" align="center" cellpadding="3">
+	          	<h:outputText/><h:outputText/><h:outputText/><h:outputText/>
+				<h:outputText class="labelTxt" value="Payment Date"></h:outputText>
+				<p:calendar datePattern="dd/MM/yyyy"   value="#{aTransactionMB.paydate}"  id="pay_date" style="line-height: normal;"/>
+				<h:outputText class="labelTxt" value="Due Date"></h:outputText>
+				<p:calendar datePattern="dd/MM/yyyy"   value="#{aTransactionMB.duedate}"  id="due_date" style="line-height: normal;"/>
+				<h:outputText/><h:outputText/><h:outputText/><h:outputText/>
+				<h:outputText class="labelTxt" value="Mailing Address"></h:outputText>
+				<h:inputText class="text_ui" value="#{aTransactionMB.maddress}"></h:inputText>
+				
+				<h:outputText class="labelTxt" value="Payment Mode"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.paymentMode}"></h:outputText>
+				
+				<h:outputText/><h:outputText/><h:outputText/><h:outputText/>
+				<h:outputText class="labelTxt" value="Transaction Type"></h:outputText>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.transactionType}"></h:outputText>
+				
+				<h:outputText class="labelTxt" value="Account "></h:outputText>
+				<h:selectOneMenu  id="cacnt" value="#{aTransactionMB.particular}" styleClass="text_ui" valueChangeListener="#{aTransactionMB.accountDetails}">
+					<f:selectItem itemLabel="---Select---"></f:selectItem>
+					<f:selectItems value="#{aTransactionMB.atypeList}"></f:selectItems>
+					<p:ajax event="valueChange" update="cacnt" process="@this"></p:ajax>
+				</h:selectOneMenu>
+				<h:outputText/><h:outputText/><h:outputText/><h:outputText/>
+				<h:outputText class="labelTxt" value="Amount"></h:outputText>
+				<h:inputText class="text_ui" value="#{aTransactionMB.amount}"/>
+				
+				<h:outputText class="labelTxt" value="Currency Type"></h:outputText>
+				<h:selectOneMenu class="text_ui" value="#{aTransactionMB.currencyType}" id="currency" style="width:200px;height:25px;">
+					<f:selectItem itemLabel="Select Currency Type" noSelectionOption="true"/>
+					<f:selectItem itemLabel="AED" itemValue="AED"/>
+				   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+				   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+				   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+				   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+					<p:ajax update="currency" process="@this"></p:ajax>
+				</h:selectOneMenu>
+				<h:outputText class="labelTxt" value="Base Currency Amount"></h:outputText>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{aTransactionMB.currency}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/>
+				</h:outputText>
+				<h:outputText value="#{aTransactionMB.baseCurrency}"  class="labelTxt"></h:outputText></h:panelGroup>
+				<h:outputText class="labelTxt" value="Description"></h:outputText>
+				<h:inputTextarea class="text_ui" value="#{aTransactionMB.note}" style="width:186px;"/>
+				<h:outputText value="#{aTransactionMB.transStatus}" style="display:none;"/><h:outputText/><h:outputText/><h:outputText/>
+				
+				<h:outputText /><h:outputText/><h:outputText/><h:outputText/>
+</h:panelGrid>
+<h:panelGrid rendered="#{aTransactionMB.paymentMode=='Card'}"  class="labelTxt" border="0"  cellspacing="11"   columns="4"  style="font-size:10px; width:730px;" align="left" cellpadding="3">  									
+ <h:outputLabel value="Bank Name" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{aTransactionMB.bankname}" style="margin-left:+39;"></h:inputText>
+								<h:outputLabel value=" Card Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="labelTxt" ></h:outputLabel>
+										<h:inputText class=" text_ui " value="#{aTransactionMB.cardno}" style="margin-right:+18;"></h:inputText>
+									
+									</h:panelGrid>
+<h:panelGrid rendered="#{aTransactionMB.paymentMode=='Transfer'}"  class="label_ui" border="0"  cellspacing="9"   columns="4"  style="font-size:10px; width:730px;" align="left" cellpadding="3">  									
+ <h:outputLabel value="Bank Name" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{aTransactionMB.bankname}" style="margin-left:+39;"></h:inputText>
+								<h:outputLabel value="Account Number" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{aTransactionMB.cardno}" style="margin-right:4px;"></h:inputText>
+									
+									</h:panelGrid>									
+<h:panelGrid rendered="#{aTransactionMB.paymentMode=='Cheque'}"  class="labelTxt" border="0"  cellspacing="7"   columns="4"  style="font-size:10px; width:730px;" align="left" cellpadding="3">  									
+									<h:outputLabel value="Bank Name" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{aTransactionMB.bankname}" style="margin-left:+40;"></h:inputText>
+										<h:outputLabel value="Cheque Number" class="labelTxt"></h:outputLabel>
+										<h:inputText class="text_ui" value="#{aTransactionMB.chequeno}" style="margin-right:+12;"></h:inputText>
+										<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+										<h:outputLabel value=" Cheque Date" class="labelTxt"></h:outputLabel>
+										<p:calendar datePattern="dd/MM/yyyy"   value="#{aTransactionMB.chequedate}" maxdate="#{currentDate}" id="tran_date" style="margin-left:+40;line-height: normal;"/>
+									</h:panelGrid>
+			 <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:10px; width:730px;" align="center" cellpadding="3">
+	          	<h:outputLabel value="Attachment"  class="labelTxt"></h:outputLabel>
+				<p:fileUpload  mode="advanced"  value="#{aTransactionMB.transFile}" id="TPhoto" style="width:250px"
+      							 fileUploadListener="#{aTransactionMB.dummyAction}" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" >
+       			</p:fileUpload>		 
+       			<a4j:mediaOutput style="width:100px;height:100px;display:#{aTransactionMB.flag};"
+							element="img" cacheable="false" session="true" 
+							createContent="#{aTransactionMB.imageview}" mimeType="image/png" />
+	         </h:panelGrid>	<br/>										
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+<p:commandButton  value="Update" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" styleClass="button_ui"  action="#{aTransactionMB.confirmedit}" update="@form"></p:commandButton>
+<p:commandButton   value="Cancel" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" styleClass="button_ui" action="#{aTransactionMB.transactionviewsclose}"></p:commandButton><h:outputText/><h:outputText/><h:outputText/>
+	          				<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></p:panel>
+	   
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="10">
+    </td></tr>   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+<p:confirmDialog header="Confirmation" message="Yes to continue No to cancel" widgetVar="cd" style="font-size:11px;">
+<center>
+<p:commandButton value="Yes" styleClass="kbutton_ui" action="#{aTransactionMB.confirmedit}"></p:commandButton>
+<p:commandButton value="No" styleClass="kbutton_ui" onclick="PF('cd').hide()"></p:commandButton>
+</center>
+</p:confirmDialog>
+          
+</td></tr>
+</table>
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 	
+<p:dialog header="Add AccountType" modal="true" widgetVar="addAccount" width="400px" height="200px" id="add">
+<br/>
+<h:panelGrid columns="3" style="border-width:0px;padding:2px;border:0px;" cellspacing="5" cellpadding="5">
+
+<h:outputLabel value="Account Type" style="font-size:12px;"></h:outputLabel>
+<h:outputLabel value=":" style="font-size:12px;"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.accountType}" id="acnt">
+<p:ajax update="acnt" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="acnt" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+<h:outputLabel value="Description" style="font-size:12px;"></h:outputLabel>
+<h:outputLabel value=":" style="font-size:12px;"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.description}" id="desc">
+</p:inputText>
+<br/>
+</h:panelGroup>
+</h:panelGrid>
+<br/>
+<center>
+<p:commandButton value="Save" action="#{aTransactionMB.addAccount1}" update="add" process="@this" ></p:commandButton>
+</center>
+</p:dialog>
+
+<p:dialog header="Confirmation" modal="true" widgetVar="confirmDialog1" id="confirmDialog1" width="200px" height="80px">
+<h:panelGrid>
+<h:outputLabel value="Successfully Saved" style="font-size:12px;"></h:outputLabel>
+</h:panelGrid>
+<br />
+ <center><p:commandButton value="Ok"  process="@this" immediate="true" update="@form" 
+    oncomplete="PF('confirmDialog1').hide()"></p:commandButton></center>  
+</p:dialog>
+</h:form>
+
+</body>
+</ui:composition>

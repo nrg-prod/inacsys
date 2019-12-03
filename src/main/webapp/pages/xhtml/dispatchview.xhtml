@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+
+		<title>Inacsys | Dispatch View</title>
+		<link rel="stylesheet" href="../../css/css.css"></link>
+	</h:head>
+	<body onload="#{commissionFormMB.dispatchview()}"  style="background-attachment:fixed;background-position:50% 50%; background-size:cover;">
+		<div align="center">
+			<h:form>
+				<div style="width: 760; background-color: #eaeced;">
+				<p:panel id="panel" style="width:750px;background-color: #eaeced;border: 0px;">
+					<table style="width: 600px;">
+						<tr>
+							<td align="left" width="00px">
+							<h:panelGrid>
+		<h:commandButton  image="/images/nrglogo.png"/>
+		</h:panelGrid>
+		<p>
+
+ </p>
+							</td>
+							<td width="00px">
+								
+							</td>
+							
+							<td align="right">
+								<div style="padding-top: +30;">
+									<table>
+										<tr>
+											<td align="center">
+												<!-- <h:inputText style="height:15px;width:30px;"></h:inputText> - <h:inputText style="height:15px;width:30px;"></h:inputText> - 20 <h:inputText style="height:15px;width:30px;"></h:inputText> -->
+												<h:outputText value="#{commissionFormMB.tDate}" class="label_ui"></h:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td><div style="line-height: 1px;">---------------------------------</div></td>
+										</tr>
+										<tr><td align="center"><h:outputText class="label_ui" value="#{commissionFormMB.address}"></h:outputText></td></tr>
+										<tr>
+											<td><div style="line-height: 1px;">---------------------------------</div></td>
+										</tr>
+										
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+							<br/>		<h:panelGrid columns="3">
+						
+												<h:outputText styleClass="label_ui"
+													value="SURAT JALAN NO." />
+													<div width="30px"></div>
+													<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;#{commissionFormMB.dispatchNo}" class="label_ui"/>
+													<h:outputText></h:outputText><h:outputText></h:outputText><div style="line-height: 1px;">--------------------------</div>
+											</h:panelGrid>
+							</td>
+							
+						</tr>
+						<tr><td><br/></td></tr>
+						<tr>
+							<td colspan="3">
+								<div
+						style="width: 700px; color: #282552; font-family: 'Helvetica Neue LT Pro 55'; font-size: 20">
+						
+						</div>
+							</td>
+						</tr>
+						<tr><td colspan="3"><hr></hr></td></tr>
+						
+						<tr>
+						<td colspan="3">
+
+							<rich:dataTable id="dataTable1" var="info" value="#{commissionFormMB.comList}" columnsWidth="100px, 100px,400px,100px" >
+						
+							<f:facet name="header">
+							<rich:columnGroup><rich:column><span
+									style="font-size: 12px; width: 250px; color: #ffffff; font-family: 'Helvetica Neue LT Pro 55';">
+									Banyaknya </span></rich:column>
+								<rich:column colspan="2">
+								<span
+									style="font-size: 12px; width: 250px; color: #ffffff; font-family: 'Helvetica Neue LT Pro 55';">
+									N A M A B A R A N G </span>
+								</rich:column>	
+								<rich:column colspan="2">
+								<span
+									style="font-size: 12px; width: 100px; color: #ffffff; font-family: 'Helvetica Neue LT Pro 55';">
+									Quantity</span>
+								</rich:column>	
+								
+									</rich:columnGroup>
+								
+							</f:facet>
+							<rich:column height="30px">
+							<div style="height: 15px;">
+								<h:outputText class="label_ui" value="#{info.sNo}" />
+								
+							</div>
+							
+							</rich:column>
+							<rich:column >
+							<h:outputText class="label_ui" value="#{info.prodcode}"/>
+							<!-- <h:outputText class="label_ui" value="#{info.uPrice}">
+							<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText> -->
+							</rich:column>
+							<rich:column>
+							<h:outputText class="label_ui" value="#{info.productName}"/>
+							</rich:column>
+							
+							<rich:column>
+							<h:outputText class="label_ui" value="#{info.rollquan}"/>
+							<h:outputText class="label_ui" value=" #{info.rollunit}"/>
+							
+							</rich:column>
+					</rich:dataTable>
+						
+						</td></tr>
+						<tr><td>
+						
+						<br/>
+						</td></tr>
+						<tr><td colspan="3">
+						<p>
+<h:panelGrid columns="12" style="font-weight:bold;font-size:14">
+	
+	 <h:outputLabel  value="Total Quantity"></h:outputLabel>
+	<h:outputText value=":"></h:outputText>
+	 <h:outputText value="#{commissionFormMB.totQuan}" > 
+	 <f:converter converterId="com.inventory.util.UrlConverter" />
+	 </h:outputText>
+	 
+	 </h:panelGrid>
+	 </p>
+						
+						</td></tr>
+						
+						
+						<tr>
+							
+							<td align="left">
+							<h:outputText
+									value="TANDA TERIMA"
+									style="font-size:16px;width: 700px;color:#282552;font-family:'Helvetica Neue LT Pro 55'; font-size: 14" /></td>
+							<td width="00px">
+								
+							</td>
+							<td align="right">
+							<h:outputText value="Hormat Kami,"
+									style="font-size:16px;width: 700px;color:#282552;font-family:'Helvetica Neue LT Pro 55'; font-size: 15" /></td>
+						</tr>
+						<tr><td colspan="3"><br/><br/></td></tr>
+						
+						
+					</table>
+					</p:panel>
+					<table style="width: 700px;"><tr><td align="center" colspan="3">
+						<h:panelGrid columns="2">
+						<p:commandButton value="Print"  styleClass="button_ui" action="#{reportMB.redirect1}">  <p:printer target="panel" /></p:commandButton>
+						<p:commandButton value="Cancel" styleClass="button_ui" action="#{commissionFormMB.dispatchviewclose}" />
+					</h:panelGrid>
+						</td></tr>
+						<tr><td colspan="3"><div style="height: 50px;"></div></td></tr>
+						</table>
+				</div>
+			</h:form>
+		</div>
+	</body>
+</ui:composition>

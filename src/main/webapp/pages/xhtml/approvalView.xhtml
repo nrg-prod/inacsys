@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Approval  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{salesViewMB.salesDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  style="margin-top:-10"  align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr >
+<td align="center" ><div style="background-color: #dab7a3;width: 1000;height: 50;">
+<table><tr><td></td></tr><tr><td>
+
+<h:outputLabel style="color:white;font-weight:bold;font-size:30" value="Download  the files"></h:outputLabel></td></tr></table></div>
+
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+	<tr>
+		<td align="left" >
+			<table border="0"   bgcolor="">
+				<tr>
+					<td align="center">
+						
+						<br/>
+						<br/>
+						<div  style="color: blue;background-color: #dab7a3;width: 280;border-radius:20;" align="center">
+							<h2 style="color:white;line-height: 50px;">#{sampleMB.head}</h2>
+							<p:panel style="width:280px;border:0px;display:1;background-color: #dab7a3;border-radius:20;">
+   								<ui:repeat var="file" value="#{approvalViewMB.fileList}" >
+   								<h:panelGrid columns="2">
+   								<h:commandButton image="../../images/downlaod.png" style="width:50px;height:50px;cursor:pointer " icon="ui-icon-arrowthick-1-s" action="#{approvalViewMB.fileCall}">
+   										<f:setPropertyActionListener target="#{approvalViewMB.fileName}" value="#{file.fileName1}"></f:setPropertyActionListener>
+   										 <p:fileDownload value="#{approvalViewMB.dFile}" >
+   										   </p:fileDownload>
+   									</h:commandButton>
+   								<p:outputLabel style="color:white;" value="#{file.fileName}"></p:outputLabel>
+   									</h:panelGrid>
+   									
+   									
+   									
+   								</ui:repeat>
+   								<br></br>
+   								<h:commandButton class="button" value="ok" action="approvalpage.xhtml?faces-redirect=true"></h:commandButton>
+    						</p:panel>
+    						
+    						
+						</div>
+						
+					</td>
+				</tr>
+				<tr><td align="center"> </td></tr>
+			    <tr>
+			    
+			    	<td height="300">
+			    	</td>
+			    </tr>
+			   
+			</table> 
+		</td>
+	</tr>
+</table> 
+
+</td></tr>
+
+ <tr>
+			    	<td align="center">
+			    		<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+					</td>
+				</tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

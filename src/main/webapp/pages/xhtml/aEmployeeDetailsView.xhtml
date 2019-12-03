@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Employee Details View </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("employee:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        function process1(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("employee:find1").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+
+ <body onload="#{employeeRegistrationFormMB.dropdown()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="employee">
+<table   border="0" class="form_background" align="center" style="overflow: hidden">
+
+
+<tr><td align="center" colspan="2"><h:outputText value="Employee View" class="header_ui"/>
+<br/></td></tr>
+<tr><td align="center"   >
+<h:outputText value="#{employeeDetailsViewFormMB.validate}" class="validation_ui"></h:outputText>
+</td></tr>
+
+<tr>
+<td height="10px" align="center">
+
+<table align="center">
+<tr><td align="center"><h:outputText style="font-style: normal;font-size:18px;color:#F51313;font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+</td></tr>
+<tr>
+                    <td align="center"> 
+	   <rich:panel style="font-size:14px; width:370px;text-align:left" header="Search by Employee ID"  >  
+	        <h:panelGrid  columns="9"  style="font-size:14px; width:390px;height: 90px;" align="center">  
+	         
+	            <h:outputLabel value="Employee ID"  class="label_ui"/>
+	             &nbsp;
+	             <h:selectOneMenu onkeypress="return process(event);" class="text_ui" value="#{employeeDetailsViewFormMB.employeeid}" >
+							<f:selectItem  itemLabel="--Select--"></f:selectItem>
+							<f:selectItems value="#{employeeRegistrationFormMB.emploeid}" ></f:selectItems>
+							</h:selectOneMenu>
+	            <h:outputText  /> <h:outputText /> 
+	            <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	           &nbsp;
+	            <h:outputText class="text_ui" />
+     <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	           &nbsp;<h:outputText/><h:commandButton class="button" id="find" value="Search" action="#{employeeDetailsViewFormMB.view}"></h:commandButton> 
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                     <td align="right" >
+                    <rich:panel style="font-size:14px; width:370px;text-align:left" header="Search by Employee Name"  >  
+	        <h:panelGrid  columns="9"  style="font-size:14px; width:390px;height: 90px;" align="center">  
+	         
+	            <h:outputLabel value="Employee Name *"  class="label_ui"/>
+	             &nbsp;
+	             <h:selectOneMenu onkeypress="return process1(event);"  class="text_ui" value="#{employeeDetailsViewFormMB.name}">
+							<f:selectItem  itemLabel="--Select--"></f:selectItem>
+							<f:selectItems value="#{employeeRegistrationFormMB.emploename}"></f:selectItems>
+							</h:selectOneMenu>
+	            <h:outputText  /> <h:outputText /> 
+	            <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	           &nbsp;
+	            <h:outputText class="text_ui" />
+     <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	           &nbsp;<h:outputText/><h:commandButton class="button" id="find1" value="Search" action="#{employeeDetailsViewFormMB.view1}"></h:commandButton> 
+	        </h:panelGrid>  
+	  	    </rich:panel>
+	  	      </td></tr>
+	  	    <tr><td colspan="2" align="center">
+	  	    <table style="align:center;" > <tr><td height="30px"><br/>
+							<h:panelGrid colspan="2" style="display:#{employeeDetailsViewFormMB.flag}">
+							<rich:dataTable id="datatable" var="info"   style="max-width:700px;max-height:250px ;font-size:14;" 
+  								styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row" columnsWidth="150px,150px,130px,90px,60px,40px,40px,40px" value="#{employeeDetailsViewFormMB.list}" >
+							<h:column ><f:facet name="header"><span  style="font-style: normal;font-size:10px;padding-top:10px;height:100;font-family:'Helvetica Neue LT Pro 55';">Registration ID</span> </f:facet> 
+							<div align="left">
+							<h:outputText class="label_ui" value="#{info.registrationId}" ></h:outputText></div> </h:column>
+							<h:column width="150px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';" >Employee ID</span></f:facet>
+							<div align="left">
+							<h:outputText  class="label_ui" value="#{info.employeeId}"></h:outputText> </div></h:column>							
+							<h:column ><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Employee Name</span></f:facet> 
+						    <div align="left">
+							<h:outputText  class="label_ui" value="#{info.employeeName}"></h:outputText></div> </h:column>
+							<h:column width="140px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Phone Number</span> </f:facet> 
+							<div align="left"><h:outputText class="label_ui" value="#{info.phoneNumber}"></h:outputText> </div></h:column>
+							<h:column width="200px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Designation</span> </f:facet> 
+							<div align="left"><h:outputText  class="label_ui" value="#{info.designation.type}"></h:outputText> </div></h:column> 
+							
+							<!-- <h:column width="100px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">DOB</span></f:facet>
+							<div align="left">
+							<h:outputText  class="label_ui" value="#{info.dateOfBirth}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText></div> </h:column>
+							 --><!-- <h:column width="80px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Gender</span> </f:facet> 
+							<div align="left">
+							<h:outputText  class="label_ui" value="#{info.gender}"></h:outputText></div> </h:column>
+							<h:column width="140px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Phone Number</span> </f:facet> 
+							<div align="left"><h:outputText class="label_ui" value="#{info.phoneNumber}"></h:outputText> </div></h:column>
+							<h:column width="80px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Qualification</span> </f:facet> 
+							<div align="left"><h:outputText  class="label_ui" value="#{info.qualification.type}"></h:outputText> </div></h:column>
+							<h:column width="100px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Entry Date</span> </f:facet> 
+							<div align="left"><h:outputText  class="label_ui" value="#{info.entryDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText> </div></h:column>
+							<h:column width="100px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Join Date</span> </f:facet> 
+							<div align="left"><h:outputText  class="label_ui" value="#{info.dateOfJoin}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText> </div></h:column>
+							<h:column width="150px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Basic Salary</span> </f:facet> 
+							<div align="left"><h:panelGroup>
+<h:outputText  class="label_ui" value="Rp&nbsp;"></h:outputText><h:outputText  class="label_ui" value="#{info.basicSalary}">
+							<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText></h:panelGroup> </div></h:column>	
+							<h:column width="200px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Designation</span> </f:facet> 
+							<div align="left"><h:outputText  class="label_ui" value="#{info.designation.type}"></h:outputText> </div></h:column> -->	
+							<h:column ><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> View</span> </f:facet>
+							<div align="center"> <h:commandButton  align="center" image="/images/view.png" action="#{employeeDetailsViewFormMB.viewform}" >
+							<f:setPropertyActionListener target="#{employeeDetailsViewFormMB.regid}" value="#{info.registrationId}"></f:setPropertyActionListener>
+							</h:commandButton></div></h:column>						
+							<h:column ><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Modify</span> </f:facet>
+							<div align="center"> <h:commandButton  align="center" image="/images/edit.png" actionListener="#{employeeDetailsViewFormMB.employeemodifyform}">
+							<f:setPropertyActionListener target="#{employeeDetailsViewFormMB.regid}" value="#{info.registrationId}"></f:setPropertyActionListener>
+							</h:commandButton></div></h:column>
+							<h:column align="center"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Delete</span> </f:facet> 
+							<div align="center"><p:commandButton icon="ui-icon-close" onclick="PF('cd1').show()" >
+							<f:setPropertyActionListener target="#{employeeDetailsViewFormMB.regid}" value="#{info.registrationId}"></f:setPropertyActionListener>
+							</p:commandButton></div></h:column>
+							</rich:dataTable></h:panelGrid>
+							</td></tr>
+							  <p:confirmDialog header="Confirmation" widgetVar="cd1" message="Yes to continue No to cancel" style="font-size:11px">
+   <center>
+   <p:commandButton value="Yes" action="#{employeeDetailsViewFormMB.delete}" styleClass="kbutton_ui"></p:commandButton>
+    <p:commandButton value="No" onclick="PF('cd1').hide()" styleClass="kbutton_ui"></p:commandButton>
+    </center>
+   </p:confirmDialog>
+							</table>
+                  
+                   </td></tr>
+                  
+                  
+                    <tr>
+                    <td height="10">        
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 10px"></td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

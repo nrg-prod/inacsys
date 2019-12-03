@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Transaction View</title>
+ <link rel="stylesheet" href="../../css/css.css"></link>
+
+ 
+</h:head>
+ <body onload="#{productRemoveFormMB.dropdown()} #{productRegisterFormMB.dropDown()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover; overflow: hidden;">
+
+
+<h:form>
+<table  border="0" class="form_background" style="width: 100%;">
+
+
+
+
+
+<tr>
+
+<td height="100px" align="center">
+
+<table align="center">
+
+  
+<tr><td height="200px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Transaction View" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td  align="center">
+                   
+                    </td>                    
+                  </tr>
+                  
+                  <tr><td colspan="2" align="center">
+	  	    <table style="align:center;" > <tr><td >
+							<div style="height:220px ; width:580px; overflow-x:scroll; overflow-y:scroll;display:#{aTransactionMB.flag}" align="center">
+							<h:panelGrid colspan="2" style="display:#{aTransactionMB.flag}">
+							<rich:dataTable id="datatable" var="info" inputStyle="height: 20px; width: 200px; font-size:10px;"
+  style="font-size:10;" 
+  							 reRender="dynamicScroller"	rowClasses="datatable-odd,datatable-even" value="#{aTransactionMB.tarns}" >
+  	 <rich:column  headerText="Name" sortOrder="#{aTransactionMB.sortsOrders['transactionNo']}" sortBy="#{info.transactionNo}" sortType="custom" width="120px"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Transaction Number" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="datatable" action="#{aTransactionMB.sort()}">
+	            <f:param name="sortProperty" value="transactionNo"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{aTransactionMB.sortsOrders['transactionNo']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{aTransactionMB.sortsOrders['transactionNo']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.transactionNo}"></h:outputText>  
+	            
+	        </rich:column>
+			 <rich:column width="120px" headerText="Name" sortOrder="#{aTransactionMB.sortsOrders['transdate']}" sortBy="#{info.transdate}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Transaction Date" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="datatable" action="#{aTransactionMB.sort()}">
+	            <f:param name="sortProperty" value="transdate"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{aTransactionMB.sortsOrders['transdate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{aTransactionMB.sortsOrders['transdate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.transdate}">
+	            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>  
+	            
+	        </rich:column>		
+			 <rich:column width="140px" headerText="Name" sortOrder="#{aTransactionMB.sortsOrders['paymentMode']}" sortBy="#{info.paymentMode}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Payment Mode" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="datatable" action="#{aTransactionMB.sort()}">
+	            <f:param name="sortProperty" value="paymentMode"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{aTransactionMB.sortsOrders['paymentMode']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{aTransactionMB.sortsOrders['paymentMode']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.paymentMode}"></h:outputText>
+	            
+	        </rich:column>				
+							
+				<rich:column width="140px" headerText="Name" sortOrder="#{aTransactionMB.sortsOrders['transactionType']}" sortBy="#{info.transactionType}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Transaction Type" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="datatable" action="#{aTransactionMB.sort()}">
+	            <f:param name="sortProperty" value="transactionType"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{aTransactionMB.sortsOrders['transactionType']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{aTransactionMB.sortsOrders['transactionType']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.transactionType}"></h:outputText>
+	            
+	        </rich:column>		
+	        <!-- <rich:column width="140px" headerText="Name" sortOrder="#{aTransactionMB.sortsOrders['note']}" sortBy="#{info.note}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Name" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="datatable" action="#{aTransactionMB.sort()}">
+	            <f:param name="sortProperty" value="note"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{aTransactionMB.sortsOrders['note']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{aTransactionMB.sortsOrders['note']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.note}"></h:outputText>
+	            
+	        </rich:column>	 -->		
+				 <rich:column width="140px" headerText="Name" sortOrder="#{aTransactionMB.sortsOrders['amt1']}" sortBy="#{info.amt1}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Amount" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="datatable" action="#{aTransactionMB.sort()}">
+	            <f:param name="sortProperty" value="amt1"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{aTransactionMB.sortsOrders['amt1']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{aTransactionMB.sortsOrders['amt1']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         	<h:panelGroup>
+<h:outputText  class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText  class="label_ui" value="#{info.amt1}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText> </h:panelGroup>
+	            
+	        </rich:column>				
+							<!-- <h:column width="140px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Amount</span> </f:facet> 
+							<div align="center"><h:outputText class="label_ui" value="#{info.amount}">
+							<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText> </div></h:column> -->
+							<!-- <h:panelGrid style="display:none">
+							<h:column width="180px" ><f:facet  name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Bank Name</span> </f:facet> 
+							<div align="center" ><h:outputText  class="label_ui" value="#{info.bankName}"></h:outputText> </div></h:column>
+							<h:column width="180px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Card Number</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.cardNo}"></h:outputText> </div></h:column>
+							<h:column width="180px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Cheque Number</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.chequeNo}"></h:outputText> </div></h:column>
+							<h:column width="100px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Cheque Date</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.chequeDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText> </div></h:column>
+							</h:panelGrid> -->
+							<h:column width="70px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Action</span> </f:facet>
+							<h:outputText rendered="#{info.status=='credited'}"  value="credited" style="color:green;" class="label_ui"/>
+							<h:outputText rendered="#{info.status=='debited'}" value="debited" style="color:red;" class="label_ui"></h:outputText>
+							<h:panelGrid rendered="#{info.paymentMode=='Cheque'}">
+							<div align="center">
+							 <h:commandButton  align="center" image="/images/accept.png" style="height:15px;width:15px" action="#{aTransactionMB.chequeCredit}">
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</h:commandButton></div></h:panelGrid>
+							<h:outputText rendered="#{info.transactionType=='Expenses'}" value="debited" style="color:red;" class="label_ui"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Expense'}" value="debited" style="color:red;" class="label_ui"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Income'}"  value="credited" style="color:green;" class="label_ui"/>
+							</h:column>						
+							<h:column width="50px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> View</span> </f:facet>
+							<div align="center"> <h:commandButton  align="center" image="/images/view.png" action="#{aTransactionMB.viewForm}">
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</h:commandButton></div></h:column>						
+							<h:column width="60px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Modify</span> </f:facet>
+							<div align="center"> <h:commandButton  align="center" image="/images/edit.png" action="#{aTransactionMB.editForm}">
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</h:commandButton></div></h:column>
+							<h:column width="60px"><f:facet name="header"><span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Delete</span> </f:facet> 
+							<div align="center"><p:commandButton icon="ui-icon-close"  onclick="PF('cd1').show()"  align="center" >
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</p:commandButton></div></h:column>
+							</rich:dataTable></h:panelGrid></div>
+							</td></tr>
+							
+							</table>
+<div id="popup" style="background-position:top;display:#{aTransactionMB.flagpop} ">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px;">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<p:commandButton value="Ok" actionListener="#{aTransactionMB.transactionviewsclose}" styleClass="kbutton_ui"></p:commandButton>
+</h:panelGrid></div>
+   </div>	</td></tr>
+                                    
+</table> 
+</td></tr>
+
+</table> 
+</td></tr>
+ <p:confirmDialog header="Confirmation" widgetVar="cd1" message="Yes to continue No to cancel" style="font-size:11px">
+   <center>
+   <p:commandButton value="Yes" action="#{aTransactionMB.delete}" styleClass="kbutton_ui" ></p:commandButton>
+    <p:commandButton value="No" onclick="PF('cd1').hide()" styleClass="kbutton_ui"></p:commandButton>
+    </center>
+   </p:confirmDialog>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

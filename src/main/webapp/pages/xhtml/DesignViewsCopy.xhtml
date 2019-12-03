@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Vendor Register Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<style>
+
+.rf-dg, .rf-dg-c
+{
+ border:none;
+}
+.one{ border: 1px solid red;}
+</style>
+</h:head>
+ 
+ <body  onload="#{productRegisterFormMB.dropDown()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+<!-- <ui:include src="/pages/xhtml/templates/menunew.xhtml" /> -->
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right">
+<h:commandButton value="Translate" style="font-weight:bold;"  ajax="false"> 
+<rich:componentControl target="popup" operation="show" />
+</h:commandButton>&nbsp;
+<h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+<div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Pendaftaran Kategori" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:300px;" align="left" bgcolor="#f4f4f4">
+<h:outputText value="Category" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Nama Kategori" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Description" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Deskripsi" style="font-size:14px;color:#3B22DA;"></h:outputText>
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+
+
+<tr><td align="center"><h:outputText value="#{productRegisterFormMB.validate}" class="validation_ui"/>
+</td></tr>
+<tr>
+<td align="center" >
+
+            <rich:panel style="width:950px;" id="tab" >
+	            <h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText id="reg" value="Product Design View" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:950px;"  >
+	             <h:panelGrid columns="2"  >
+	         
+	             <h:panelGrid border="0"  cellspacing="20"   columns="2"  style="font-size:14px; " align="left" cellpadding="3">
+	           <h:outputText class="label_ui" value="Product Name"></h:outputText>
+				<h:outputText class="text_ui" value="#{productRegisterFormMB.product_name}"></h:outputText>
+			
+					
+			
+				<h:outputText class="label_ui" value="Description"></h:outputText>
+				<h:outputText  class="text_ui" value="#{productRegisterFormMB.description}"   ></h:outputText>
+				</h:panelGrid>
+				
+				
+				
+				<h:panelGrid cellpadding="30" >
+	             <a4j:mediaOutput style="width:100px;height:100px;" element="img"
+   cacheable="false" session="true" createContent="#{productRegisterFormMB.paint2}"
+     mimeType="image/png" /></h:panelGrid>
+      
+    </h:panelGrid>
+	
+	</rich:panel>
+	<rich:panel style="width:950px;">
+	   
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+
+<h:commandButton  value="Process" class="button_ui"  action="#{productRegisterFormMB.vvalidate()}" >
+</h:commandButton> 
+<h:commandButton value="Cancel" class="button_ui" action="#{reportMB.redirect1}" ></h:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></rich:panel>
+	<h:panelGroup style="width:950px;display:#{productRegisterFormMB.ff1};">
+	<rich:panel style="width:950px;">
+	<h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText value="Upload Samples" class="header_ui"/>
+	            </h:panelGrid>
+	            
+	<h:form>
+
+ <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="2"  style="font-size:14px; width:700px;" align="left" cellpadding="3">
+           
+           <h:outputText class="label_ui" value="Upload Photo"></h:outputText>
+            <rich:fileUpload style="max-width:240px;max-height:70px ;" fileUploadListener="#{productRegisterFormMB.listener2}" id="upload" acceptedTypes="jpg, gif, png, bmp"
+                ontyperejected="alert('Only JPG, GIF, PNG and BMP files are accepted');" maxFilesQuantity="1">
+                <a4j:ajax event="uploadcomplete" execute="@none" render="@form" />
+            </rich:fileUpload>
+            </h:panelGrid>
+            
+            <h:panelGroup id="info" layout="block">
+                <h:outputText value="#{productRegisterFormMB.uploadValidate}" style="color:red;font-size:14px;" />
+                    <h:outputText value="No files currently uploaded" rendered="#{productRegisterFormMB.size==0}" />
+                    <rich:dataGrid styleClass="tableClass1" columns="5" value="#{productRegisterFormMB.files}" var="file" rowKeyVar="row">
+                        
+                            
+                            
+                            
+                            <h:panelGroup columnClasses="one">
+                            <h:panelGrid columns="1">
+                                <a4j:mediaOutput element="img" mimeType="image/jpeg" createContent="#{productRegisterFormMB.paint1}"
+                                    value="#{row}" style="width:130px; height:130px;" cacheable="false">
+                            
+                                </a4j:mediaOutput>
+                            
+                             </h:panelGrid></h:panelGroup>    
+                           
+                        
+                    </rich:dataGrid>
+                <a4j:commandButton action="#{productRegisterFormMB.clearUploadData}" render="info, upload" value="Clear Uploaded Data"
+                    rendered="#{productRegisterFormMB.size>0}" />
+            </h:panelGroup>
+        
+          
+        </h:form>            
+	            
+	            
+	            
+	            
+	            
+	            
+	<h:panelGrid columns="5" >
+	
+	</h:panelGrid>
+	</rich:panel>
+	               <rich:panel style="width:950px;">
+	   
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+
+<h:commandButton id="save" value="Save" class="button_ui"  action="#{productRegisterFormMB.designImageSubmit()}" >
+</h:commandButton> 
+<h:commandButton  id="cancel" value="Cancel" class="button_ui" action="#{reportMB.redirect1}" ></h:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></rich:panel></h:panelGroup >
+<h:panelGroup  style="display:#{productRegisterFormMB.ff2};">                        
+<rich:panel style="width:950px;">
+	<h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText value="View Samples" class="header_ui"/>  
+	            </h:panelGrid>   
+	            
+	            <h:panelGroup>
+            
+	              <h:form id="main" prependId="false">
+	              <h:outputText value="#{productRegisterFormMB.invalidate2}" class="validation_ui"/>
+	            <rich:dataGrid styleClass="tableClass1" columns="5" value="#{productRegisterFormMB.domain1}" var="ff" rowKeyVar="row">
+                       
+                            
+                            
+                            
+                            <h:panelGroup columnClasses="one">
+                            <h:panelGrid columns="1">
+                            
+                              <h:graphicImage style="width:100px;height:100px;" value="/images/dynamic/?file=#{ff.fileName}"/>
+                               <h:panelGroup>
+                               <h:outputText value="#{ff.no}"></h:outputText>    
+							<h:inputText class="header_ui" id="change" value="#{ff.desc}"  valueChangeListener="#{productRegisterFormMB.Change}">
+							<f:attribute value="#{ff.fileName}" name="fname"></f:attribute>
+							<f:attribute value="#{ff.no}" name="no"></f:attribute>
+							<f:ajax render="@form" execute="change"></f:ajax>
+							</h:inputText>   
+							<h:selectBooleanCheckbox id="check" value="#{ff.priroty}" valueChangeListener="#{productRegisterFormMB.checkBox}" >
+							<f:selectItem itemValue="1" itemLabel=" " />
+							<f:attribute value="#{ff.fileName}" name="fname"></f:attribute>
+							<f:attribute value="#{ff.desc}" name="desc"></f:attribute>
+							<f:attribute value="#{ff.no}" name="no"></f:attribute>
+							<f:ajax render="@form" execute="check"></f:ajax>
+							</h:selectBooleanCheckbox> </h:panelGroup>
+                             </h:panelGrid></h:panelGroup>    
+                           
+                        
+                    </rich:dataGrid>
+	            </h:form>
+	            
+	            
+	           
+	            
+		         </h:panelGroup>
+	            
+	            
+		         </rich:panel>   
+		         <rich:panel style="width:950px;">
+	   
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+
+<h:commandButton value="Save" class="button_ui"  action="#{productRegisterFormMB.saveImages()}" >
+</h:commandButton> 
+<h:commandButton value="Cancel" class="button_ui" action="#{reportMB.redirect1}" ></h:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></rich:panel>
+		         
+		              
+		        </h:panelGroup>    
+
+
+</td>
+</tr>                 
+ <tr><td>
+ 
+
+ 
+ </td></tr>
+ 
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+            <!--     <div style="font-size:18px;color:white;clear:both;width:1040px;text-align:center;padding:5px;align:center; background-color: #174e77;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div> -->
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

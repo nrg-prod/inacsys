@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase Delivery Status  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;"  >
+
+
+<h:form>
+<table style="margin-top:-10" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1050px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+
+<table align="center" border="0" class="form_background">
+<tr>
+<td width="1020px"></td>
+</tr>
+<tr>
+</tr>
+<tr>
+<td align="center" >
+<h:outputText value="#{loginMB.validate1}" class="validation_ui"/><br/><br/>
+<table border="0"   bgcolor="">
+             <tr align="center"> <td align="center"><h:outputText value="Out Of Stock" class="header_ui"/>   </td></tr> 
+
+<tr>
+                    <td align="left" >
+
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px"></td></tr>
+                 </table>  <table border="0">
+                    <tr >
+                    <td >
+                   <h:panelGrid style="display:#{loginMB.flag}">
+  <rich:dataTable  columnsWidth="160px,160px,160px,160px,160px" id="dataTabl"  height="50px" var="info" value="#{loginMB.outStock}" enableContextMenu="false"
+   reRender="dynamicScroller"
+  rowClasses="datatable-odd,datatable-even"  >
+  
+   <rich:column  headerText="Name" sortOrder="#{loginMB.sortsOrders['productName']}" sortBy="#{info.productName}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Product Name " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{loginMB.sort()}">
+	            <f:param name="sortProperty" value="productName"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{loginMB.sortsOrders['productName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{loginMB.sortsOrders['productName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.productName}"/>  
+	            
+	        </rich:column>
+ 
+ <rich:column  headerText="Name" sortOrder="#{loginMB.sortsOrders['vendor']}" sortBy="#{info.vendor}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Vendor Name" execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{loginMB.sort()}">
+	            <f:param name="sortProperty" value="vendor"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{loginMB.sortsOrders['vendor']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{loginMB.sortsOrders['vendor']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.vendor}"/>  
+	            
+	        </rich:column>
+ 
+	   <rich:column  headerText="Name" sortOrder="#{loginMB.sortsOrders['actual1']}" sortBy="#{info.actual1}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Buying Price" execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{loginMB.sort()}">
+	            <f:param name="sortProperty" value="actual1"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{loginMB.sortsOrders['actual1']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{loginMB.sortsOrders['actual1']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         <h:outputText value="Rp " class="label_ui"/>
+	           <h:outputText value="#{info.actual1}"  class="label_ui"> <f:converter converterId="com.inventory.util.UrlConverter"/> </h:outputText>
+	            
+	        </rich:column>
+      
+   <rich:column  headerText="Name" sortOrder="#{loginMB.sortsOrders['market1']}" sortBy="#{info.market1}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Selling Price " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{loginMB.sort()}">
+	            <f:param name="sortProperty" value="market1"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{loginMB.sortsOrders['market1']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{loginMB.sortsOrders['market1']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         <h:outputText value="Rp " class="label_ui"/>
+	           <h:outputText value="#{info.market1}"  class="label_ui"> <f:converter converterId="com.inventory.util.UrlConverter"/> </h:outputText>
+	            
+	        </rich:column>
+      
+  
+  
+	
+  
+	        
+	   	
+<!--  </rich:dataTable> --></rich:dataTable> </h:panelGrid>
+            
+    </td> 
+ 
+            
+    </tr>
+</table> 
+</td>
+</tr>
+<tr><td height="400px">
+
+</td>
+</tr>
+
+</table>              
+ 
+ 
+   
+
+
+</td></tr>
+
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

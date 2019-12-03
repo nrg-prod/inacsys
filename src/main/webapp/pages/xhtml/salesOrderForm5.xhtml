@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://primefaces.org/ui"
+      template="../../pages/xhtml/home.xhtml">
+<link rel="stylesheet" href="../../css/css.css" ></link>
+<ui:define name="content" >	
+<body style="over-flow-y:auto;">
+<p:panel header="Sales Order Form" id="panelID" style="min-height:100%">
+<table   border="0" class="form_background" align="center" >
+
+
+<tr>
+
+<td  align="center">
+
+<table align="center">
+<tr><td align="center">
+
+</td></tr>
+
+                    <tr align="center">
+                    <td>
+                     <p:panel style="width:1000px;" id="tb" >
+                    <h:outputText value="#{salesOrderFormMB.validate2}" styleClass="errorTxt"/>
+                
+	            <h:form>
+                       <p:panel style="width:700px;" >
+                       <table><tr><td>
+	            <h:panelGrid class="labelTxt" columns="6" style="width: 700px; HEIGHT:110PX; font-family: 'HelveticaNeueLT Pro 55 Roman'; " align="center" >
+	         
+
+
+ <h:outputText class="labelTxt" value="Date *"></h:outputText><h:outputText ></h:outputText>
+ <p:calendar styleClass="date111" inputStyle="height: 20px; width: 100px; font-size:10px;" pattern="dd/MM/yyyy" value="#{salesOrderFormMB.oderDate}" size="30" maxlength="10" id="date"  label="Date">
+<f:ajax render="@form" event="dateSelect" update="@form"></f:ajax>
+ </p:calendar>
+  
+  <h:outputText class="labelTxt" value=" Delivery Date *"></h:outputText><h:outputText ></h:outputText>
+ <p:calendar  inputStyle="height: 20px; width: 200px; font-size:10px;" pattern="dd/MM/yyyy" value="#{salesOrderFormMB.targetDate}" size="30" maxlength="10" id="ate"  label="Date" >
+ <f:ajax render="@form" event="dateSelect" update="@form"></f:ajax>
+ </p:calendar>
+ 
+ <h:outputText class="labelTxt" value="Category *" />
+ <h:outputText ></h:outputText>
+<h:selectOneMenu id="cgtry" style="height:27px" class="text_ui" value="#{salesOrderFormMB.category1}"  valueChangeListener="#{salesOrderFormMB.category}">
+<f:selectItem itemLabel="--- select ---" itemValue="select"></f:selectItem>
+<f:selectItem itemLabel="Personal" itemValue="Personal"></f:selectItem>
+<f:selectItem itemLabel="Company" itemValue="Company"></f:selectItem>
+<f:selectItem itemLabel="Others" itemValue="Store"></f:selectItem>
+<f:ajax execute="cgtry" render="@form"></f:ajax>
+</h:selectOneMenu>
+ 
+ <h:outputText value="Customer Name *" class="labelTxt"/><h:outputText ></h:outputText>
+	        <h:selectOneMenu onclick="custnameclick()" id="cgtry1" style="font-size: 10px;  height: 27px; width: 200px;  font-family:'Arial,san-serif';"  value="#{salesOrderFormMB.customername}"  label="select one vendor" valueChangeListener="#{salesOrderFormMB.customerName}">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue=""/>
+				   	 <f:selectItems value="#{salesOrderFormMB.resulfinal}" />
+				    <f:ajax execute="cgtry1" render="@form"></f:ajax>
+				 </h:selectOneMenu>
+				 <h:outputText value="Customer Phone Number *" class="labelTxt"/><h:outputText ></h:outputText>
+	        <h:selectOneMenu id="phnos" style="font-size: 10px;  height: 27px; width: 200px;font-family:'Arial,san-serif'';" value="#{salesOrderFormMB.custPhNo}"  label="select one vendor" >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue="" />
+				   		 <f:selectItems value="#{salesOrderFormMB.phnozz}"  />
+				    <f:ajax execute="phnos" render="@form"></f:ajax>
+				 </h:selectOneMenu>
+ <h:outputText value="Currency *" class="labelTxt"/><h:outputText ></h:outputText>
+	        <h:selectOneMenu id="curr" style="font-size: 10px;  height: 27px; width: 200px;font-family:'Arial,san-serif'';" value="#{salesOrderFormMB.currency}"  label="select one vendor">
+				   	<f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue="" />
+				   	<f:selectItem itemLabel="AED" itemValue="AED"/>
+				   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+				   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+				   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+				   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+				    <f:ajax execute="curr" render="@form"></f:ajax>
+			</h:selectOneMenu>
+ 
+ 
+            </h:panelGrid></td><td>
+            
+            
+            
+            </td></tr></table>
+            </p:panel>
+            </h:form>          
+            <h:form id="fo">
+            
+            <h:outputText value="#{salesOrderFormMB.validate}" styleClass="errorTxt"/>
+            <h:panelGrid style="height:10px" ></h:panelGrid>
+            <p:dataTable  var="info" value="#{salesOrderFormMB.homeMBs}"  style="width:1000px;">
+				
+					<p:column width="30" headerText="No">
+					
+					<f:facet name="header"> <span class="dataTableTxt"> No  </span>      </f:facet>
+				
+					
+					<div align="center">
+						 <h:outputText  value="#{info.serialno}"/>
+						 </div>
+					</p:column>
+					
+					<p:column width="160" headerText="Item Name">
+					<f:facet name="header"> <span class="dataTableTxt"> Product Name * </span>      </f:facet>
+					
+					<div align="center">
+					
+						 <h:outputText style="font-size:12px; display:#{info.uflag};font-family:'Arial,san-serif'"  value="#{info.productName}"/>
+						 <h:selectOneMenu onclick="productnameClick()" id="a" value="#{info.productName}" label="select one type" valueChangeListener="#{salesOrderFormMB.valueChange}"  style="display:#{info.flag}; width: 140px; " class="text_ui">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   			 <f:selectItems  value="#{salesOrderFormMB.productlist}" ></f:selectItems>
+				   			<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				    		<f:attribute value="#{info.productName}" name="product"></f:attribute>
+				    		<f:ajax render="@form" execute="a"></f:ajax>
+				 </h:selectOneMenu></div>
+					</p:column>
+					<p:column width="80" headerText="Price">
+					<f:facet name="header"> <span class="dataTableTxt"> Price  </span>      </f:facet>
+					<div align="center">
+						<!--  <h:outputText  value="#{info.price}" class="label_ui"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText> -->
+						<h:panelGroup>
+						 <h:outputText id="pri" value="#{info.price}">
+						 <f:converter converterId="com.inventory.util.UrlConverter"/>
+						 </h:outputText></h:panelGroup>
+						
+						 </div>
+					</p:column>
+					
+					<p:column headerText="Quantity *" width="100">
+	       <f:facet name="header">
+	        <h:outputText value="Quantity *"  class="dataTableTxt"></h:outputText>
+	       </f:facet>
+	  <div align="center">
+					<h:outputText  value="  #{info.quantity}" style="display:#{info.flag2};" styleClass="dlabelTxt"/>
+						 <h:outputText  value=" #{info.unit}"  class="dlabelTxt"/>
+						 <h:inputText id="a1" valueChangeListener="#{salesOrderFormMB.quantityChange1}" value="#{info.quantity}"  style="font-family:'Arial,san-serif';display:#{info.flag1};font-size:12px; width: 71px; " class="text_ui">
+	           			<f:attribute value="#{info.productName}" name="ram"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:attribute value="#{info.price}" name="price"></f:attribute>
+	          		 	<f:ajax render="@form" execute="a1"></f:ajax>
+	           			</h:inputText>
+	      </div>
+	         </p:column>
+					
+					
+					<p:column  headerText="Discount" width="140">
+					<f:facet name="header"> <span class="dataTableTxt"> Discount </span>      </f:facet>
+					<div>
+					<h:selectOneMenu  rendered="#{info.netAmount!=0}" style="font-size: 10px; width:60px; height: 20px; display:#{info.dflag};" id="a3" valueChangeListener="#{salesOrderFormMB.discounttypeChange}">
+				   	 <f:selectItem  itemLabel="select" />
+				   		 <f:selectItem itemLabel="%" itemValue="%"/>
+				    <f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+				    <f:ajax render="@form" execute="a3"></f:ajax>
+				 </h:selectOneMenu>
+				 <h:outputText  value="#{info.dicount}" style="display:#{info.dflag1};" class="dlabelTxt"/>
+				 &nbsp;&nbsp;&nbsp;
+				 <h:outputText  value="#{info.dicountAmount}" style="display:#{info.dflag2};" class="dlabelTxt"/>
+				 <h:inputText class="text_ui" value="#{info.dicountAmount}" rendered="#{info.netAmount!=0}" id="a2" valueChangeListener="#{salesOrderFormMB.discountChange}" style="font-family:'Arial,san-serif';display:#{info.dflag3};font-size:12px; width:40px;">
+				 <f:attribute value="#{info.productName}" name="ram"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:attribute value="#{info.dicount}" name="discount"></f:attribute>
+	          		 	<f:attribute value="#{info.netAmount}" name="net"></f:attribute>
+	          		 	<f:ajax render="@form" execute="a2"></f:ajax>
+				 </h:inputText>
+				 </div>
+					</p:column> 
+					
+					<p:column width="130" headerText="Bar Code">
+					<f:facet name="header"> <span class="dataTableTxt"> Barcode  </span>      </f:facet>
+					<div align="center">
+   						<h:outputText value="#{info.barcode1}" style="color:black;display:#{info.barflag1};font-size:12px" width="100" height="50"/>
+   						 
+   						 <h:inputText id="ud"  valueChangeListener="#{salesOrderFormMB.barcodevaluechange}" style="display:#{info.barflag};width:100px;height:20px;">
+   						 <f:attribute value="#{info.productName}" name="ram"></f:attribute>
+	          		 	<f:attribute value="#{info.serialno}" name="serial"></f:attribute>
+	          		 	<f:ajax render="@form" execute="ud"></f:ajax>
+   						 </h:inputText>	
+						 
+						 </div>
+					</p:column>
+					
+					<p:column width="140" headerText="Net Amount">
+					<f:facet name="header"> <span class="dataTableTxt"> Net Amount  </span>      </f:facet>
+					<div align="center">
+					<h:panelGroup>
+						 <h:outputText  value="#{info.netAmount}" class="dlabelTxt">
+						 <f:converter converterId="com.inventory.util.UrlConverter" />
+						 </h:outputText></h:panelGroup>
+						 </div>
+					</p:column>
+					
+					
+					<p:column width="50" headerText="Net Amount">
+					<f:facet name="header"> <span class="dataTableTxt"> Edit  </span>      </f:facet>
+					<div align="center"> <h:commandButton id="edit"  image="/images/edit.png"  action="#{salesOrderFormMB.edit}">
+	            <f:setPropertyActionListener value="#{info.serialno}" target="#{salesOrderFormMB.serialno}"></f:setPropertyActionListener>
+	           	<f:setPropertyActionListener value="#{info.netAmount}" target="#{salesOrderFormMB.netAmount}"></f:setPropertyActionListener>		
+	          		 	<p:ajax update="@form" process="@this" immediate="true"></p:ajax>
+	           			
+	           </h:commandButton></div> 
+					</p:column>
+				</p:dataTable>
+				<table align="left">
+				<tr>
+				<td width="10%">
+				<h:commandButton id="but1"  value="Add" action="#{salesOrderFormMB.redirectHome2}" image="/images/addimg.png">
+				<f:ajax render="@form" execute="but1"></f:ajax>
+				</h:commandButton></td></tr></table><br/>
+				<h:panelGrid columns="7"  align="left" width="70%" style="height:80px">
+				<h:outputText  style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important" value="Shipping Company"></h:outputText>
+				<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important;margin-bottom:-2px"  value=":"/>
+				<h:inputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important" id="t"  value="#{salesOrderFormMB.shipping_company}" ></h:inputText>
+				<h:outputText></h:outputText>
+				<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important"  value="Gross Total  "/>
+				<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important;margin-bottom:5px"  value=":"/>
+				<h:outputLabel  style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important;margin-bottom:5px" value="#{salesOrderFormMB.crosstotal}">
+				<f:converter converterId="com.inventory.util.UrlConverter" /></h:outputLabel>
+				<h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important" value="Shipping Cost"/>
+				<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important;margin-bottom:-2px"  value=":"/>
+				<h:inputText id="chr" value="#{salesOrderFormMB.shipping_charge}" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important" valueChangeListener="#{salesOrderFormMB.cost}">
+				<f:ajax render="@form" execute="chr t"></f:ajax>
+				</h:inputText>
+				<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ></h:outputText>
+				<h:outputText style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important"  value="Grand Total"></h:outputText>
+				<h:outputLabel style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important;margin-bottom:5px"  value=":"/>
+				<h:outputLabel  style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif' !important;margin-bottom:6px"  value="#{salesOrderFormMB.totalPrice}">
+				<f:converter converterId="com.inventory.util.UrlConverter" /></h:outputLabel>
+				</h:panelGrid>
+				</h:form>
+				<h:panelGrid cellpadding="5" columns="2">
+				<p:commandButton id="save1" value="Submit" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" action="#{salesOrderFormMB.confirm}" update="panelID" process="@this">
+				</p:commandButton>
+				<p:commandButton value="Cancel" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" update="@form" action="#{salesOrderFormMB.salesOrderpage}"></p:commandButton>
+				</h:panelGrid>				
+				</p:panel><br></br><br></br><br></br>
+    </td></tr>
+   
+</table> 
+</td></tr>
+</table>
+
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+
+
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 	
+<p:dialog header="Alert" widgetVar="confirm1" modal="true" appendTo="@(body)"
+							width="40%" height="100" resizable="false" draggable="false">
+<div style="height:30px"></div>
+							<center><h:panelGrid columns="1" border="0"
+								align="center">
+<h:outputText value="Please select the category "
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+							<br /><br />
+							
+						</p:dialog>
+						<p:dialog header="Alert" widgetVar="confirm2" modal="true" appendTo="@(body)"
+							width="60%" height="130" resizable="false" draggable="false">
+<div style="height:40px"></div>
+							<center><h:panelGrid columns="1" border="0"
+								align="center">
+<h:outputText value="There is NO customer available for the selected category Please register !"
+							styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+							<br /><br />
+							
+						</p:dialog>
+						<p:dialog header="Alert" widgetVar="confirm3" modal="true" appendTo="@(body)"
+							width="40%" height="100" resizable="false" draggable="false">
+<div style="height:30px"></div>
+							<center><h:panelGrid columns="1" border="0"
+								align="center">
+<h:outputText value="Purchase Order not done yet"
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+							<br /><br />
+							
+						</p:dialog>
+<p:remoteCommand name="remote1" action="#{salesOrderFormMB.customernameclick}"></p:remoteCommand>
+<p:remoteCommand name="remote2" action="#{salesOrderFormMB.productnameclick}"></p:remoteCommand>
+</p:panel>
+</body>
+</ui:define>
+</ui:composition>

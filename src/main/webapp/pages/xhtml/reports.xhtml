@@ -1,0 +1,862 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+<script>
+	PrimeFaces.widget.Dialog.prototype.applyFocus = function() {
+		var firstInput = this.jq.find(':not(:submit):not(:button):input:visible:enabled:first');
+	 	if(!firstInput.hasClass('hasDatepicker')) {
+	    	firstInput.focus();
+	 	}
+	};
+</script>
+	<div style="margin-top:3%;margin-left:70px">
+		<div class="ui-grid ui-grid-responsive">
+    		<div class="ui-grid-row ">
+        		<div class="ui-grid-col-3" >
+          			<p:commandLink style="text-decoration:none" action="#{reportMB.report}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('vendorreportDlg').show();" update=":center_content:dialogPanelVendorReport">
+        			<div class="asdf asdff">       
+       					<p class="font" style="font-size: 14px;color: white !important;margin-top:8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'" >VENDOR REPORT</p>
+       				</div>
+       				</p:commandLink>
+        		</div>
+        		<div class="ui-grid-col-3" >
+         			<p:commandLink action="#{reportMB.report}" style="text-decoration:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"  oncomplete="PF('customerreportDlg').show();" update=":center_content:dialogPanelCustomerReport">
+	          			<div class="asdf asdff1">
+	        				<p class="font" style="font-size: 14px;color: white !important;margin-top: 8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'">CUSTOMER REPORT</p>
+	        			</div>
+        			</p:commandLink>
+        		</div>
+        		<div class="ui-grid-col-3" >
+         			<p:commandLink action="#{reportMB.report}" style="text-decoration:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('purchasereportDlg').show();" update=":center_content:dialogPanelPurchaseReport">
+          				<div class="asdf asdff2">
+         					<p class="font" style="font-size: 14px;color:  white !important;margin-top: 8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'">PURCHASE REPORT</p>
+        				</div>
+        			</p:commandLink>
+        		</div>
+        		<div class="ui-grid-col-3" >
+        			<p:commandLink action="#{reportMB.report}" style="text-decoration:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('salesreportDlg').show();" update=":center_content:dialogPanelSalesReport">
+	         			<div class="asdf asdff3">
+	        				<p class="font" style="font-size: 14px;color:  white !important;margin-top: 8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'">SALES REPORT</p>
+	        			</div>
+       	 			</p:commandLink>
+        		</div>
+    		</div>
+    		<br/>
+    		<div class="ui-grid-row">
+        		<div class="ui-grid-col-3" >
+         			<p:commandLink action="#{reportMB.stockreport}" style="text-decoration:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('stockreportDlg').show();" update=":center_content:dialogPanelStockReport">
+           				<div class="asdf asdff4">
+       						<p class="font" style="font-size: 14px;color: white !important;margin-top: 8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'">STOCK REPORT</p>
+       				</div>
+        			</p:commandLink>
+        		</div>
+        		<div class="ui-grid-col-3">
+            		<p:commandLink actionListener="#{purchaseReportMB.paymentreport}" style="text-decoration:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+            			<div class="asdf asdff5">
+							<p class="font" style="font-size: 14px;color:  white !important;margin-top: 8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'">PAYMENT REPORT</p>
+         				</div>
+          			</p:commandLink>      
+        		</div>
+        		<div class="ui-grid-col-3">
+         			<p:commandLink actionListener="#{stockReportMB.employeereportPage}" style="text-decoration:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+        				<div class="asdf asdff6">
+      						<p class="font" style="font-size: 14px;color:  white !important;margin-top: 8px;margin-bottom: 0px;padding-top:3px;font-family:'Arial,san-serif'">EMPLOYEE REPORT</p>
+       					</div>
+        			</p:commandLink>
+        		</div>
+			</div>
+	</div>
+</div>
+
+<!-- Vendor Report -->
+<p:dialog header="Vendor Report" widgetVar="vendorreportDlg" width="800px" height="500px" appendTo="@(body)" modal="true" position="center" draggable="false" resizable="false">
+	<p:outputPanel id="dialogPanelVendorReport">
+	<h:form id="vendorformid">
+	<p:spacer height="20px;"></p:spacer>
+	<center>
+		<h:panelGrid>
+			<h:outputText value="#{reportMB.validate}" class="validation_ui"/>
+		</h:panelGrid>
+	</center>
+	<table align="center" width="90%">
+		<tr align="center">
+			<td style="height:25px" width="20%">
+				<h:outputText value="From Date" class="label_ui"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar  pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.fromDate}" id="vfdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="vfdate"></p:ajax>
+				</p:calendar>
+			</td>
+			<td style="height:25px"  width="20%">
+			 	<h:outputText value="To Date" class="label_ui"></h:outputText>
+			 	<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.toDate}" id="vtdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="vtdate"></p:ajax>
+				</p:calendar>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="vfdate" styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="vtdate"  styleClass="errorTxt"></h:message></td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%">
+				 <h:outputText value="Type" class="label_ui" style="text-align:left"></h:outputText>
+				 <h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<h:selectOneRadio id="vt" value="#{reportMB.reportDatabean.type}" styleClass="labelTxt" valueChangeListener="#{reportMB.typeValueChange}">
+					<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+					<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+			</td>
+			<td style="height:25px" width="20%">
+			 	<h:outputText value="Vendor Name" class="label_ui" for="venauto" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText value="All" class="label_ui" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<p:inputText value="#{reportMB.reportDatabean.name}" styleClass="labelTxt" id="vn" style="font-size:14px" rendered="#{reportMB.reportDatabean.type=='single'}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="vn"></p:ajax>
+				</p:inputText>
+				<h:selectOneMenu id="av" style="width:200px;height:25px;" rendered="#{reportMB.reportDatabean.type=='multiple'}" class="labelTxt"  styleClass="ui-selectdropd" value="#{reportMB.reportDatabean.allName}" >
+	  	 			<f:selectItem itemLabel="--- Select ---" itemValue=""/>
+	  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+	  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="av"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px" width="20%"></td>
+			<td style="height:25px" width="20%"><h:message for="vt"  styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"> <h:message for="vn" styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='single'}"></h:message> <h:message for="av"  styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:message></td><td></td>
+		</tr>
+	</table>
+	<br/>
+	<center>
+		<p:commandButton style="font-family:'Arial,san-serif' !important" value="Search" action="#{reportMB.searchVendorReport}" update="@form" process="@this" immediate="true"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+	</center>
+	<p:spacer height="30px;"></p:spacer>
+	<center>
+	<p:panel rendered="#{reportMB.reportFlag}" style="width:730px;border-width:0px">
+		<p:dataTable var="vendorrp" selectionMode="single" value="#{reportMB.reportDatabean.reportLists}" widgetVar="vendorInfo" rowKey="#{vendorrp.orderNumber}"
+ 			paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  			pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true" style="font-size:11px;width:100%">
+ 			<f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('vendorInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            	</p:outputPanel>
+ 			</f:facet>
+ 			<p:ajax event="rowDblselect" listener="#{reportMB.onRowSelectEvent}" update="@form" process="@this"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+ 			<p:column filterBy="#{vendorrp.name}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{vendorrp.name}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{vendorrp.phoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{vendorrp.phoneNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{vendorrp.orderNumber}" headerText="PO Number"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{vendorrp.orderNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{vendorrp.price}" headerText="Price"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{vendorrp.price}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{vendorrp.status}" headerText="PO Details"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{vendorrp.status}" class="text_ui"/>
+			</p:column>
+ 		</p:dataTable>
+  		<p:spacer height="10px;"></p:spacer>
+	</p:panel>
+	<p:panel rendered="#{reportMB.detailReportFlag}" style="width:730px;border-width:0px">
+		<p:dataTable value="#{reportMB.reportDatabean.detailReportLists}" id="dt1" var="detvendor"
+  			paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  			pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+			 <p:column headerText="PO Number">
+			 	<h:outputText value="#{detvendor.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product">
+				<h:outputText value="#{detvendor.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Quantity"> 
+				<h:outputText value="#{detvendor.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Price">
+			 	<h:outputText value="#{detvendor.price}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Total Price">
+			 	<h:outputText value="#{detvendor.totalPrice}" class="text_ui"></h:outputText>
+			 </p:column>
+		 	<f:facet name="footer">
+			 	<div align="right">
+			 		<h:outputText value="Grand Total: #{reportMB.reportDatabean.totalAmount}" style="font-size:16px;color:#222222;"></h:outputText>
+			 	</div>
+		 	</f:facet>
+ 		</p:dataTable>
+	</p:panel>
+	</center>
+	</h:form>
+	</p:outputPanel>
+</p:dialog>
+
+<!-- Customer Report -->
+<p:dialog header="Customer Report" widgetVar="customerreportDlg" width="800px" height="500px" appendTo="@(body)" modal="true" position="center" draggable="false" resizable="false">
+	<p:outputPanel id="dialogPanelCustomerReport">
+	<h:form id="customerformid">
+	<p:spacer height="20px;"></p:spacer>
+	<center>
+		<h:panelGrid>
+			<h:outputText value="#{reportMB.validate}" class="validation_ui"/>
+		</h:panelGrid>
+	</center>
+	<table align="center" width="90%">
+		<tr align="center">
+			<td style="height:25px" width="20%">
+				<h:outputText value="From Date" class="label_ui"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar  pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.fromDate}" id="cfdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="cfdate"></p:ajax>
+				</p:calendar>
+			</td>
+			<td style="height:25px"  width="20%">
+			 	<h:outputText value="To Date" class="label_ui"></h:outputText>
+			 	<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.toDate}" id="ctdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="ctdate"></p:ajax>
+				</p:calendar>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="cfdate" styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="ctdate"  styleClass="errorTxt"></h:message></td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%">
+				 <h:outputText value="Type" class="label_ui" style="text-align:left"></h:outputText>
+				 <h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<h:selectOneRadio id="ct" value="#{reportMB.reportDatabean.type}" styleClass="labelTxt" valueChangeListener="#{reportMB.typeValueChange}">
+					<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+					<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+			</td>
+			<td style="height:25px" width="20%">
+			 	<h:outputText value="Customer Name" class="label_ui" for="venauto" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText value="All" class="label_ui" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<p:inputText value="#{reportMB.reportDatabean.name}" styleClass="labelTxt" id="cn" style="font-size:14px" rendered="#{reportMB.reportDatabean.type=='single'}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="cn"></p:ajax>
+				</p:inputText>
+				<h:selectOneMenu id="ac" style="width:200px;height:25px;" rendered="#{reportMB.reportDatabean.type=='multiple'}" class="labelTxt"  styleClass="ui-selectdropd" value="#{reportMB.reportDatabean.allName}" >
+	  	 			<f:selectItem itemLabel="--- Select ---" itemValue=""/>
+	  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+	  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="ac"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px" width="20%"></td>
+			<td style="height:25px" width="20%"><h:message for="ct"  styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"> <h:message for="cn" styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='single'}"></h:message> <h:message for="ac"  styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:message></td><td></td>
+		</tr>
+	</table>
+	<br/>
+	<center>
+		<p:commandButton style="font-family:'Arial,san-serif' !important" value="Search" action="#{reportMB.searchCustomerReport}" update="@form" process="@this" immediate="true"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+	</center>
+	<p:spacer height="30px;"></p:spacer>
+	<center>
+	<p:panel rendered="#{reportMB.reportFlag}" style="width:750px;border-width:0px">
+		<p:dataTable var="customerrp" selectionMode="single" value="#{reportMB.reportDatabean.reportLists}" widgetVar="CustomerInfo" rowKey="#{customerrp.orderNumber}"
+ 			paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  			pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true" style="font-size:11px;width:100%">
+ 			<f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('CustomerInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            	</p:outputPanel>
+ 			</f:facet>
+ 			<p:ajax event="rowDblselect" listener="#{reportMB.onRowSelectEvent1}" update="@form" process="@this"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+ 			<p:column filterBy="#{customerrp.name}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{customerrp.name}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{customerrp.phoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{customerrp.phoneNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{customerrp.orderNumber}" headerText="SO Number"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{customerrp.orderNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{customerrp.price}" headerText="Gross Total"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{customerrp.price}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{customerrp.status}" headerText="SO Details"  filterMatchMode="contains" filterStyle="display:none">
+            	<h:outputText value="#{customerrp.status}" class="text_ui"/>
+			</p:column>
+ 		</p:dataTable>
+  		<p:spacer height="10px;"></p:spacer>
+	</p:panel>
+	<p:panel rendered="#{reportMB.detailReportFlag}" style="width:730px;border-width:0px">
+		<p:dataTable value="#{reportMB.reportDatabean.detailReportLists}" id="dt1" var="detvendor"
+  			paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  			pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+			 <p:column headerText="SO Number">
+			 	<h:outputText value="#{detvendor.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product">
+				<h:outputText value="#{detvendor.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Quantity"> 
+				<h:outputText value="#{detvendor.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Unit Price">
+			 	<h:outputText value="#{detvendor.price}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Total Amount">
+			 	<h:outputText value="#{detvendor.totalPrice}" class="text_ui"></h:outputText>
+			 </p:column>
+		 	<f:facet name="footer">
+			 	<div align="right">
+			 		<br/><h:outputText value="Shipping Cost&nbsp;&nbsp;: #{reportMB.reportDatabean.shippingCost}" style="font-size:16px;color:#222222;font-weight:normal;text-align:right"></h:outputText>
+			 		<br/><br/><h:outputText value="Grand Total&nbsp;&nbsp;: #{reportMB.reportDatabean.totalAmount}" style="font-size:16px;color:#222222;text-align:right"></h:outputText>
+			 	</div>
+		 	</f:facet>
+ 		</p:dataTable>
+	</p:panel>
+	</center>
+	</h:form>
+	</p:outputPanel>
+</p:dialog>
+
+<!-- Stock Report -->
+<p:dialog header="Stock Report" widgetVar="stockreportDlg" width="800px" height="500px" appendTo="@(body)" modal="true" position="center" draggable="false" resizable="false">
+	<p:outputPanel id="dialogPanelStockReport">
+	<h:form id="stockformid">
+	<p:spacer height="20px;"></p:spacer>
+	<center>
+		<h:panelGrid>
+			<h:outputText value="#{reportMB.validate}" class="validation_ui"/>
+		</h:panelGrid>
+	</center>
+	<table align="center" width="60%">
+		<tr align="center">
+			<td style="height:25px" width="20%">
+				<h:outputText value="Choose Product Name " class="label_ui"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<h:selectOneMenu class="labelTxt" id="pname" value="#{reportMB.reportDatabean.productName}" style="width:200px;height:25px;" label="select one group">
+		   			 <f:selectItem  itemLabel="--- Select ---" noSelectOption="true" />
+		   			 <f:selectItem itemLabel="ALL" itemValue="All"></f:selectItem>
+		   			 <f:selectItems value="#{reportMB.products}" />
+				   	 <p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px" width="20%"></td>
+			<td style="height:25px" width="20%"><h:message for="pname"  styleClass="errorTxt"></h:message></td>
+		</tr>
+	</table>
+	<br/>
+	<center>
+		<div style="padding-left:90px"><p:commandButton style="font-family:'Arial,san-serif' !important" value="Search" action="#{reportMB.searchStockreport}" update="@form" process="@this" immediate="true"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+	</div></center>
+	<p:spacer height="30px;"></p:spacer>
+	<center>
+	<p:panel rendered="#{reportMB.reportFlag}" style="width:750px;border-width:0px">
+		<p:dataTable id="stockdatatable" value="#{reportMB.reportDatabean.reportLists}" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+			 widgetVar="stockViewInfo" filteredValue="#{reportMB.filteredList}" var="info" paginator="true" rows="10" emptyMessage="No information found with given criteria" reflow="true">
+			<f:facet name="header">
+				<p:outputPanel style="text-align:right">
+					<p:inputText id="globalFilter" onkeyup="PF('stockViewInfo').filter()"
+						style="width:20%;height:25px;" placeholder="Enter keyword" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Product Name" filterBy="#{info.productName}" filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText class="text_ui" value="#{info.productName}" />
+			</p:column>
+			<p:column headerText="Acutual Price" filterBy="#{info.price}" filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText class="text_ui" value="#{info.price}" />
+			</p:column>
+			<p:column headerText="Available Quantity" filterBy="#{info.quantity}" filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText class="text_ui" value="#{info.quantity}" />
+			</p:column>
+			<p:column headerText="StockIn Quantity" filterBy="#{info.stockinQuantity}" filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText value="#{info.stockinQuantity}" class="text_ui"></h:outputText>
+			</p:column>
+			<p:column headerText="StockOut Quantity" filterBy="#{info.stockoutQuantity}" filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText class="text_ui" value="#{info.stockoutQuantity}"></h:outputText>
+			</p:column>
+			<p:column headerText="Damaged Quantity" filterBy="#{info.stockdamageQuantity}" filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText class="text_ui" value="#{info.stockdamageQuantity}"></h:outputText>
+			</p:column>
+		</p:dataTable>
+  	<p:spacer height="10px;"></p:spacer>
+	</p:panel>
+	</center>
+	</h:form>
+	</p:outputPanel>
+</p:dialog>
+
+<!-- Purchase Report -->
+<p:dialog header="Purchase Report" widgetVar="purchasereportDlg" width="950px" height="500px" appendTo="@(body)" modal="true" position="center" draggable="false" resizable="false">
+	<p:outputPanel id="dialogPanelPurchaseReport">
+	<h:form id="purchaseformid">
+	<p:spacer height="20px;"></p:spacer>
+	<center>
+		<h:panelGrid>
+			<h:outputText value="#{reportMB.validate}" class="validation_ui"/>
+		</h:panelGrid>
+	</center>
+	<table align="center" width="90%">
+		<tr align="center">
+			<td style="height:25px" width="20%">
+				<h:outputText value="From Date" class="label_ui"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar  pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.fromDate}" id="purfdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="purfdate"></p:ajax>
+				</p:calendar>
+			</td>
+			<td style="height:25px"  width="20%">
+			 	<h:outputText value="To Date" class="label_ui"></h:outputText>
+			 	<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.toDate}" id="purtdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="purtdate"></p:ajax>
+				</p:calendar>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="purfdate" styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="purtdate"  styleClass="errorTxt"></h:message></td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%">
+				 <h:outputText value="Type" class="label_ui" style="text-align:left"></h:outputText>
+				 <h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<h:selectOneRadio id="purt" value="#{reportMB.reportDatabean.type}" styleClass="labelTxt" valueChangeListener="#{reportMB.typeValueChange}">
+					<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+					<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+			</td>
+			<td style="height:25px" width="20%">
+			 	<h:outputText value="Vendor Name" class="label_ui" for="venauto" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText value="All" class="label_ui" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<p:inputText value="#{reportMB.reportDatabean.name}" styleClass="inputTxt" id="purn" rendered="#{reportMB.reportDatabean.type=='single'}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="purn"></p:ajax>
+				</p:inputText>
+				<h:selectOneMenu id="apur" style="width:200px;height:25px;" rendered="#{reportMB.reportDatabean.type=='multiple'}" class="labelTxt"  styleClass="ui-selectdropd" value="#{reportMB.reportDatabean.allName}" >
+	  	 				<f:selectItem itemLabel="---Select---" itemValue=""></f:selectItem>
+	  	 				<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Purchase Delivery" itemValue="Purchase Delivery"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Purchase Return" itemValue="Purchase Return"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Purchase Close" itemValue="Purchase Close"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="apur"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px" width="20%"></td>
+			<td style="height:25px" width="20%"><h:message for="purt"  styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"> <h:message for="purn" styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='single'}"></h:message> <h:message for="apur"  styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:message></td><td></td>
+		</tr>
+	</table>
+	<br/>
+	<center>
+		<p:commandButton style="font-family:'Arial,san-serif' !important" value="Search" action="#{reportMB.searchPurchaseReport}" update="@form" process="@this" immediate="true"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+	</center>
+	<p:spacer height="30px;"></p:spacer>
+	<center>
+	<p:panel rendered="#{reportMB.reportFlag}" style="width:880px;border-width:0px">
+		<p:dataTable var="purchaserp" selectionMode="single" value="#{reportMB.reportDatabean.reportLists}" widgetVar="PurchaseInfo" rowKey="#{purchaserp.orderNumber}"
+ 			paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  			pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true" style="font-size:11px;">
+ 			<f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('PurchaseInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            	</p:outputPanel>
+ 			</f:facet>
+ 			<p:ajax event="rowDblselect" listener="#{reportMB.onPurchaseRowSelectEvent}" update="@form" process="@this"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+ 			<p:column filterBy="#{purchaserp.orderDate}" headerText="Date"  filterMatchMode="contains" filterStyle="display:none" width="90">
+            	<h:outputText value="#{purchaserp.orderDate}" class="text_ui"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+			</p:column> 
+ 			<p:column filterBy="#{purchaserp.name}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none" width="150">
+            	<h:outputText value="#{purchaserp.name}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{purchaserp.orderNumber}" headerText="PO Number"  filterMatchMode="contains" filterStyle="display:none" width="130">
+            	<h:outputText value="#{purchaserp.orderNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{purchaserp.quantity}" headerText="Quantity"  filterMatchMode="contains" filterStyle="display:none" width="130">
+            	<h:outputText value="#{purchaserp.quantity}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{purchaserp.price}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" width="150">
+            	<h:outputText value="#{purchaserp.price}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{purchaserp.status}" headerText="Status"  filterMatchMode="contains" filterStyle="display:none"   width="90">
+            	<h:outputText value="#{purchaserp.status}" class="text_ui"/>
+			</p:column>
+ 		</p:dataTable>
+  		<p:spacer height="10px;"></p:spacer>
+  	</p:panel>
+  	<p:panel rendered="#{reportMB.purdeliveryreportFlag}" style="border-width:0px">	
+  		<p:dataTable id="dt" var="delipurchase" value="#{reportMB.reportDatabean.reportLists}" widgetVar="purchasedinfo" paginator="true" rows="10" style="font-size:11px"
+   			emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+ 			<f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('purchasedinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            	</p:outputPanel>
+ 			</f:facet>
+			 <p:column headerText="Name" filterBy="#{delipurchase.name}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delipurchase.name}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="PO Number" filterBy="#{delipurchase.orderNumber}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delipurchase.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product" filterBy="#{delipurchase.productName}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delipurchase.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Quantity" filterBy="#{delipurchase.quantity}" filterMatchMode="contains" filterStyle="display:none"> 
+			 	<h:outputText value="#{delipurchase.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Price" filterBy="#{delipurchase.price}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delipurchase.price}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Status" filterBy="#{delipurchase.status}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delipurchase.status}" class="text_ui"></h:outputText>
+			 </p:column>
+ 		</p:dataTable>
+	</p:panel>
+	<p:panel rendered="#{reportMB.purclosereportFlag}" style="border-width:0px">	
+		<p:dataTable id="purclose" var="closepurchase" value="#{reportMB.reportDatabean.reportLists}"  widgetVar="purchasecloseinfo" paginator="true"  rows="10" style="font-size:11px"
+  			emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+ 			 <f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('purchasecloseinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            	</p:outputPanel>
+ 			 </f:facet>
+			 <p:column headerText="Name" filterBy="#{closepurchase.name}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{closepurchase.name}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="PO Number" filterBy="#{closepurchase.orderNumber}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{closepurchase.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product" filterBy="#{closepurchase.productName}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{closepurchase.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Quantity" filterBy="#{closepurchase.quantity}" filterMatchMode="contains" filterStyle="display:none"> 
+			 	<h:outputText value="#{closepurchase.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Price" filterBy="#{closepurchase.price}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{closepurchase.price}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Total Price" filterBy="#{closepurchase.totalprice}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{closepurchase.totalPrice}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Status" filterBy="#{closepurchase.paymentStatus}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{closepurchase.paymentStatus}" class="text_ui"></h:outputText>
+			 </p:column>
+ 		</p:dataTable>
+ 	</p:panel>
+ 	<p:panel rendered="#{reportMB.purreturnreportFlag}" style="border-width:0px">
+ 		<p:dataTable id="purret" var="returnpur" selectionMode="single" value="#{reportMB.reportDatabean.reportLists}"  widgetVar="purchaseretinfo" paginator="true"  rows="10" style="font-size:11px" rowKey="#{returnpur.orderNumber}"
+   			emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+ 			 <f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('purchaseretinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            	</p:outputPanel>
+ 			 </f:facet>
+ 			 <p:ajax event="rowDblselect" listener="#{reportMB.onPurchaseReturnRowSelectEvent}" update="@form" process="@this"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+			 <p:column headerText="PO Number" filterBy="#{returnpur.orderNumber}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{returnpur.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Total Quantity" filterBy="#{returnpur.quantity}" filterMatchMode="contains" filterStyle="display:none"> 
+			 	<h:outputText value="#{returnpur.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Normal Return" filterBy="#{returnpur.normalReturn}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{returnpur.normalReturn}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Damage Return" filterBy="#{returnpur.damageReturn}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{returnpur.damageReturn}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Return Status" filterBy="#{delipurchase.status}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{returnpur.status}" class="text_ui"></h:outputText>
+			 </p:column>
+ 		</p:dataTable>
+ 	</p:panel>
+	<p:panel rendered="#{reportMB.detailReportFlag}" style="width:860px;border-width:0px">
+		<p:dataTable value="#{reportMB.reportDatabean.detailReportLists}" id="purdetail" var="detpurchase"  paginator="true"  rows="5" 
+   			emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+			 <p:column headerText="PO Number">
+			 	<h:outputText value="#{detpurchase.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product">
+			 	<h:outputText value="#{detpurchase.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Quantity"> 
+			 	<h:outputText value="#{detpurchase.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product Price">
+			 	<h:outputText value="#{detpurchase.price}" class="text_ui"></h:outputText>
+			 </p:column>
+			  <p:column headerText="Total Amount">
+			 	<h:outputText value="#{detpurchase.totalPrice}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Delivery Status">
+			 	<h:outputText value="#{detpurchase.status}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Payment Status">
+			 	<h:outputText value="#{detpurchase.paymentStatus}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <f:facet name="footer">
+				 <div align="right">
+				 	<h:outputText value="Grand Total: #{reportMB.reportDatabean.totalAmount}" style="font-size:16px;color:#222222;"></h:outputText>
+				 </div>
+			 </f:facet>
+ 		</p:dataTable>
+	</p:panel>
+	<p:panel rendered="#{reportMB.purretunndetailReportFlag}" style="width:860px;border-width:0px">
+		<p:dataTable  value="#{reportMB.reportDatabean.detailReportLists}" id="purretdet" var="detpurchase"  paginator="true"  rows="5" 
+	   		emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true" lazy="true">
+			 <p:column headerText="Return Date">
+			 	<h:outputText value="#{detpurchase.orderDate}" class="text_ui"> <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+			 </p:column>
+			 <p:column headerText="PO Number">
+			 	<h:outputText value="#{detpurchase.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Vendor Name">
+			 	<h:outputText value="#{detpurchase.name}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product">
+			 	<h:outputText value="#{detpurchase.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Normal Return"> 
+			 	<h:outputText value="#{detpurchase.normalReturn}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Damage Return">
+			 	<h:outputText value="#{detpurchase.damageReturn}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Return Status">
+			 	<h:outputText value="#{detpurchase.status}" class="text_ui"></h:outputText>
+			 </p:column>
+	 	</p:dataTable>
+	 </p:panel>
+	</center>
+	</h:form>
+	</p:outputPanel>
+</p:dialog>
+
+<!-- Sales Report -->
+<p:dialog header="Sales Report" widgetVar="salesreportDlg" width="900px" height="500px" appendTo="@(body)" modal="true" position="center" draggable="false" resizable="false">
+	<p:outputPanel id="dialogPanelSalesReport">
+	<h:form id="salesformid">
+	<p:spacer height="20px;"></p:spacer>
+	<center>
+		<h:panelGrid>
+			<h:outputText value="#{reportMB.validate}" class="validation_ui"/>
+		</h:panelGrid>
+	</center>
+	<table align="center" width="90%">
+		<tr align="center">
+			<td style="height:25px" width="20%">
+				<h:outputText value="From Date" class="label_ui"></h:outputText>
+				<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar  pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.fromDate}" id="salesfdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="salesfdate"></p:ajax>
+				</p:calendar>
+			</td>
+			<td style="height:25px"  width="20%">
+			 	<h:outputText value="To Date" class="label_ui"></h:outputText>
+			 	<h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px"  width="20%">
+				<p:calendar pattern="dd-MM-yyyy" value="#{reportMB.reportDatabean.toDate}" id="salestdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="salestdate"></p:ajax>
+				</p:calendar>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="salesfdate" styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"><h:message for="salestdate"  styleClass="errorTxt"></h:message></td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px"  width="20%">
+				 <h:outputText value="Type" class="label_ui" style="text-align:left"></h:outputText>
+				 <h:outputText style="color:red" value="*"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<h:selectOneRadio id="salest" value="#{reportMB.reportDatabean.type}" styleClass="labelTxt" valueChangeListener="#{reportMB.typeValueChange}">
+					<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+					<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+			</td>
+			<td style="height:25px" width="20%">
+			 	<h:outputText value="Customer Name" class="label_ui" for="venauto" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='single'}"></h:outputText>
+				<h:outputText value="All" class="label_ui" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+				<h:outputText style="color:red;" value="*" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:outputText>
+			</td>
+			<td style="height:25px" width="20%">
+				<p:inputText value="#{reportMB.reportDatabean.name}" styleClass="inputTxt" id="salesn" rendered="#{reportMB.reportDatabean.type=='single'}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="salesn"></p:ajax>
+				</p:inputText>
+				<h:selectOneMenu id="asales" style="width:200px;height:25px;" rendered="#{reportMB.reportDatabean.type=='multiple'}" class="labelTxt"  styleClass="ui-selectdropd" value="#{reportMB.reportDatabean.allName}" >
+	  	 				<f:selectItem itemLabel="---Select---" itemValue=""/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Sales Delivery" itemValue="Sales Delivery"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Sales Return" itemValue="Sales Return"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="asales"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+		</tr>
+		<tr align="center">
+			<td style="height:25px" width="20%"></td>
+			<td style="height:25px" width="20%"><h:message for="salest"  styleClass="errorTxt"></h:message></td>
+			<td style="height:25px"  width="20%"></td>
+			<td style="height:25px"  width="20%"> <h:message for="salesn" styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='single'}"></h:message> <h:message for="asales"  styleClass="errorTxt" rendered="#{reportMB.reportDatabean.type=='multiple'}"></h:message></td><td></td>
+		</tr>
+	</table>
+	<br/>
+	<center>
+		<p:commandButton style="font-family:'Arial,san-serif' !important" value="Search" action="#{reportMB.searchSalesReport}" update="@form" process="@this" immediate="true"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+	</center>
+	<p:spacer height="30px;"></p:spacer>
+	<center>
+	<p:panel rendered="#{reportMB.reportFlag}" style="width:880px;border-width:0px">
+		<p:dataTable var="salesrep" selectionMode="single" value="#{reportMB.reportDatabean.reportLists}" widgetVar="salesInfo"   paginator="true" rows="10" rowKey="#{salesrep.orderNumber}"
+ 			emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true" style="font-size:11px;width:100%">
+ 			<f:facet name="header">
+            	<p:outputPanel>
+               		<p:inputText id="globalFilter" onkeyup="PF('salesInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            	</p:outputPanel>
+ 			</f:facet>
+   			<p:ajax event="rowDblselect" listener="#{SalesReportMB.onRowSelectEvent}" update="@all" />
+			<p:column filterBy="#{salesrep.name}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none">
+				<h:outputText value="#{salesrep.name}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesrep.orderDate}" headerText="Order Date"  filterMatchMode="contains" filterStyle="display:none">
+			    <h:outputText value="#{salesrep.orderDate}" class="text_ui"/>
+			</p:column>
+			
+			<p:column filterBy="#{salesrep.orderNumber}" headerText="Order  Number"  filterMatchMode="contains" filterStyle="display:none">
+			    <h:outputText value="#{salesrep.orderNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesrep.phoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+			    <h:outputText value="#{salesrep.phoneNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesrep.quantity}" headerText="Quantity"  filterMatchMode="contains" filterStyle="display:none">
+			            <h:outputText value="#{salesrep.quantity}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesrep.price}" headerText=" Sell Price"  filterMatchMode="contains" filterStyle="display:none">
+			    <h:outputText value="#{salesrep.price}" class="text_ui"/>       
+			</p:column>
+			<p:column filterBy="#{salesrep.status}" headerText=" Status"  filterMatchMode="contains" filterStyle="display:none">
+			     <h:outputText value="#{salesrep.status}" class="text_ui"/>       
+			</p:column>
+ 		</p:dataTable>
+	</p:panel>
+	<p:panel rendered="#{reportMB.allReportFlag}" style="width:880px;border-width:0px">
+		<p:dataTable id="dt" var="salesdrp"  selectionMode="single" value="#{reportMB.reportDatabean.reportLists}"   widgetVar="purchaseInfo1" paginator="true"  rows="10" rowKey="#{salesdrp.name}"
+ 			style="font-size:11px" emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top" reflow="true">
+			<f:facet name="header">
+	            <p:outputPanel>
+	                <p:inputText id="globalFilter" onkeyup="PF('purchaseInfo1').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+	            </p:outputPanel>
+	 		</f:facet>
+	  		<p:ajax event="rowDblselect" listener="#{SalesReportMB.onRowSelectEvent1}" update="@all" />
+			<p:column filterBy="#{salesdrp.name}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none">
+			            <h:outputText value="#{salesdrp.name}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesdrp.phoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+			            <h:outputText value="#{salesdrp.phoneNumber}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesdrp.quantity}" headerText="Quantity"  filterMatchMode="contains" filterStyle="display:none">
+			            <h:outputText value="#{salesdrp.quantity}" class="text_ui"/>
+			</p:column>
+			<p:column filterBy="#{salesdrp.totalPrice}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none">
+			            <h:outputText value="#{salesdrp.totalPrice}" class="text_ui"/>
+			</p:column>
+ 		</p:dataTable>
+	</p:panel>
+	<p:panel rendered="#{reportMB.purdeliveryreportFlag}" style="width:880px;border-width:0px">
+		<p:dataTable id="salesdel" var="delisale" value="#{reportMB.reportDatabean.reportLists}"  widgetVar="purchasedinfo" paginator="true"  rows="10"  style="font-size:11px"
+  			emptyMessage="No information found with given criteria" pageLinks="10" paginatorAlwaysVisible="false" reflow="true">
+ 			<f:facet name="header">
+            	<p:outputPanel>
+                	<p:inputText id="globalFilter" onkeyup="PF('purchasedinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            	</p:outputPanel>
+ 			</f:facet>
+			 <p:column headerText="Customer Name" filterBy="#{delisale.name}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delisale.name}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column filterBy="#{delisale.phoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+			    <h:outputText value="#{delisale.phoneNumber}" class="text_ui"/>
+			 </p:column>
+			 <p:column headerText="SO Number" filterBy="#{delisale.orderNumber}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delisale.orderNumber}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Product Name" filterBy="#{delisale.productName}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delisale.productName}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Quantity" filterBy="#{delisale.quantity}" filterMatchMode="contains" filterStyle="display:none"> 
+			 	<h:outputText value="#{delisale.quantity}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Sell Price" filterBy="#{delisale.price}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delisale.price}" class="text_ui"></h:outputText>
+			 </p:column>
+			 <p:column headerText="Delivery Status" filterBy="#{delisale.status}" filterMatchMode="contains" filterStyle="display:none">
+			 	<h:outputText value="#{delisale.status}" class="text_ui"></h:outputText>
+			 </p:column>
+ 		</p:dataTable>
+	</p:panel>
+	</center>
+	</h:form>
+	</p:outputPanel>
+</p:dialog>
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+  	<p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+</p:dialog>     
+</ui:define>
+</ui:composition>
+	

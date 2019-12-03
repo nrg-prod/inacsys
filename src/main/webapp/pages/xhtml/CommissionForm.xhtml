@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Commission View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("commission:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="commission">
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+ <ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right">
+<h:commandButton value="Translate" style="font-weight:bold;"  ajax="false"> 
+<rich:componentControl target="popup" operation="show" />
+</h:commandButton>&nbsp;
+<h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+<div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Komisi" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:300px;" align="left" bgcolor="#f4f4f4">
+
+
+<h:outputText  value="From Date" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="dari Tanggal" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="To Date " style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="hingga saat ini" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+
+
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+<tr align="center"> <td align="center"> 
+ </td></tr>
+
+<tr>
+                    <td align="center" >
+                    
+                    
+                    <h:form id="a1">
+                    <h:outputText value="#{commissionFormMB.validate}" class="validation_ui"/><br/><br/>
+                   <h:outputText id="reg" value="Commission" class="header_ui"/>
+                   <rich:panel header="Search by Name and Date" style="text-align:left;width:500px;">
+                   <h:panelGrid class="label_ui"  columns="2" cellspacing="2" cellpadding="4" style="width:650px;font-size:14px;" align="left">
+                  
+			
+	       <h:outputText value="From Date *"  class="label_ui" /> <rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" datePattern="dd/MM/yyyy" value="#{commissionFormMB.fromdate}">
+	       
+	       </rich:calendar>
+	         
+	      <h:outputLabel value="To Date *"  class="label_ui" /><rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" datePattern="dd/MM/yyyy" value="#{commissionFormMB.todate}"></rich:calendar>
+	  <h:outputText></h:outputText>
+	  <h:commandButton class="button" id="find" value="View" action="#{commissionFormMB.commissionview}">
+	  	<f:ajax render="@form" execute="@form"></f:ajax>
+	  </h:commandButton>
+	   </h:panelGrid>
+	 
+	       </rich:panel>
+				
+				</h:form>
+				
+				 </td></tr>  
+
+ <tr><td>
+ <h:panelGrid style="display:#{commissionFormMB.flag}">
+  <rich:dataTable  columnsWidth="150px,150px,150px,200px,115px,115px" id="dataTabl"  height="50px" var="info" value="#{commissionFormMB.totallist}" enableContextMenu="false"
+   reRender="dynamicScroller"
+  rowClasses="datatable-odd,datatable-even">
+  <rich:column  headerText="Name" sortOrder="#{buyersViewMB.sortsOrders['orderdate']}" sortBy="#{info.orderdate}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Date" execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{buyersViewMB.sort()}">
+	            <f:param name="sortProperty" value="orderdate"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{buyersViewMB.sortsOrders['orderdate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{buyersViewMB.sortsOrders['orderdate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderdate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText>  
+	            
+	        </rich:column>
+	       <!--  <h:column  headerText="Name" width="350px">
+	         <f:facet name="header"> <span style="font-size:16px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  Date   </span>      </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderdate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  </h:outputText>
+	        </h:column>   -->
+  
+	        <h:column headerText="RollNo" width="350px"> 	            
+	            <f:facet name="header"> <span style="font-size:16px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55';">  Invoice Number   </span>      </f:facet>	        
+	            <h:outputText   class="label_ui" value="#{info.invoiceno}"/>  
+	        </h:column>  
+	        
+  		<h:column    headerText="Address" width="350px"> 
+	   		 <f:facet name="header"> <span style="font-size:16px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">Name   </span>      </f:facet>
+	        
+	            <h:outputText class="label_ui" value="#{info.cname}">  </h:outputText>  
+	            
+	        </h:column>  
+	       
+  			<h:column    headerText="Address" width="350px"> 
+	   		 <f:facet name="header"> <span style="font-size:16px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  Total Amount  </span>      </f:facet>
+	        
+	            <h:outputText class="label_ui" value="x">  </h:outputText>  
+	            
+	        </h:column>  
+	   		<h:column    headerText="Address" width="350px"> 
+	   		 <f:facet name="header"> <span style="font-size:16px;width: 350px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  Commission  </span>      </f:facet>
+	        
+	            <h:outputText class="label_ui" value="x">  </h:outputText>  
+	            
+	        </h:column>   
+  
+          
+</rich:dataTable></h:panelGrid>
+ </td></tr>
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

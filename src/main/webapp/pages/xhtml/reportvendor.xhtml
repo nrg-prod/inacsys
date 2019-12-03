@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+	<title> Inacsys | Vendor Report </title>
+ 	<link rel="stylesheet" href="../../css/css.css">
+ 
+	</link>
+</h:head>
+<h:body>
+		
+
+			<h:form>
+			<center>
+				<h:panelGrid>
+					<h:outputText value="#{reportMB.validate}" class="validation_ui"/>
+				</h:panelGrid></center>
+				 <table align="center" width="80%">
+				 <tr align="center">
+				 <td style="height:20px" width="20%">
+				 <h:outputText value="From Date" class="label_ui"></h:outputText>
+						<h:outputText style="color:red" value="*"></h:outputText></td>
+				 <td style="height:20px"  width="20%">
+					<p:calendar  pattern="dd-MM-yyyy" value="#{reportMB.rVendorFromDate}" id="fdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar></td>
+				 <td style="height:20px"  width="20%">
+				 <h:outputText value="To Date" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText></td>
+				 <td style="height:20px"  width="20%">
+					<p:calendar pattern="dd-MM-yyyy" value="#{reportMB.rVendorToDate}" id="tdate">
+						<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar></td>
+				</tr>
+				<tr align="center"><td style="height:20px"  width="20%"></td>
+				<td style="height:20px"  width="20%"><h:message for="fdate" styleClass="errorTxt"></h:message>
+				</td><td style="height:20px"  width="20%"></td><td style="height:20px"  width="20%"><h:message for="tdate"  styleClass="errorTxt"></h:message></td></tr>
+				 <tr align="center"><td style="height:20px"  width="20%">
+				 <h:outputText value="Type" class="label_ui" style="text-align:left"></h:outputText>
+				 <h:outputText style="color:red" value="*"></h:outputText>
+				 </td>
+				 <td style="height:20px"  width="20%">
+				 <h:selectOneRadio id="vt" value="#{reportMB.vendorType}" styleClass="labelTxt" valueChangeListener="#{reportMB.valueChange}">
+				<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+				<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+				<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+				 </td>
+				 <td style="height:20px"  width="20%">
+				 	<h:outputText value="Vendor Name" class="label_ui" for="venauto" style="display:#{reportMB.singleVendorFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{reportMB.singleVendorFlag}" value="*" ></h:outputText>
+					<h:outputText value="All" class="label_ui" style="display:#{reportMB.multipleVendorFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{reportMB.multipleVendorFlag}" value="*"></h:outputText>
+				 </td>
+				 <td style="height:20px"  width="20%">
+				 <p:inputText value="#{reportMB.repornew}" styleClass="labelTxt" id="v1" style="display:#{reportMB.singleVendorFlag};font-size:14px">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					
+					</p:inputText>
+					<h:selectOneMenu id="av1" style="width:200px;height:25px;display:#{reportMB.multipleVendorFlag}" class="labelTxt"  styleClass="ui-selectdropd" value="#{reportMB.allVendorName}" >
+		  	 			<f:selectItem itemLabel="--- Select ---" itemValue=""/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+				 </td>
+				 </tr>
+				 <tr align="center"><td style="height:20px"  width="20%"></td>
+				 <td style="height:20px"  width="20%">
+				  <h:message for="vt"  styleClass="errorTxt"></h:message>
+				 </td><td style="height:20px"  width="20%"></td>
+				 <td style="height:20px"  width="20%"> <h:message for="v1" styleClass="errorTxt" style="display:#{reportMB.singleVendorFlag}"></h:message> <h:message for="av1"  styleClass="errorTxt" style="display:#{reportMB.multipleVendorFlag}"></h:message></td><td></td>
+				 </tr>
+				 </table><br/>
+				 <center>
+				 <p:commandButton style="font-family:'Arial,san-serif' !important" value="Search" action="#{reportMB.searchReport}" update="@form"></p:commandButton>
+			</center>
+			<p:spacer height="30px;"></p:spacer>
+			<center>
+			<p:panel rendered="#{reportMB.reportSuccessFlag}" style="width:730px;border-width:0px">
+				<!-- <ui:include src="../../pages/xhtml/vendorReportDataTable.xhtml"></ui:include> -->
+				<p:dataTable var="vendorrp" selectionMode="single" value="#{reportMB.vendorReportlist2}" widgetVar="vendorInfo" rowKey="#{vendorrp.purchaseOrderNO}"
+ paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('vendorInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+ <p:ajax event="rowDblselect" listener="#{reportMB.onRowSelectEvent}" update="@form" />
+ <p:column filterBy="#{vendorrp.vendorRepName}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{vendorrp.vendorRepName}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{vendorrp.vendorphonenumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{vendorrp.vendorphonenumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{vendorrp.purchaseOrderNO}" headerText="PO Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{vendorrp.purchaseOrderNO}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{vendorrp.prize}" headerText="Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{vendorrp.prize}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{vendorrp.purchaseStatus}" headerText="Purchase Details"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{vendorrp.purchaseStatus}" class="text_ui"/>
+            
+</p:column>
+ </p:dataTable>
+  <p:spacer height="10px;"></p:spacer>
+			</p:panel>
+			<p:panel rendered="#{reportMB.detailreportSuccessFlag}" style="width:730px;border-width:0px">
+				<!-- <ui:include src="../../pages/xhtml/vendorDetailReportDataTable.xhtml"></ui:include> -->
+				<p:dataTable rendered="#{reportMB.vendorDetailFlag1}" value="#{reportMB.vendorReportList4}" id="dt1" var="detvendor"
+  paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <p:column headerText="PO Number" style="color:white;font-size:10px;font-weight:bold">
+ <h:outputText value="#{detvendor.detailPONumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Product" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detvendor.detailProduct}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Quantity" style="color:white;font-size:11px;font-weight:bold"> 
+ <h:outputText value="#{detvendor.detailQuan}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Selling Price" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detvendor.sellingPrice}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Total Amount" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detvendor.totalprice}" class="text_ui"></h:outputText>
+ </p:column>
+ <f:facet name="footer">
+ <div align="right">
+ <h:outputText value="Grand Total: #{reportMB.totAmount}" style="font-size:12px;color:#222222;"></h:outputText>
+ </div>
+ </f:facet>
+ </p:dataTable>
+			</p:panel>
+	
+	<p:dialog visible="#{reportMB.norecordFlag}" header="Confirmation" widgetVar="cd" width="200px" height="60px" modal="true" appendTo="@(body)" resizable="false">
+	<center>
+	<h:panelGrid columns="3">
+	<p style="font-size:12px;">No Records Found</p></h:panelGrid><br/>
+	<p:commandButton value="Ok" onclick="PF('cd').hide()"></p:commandButton>
+	</center>
+	</p:dialog>
+	</center>
+	</h:form>
+	
+	<br/>
+	</h:body>
+
+</ui:composition>

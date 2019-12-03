@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+ xmlns:p="http://primefaces.org/ui"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Log out</title>
+ <link rel="stylesheet" href="../../css/css.css"> 
+</link>
+<style>
+#header
+     {																	
+    	margin-left: -684px;
+    	color: white;
+     }
+h1{
+	font-size: 50px;
+    margin-left: 369px;
+        margin-top: 94px;
+}
+p {
+    font-size: 46px;
+   margin-left: 517px;
+    margin-top: 34px;   
+}
+
+.ui-grid .ui-grid-row {
+    display: flex;
+    background-color: black;
+    clear: both;
+    height: 60px;
+}
+.ui-panelgrid .ui-grid-responsive .ui-panelgrid-cell {
+    border: 0 none;
+    color: aliceblue;
+    margin-top: 14px;
+    margin-left: 62px;
+    font-size: 21px;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    /* background: none; */
+    margin-left: 344px;
+}
+.ui-grid {
+    clear: both;
+    padding: 0px;
+    margin: -9px;
+}
+</style>
+</h:head> 
+<body>
+<p:panelGrid columns="2" layout="grid">
+<h><b>INACSYS</b></h>
+<h:form>
+<p:growl id="growl" life="2000" />
+<p:commandButton value="Click to Login" id="ajax" update="growl" styleClass="ui-priority-primary" action="login.xhtml?faces-redirect=true"/>
+</h:form>
+</p:panelGrid>
+<h:form>
+<h1>Successfully logged out</h1>
+</h:form>
+<h:graphicImage value="/images/man.png" style="margin-left: 524px;margin-top: 30px;"/>
+<p>Thank you</p>
+</body>
+</ui:composition>

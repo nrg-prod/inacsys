@@ -1,0 +1,74 @@
+
+#tweet-feed h2 {
+    clear:both;
+}
+
+#tweet-feed p, #tweet-feed a {
+    font-size: 11px;
+    color: #fff;
+}
+
+#tweet-feed a {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#tweet-feed a:hover {
+    border-bottom: 1px solid #fff;
+}
+
+#tweet-feed ul {
+    position: relative;
+    left: -15px;
+    top: 20px;
+    margin-bottom: 50px;
+}
+
+#tweet-feed ul li {
+    margin-top: 25px;
+    list-style: none;
+    overflow: hidden;
+}
+
+#tweet-feed .timePosted {
+    float: right;
+    margin: 0 5px;
+}
+
+#tweet-feed .user {
+    width: 55px;
+}
+
+#tweet-feed .tweet {
+    
+}
+
+#tweet-feed .user {
+    clear: both;
+}
+
+#tweet-feed .user span span {
+    display: block;
+    margin-top: 7px;
+}
+
+#tweet-feed .user img, #tweet-feed .user a > span {
+    float: left;
+    width: 40px;
+    margin-right: 40px;
+    border-radius: 20px;
+}
+
+#tweet-feed .interact {
+    float: right;
+}
+
+#tweet-feed .interact a {
+    margin-left: 5px;
+}
+
+.user a span:last-child {
+    display: none;
+}

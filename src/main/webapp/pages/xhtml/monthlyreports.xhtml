@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:a4j="http://richfaces.org/a4j"
+  xmlns:b="http://bootsfaces.net/ui"
+ xmlns:p="http://primefaces.org/ui">
+
+        <ui:define name="content">
+      <div style="margin-top:3%;">
+      
+      
+      <script type="text/javascript">
+    function handleDrop(event, ui) {
+        var droppedCar = ui.draggable;
+ 
+        droppedCar.fadeOut('fast');
+    }
+</script>
+ 
+<h:form>
+<center><h:outputText value="#{reportMB.validate}" styleClass="errorTxt"></h:outputText> </center><br/>
+
+<div class="ui-grid">
+            <div class="ui-grid-row" style="height: 8%;">
+             <div class="ui-grid-col-1" style="width: 5%" ></div>
+                <div class="ui-grid-col-2" >
+                	<div class="ui-grid-row">
+                		<div class="ui-grid-col-3">
+                			<h:outputText class="labelTxt" value="Year"></h:outputText>
+                			<h:outputLabel value="#{reportMB.reportpage}" style="display:none"></h:outputLabel>
+                		</div>
+                		<div class="ui-grid-col-9">
+                			<h:selectOneMenu styleClass="ui-selectdrop" value="#{reportMB.year}" style="height:23px" class="labelTxt">
+								<f:selectItem  itemLabel="---Select---" noSelectionOption="true"></f:selectItem>
+								<f:selectItems value="#{reportMB.yearinfo}"></f:selectItems>
+								<p:ajax immediate="true" process="@this" update="@form"></p:ajax>
+							</h:selectOneMenu>
+                		</div>
+                	</div>
+                </div>
+                <div class="ui-grid-col-1"></div>
+                <div class="ui-grid-col-3">
+                	<div class="ui-grid-row">
+                		<div class="ui-grid-col-6">
+							<h:outputText value="Month" class="labelTxt"></h:outputText>
+						</div>
+						<div class="ui-grid-col-6">
+							<h:selectOneMenu styleClass="ui-selectdrop" value="#{reportMB.month}" style="height:23px" class="labelTxt">
+								<f:selectItem itemLabel="---Select---" noSelectionOption="true"></f:selectItem>
+								<f:selectItem itemValue="01" itemLabel="Jan"></f:selectItem>
+								<f:selectItem itemValue="02" itemLabel="Feb"></f:selectItem>
+								<f:selectItem itemValue="03" itemLabel="March"></f:selectItem>
+								<f:selectItem itemValue="04" itemLabel="April"></f:selectItem>
+								<f:selectItem itemValue="05" itemLabel="May"></f:selectItem>
+								<f:selectItem itemValue="06" itemLabel="June"></f:selectItem>
+								<f:selectItem itemValue="07" itemLabel="July"></f:selectItem>
+								<f:selectItem itemValue="08" itemLabel="Aug"></f:selectItem>
+								<f:selectItem itemValue="09" itemLabel="Sep"></f:selectItem>
+								<f:selectItem itemValue="10" itemLabel="Oct"></f:selectItem>
+								<f:selectItem itemValue="11" itemLabel="Nov"></f:selectItem>
+								<f:selectItem itemValue="12" itemLabel="Dec"></f:selectItem>
+								<f:ajax immediate="true" process="@this" update="@form"></f:ajax>
+							</h:selectOneMenu> 
+						</div>
+					</div>
+				</div>
+				  <div class="ui-grid-col-1"></div>
+                <div class="ui-grid-col-3">
+                	<div class="ui-grid-row">
+                		<div class="ui-grid-col-6">
+                			<h:outputText class="labelTxt" value="Business Partner"></h:outputText>
+                		</div>
+                		
+                		<div class="ui-grid-col-6">
+                			<h:selectOneMenu id="bpartner"  styleClass="ui-selectdrop" value="#{reportMB.businessPartner}" style="height:23px" class="labelTxt" valueChangeListener="#{reportMB.reporttypeChange}">
+								   <f:selectItem itemLabel="--- Select ---" noSelectionOption="true" />
+								   <f:selectItem itemLabel="Vendor" itemValue="Vendor" />
+								   <f:selectItem itemLabel="Customer" itemValue="Customer" />
+								   <f:selectItem itemLabel="Transaction" itemValue="Transaction" />
+								   <p:ajax event="valueChange" process="@this" update=":center_content"></p:ajax>
+						   </h:selectOneMenu>
+                		</div>
+                	</div>
+            </div>
+              <div class="ui-grid-col-1"></div>
+           
+        </div>
+       <hr style="border: 1px solid #222; width: 50%;    margin-bottom: 1%;" align="center"></hr>     
+       <h:panelGroup rendered="#{reportMB.businessPartner!=''}">
+        	 <div class="ui-grid-row" style="height: 8%;">
+        	 <div class="ui-grid-col-12" style="width:100%;" align="center">
+        	  	<h:panelGroup rendered="#{reportMB.businessPartner!=''}">
+ 					<h:outputText value="Report Type" class="labelTxt" style="font-weight: bolder;text-transform: uppercase;text-decoration: underline;" ></h:outputText> 	
+ 				</h:panelGroup>
+        	  </div>
+        	 </div>
+        	 <div class="ui-grid-row" style="height: 5%">
+        	 	<div class="ui-grid-col-12" align="center" style="width: 100%">
+							<h:panelGroup rendered="#{reportMB.businessPartner=='Vendor'}" >
+								<h:selectManyCheckbox value="#{reportMB.types}" class="labelTxt" style="width: 50%;text-align: center;">
+									<f:selectItems value="#{reportMB.typesList}"></f:selectItems>
+									<p:ajax event="valueChange" immediate="true" process="@this"
+										update="@form"></p:ajax>
+								</h:selectManyCheckbox>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{reportMB.businessPartner=='Customer'}">
+								<h:selectManyCheckbox value="#{reportMB.types}" class="labelTxt" style="width: 85%;text-align: center;">
+									<f:selectItems value="#{reportMB.typesList}"></f:selectItems>
+									<p:ajax event="valueChange" immediate="true" process="@this"
+										update="@form"></p:ajax>
+								</h:selectManyCheckbox>
+							</h:panelGroup>
+							<h:panelGroup
+								rendered="#{reportMB.businessPartner=='Transaction'}">
+								<h:selectManyCheckbox value="#{reportMB.types}" class="labelTxt" style="width: 20%;text-align: center;">
+									<f:selectItems value="#{reportMB.typesList}"></f:selectItems>
+									<p:ajax event="valueChange" immediate="true" process="@this"
+										update="@form"></p:ajax>
+								</h:selectManyCheckbox>
+							</h:panelGroup>
+						</div>
+        	 
+        	 </div>
+          <hr style="border: 1px solid #222; width: 50%;    margin-bottom: 1%;" align="center"></hr>    
+       </h:panelGroup>
+       
+        <div class="ui-grid-row" style="height: 8%;">
+        		
+        		 <div class="ui-grid-col-12" align="center" style="width: 100%;">
+        		 	<h:outputText value="Format" class="labelTxt" style="font-weight: bolder;text-transform: uppercase;text-decoration: underline;"  ></h:outputText> 	
+        		 </div>
+        		 
+        		
+        </div>
+        <div class="ui-grid-row" style="    height:5%">
+        		 <div class="ui-grid-col-12" align="center" style="    width: 100%;">
+        		 	<h:selectManyCheckbox value="#{reportMB.formats}" class="labelTxt"  style="width: 50%;text-align: center;margin-right: 5%;">
+					 		<f:selectItems value="#{reportMB.formatList}"></f:selectItems>	
+							<p:ajax event="valueChange" immediate="true" process="@this" update="@form"></p:ajax>
+					  	</h:selectManyCheckbox>	
+        		 </div>
+       	</div>
+      </div>
+        <hr style="border: 1px solid #222; width: 50%;    margin-bottom: 1%;" align="center"></hr>    
+ <br/>
+</h:form>
+     
+    <center>
+   
+    
+    <p:commandButton value="Generate" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+     action="#{reportMB.getDailyreport}" ajax="true" immediate="true" update="@form" ></p:commandButton>&nbsp;
+     <p:commandButton value="Cancel" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" 
+     action="#{reportMB.monthlyreportspage}" ajax="true" immediate="true" update="@form"></p:commandButton>
+       </center> 
+    <br/><br/>
+    
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 	
+    
+  <p:dialog widgetVar="con" appendTo="@(body)" width="50%" height="600"
+				style="padding: 0;  margin: 0;border: 0;" modal="true"
+				resizable="false">
+				<center>
+					<p:media value="#{reportMB.streamedContent}" width="100%"
+						height="550" player="pdf" rendered="#{reportMB.pdfflag}"
+						style="padding: 0;  margin: 0;border: 0;">
+						<f:param name="id" value="#{reportMB.streamedContent}" />
+					</p:media>
+					<br />
+					<div style="height: 10px;"></div>
+					<p:commandButton value="OK" onstart="PF('statusDialog').show();"
+						onsuccess="PF('statusDialog').hide();" update="center_content"
+						process="@this" action="#{reportMB.monthlyreportspage}"
+						oncomplete="PF('con').hide()" styleClass="ui-priority-primary" />
+					<div style="height: 20px;"></div>
+				</center>
+			</p:dialog>  
+ 
+
+ <p:dialog widgetVar="errormsg" appendTo="@(body)" header="Confirmation"  width="600px" height="120" modal="true" resizable="false">
+  <center>
+  <div style="height:30px;"></div>
+ <h:outputText value="No Record Found !!!" class="confirmTxt"></h:outputText>
+  <div style="height:30px;"></div>
+ 
+  <p:commandButton value="OK"  update="center_content" process="@this" action="#{reportMB.monthlyreportspage}" oncomplete="PF('errormsg').hide()" styleClass="ui-priority-primary" />
+   </center>   
+ </p:dialog>
+ 
+
+ 
+    </div>
+    
+    </ui:define>
+ </ui:composition>

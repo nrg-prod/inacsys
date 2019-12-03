@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Report Invoice </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  <tr>
+                    <td align="center" >
+                   
+	      
+
+	        
+				 
+				 
+	   <div style="height: 200;width: 900;overflow: auto">
+	        <rich:panel style="width:900px;">  
+	        
+	         
+                      <rich:dataTable id="dataTabl" var="info"  value="#{reportMB.invoiceList}" columnsWidth="200px,200px,200px,200px">  
+         	
+ 
+     <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.invoiceDate}"  class="label_ui">  
+	            <f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+	            </h:outputText>
+	        </h:column>  
+  
+	        
+  
+	      
+  
+	   		<h:column    headerText="Address">  
+		   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Sales Number </span>      </f:facet>
+		            <h:outputText class="label_ui" value="#{info.i0021.salesOrderNumber}"/>  
+		    </h:column>  
+		    <h:column   headerText="Phone">  
+	   			<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Customer Name  </span>      </f:facet>
+	         		<h:outputText class="label_ui" value="#{info.i0021.customerName}" />    
+	        </h:column>
+  
+	   		<h:column   headerText="Phone">  
+	   			<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Total Amount  </span>      </f:facet>
+	         		<h:outputText class="label_ui" value="#{info.i0021.crossTotal}" >
+	         		<f:converter converterId="com.inventory.util.UrlConverter" />
+	         		</h:outputText>    
+	        </h:column>
+ </rich:dataTable>  
+		       
+	   </rich:panel>  </div>
+	   
+	    <h:outputText value="Total amount from  " class="header_ui"/>
+ <h:outputText value="#{reportMB.fromdate1}  " class="header_ui"><f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime></h:outputText>	  
+  <h:outputText value="to  " class="header_ui"/>
+  	      <h:outputText value="  #{reportMB.toDate1}" class="header_ui"><f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime></h:outputText>
+  
+  &nbsp;&nbsp;
+  <h:outputText value="is" class="header_ui"/>
+	     &nbsp;&nbsp; <h:outputText value="#{reportMB.total}" class="header_ui">
+	     <f:converter converterId="com.inventory.util.UrlConverter" />
+	     </h:outputText>
+	     
+	   
+	   
+                    </td>
+                  </tr>
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+<td align="center" >
+
+
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

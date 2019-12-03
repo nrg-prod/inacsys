@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title> Inacsys | Transaction Form  </title>
+<link rel="stylesheet" href="../../css/css.css">
+</link>
+<script>
+PrimeFaces.widget.Dialog.prototype.applyFocus = function() {
+	 var firstInput = this.jq.find(':not(:submit):not(:button):input:visible:enabled:first');
+	 if(!firstInput.hasClass('hasDatepicker')) {
+	    firstInput.focus();
+	 }
+	};
+</script>
+<style>
+#ADD{
+	background-color: gray;
+	color: white;
+}
+
+.verticalLine {
+  border-left: 3px solid #2196f3;
+  height:100%;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding: 1px 4px 6px 6px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close span{
+    display: block;
+    margin: 6px 3px 1px 7px;
+}
+/* .ui-calendar .ui-inputfield .ui-widget .ui-state-default .ui-corner-all .hasDatepicker
+{
+    width: 110px !important;
+}
+#j_idt4:tran_date_input{
+    width: 110px !important;
+} */
+</style>
+</h:head>
+<body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover; overflow: hidden;">
+<h:form id="form">
+<table   border="0" class="form_background" style="width: 100%;">
+
+
+<tr>
+
+<td  align="center">
+
+<table align="center">
+<tr><td align="center"><h:outputText value="#{aTransactionMB.validate}" class="validation_ui"/>
+</td></tr>
+<tr>
+                    <td align="center">
+                   
+	              
+	             <p:panel style="width:1200px; overflow-y:scroll;" id="panelid" >
+	             <table width="600px">
+	             <tr><td colspan="8" align="center">
+	             <h:outputLabel id="errmsg"></h:outputLabel>
+	             <h:message for="errmsg" style="color:red;font-size:10px;"></h:message>
+	             </td></tr>
+	             <tr style="width: 110px;">
+	             <!-- <h:outputLabel value="Date  " styleClass="label_ui"> </h:outputLabel>
+	             <h:outputLabel value="*  " style="color:red;"> </h:outputLabel>
+				 <p:calendar datePattern="dd/MM/yyyy" maxdate="#{currentDate}" id="tran_date" style="line-height: normal;" value="#{aTransactionMB.date}">
+				 <p:ajax update="@form" process="@this" event="dateSelect"></p:ajax>
+				 </p:calendar> -->
+	             <td colspan="4" style="background:#2196f3;height:30px">	             
+	             <h:outputLabel value="DEBIT  "  style="margin-left:+260px;color:#fff;font-family:'Arial,san-serif';font-size:20px !important"> </h:outputLabel>
+	             </td>
+	             <td colspan="5" style="background:#2196f3;height:30px">	             
+	             <h:outputLabel value="CREDIT  "  style="margin-left:+260px;color:#fff;font-family:'Arial,san-serif';font-size:20px !important"></h:outputLabel>
+	             </td>
+	             </tr>	
+	              <tr><td style="height:20px;"></td></tr>             
+	             <tr >
+	             <td>
+					<p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.debitlist}" id="dataTable01" >
+					<p:column width="100" headerText="Transaction Type *" style="font-size:12px;color:white;">
+						<h:outputLabel value="#{info.serialNo}" style="display:none;"></h:outputLabel>
+						<h:outputLabel value="#{info.status}" style="display:none;"></h:outputLabel>
+						<h:selectOneMenu style="width:120px;height:24px;" id="trans" value="#{info.transactionType}" valueChangeListener="#{aTransactionMB.transDetails}">
+						<f:selectItem itemLabel="---Select---"></f:selectItem>
+						<f:selectItem itemLabel="Bill" itemValue="Bill"></f:selectItem>
+						<f:selectItem itemLabel="Expense" itemValue="Expense"></f:selectItem>
+						<f:selectItem itemLabel="Cheque" itemValue="Cheque"></f:selectItem>
+						<f:selectItem itemLabel="Vendor Credit" itemValue="Vendor Credit"></f:selectItem>
+						<f:attribute name="serialNo" value="#{info.serialNo}"></f:attribute>
+						<f:attribute name="status" value="#{info.status}"></f:attribute>
+						<p:ajax event="valueChange" update="@form" process="@this"></p:ajax>
+						</h:selectOneMenu>
+					</p:column>
+					</p:dataTable>
+					
+	             </td>	             
+	            
+					<td>
+					<p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.debitlist}" id="dataTable1" >
+					<p:column width="100" headerText="Account *" style="font-size:12px;color:white;">
+					<!-- 	<p:inputText style="width:110px;" value="#{info.particular}" id="dnames">
+						<p:ajax event="valueChange" update="dnames" process="@this"></p:ajax>
+						</p:inputText> -->
+						<h:selectOneMenu style="width:120px;height:24px;" id="dacc" value="#{info.particular}" valueChangeListener="#{aTransactionMB.accountDetails}" >
+						<f:selectItem itemLabel="---Select---"></f:selectItem>
+						<f:selectItem itemLabel="+ Add New" itemValue="Add"  ></f:selectItem>
+						<f:selectItems value="#{aTransactionMB.atypeList}"></f:selectItems>
+						<f:attribute name="serialNo" value="#{info.serialNo}"></f:attribute>
+						<f:attribute name="status" value="#{info.status}"></f:attribute>
+						<p:ajax event="valueChange" update="@form" process="@this"></p:ajax>
+						</h:selectOneMenu>
+					</p:column></p:dataTable>
+					</td>
+					<td>
+					<p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.debitlist}" id="dataTable4" >
+					<p:column width="100" headerText="Payment Mode *" style="font-size:12px;color:white;">
+						<h:outputLabel value="#{info.serialNo}" style="display:none;"></h:outputLabel>
+						<h:outputLabel value="#{info.status}" style="display:none;"></h:outputLabel>
+						<h:selectOneMenu style="width:120px;height:24px;" id="dpay" value="#{info.paymentMode}" valueChangeListener="#{aTransactionMB.paymentDetails}" >
+						<f:selectItem itemLabel="---Select---"></f:selectItem>
+						<f:selectItem itemLabel="Cash" itemValue="Cash"></f:selectItem>
+						<f:selectItem itemLabel="Card" itemValue="Card"></f:selectItem>
+						<f:selectItem itemLabel="Cheque" itemValue="Cheque"></f:selectItem>
+						<f:selectItem itemLabel="Transfer" itemValue="Transfer"></f:selectItem>
+						<f:attribute name="serialNo" value="#{info.serialNo}"></f:attribute>
+						<f:attribute name="status" value="#{info.status}"></f:attribute>
+						<p:ajax event="valueChange" update="dpay" process="@this"></p:ajax>
+						</h:selectOneMenu>
+					</p:column>
+					</p:dataTable>
+					
+	             </td>
+	             
+	             <td>
+	             <p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.debitlist}" id="dataTable" >
+					<p:column width="100" headerText="Description " style="font-size:12px;color:white;">
+						<p:inputText style="width:110px;height:13px;" value="#{info.note}" id="dnotes">
+						<p:ajax event="valueChange" update="dnotes" process="@this"></p:ajax>
+						</p:inputText>
+					</p:column>
+					</p:dataTable>
+					</td>
+	             <td width="100px" height="100px">
+	             <div class="verticalLine"></div>
+	             </td>
+	             <td>
+					<p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.creditlist}" id="dataTable02" >
+					<p:column width="100" headerText="Transaction Type *" style="font-size:12px;color:white;">
+						<h:outputLabel value="#{info.serialNo}" style="display:none;"></h:outputLabel>
+						<h:outputLabel value="#{info.status}" style="display:none;"></h:outputLabel>
+						<h:selectOneMenu style="width:120px;height:24px;" id="ctrans" value="#{info.ctransactionType}" valueChangeListener="#{aTransactionMB.transDetails}">
+						<f:selectItem itemLabel="---Select---"></f:selectItem>
+						<f:selectItem itemLabel="Invoice" itemValue="Invoice"></f:selectItem>
+						<f:selectItem itemLabel="Payment" itemValue="Payment"></f:selectItem>
+						<f:selectItem itemLabel="Estimate" itemValue="Estimate"></f:selectItem>
+						<f:selectItem itemLabel="Sales Receipt" itemValue="Sales Receipt"></f:selectItem>
+						<f:selectItem itemLabel="Credit Memo" itemValue="Credit Memo"></f:selectItem>
+						<f:selectItem itemLabel="Delayed Charge" itemValue="Delayed Charge"></f:selectItem>
+						<f:selectItem itemLabel="Time Activity" itemValue="Time Activity"></f:selectItem>
+						<f:attribute name="serialNo" value="#{info.serialNo}"></f:attribute>
+						<f:attribute name="status" value="#{info.status}"></f:attribute>
+						<p:ajax event="valueChange" update="@form" process="@this"></p:ajax>
+						</h:selectOneMenu>
+					</p:column>
+					</p:dataTable>
+					
+	             </td>	      
+	           <td>
+					<p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.creditlist}" id="dataTable6" >
+					<p:column width="100" headerText="Account  *" style="font-size:12px;color:white;">
+						<h:selectOneMenu style="width:120px;height:24px;" id="cacnt" value="#{info.cparticular}" valueChangeListener="#{aTransactionMB.accountDetails}" >
+						<f:selectItem itemLabel="---Select---"></f:selectItem>
+						<f:selectItem itemLabel="+ Add +" itemValue="Add"  ></f:selectItem>
+						<f:selectItems value="#{aTransactionMB.atypeList}"></f:selectItems>
+						<f:attribute name="serialNo" value="#{info.serialNo}"></f:attribute>
+						<f:attribute name="status" value="#{info.status}"></f:attribute>
+						<p:ajax event="valueChange" update="@form" process="@this"></p:ajax>
+						</h:selectOneMenu>
+					</p:column></p:dataTable>
+					</td><td>
+					<p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.creditlist}" id="dataTable8" >
+					<p:column width="100" headerText="Payment Mode  *" style="font-size:12px;color:white;">
+						<p:column width="100" headerText="payment Mode" style="font-size:12px;color:white;">
+						<h:outputLabel value="#{info.serialNo}" style="display:none;"></h:outputLabel>
+						<h:outputLabel value="#{info.status}" style="display:none;"></h:outputLabel>
+						<h:selectOneMenu style="width:120px;height:24px;" id="cpay" value="#{info.cpaymentMode}" valueChangeListener="#{aTransactionMB.paymentDetails}" >
+						<f:selectItem itemLabel="---Select---"></f:selectItem>
+						<f:selectItem itemLabel="Cash" itemValue="Cash"></f:selectItem>
+						<f:selectItem itemLabel="Card" itemValue="Card"></f:selectItem>
+						<f:selectItem itemLabel="Cheque" itemValue="Cheque"></f:selectItem>
+						<f:selectItem itemLabel="Transfer" itemValue="Transfer"></f:selectItem>
+						<f:attribute name="serialNo" value="#{info.serialNo}"></f:attribute>
+						<f:attribute name="status" value="#{info.status}"></f:attribute>
+						<p:ajax event="valueChange" update="cpay" process="@this"></p:ajax>
+						</h:selectOneMenu>
+					</p:column>
+					</p:column>
+					</p:dataTable>
+	             </td>
+	              <td>
+	             <p:dataTable style="width:140px;" var="info" value="#{aTransactionMB.creditlist}" id="dataTable5" >
+					<p:column width="100" headerText="Description " style="font-size:12px;color:white;">
+						<p:inputText style="width:110px;height:13px;" value="#{info.cnote}" id="cnotes">
+						<p:ajax event="valueChange" update="cnotes" process="@this"></p:ajax>
+						</p:inputText>
+					</p:column>
+					</p:dataTable>
+					</td>
+	             </tr>
+	             </table>
+	             <br/> <br/><center>
+	             <p:commandButton  value="Submit" styleClass="button_ui" action="#{aTransactionMB.saveTransaction}" update="panelid" process="@this"></p:commandButton>
+<p:commandButton  value="Reset" styleClass="button_ui" action="#{aTransactionMB.transationClear}" update="panelid" process="@this"></p:commandButton>
+<p:commandButton   value="Cancel" styleClass="button_ui" action="#{aTransactionMB.transactionformclose}" update="@form" process="@this"></p:commandButton>
+	             </center>
+	             <br/>
+	             </p:panel>
+	   
+                    </td>
+                  </tr>
+                   
+</table> 
+<p:dialog header="Payment Details" modal="true" widgetVar="paymentDetails" width="400px" height="200px" id="paydet">
+<br/>
+<h:panelGrid columns="3" style="border-width:0px;padding:2px;border:0px;" cellspacing="5" cellpadding="5">
+
+<h:outputLabel value="Bank Name" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.bankname}" id="bankname" styleClass="inputTxt">
+<p:ajax update="bankname" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="bankname" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+<h:outputLabel value="Card Number" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.cardno}" id="cardno" styleClass="inputTxt">
+<p:ajax update="cardno" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="cardno" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+</h:panelGrid>
+<br/>
+<center>
+<p:commandButton value="Save" action="#{aTransactionMB.savepaymentDetails}" update="paydet" process="@this" ></p:commandButton>
+</center>
+</p:dialog>
+
+
+<p:dialog header="Payment Details" modal="true" widgetVar="tpaymentDetails" width="400px" height="200px" id="tpaydet" >
+<br/>
+<h:panelGrid columns="3" style="border-width:0px;padding:2px;border:0px;" cellspacing="5" cellpadding="5">
+
+<h:outputLabel value="Bank Name" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.bankname}" id="tbankname" styleClass="inputTxt">
+<p:ajax update="tbankname" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="tbankname" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+<h:outputLabel value="Account Number" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.cardno}" id="tcardno" styleClass="inputTxt">
+<p:ajax update="tcardno" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="tcardno" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+</h:panelGrid>
+<br/>
+<center>
+<p:commandButton value="Save" action="#{aTransactionMB.savepaymentDetails}" update="tpaydet" process="@this" ></p:commandButton>
+</center>
+</p:dialog>
+<p:dialog header="Payment Details" modal="true" widgetVar="paymentDetails1" width="400px" height="200px" id="cpaydet">
+<h:panelGrid columns="3" style="border-width:0px;padding:2px;border:0px;" cellspacing="5" cellpadding="5">
+<h:outputLabel value="Bank Name" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.bankname}" id="bankname1" styleClass="inputTxt">
+<p:ajax update="bankname1" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="bankname1" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+<h:outputLabel value="Cheque Number" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.chequeno}" id="chequeno" styleClass="inputTxt">
+<p:ajax update="chequeno" process="@this"></p:ajax>
+</p:inputText>
+<br/>
+<h:message for="chequeno" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+<h:outputLabel value="Cheque Date" class="labelTxt"></h:outputLabel>
+<h:outputLabel value=":" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:calendar datePattern="dd/MM/yyyy" maxdate="#{currentDate}" id="chequedate" style="line-height: normal;" styleClass="inputTxt"
+	 value="#{aTransactionMB.chequedate}">
+<p:ajax update="chequedate" process="@this" event="dateSelect"></p:ajax>
+</p:calendar>
+<br/>
+<h:message for="chequedate" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+</h:panelGrid>
+<br/>
+<center>
+<p:commandButton value="Save" action="#{aTransactionMB.savepaymentDetails}" update="cpaydet" process="@this"></p:commandButton>
+</center>
+</p:dialog>
+<p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="confirmDialog" modal="true"
+							width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Transaction Registration has been successfully completed."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:30px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="@form"
+		 actionListener="#{aTransactionMB.closeTranasction}" oncomplete="PF('confirmDialog').hide()"></p:commandButton></center>						
+						<br /><br /></p:dialog>	
+
+
+<p:dialog header="Add AccountType" modal="true" widgetVar="addAccount" width="80%" height="50%" id="paydets">
+<br/>
+<div style="height:20px;"></div>
+	<center><h:outputText value="#{aTransactionMB.payValidate}" style="color:red;" class="labelTxt"></h:outputText> </center>
+<br/>
+<h:panelGrid columns="4" cellpadding="10" cellspacing="5" width="90%" style="height:50%;">
+	<h:outputLabel class="labelTxt" value="Account Type"></h:outputLabel>
+	<h:selectOneMenu value="#{aTransactionMB.accounts}" rendered="#{aTransactionMB.status=='Debit'}"
+		id="acctypes" style="width:200px;height:25px;" valueChangeListener="#{aTransactionMB.accountType}">
+		<f:selectItem itemLabel="Expenses" itemValue="Expenses"></f:selectItem>
+		<f:selectItem itemLabel="Bank" itemValue="Bank"></f:selectItem>
+		<p:ajax update="acctypes" process="@this" event="valueChange"></p:ajax>
+	</h:selectOneMenu>
+	<h:selectOneMenu value="#{aTransactionMB.accounts}" rendered="#{aTransactionMB.status=='Credit'}"
+		id="acctypes1" style="width:200px;height:25px;" valueChangeListener="#{aTransactionMB.accountType}">
+		<f:selectItem itemLabel="Other Current Assets" itemValue="Other Current Assets"></f:selectItem>
+		<f:selectItem itemLabel="Bank" itemValue="Bank"></f:selectItem>
+		<p:ajax update="acctypes1" process="@this" event="valueChange"></p:ajax>
+	</h:selectOneMenu>
+	<h:outputLabel class="labelTxt" value="Name"></h:outputLabel>
+	<h:panelGroup>
+		<p:inputText styleClass="inputTxt" id="detName" readonly="true" value="#{aTransactionMB.detailName}">
+			<p:ajax update="detName" process="@this"></p:ajax>
+		</p:inputText><br/>
+		<h:message for="detName" styleClass="errorTxt"></h:message>
+	</h:panelGroup>
+	<h:outputLabel></h:outputLabel><h:outputLabel ></h:outputLabel>
+	<h:outputLabel ></h:outputLabel><h:outputLabel></h:outputLabel>
+	<h:outputLabel class="labelTxt" value="Detail Type"></h:outputLabel>
+	<h:selectOneListbox style="width:240px;height:100px;" id="dtypes" valueChangeListener="#{aTransactionMB.detailSelect}">
+		<f:selectItems value="#{aTransactionMB.detailTypes}"></f:selectItems>
+		<p:ajax update="dtypes detName" process="@this" event="valueChange"></p:ajax>
+	</h:selectOneListbox>
+	<h:outputLabel class="labelTxt" value="Balance"></h:outputLabel>
+	<p:inputText styleClass="inputTxt" id="bal" value="#{aTransactionMB.balance}">
+		<p:ajax update="bal" process="@this" ></p:ajax>
+	</p:inputText>
+</h:panelGrid>
+<br/>
+<center>
+<p:commandButton value="Save" action="#{aTransactionMB.accountDeposit}" update="paydets dataTable1 dataTable6" process="@this" ></p:commandButton>
+</center>
+</p:dialog>
+
+<p:dialog header="Confirmation" modal="true" widgetVar="confirmDialog1" id="confirmDialog1" width="200px" height="80px">
+<h:panelGrid>
+<h:outputLabel value="Successfully Saved" style="font-size:12px;"></h:outputLabel>
+</h:panelGrid>
+<br />
+ <center><p:commandButton value="Ok"  process="@this" immediate="true" update="@form" 
+    oncomplete="PF('confirmDialog1').hide()"></p:commandButton></center>  
+</p:dialog>
+
+
+<p:dialog header="Transaction Details" widgetVar="transDetails1" width="80%" height="250px" id="transdet" modal="true">
+<div style="height:10px;"></div>
+<p:panelGrid columns="4" styleClass="ui-panelgrid-blank">
+
+<h:outputLabel value="Payment Date" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:calendar pattern="dd/MM/yyyy"  id="paydate" style="line-height: normal;" styleClass="inputTxt"
+	 value="#{aTransactionMB.paydate}">
+<p:ajax update="paydate" process="@this" event="dateSelect"></p:ajax>
+</p:calendar>
+<br/>
+<h:message for="paydate" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+
+<h:outputLabel value="Due Date" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:calendar pattern="dd/MM/yyyy"  id="duedate" style="line-height: normal;" styleClass="inputTxt"
+	 value="#{aTransactionMB.duedate}">
+<p:ajax update="duedate" process="@this" event="dateSelect"></p:ajax>
+</p:calendar>
+<br/>
+<h:message for="duedate" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+
+<h:outputLabel value="Mailing Address" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputTextarea value="#{aTransactionMB.maddress}" id="maddress" styleClass="inputTxt"> 
+<p:ajax update="maddress" process="@this"></p:ajax>
+</p:inputTextarea>
+<br/>
+<h:message for="maddress" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+
+<h:outputLabel value="Amount" class="labelTxt"></h:outputLabel>
+<h:panelGroup>
+<p:inputText value="#{aTransactionMB.amount}" id="amount" styleClass="inputTxt">
+<p:ajax update="amount" process="@this"></p:ajax>
+</p:inputText><br/>
+<h:message for="amount" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+<h:outputLabel class="labelTxt" value="Currency Type"></h:outputLabel>
+<h:panelGroup>
+	<h:selectOneMenu class="text_ui" value="#{aTransactionMB.currencyType}" id="currency" style="width:200px;height:25px;">
+		<f:selectItem itemLabel="Select Currency Type" noSelectionOption="true"/>
+		<f:selectItem itemLabel="AED" itemValue="AED"/>
+	   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+	   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+	   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+	   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+		<p:ajax update="currency" process="@this"></p:ajax>
+	</h:selectOneMenu>
+	<br/>
+<h:message for="currency" style="color:red;font-size:10px;"></h:message>
+</h:panelGroup>
+	<h:outputLabel></h:outputLabel>
+	<h:outputLabel></h:outputLabel>
+<h:outputLabel value="Attachment" class="labelTxt"></h:outputLabel>
+<p:fileUpload  mode="advanced" style="width:400px;"
+       value="#{aTransactionMB.transFile}" id="TPhoto"
+       fileUploadListener="#{aTransactionMB.dummyAction}"
+       allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" >
+       
+       </p:fileUpload>
+
+</p:panelGrid>
+<br/>
+<center>
+<p:commandButton value="Save" action="#{aTransactionMB.savetransDetails}" update="transdet" process="@this" ></p:commandButton>
+</center>
+</p:dialog>
+
+
+</td></tr>
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

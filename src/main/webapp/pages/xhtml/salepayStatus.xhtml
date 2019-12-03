@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+
+<title> Inacsys |Sales Payment View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+			<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+			
+
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+
+										<tr align="center"><td>
+<p:panel id="panel" style="border:0px;" >
+
+<rich:panel style="width:450px;">
+<h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="2"  style="font-size:14px; width:450px;" align="center" cellpadding="3">
+   <h:outputText id="reg" value="Customer Information " class="header_ui"/>
+	            </h:panelGrid>
+<h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="2"  style="font-size:14px; width:450px;" align="center" cellpadding="3">
+	            <h:outputText class="label_ui" value="Name"></h:outputText>
+				<h:outputText class="label_ui" value="#{salesViewMB.customerName}" id="Name"  label="name" >
+			
+				</h:outputText>
+				 <h:outputText class="label_ui" value="Address "></h:outputText>
+				<h:outputText class="label_ui" value="#{salesViewMB.address}"  id="Nam"  label="name" >
+			
+				</h:outputText>
+				 <h:outputText class="label_ui" value="Telephone Number"></h:outputText>
+				<h:outputText class="label_ui" value="#{salesViewMB.telephonenumber}" >
+			
+				</h:outputText>
+				
+				
+				</h:panelGrid></rich:panel>
+				<div style="height: 20px"></div>
+	       
+	              <h:panelGrid style="display:#{salesViewMB.flag1}">
+    <rich:dataTable id="dataTable" var="info"  value="#{salesViewMB.resulfinal}" columnsWidth="90px,150px,100px,150px,140px,140px">  
+         	
+ 
+  			 <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;">  Date  </span>      </f:facet>
+	         <h:outputText class="label_ui" value="#{info.orderDate}" >   
+	         <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> 
+	         </h:outputText>
+	        </h:column>
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;">  Product Name   </span>      </f:facet>
+	            <h:outputText value="#{info.product_name}"  class="label_ui"/>  
+	        </h:column> 
+	         
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;">  Quantity   </span>      </f:facet>
+	            <h:outputText value="#{info.quantity}"  class="label_ui"/>    <h:outputText value=" "></h:outputText>
+	             <h:outputText value="#{info.unit}"  class="label_ui"/>  
+	        </h:column> 
+  
+	       <!--  <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;">  Batch Name </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.batchProductName}"  class="label_ui"/>  
+	        </h:column>   -->
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;"> Unit Price </span> 
+	   		     </f:facet>
+	   		     <h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText class="label_ui" value="#{info.sellingPrice}" >
+	           
+	            </h:outputText>  
+	        </h:column>  
+  <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:12px;padding-top:10px;"> Total Price </span>      </f:facet>
+	            <h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText class="label_ui" value="#{info.totalPrice}" >
+	          
+	            </h:outputText>  
+	        </h:column>  
+	   		 
+	          
+   
+  
+          
+ </rich:dataTable></h:panelGrid></p:panel>
+
+
+<h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+<p:commandButton value="Ok"  styleClass="button_ui" action="#{salesPaymentMB.salespaymentviewclose}"></p:commandButton>
+
+<p:commandButton value="Print"  styleClass="button_ui"  > <p:printer target="panel"></p:printer></p:commandButton><h:outputText/><h:outputText/><h:outputText/>
+</h:panelGrid>
+  </td></tr>
+</table> 
+
+</td></tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

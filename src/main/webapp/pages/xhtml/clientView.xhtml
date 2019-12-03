@@ -1,0 +1,668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<head>
+<script type="text/javascript" src="../../js/mycustompurchase.js"/>
+
+</head>
+	<ui:define name="content">		
+
+						<div style="height:5px;"></div>
+						<center>
+						<p:dataTable var="info" value="#{clientMB.clientDataBean.clientLists}"
+					widgetVar="clientInfo" id="dataTable"
+					emptyMessage="No information found with given criteria"
+				    paginator="true" paginatorAlwaysVisible="false" reflow="true"
+					rows="10" paginatorPosition="top"
+					 pageLinks="5">
+										<f:facet name="header">
+									<p:outputPanel style="text-align:right">
+
+										<p:inputText id="globalFilter" onkeyup="PF('clientInfo').filter()"
+											style="width:20%;height:25px;" placeholder="Enter keyword" />
+									</p:outputPanel>
+								</f:facet>
+								<p:column filterBy="#{info.clientNumber}" width="50"
+									headerText="Client ID" filterMatchMode="contains"
+									filterStyle="display:none">
+							<h:outputText class="label_ui" style="display:none;"
+										value="#{info.clientID}" />	
+									<h:outputText class="label_ui"
+										value="#{info.clientNumber}" />
+								</p:column>
+								<p:column filterBy="#{info.clientName}" width="100" headerText="Client Name"
+									filterMatchMode="contains" filterStyle="display:none">
+									<h:outputText value="#{info.clientName}">
+									</h:outputText>
+								</p:column>
+								<p:column filterBy="#{info.phoneNumber}" width="70" headerText="Phone Number"
+									filterMatchMode="contains" filterStyle="display:none">
+									<h:outputText class="label_ui" value="#{info.phoneNumber}">
+									</h:outputText>
+								</p:column>
+								
+								<p:column filterBy="#{info.userLimit}" width="60" headerText="No of Users"
+									filterMatchMode="contains" filterStyle="display:none">
+									<h:outputText class="label_ui" value="#{info.userLimit}">
+									</h:outputText>
+								</p:column>
+
+								<p:column filterBy="#{info.createdUser}" width="70" headerText="Created Users"
+									filterMatchMode="contains" filterStyle="display:none">
+									<p:commandLink value="#{info.createdUser}" styleClass="label_ui" action="#{userCreateMB.createduserDetails}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+											 update=":center_content:dialogPanel2">
+									<f:setPropertyActionListener value="#{info.clientNumber}" target="#{userCreateMB.userCreateDataBean.clientNumber}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info.createdUser}" target="#{userCreateMB.userCreateDataBean.userLimit}"></f:setPropertyActionListener>
+									</p:commandLink>
+								</p:column>
+								
+								<p:column filterBy="#{info.mailID}" width="100" headerText="Email ID"
+									filterMatchMode="contains" filterStyle="display:none">
+									<h:outputText class="label_ui" value="#{info.mailID}">
+									</h:outputText>
+								</p:column>
+								<p:column width="120" headerText="Action">
+
+									<div align="center">
+										<p:commandLink value="View"
+											action="#{clientMB.clientDetails}" styleClass="labelTxt"
+											update=":center_content:dialogPanelView" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+											oncomplete="PF('clientDialogView').show();" immediate="true" process="@this">
+											<f:setPropertyActionListener
+												target="#{clientMB.clientDataBean.phoneNumber}"
+												value="#{info.phoneNumber}" />
+
+										</p:commandLink>&nbsp;
+										<p:commandLink value="Edit" styleClass="labelTxt"
+											action="#{clientMB.clientDetails}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+											update=":center_content:dialogPanelModify"
+											oncomplete="PF('clientDialogModify').show();">
+
+											<f:setPropertyActionListener
+												target="#{clientMB.clientDataBean.phoneNumber}"
+												value="#{info.phoneNumber}" />
+							<f:setPropertyActionListener
+								target="#{clientMB.clientDataBean.clientID}"
+								value="#{info.clientID}" />
+						</p:commandLink>&nbsp;
+										<p:commandLink value="Delete" styleClass="labelTxt" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+											oncomplete="PF('cd').show()">
+											<f:setPropertyActionListener
+												target="#{clientMB.clientDataBean.phoneNumber}"
+												value="#{info.phoneNumber}" />
+							<f:setPropertyActionListener
+								target="#{clientMB.clientDataBean.clientID}"
+								value="#{info.clientID}" />
+										</p:commandLink>
+										
+										&nbsp;
+										<p:commandLink value="UserCreate" styleClass="labelTxt" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+											action="#{userCreateMB.userCreateDialog}" update=":center_content:dialogPanel1"  oncomplete="PF('userCreateDialog').show();">
+
+											<f:setPropertyActionListener
+												target="#{clientMB.clientDataBean.phoneNumber}"
+												value="#{info.phoneNumber}" />
+							<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.clientNumber}"
+								value="#{info.clientNumber}" />
+								<f:setPropertyActionListener
+												target="#{userCreateMB.userCreateDataBean.userLimit}"
+												value="#{info.userLimit}" />
+												<f:setPropertyActionListener
+								target="#{userCreateMB.userCreateDataBean.clientID}"
+								value="#{info.clientID}" />
+						</p:commandLink>
+									</div>
+								</p:column>
+								
+							</p:dataTable>
+						</center>
+<p:dialog  header="User Create Form" id="dlg" appendTo="@(body)"  widgetVar="userCreateDialog" modal="true" height="300px" width="90%" >
+            <p:outputPanel id="dialogPanel1">
+				<h:form id="panelID">
+				<table align="right"><tr><td align="right">
+				<h:panelGrid columns="3" style="align:right;height:50px" rendered="#{userCreateMB.status == 'register'}">
+				<h:outputText value="Add Row" style="margin-right:+30px;" styleClass="labelTxt"></h:outputText>
+				<h:inputHidden></h:inputHidden>
+				<h:outputText value="Remove Row" styleClass="labelTxt"> </h:outputText>
+				<h:panelGroup>
+				<p:commandButton id="rowID" style="display:none;" action="#{userCreateMB.userRow}" immediate="true" process="@this" update=":center_content:dialogPanel1" ></p:commandButton>
+				 <p:commandButton icon="ui-icon-plus" onclick="addrowvalidate()"></p:commandButton>
+				</h:panelGroup>
+				<h:inputHidden></h:inputHidden>
+				<p:commandButton icon="ui-icon-close" action="#{userCreateMB.removeRow}" immediate="true" process="@this" update=":center_content:dialogPanel1"></p:commandButton>
+				<h:outputText></h:outputText>
+				</h:panelGrid>
+				<br/>
+				</td></tr></table>
+				<div style="height:20px"></div>
+				<div align="center" style="height:30px">
+				<h:inputHidden id="limitcheck"></h:inputHidden><h:message for="limitcheck" styleClass="errorTxt"></h:message>
+<h:outputText value="#{userCreateMB.validate}" style="color:red;font-size:14px;font-family:'Arial,san-serif'"></h:outputText>
+				<h:outputText  id="usercheck" styleClass="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText></div>
+				<p:dataTable var="user" id="checkboxDT" value="#{userCreateMB.lists}"  style="margin-bottom:20px;width:100%;overflow:auto" reflow="true" rendered="#{userCreateMB.status == 'register'}">
+	
+	<p:column styleClass="dtable_ui" style="width:40px;height:25px" >
+       <div align="center">       
+        <p:selectBooleanCheckbox value="#{user.tick}" style="display:#{user.flag};" id="checkbox">
+       <p:ajax immediate="true" process="@this" event="valueChange"></p:ajax>
+       </p:selectBooleanCheckbox>
+       </div>
+       </p:column>
+     
+    <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="User Name" >
+        <div align="center" >
+        <h:inputHidden value="#{user.sno}" style="height:20px;"/>
+        <p:inputText value="#{user.createUserName}" style="height:25px;width:145px;" id="inputuser" onblur="usenamecheck();" >
+        <p:ajax immediate="true" process="@this" event="valueChange"></p:ajax>
+        </p:inputText>
+        <div style="height:15px"></div>
+      <h:outputText value="#{user.errorusername}" id="usererror" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif'line-height: initial;"></h:outputText>
+        <div style="height:10px"></div>
+        </div>
+   </p:column>
+ 
+    <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="Password" >
+    <div align="center" ><p:inputText value="#{user.createUserPwd}" style="height:25px;width:145px;" id="inputpwd" onblur="passwordcheck();">
+    <p:ajax immediate="true" process="@this" event="valueChange"></p:ajax></p:inputText>
+    <div style="height:15px"></div>
+   <h:outputText value="#{user.errorpassword}" id="userpwd" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText>
+    </div>
+      <div style="height:10px"></div>
+       </p:column>
+ 
+    <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="Email-ID" >
+    <div align="center"> <p:inputText  value="#{user.createUserMail}" style="height:25px;width:150px;"  id="inputmail" onblur="emailcheck();">
+    <p:ajax immediate="true" process="@this" event="valueChange"></p:ajax></p:inputText>
+    <div style="height:15px"></div>
+   <h:outputText value="#{user.erroremail}" id="usermail" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText>
+</div>
+  <div style="height:10px"></div>
+    </p:column>
+ 
+    <p:column style="width:130px;color:white;font-size:12px;height:25px"  headerText="Phone Number" >
+    <div align="center"> <p:inputText value="#{user.createUserPhone}" style="height:25px;width:130px;" id="inputphone" onblur="phonecheck();">
+    <p:ajax immediate="true" process="@this" event="valueChange"></p:ajax></p:inputText>
+    <div style="height:15px"></div>
+  <h:outputText value="#{user.errorphone}" id="userphone" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText>
+    </div>
+      <div style="height:10px"></div>
+    </p:column>
+     <p:column style="width:140px;font-size:12px;height:25px"  headerText="User Type" >
+    <div align="center"> 
+    <h:selectOneMenu value="#{user.userType}" valueChangeListener="#{userCreateMB.userTypeValueChange}"
+							     style="border-radius:0px;height: 25px;width: 150px;" id="utype" widgetVar="var2" styleClass="labelTxt">									
+									<f:selectItem itemLabel="--- Select UserType---" itemValue="" />
+       								<f:selectItem itemLabel="Maker" itemValue="Maker"></f:selectItem>
+       								<f:selectItem itemLabel="Maker/Authorizer" itemValue="Maker/Authorizer"></f:selectItem>
+       								<f:attribute name="sno" value="#{user.sno}"></f:attribute>
+      								<p:ajax immediate="true" update="usermenu" process="@this" event="valueChange"></p:ajax>
+								</h:selectOneMenu><div style="height:15px"></div>	
+  <h:outputText value="#{user.erroruserType}" id="usertype" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText>
+    </div>
+      <div style="height:10px"></div>
+    </p:column>
+    <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="User Department" >
+    <div align="center"> 
+    <p:selectCheckboxMenu style="height:28px;width:150px;border-radius:1px;font-family:'Arial,san-serif';padding:0px 10px 9px 6px !important;font-weight:normal !important;font-size:14px;" id="userdept" 
+	multiple="true" label="---Departments---" filter="true" value="#{user.selectedDepartments}" filterMatchMode="startsWith" panelStyle="width:260px">
+	<f:selectItems value="#{user.departmentList}" />
+	<p:ajax event="toggleSelect" update="@form" process="@this"></p:ajax>
+	<p:ajax event="change"></p:ajax>
+</p:selectCheckboxMenu><div style="height:15px"></div>
+  <h:outputText value="#{user.erroruserDepartments}" id="userdepartment" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText>
+    </div>
+      <div style="height:10px"></div>
+    </p:column>
+    <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="User Menus" >
+    <div align="center"> 
+    <p:selectCheckboxMenu style="height:28px;width:150px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;font-size:14px;" id="usermenu" 
+	multiple="true" label="---Menus---" filter="true" value="#{user.selectedMenus}" filterMatchMode="startsWith" panelStyle="width:260px">
+	<f:selectItems value="#{user.menuList}" />
+	<p:ajax event="toggleSelect" update="@form" process="@this"></p:ajax>
+	<p:ajax event="change"></p:ajax>
+</p:selectCheckboxMenu><div style="height:15px"></div>	
+  <h:outputText value="#{user.erroruserMenus}" id="errmenu" class="erroroutput" style="color:red;font-size:14px;font-family:'Arial,san-serif';line-height: initial;"></h:outputText>
+    </div>
+      <div style="height:10px"></div>
+    </p:column>
+   
+</p:dataTable>
+				<center>
+				<h:panelGroup>
+				<p:commandButton id="confirmID" style="display:none;" action="#{userCreateMB.userCreateForm}" process="@this" immediate="true" update=":center_content:dialogPanel1" 
+				onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+				<p:commandButton value="Save" onclick="confirm()" rendered="#{userCreateMB.status == 'register'}" 
+				onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+				></p:commandButton> 
+				</h:panelGroup>
+				</center>
+				<p:remoteCommand name="remoteDialog" action="#{userCreateMB.refreh}" update=":center_content" ></p:remoteCommand>
+				<div align="center" >
+    	<table align="center"><tr><td align="center">
+    	
+			<p:panel style="margin-top:+50px;width:350px;margin-bottom:+50px;" rendered="#{userCreateMB.status == 'insert'}" align="center">
+    		<h:panelGrid columns="4" rendered="#{userCreateMB.status == 'insert'}" align="center">
+    			<h:outputLabel value=" &nbsp;&nbsp;Successfully created the User" style="color:balck;font-size:22px;font-family:Arial,san-serif !important;"/>
+    			</h:panelGrid>
+    	</p:panel></td></tr></table></div>
+    	
+    	
+       
+				</h:form>
+                </p:outputPanel>
+                
+                </p:dialog>
+                <p:dialog header="Confirmation" widgetVar="cd" modal="true" width="45%" height="130"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Client?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:20px"></div>
+					<p:commandButton value="Yes" action="#{clientMB.clientDelete}"
+						onsuccess="PF('cd').hide()" process="@this" immediate="true"
+						styleClass="button_ui" oncomplete="PF('cd1su').show()"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="cd1su" modal="true" width="45%" height="130"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Client has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:20px"></div>
+				<center>
+				<p:commandButton value="OK"  action="#{clientMB.clientView}" update=":center_content"
+						 onclick="PF('cd1su').hide()" process="@this" immediate="true"
+						styleClass="button_ui"></p:commandButton></center>
+			</p:dialog>
+			
+			<p:dialog header="ALERT...!!" widgetVar="nousercreatedetailsDlg" modal="true" width="45%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="No Users has beed created for this client." styleClass="confirmTxt"/></center>
+				<div style="height:20px"></div>
+			</p:dialog>
+	
+	
+	<p:dialog  header="Created User Details Form" id="dlg1" appendTo="@(body)"  widgetVar="usercreatedetailsDlg" modal="true" height="300px" width="70%" >
+				<div style="height:20px"></div>
+				<p:outputPanel id="dialogPanel2">
+				<h:form id="panelID1">
+				<p:dataTable var="user" value="#{userCreateMB.userCreateDataBean.userinfoList}">
+	
+    <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="User Name" >
+        <h:outputText value="#{user.createUserName}" style="height:25px;width:145px;color:#222" class="label_ui">
+        </h:outputText>
+   </p:column>
+ 
+ <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="User Password" >
+        <h:outputText value="#{user.createUserPwd}" style="height:25px;width:145px;color:#222" class="label_ui">
+        </h:outputText>
+   </p:column>
+   <p:column style="width:100px;color:white;font-size:12px;height:25px"  headerText="Phone Number" >
+        <h:outputText value="#{user.createUserPhone}" style="height:25px;width:145px;color:#222" class="label_ui">
+        </h:outputText>
+   </p:column>
+   <p:column style="width:140px;color:white;font-size:12px;height:25px"  headerText="EMail ID" >
+        <h:outputText value="#{user.createUserMail}" style="height:25px;width:145px;color:#222" class="label_ui">
+        </h:outputText>
+   </p:column><p:column style="width:100px;color:white;font-size:12px;height:25px"  headerText="User Type" >
+        <h:outputText value="#{user.userType}" style="height:25px;width:145px;color:#222" class="label_ui">
+        </h:outputText>
+   </p:column>
+   
+</p:dataTable>
+				</h:form>
+				</p:outputPanel>
+                
+                </p:dialog>
+	
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   </p:dialog>
+		 	<p:dialog header="Client View" id="dlgview" appendTo="@(body)"
+				widgetVar="clientDialogView" modal="true" 
+				
+				height="auto" width="400px" resizable="false">
+
+
+				<p:outputPanel id="dialogPanelView">
+
+					<h:form id="clientView">
+						<center>
+						<p:panelGrid columns="2" style="text-align:left;height:400px"
+							styleClass="ui-panelgrid-blank"
+							>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Client Name " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="label_ui" readonly="true"
+									 value="#{clientMB.clientDataBean.clientName}" />
+							</h:panelGroup>
+
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number" for="vTaxNo" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{clientMB.clientDataBean.phoneNumber}"
+									id="vTaxNo" styleClass="label_ui" readonly="true">
+
+								</p:inputText>
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText  class="label_ui" value="Email ID " for="vftype" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{clientMB.clientDataBean.mailID}"
+									id="vftype" styleClass="label_ui" readonly="true">
+
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:outputText class="label_ui" value="No of Users" />
+							<h:panelGroup>
+								<p:inputText value="#{clientMB.clientDataBean.userLimit}"
+									styleClass="label_ui" id="vweb" readonly="true">
+
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Head Office Address"
+									for="vNoB" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{clientMB.clientDataBean.address}"
+									id="vNoB" styleClass="label_ui" readonly="true">
+
+								</p:inputText>
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Department" for="vFaxNo" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectCheckboxMenu id="errdepartment"
+									style="height:28px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;font-size:14px;"
+									multiple="true" label="---Departments---" filter="true"
+									value="#{clientMB.selectedDepartments}"
+									filterMatchMode="startsWith" panelStyle="width:260px">
+									<f:selectItems value="#{clientMB.departmentList}" />
+									<p:ajax update="@form" process="@this" event="toggleSelect"></p:ajax>
+									<p:ajax event="change"
+										listener="#{clientMB.departmentvalueChange}"></p:ajax>
+								</p:selectCheckboxMenu>
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Menus" for="vFaxNo" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+							<p:selectCheckboxMenu
+									style="height:28px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;font-size:14px;"
+									id="menus" multiple="true" label="---Menus---"
+									filter="true" value="#{clientMB.selectedMenus}"
+									filterMatchMode="startsWith" panelStyle="width:260px">
+									<f:selectItems value="#{clientMB.menuList}" />
+									<p:ajax update="@form" process="@this" event="toggleSelect"></p:ajax>
+									<p:ajax event="change"></p:ajax>
+								</p:selectCheckboxMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Base Currency" for="vFaxNo" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{clientMB.clientDataBean.baseCurrency}" id="bcurr"
+									styleClass="label_ui" readonly="true">
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Country" for="ccoun" />
+
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{clientMB.clientDataBean.clientCountry}" id="ccoun1"
+									styleClass="label_ui" readonly="true">
+								</p:inputText>
+							</h:panelGroup>
+						</p:panelGrid>
+						</center>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+
+		
+<!-- Client Modify -->
+			<p:dialog header="Client Modify" id="dlgClintModify" appendTo="@(body)"
+				widgetVar="clientDialogModify" modal="true" height="560px" width="500px" resizable="false">
+<div style="height:10px"></div>
+				<p:outputPanel id="dialogPanelModify">
+
+					<h:form id="venModify">
+					<table align="center">
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Client Name"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:inputText
+									value="#{clientMB.clientDataBean.clientName}" id="nameerr">
+									<p:ajax update="@form" process="@this"></p:ajax>
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="nameerr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel
+									value="Phone Number" styleClass="labelTxt"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:inputText
+									value="#{clientMB.clientDataBean.phoneNumber}" id="phnoerr">
+									<p:ajax update="@form" process="@this"></p:ajax>
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="phnoerr"
+									styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Email-Id"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:inputText
+									value="#{clientMB.clientDataBean.mailID}" id="mailerr">
+									<p:ajax update="@form" process="@this"></p:ajax>
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="mailerr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="No of User"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:inputText
+									value="#{clientMB.clientDataBean.userLimit}" id="limiterr">
+									<p:ajax update="@form" process="@this"></p:ajax>
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="limiterr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel
+									value="Head office Address" styleClass="labelTxt"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:inputTextarea id="haddr"
+									value="#{clientMB.clientDataBean.address}">
+									<p:ajax update="@form" process="@this"></p:ajax>
+								</p:inputTextarea></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="haddr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Department"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:selectCheckboxMenu id="errdepartment"
+									style="height:28px;border-radius:1px;font-family:'Arial,san-serif';padding:0px 10px 9px 6px !important;font-weight:normal !important;font-size:14px;"
+									multiple="true" label="---Departments---" filter="true"
+									value="#{clientMB.selectedDepartments}"
+									filterMatchMode="startsWith" panelStyle="width:260px">
+									<f:selectItem itemLabel="+ ADD NEW" itemValue="add"
+										noSelectionOption="true"></f:selectItem>
+									<f:selectItems value="#{clientMB.departmentList}" />
+									<p:ajax update="@form" process="@this" event="toggleSelect"></p:ajax>
+									<p:ajax event="change"
+										listener="#{clientMB.departmentvalueChange}"></p:ajax>
+								</p:selectCheckboxMenu></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="errdepartment"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel value="Menus"
+									styleClass="labelTxt" style="font-weight:normal;padding: 9px;"></h:outputLabel>
+							</td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><p:selectCheckboxMenu
+									style="height:28px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;font-size:14px;"
+									id="errmenu" multiple="true" label="---Menus---"
+									filter="true" value="#{clientMB.selectedMenus}"
+									filterMatchMode="startsWith" panelStyle="width:260px">
+									<f:selectItems value="#{clientMB.menuList}" />
+									<p:ajax update="@form" process="@this" event="toggleSelect"></p:ajax>
+									<p:ajax event="change"></p:ajax>
+								</p:selectCheckboxMenu></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="errmenu"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel
+									value="Base Currency" styleClass="labelTxt"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							<p:inputText value="#{clientMB.clientDataBean.baseCurrency}" id="basecurr" readonly="true"></p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="basecurr"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"><h:outputLabel
+									value="Country" styleClass="labelTxt"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;"><h:outputLabel value=":"
+									style="font-weight:normal;padding: 9px;"></h:outputLabel></td>
+							<td style="height: 25px;">
+							<h:selectOneMenu value="#{clientMB.clientDataBean.clientCountry}" id="ccoun" widgetVar="var1" styleClass="input-sm" style="border-radius:0px;height: 30px;width: 200px;">	
+								<f:selectItem itemLabel="--- Select Country---" itemValue="" />
+								<f:selectItem itemLabel="India" itemValue="India"></f:selectItem> 
+								<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+								<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+								<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+								<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+								<p:ajax process="@this" update="@form"></p:ajax> 
+							</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"></td>
+							<td style="height: 25px;"><h:message for="ccoun"
+									style="padding: 1px;" styleClass="errorTxt"></h:message></td>
+						</tr>
+					</table>
+					
+<br/>
+						<center>
+
+							<p:commandButton value="Update" process="@this"
+								action="#{clientMB.clientUpdate}" 
+								onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+								update=":center_content:dialogPanelModify"></p:commandButton>
+
+						</center>
+					</h:form>
+
+				</p:outputPanel>
+
+			</p:dialog> 
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="clientUpdate" modal="true"
+				  style="font-size:11px" resizable="false" width="45%" height="120px"
+				appendTo="@(body)">
+				<div style="height:10px"></div>
+				<center>
+							<h:outputText value="Client Information has been successfully modified." styleClass="confirmTxt"/>
+							</center>
+					<div style="height:20px"></div><center>
+					
+						<p:commandButton value="OK" oncomplete="PF('clientUpdate').hide()" action="#{clientMB.clientView}"  
+						onclick="PF('clientDialogModify').hide();"  update=":center_content" process="@this" 
+							></p:commandButton>
+						</center>
+			</p:dialog>
+	
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Purchase Return View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table   border="0" class="form_background" align="center">
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+
+<table align="center">
+
+  
+<tr><td height="350px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Purchase Return View" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText style="font-style: normal;font-size:18px;color:#F51313"/>
+</td></tr>
+<tr>
+<td><h:outputText value="#{purchaseReturnFormMB.validate}" class="validation_ui"/></td>
+</tr>
+</table>
+
+<table border="0"   bgcolor="">
+<tr align="center">
+                    
+                    
+                    <td align="center" colspan="2">
+                      <rich:panel style="font-size:14px; width:450px;text-align:left;"    >  
+	       <h:panelGrid  columns="2"  style="font-size:14px; width:350px;height: 115px;" align="center">  
+	          
+	            <h:outputLabel value="Purchase Order Number"  class="label_ui" />
+	            <h:outputText value=": #{purchaseReturnFormMB.porderNo}"  class="label_ui" />
+	            <h:outputText value="Vendor Name"  class="label_ui" />
+	            <h:outputText value=": #{purchaseReturnFormMB.vendorName}"  class="label_ui" />
+	            <h:outputText value="Order Date"  class="label_ui" />
+	            <h:outputText value=": #{purchaseReturnFormMB.orderDate} "  class="label_ui" >
+	            <f:convertDateTime pattern="dd/MM/yyyy" />
+	           </h:outputText>
+	                 </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="10px">
+                  </td></tr>
+                    <tr>
+                    <td>            
+    </td></tr>
+</table> 
+   <div style="height:180px ; width:600px; overflow-x:scroll; overflow-y:scroll;" align="center">
+<h:panelGrid >
+  <rich:dataTable  columnsWidth="100px,200px,100px,100px,100px,100px,100px" id="dataTabl"  height="50px" var="info"  value="#{purchaseReturnFormMB.mb3}" enableContextMenu="false"
+   reRender="dynamicScroller"
+  rowClasses="datatable-odd,datatable-even"  >
+  
+  <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';">  Return Date</span>      </f:facet>
+	            <h:outputText value="#{info.returnDate}"  class="label_ui">
+	             <f:convertDateTime pattern="dd/MM/yyyy" />
+	            </h:outputText>  
+	        </h:column>
+  
+  
+  <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';">  Product Name   </span>      </f:facet>
+	            <h:outputText value="#{info.productName}"  class="label_ui"/>  
+	        </h:column>
+	         
+	         <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';"> Purchase Quantity  </span>      </f:facet>
+	            <h:outputText value="#{info.totalQuan1}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>  
+	        </h:column>
+     <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';"> Normal Return </span>      </f:facet>
+	            <h:outputText value="#{info.returnQuan1}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>  
+	        </h:column>
+ <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';">Damage Return </span>      </f:facet>
+	            <h:outputText value="#{info.returnQuan2}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>  
+	        </h:column>
+    
+ <!-- <h:column  headerText="Name" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;width: 200px;font-family:'Helvetica Neue LT Pro 55';"> Total Quantity Purchased</span>      </f:facet>
+	            <h:outputText value="#{info.totalQuan1}"  class="label_ui"/>  
+	        </h:column> -->
+      
+	
+	        
+	   	
+<!--  </rich:dataTable> --></rich:dataTable> </h:panelGrid></div>
+
+<br></br>
+<h:commandButton value="Ok" action="#{purchaseReturnFormMB.purchaseReturnPage}" class="button_ui"></h:commandButton>
+ 
+
+</td></tr>
+<tr><td style="height:10px;"></td></tr>             
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+</body>
+</ui:composition>

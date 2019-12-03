@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Customer Edit Confirm  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javascript" src="../../js/mycustom.js"></script>
+     <script type="text/javascript" src="../../js/mycustompurchase.js"></script>
+</h:head>
+ <body background="../../images/brown.jpg" style="background-attachment: fixed; background-size:cover;">
+
+<h:form>
+			<table   align="center" border="0" class="form_background">
+				
+
+
+
+
+
+<tr><td align="center">
+
+<table border="0"   bgcolor="">
+						<tr>
+                    		<td align="center" > 
+                    		 <div id="panel">             		 			
+	   							<rich:panel style="width:500px;">  
+	       							 <h:panelGrid class="label_ui" columns="3"  style="font-size:14px; width:450px;" align="left" >	       
+	        							<h:outputText value="Successfully updated the customer details" class="header_ui"/>
+	        	        	        	<!-- <h:outputText value="#{productViewMB.productName}" style="font-style: normal;font-size:18px;color:#3B22DA; font-weight: bold;font-family: 'HelveticaNeueLT Pro 55 Roman';"/> -->	
+	        	        	        	 <p:commandButton  value="OK"  action="#{buyersViewMB.customermodifyclose}" styleClass="kbutton_ui" ajax="false"></p:commandButton>              
+	       							 </h:panelGrid>
+       							 </rich:panel>
+	       					
+	  							 </div>
+                    		</td>
+                 		 </tr>
+                   		</table> 
+
+</td></tr>
+
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

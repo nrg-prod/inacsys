@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase Order Save </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{purchaseOrderFromMB.purchaseDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center"><h:outputText value="#{purchaseOrderFromMB.validate1}" class="validation_ui"/>
+</td></tr>
+<tr>
+                    <td align="center">
+                   
+	              <rich:panel style="width:920px;" id="tab" >
+	            <h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText id="reg" value="Purchase Order Form" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:920px;">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:990px;" align="center" cellpadding="3">
+	              
+                    <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/> 
+	            <h:outputText class="label_ui" value="Vendor Name"></h:outputText>
+				<h:outputText class="label_ui" value="#{purchaseOrderFromMB.vendor_phone_number}" onchange="submit()" valueChangeListener="#{purchaseOrderFromMB.changeDrop}"></h:outputText>
+				<h:outputText class="label_ui" value="Firm Number"></h:outputText>
+				<h:outputText class="label_ui" value="#{purchaseOrderFromMB.firmName}"></h:outputText>
+				<h:outputText class="label_ui" value="Product Name" />
+				<h:selectOneMenu class="text_ui" value="#{purchaseOrderFromMB.product_name}"  label="select one product name">
+				   	 <f:selectItem itemValue="Select" itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{purchaseOrderFromMB.productName}" />
+				    
+				 </h:selectOneMenu>				
+				<h:outputText class="label_ui" value="Quantity"></h:outputText>
+				<h:inputText class="text_ui" value="#{purchaseOrderFromMB.quantity1}"></h:inputText>
+				<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/>                        
+	              </h:panelGrid>
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+<h:commandButton class="button" id="save" value="Confirm"  action="#{purchaseOrderFromMB.savePuruchaseOrder1}" />
+
+<h:commandButton class="button" id="cancel"  value="Cancel" action="#{reportMB.redirect1}"/>
+
+</h:panelGrid>
+</rich:panel>
+	   
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="150">
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form></body>
+</ui:composition>

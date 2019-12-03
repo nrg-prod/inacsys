@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Invoice Purchase  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("invoice1:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body onload="#{invoicePurhcaseMB.invoicePurachaseDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="invoice1" onkeypress="return process(event);">
+<table   border="0" class="form_background" width="100%">
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+<tr><td align="center">
+<h:outputText value= "Purchase Invoice"  class="header_ui"/>
+<br/>
+</td></tr>
+<tr ><td align="center"><h:outputText value="#{invoicePurhcaseMB.invalidate}" style="font-style: normal;font-size:12px;color:#F51313"/><br/></td></tr>
+
+<tr>
+                    <td align="center">
+                  <rich:panel style="font-size:10px; width:365px;text-align:left;" header="Search by Reference Number"  >  
+	        <h:panelGrid  columns="2"  style="font-size:10px; width:365px;height: 100px;" align="center">  
+	         
+	            <h:outputLabel value="Purchase Reference Number *"  class="label_ui"/>
+	            
+	             
+	          
+	           
+	           <h:selectOneMenu class="text_ui"  value="#{invoicePurhcaseMB.s}"  label="purchase number"  >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{invoicePurhcaseMB.finallist1}" />
+				    
+				 </h:selectOneMenu>
+	           
+	           
+	            <h:outputText value="" /><h:commandButton class="button" id="find" value="Find" action="#{invoicePurhcaseMB.invoicePurhcase}" /> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	    </rich:panel><br/>
+                    </td>
+                  </tr>  
+
+   
+<tr><td align="center">
+<br/>
+<div style="height:100px ; width:450px; overflow-x:scroll; overflow-y:scroll;display:#{invoicePurhcaseMB.flag}" align="center">
+<h:panelGrid style="display:#{invoicePurhcaseMB.flag}" >
+                     <rich:dataTable id="dataTable" var="info"  value="#{invoicePurhcaseMB.result4}" columnsWidth="100px,210px,210px,70px">  
+         	
+ 
+   
+	        <h:column   headerText="RollNo">  
+	            
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date   </span>      </f:facet>  
+ 
+	            <h:outputText value="#{info.orderDate}"  class="label_ui">  
+	            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+	            </h:outputText>
+	        </h:column>  
+   
+  
+	         <h:column  headerText="Name">  
+					<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Firm Name   </span>      </f:facet>  
+ 
+	            <h:outputText value="#{info.firmName}"  class="label_ui"/>  
+
+	        </h:column>  
+  
+  
+  
+	   		<h:column    headerText="Address">  
+	         <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount   </span>      </f:facet>  
+ 	            <h:outputText class="label_ui"  value="Rp " />
+ 	            <h:outputText class="label_ui"  value="#{info.totalPrice}" >
+ 	            <f:converter converterId="com.inventory.util.UrlConverter" />
+ 	            </h:outputText>  
+	        </h:column>  
+  
+	   		
+  
+  
+	   		<h:column  headerText="Phone"> 
+	   		 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Action   </span>      </f:facet> 
+	        <div align="center"> <h:commandButton image="/images/view.png"  action="#{invoicePurhcaseMB.redirect}"/></div>    
+	        </h:column>  
+  
+          
+ </rich:dataTable> </h:panelGrid></div>
+ <div style="height:100px ; width:600px; overflow-x:scroll; overflow-y:scroll;display:#{invoicePurhcaseMB.flag1}" align="center">
+ <h:panelGrid style="display:#{invoicePurhcaseMB.flag1}" >
+                     <rich:dataTable id="dataTable1" var="inf"  value="#{invoicePurhcaseMB.result4}" columnsWidth="80px,150px,150px,150px,150px">  
+         	
+ 
+   
+	        <h:column   headerText="RollNo">  
+	            
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date   </span>      </f:facet>  
+ 
+	            <h:outputText value="#{inf.orderDate}"  class="label_ui"/>  
+	        </h:column>  
+   
+  
+	         <h:column  headerText="Name">  
+					<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Firm Name   </span>      </f:facet>  
+ 
+	            <h:outputText value="#{inf.firmName}"  class="label_ui"/>  
+
+	        </h:column>  
+  
+  
+  
+	   		<h:column    headerText="Address">  
+	         <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Sales Order Number  </span>      </f:facet>  
+ 	            <h:outputText class="label_ui"  value="#{inf.orderNumber}" />  
+	        </h:column>  
+  
+<h:column    headerText="Address">  
+	         <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount   </span>      </f:facet>  
+ 	            <h:outputText class="label_ui"  value="#{inf.totalPrice}" />  
+	        </h:column>  
+  
+
+  	<h:column   headerText="Phone">  
+	   		 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Find  </span>      </f:facet>  
+ 	          <div align="center">
+ 	            <h:commandButton class="button_table1"  image="/images/view.png" action="#{invoicePurhcaseMB.invoiceView}">
+	             <f:setPropertyActionListener target="#{invoicePurhcaseMB.orderNumber}" value="#{inf.orderNumber}" />
+	           </h:commandButton></div>
+	        </h:column>
+  
+          
+ </rich:dataTable> </h:panelGrid></div>
+ 
+ 
+ 
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+
+ 
+
+	       <ui:define name="content">
+	       <h:form>
+	       <p:tabView  style="min-height:90%" dynamic="true">
+	        	 <p:ajax event="tabChange"  listener="#{purchaseExpenseMB.tabchange}" update="@all"/> 
+	       <p:tab title="Transaction Form">
+            <div align="right">
+			<p:commandButton styleClass="image-align"
+			actionListener="#{aTransactionMB.transactionform}"  value= "Transaction Form"
+			style="height:28px;">
+			</p:commandButton>
+			<h:commandButton image="../../images/refresh.png"
+							action="#{aTransactionMB.search}"
+							style="margin-bottom:-11px;height:28px;"></h:commandButton></div>
+			<div style="height: 5px;"></div>
+			<h:form>
+			<p:dataTable id="datatable" var="info"  style="font-size:10;width:100%;" widgetVar="salesInfo"
+								paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" reRender="dynamicScroller" rowClasses="datatable-odd,datatable-even" value="#{aTransactionMB.tarns}" filteredValue="#{aTransactionMB.filteredList}">
+  							 <f:facet name="header">
+								<p:outputPanel style="text-align:right">
+									<p:inputText id="globalFilter"
+										onkeyup="PF('salesInfo').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+  	        <p:column  headerText="Transaction Number"  width="140px" filterBy="#{info.transactionNo}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+	         <h:outputText  class="label_ui" value="#{info.transactionNo}"></h:outputText>     
+	        </p:column>
+			 <p:column width="140px" headerText="Transaction Date" filterBy="#{info.transdate}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+	        <h:outputText  class="label_ui" value="#{info.transdate}">
+	        <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>    
+	        </p:column>		
+			 <p:column width="140px" headerText="Payment Mode" filterBy="#{info.paymentMode}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+	        <h:outputText  class="label_ui" value="#{info.paymentMode}"></h:outputText>
+	         </p:column>				
+			<p:column width="140px" headerText="Transaction Type" filterBy="#{info.transactionType}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+		    <h:outputText  class="label_ui" value="#{info.transactionType}"></h:outputText>
+	        </p:column>		
+	      	
+				 <p:column width="140px" headerText="Amount" filterBy="#{info.amt1}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+	         	<h:panelGroup>
+               <h:outputText  class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText  class="label_ui" value="#{info.amt1}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText> </h:panelGroup>
+ 	           </p:column>				
+							
+							<p:column width="60px" headerText="Action" filterBy="#{info.status}" filterMatchMode="contains"
+								filterStyle="display:none">
+							<h:outputText rendered="#{info.status=='credited'}"  value="credited" style="color:green;" class="label_ui"/>
+							<h:outputText rendered="#{info.status=='debited'}" value="debited" style="color:red;" class="label_ui"></h:outputText>
+							
+							<h:outputText rendered="#{info.transactionType=='Expenses'}" value="debited" style="color:red;" class="label_ui"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Expense'}" value="debited" style="color:red;" class="label_ui"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Income'}"  value="credited" style="color:green;" class="label_ui"/>
+							</p:column>						
+							<p:column width="100px" headerText="Action">
+							<div align="center"> <p:commandButton  align="center" icon="fa fa-search" action="#{aTransactionMB.transactionviewform1}">
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</p:commandButton>&nbsp;
+							<p:commandButton  align="center" icon="fa fa-pencil" action="#{aTransactionMB.transactionmodifyform}">							
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</p:commandButton>&nbsp;
+							<p:commandButton icon="fa fa-remove"  onclick="PF('cd1').show()"  align="center" >
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</p:commandButton>
+							</div></p:column>						
+							
+							</p:dataTable>
+							<p:dialog header="Confirmation" widgetVar="cd1" modal="false"
+							width="230" height="70" resizable="false" draggable="false">
+
+							<h:panelGrid columns="3" border="0" style="font-size:10px; "
+								align="center">
+ &nbsp;&nbsp; &nbsp;<h:outputText value="Yes to continue No to cancel"
+									style="font-size:12px;color:#000000;"></h:outputText>
+							</h:panelGrid>
+							<br />
+							<center>
+								<p:commandButton value="Yes" styleClass="button_ui" 
+									action="#{aTransactionMB.delete}" onsuccess="PF('cd1').hide();">
+								</p:commandButton>
+								
+								<p:commandButton value="No" styleClass="button_ui"
+									onclick="PF('cd1').hide()"></p:commandButton>
+							</center>
+						</p:dialog>
+						
+						<p:dialog header="Success Message" widgetVar="deleteconf" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Transaction is successfully deleted" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="OK" 
+						 onclick="PF('deleteconf').hide()" process="@this" immediate="true"
+						styleClass="button_ui"></p:commandButton>
+					
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+						
+								</h:form>
+			 </p:tab>
+	       <p:tab title="Account Payable Liablity">
+					
+									<p:dataTable id="dataTablepayableLiabilites"
+										value="#{purchaseExpenseMB.purchaseList}" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+										widgetVar="payableLiabinfo" var="info" paginator="true" reflow="true"
+										rows="10" filteredValue="#{purchaseExpenseMB.filteredList1}"
+										 emptyMessage="No information found with given criteria">
+
+										<f:facet name="header">
+											<p:outputPanel style="text-align:right">
+
+												<p:inputText id="globalFilter"
+													onkeyup="PF('payableLiabinfo').filter()"
+													style="width:20%;height:25px;" placeholder="Enter keyword" />
+											</p:outputPanel>
+										</f:facet>
+
+
+
+
+
+										<p:column headerText="No" filterBy="#{info.sNo}" width="50"
+											filterMatchMode="contains" filterStyle="display:none">
+												<div align="center">
+											<h:outputText value="#{info.sNo}" class="label_ui" /></div>
+										</p:column>
+
+										<p:column headerText="Date" filterBy="#{info.tDate}" width="110"
+											filterMatchMode="contains" filterStyle="display:none">
+											<div align="center">
+
+
+											<h:outputText value="#{info.tDate}" class="label_ui">
+												<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+											</h:outputText></div>
+										</p:column>
+										<p:column headerText="Vendor Name" width="140"
+											filterBy="#{info.clientName}" filterMatchMode="contains"
+											filterStyle="display:none">
+											<div align="center">
+											<h:outputText value="#{info.clientName}" class="label_ui" /></div>
+										</p:column>
+										<p:column headerText="Reason" filterBy="#{info.reason}" width="140"
+											filterMatchMode="contains" filterStyle="display:none">
+												<div align="center">
+											<h:outputText value="#{info.reason}" class="label_ui" /></div>
+										</p:column>
+										<p:column headerText="Amount" filterBy="#{info.amount}" width="140"
+											filterMatchMode="contains" filterStyle="display:none">
+												<div align="center">
+											<h:panelGroup>
+												<h:outputText class="label_ui" value="&nbsp;"></h:outputText>
+												<h:outputText value="#{info.amount}" class="label2_ui">
+													<f:converter converterId="com.inventory.util.UrlConverter" />
+												</h:outputText>
+											</h:panelGroup></div>
+										</p:column>
+
+									</p:dataTable>
+								<table>
+									<tr>
+										<td width="700"></td>
+									</tr>
+									<tr align="right">
+										<td align="right">
+											<p>
+												<h:panelGrid columns="12" 
+													style="font-weight:bold;font-size:11">
+													<h:outputText value="Total Amount"></h:outputText>&nbsp;
+													<h:panelGroup>
+
+														<h:outputText value=":"></h:outputText>&nbsp;
+														<h:outputText value="Rp  " />
+														<h:outputText value="#{purchaseExpenseMB.tots}"
+															class="label2_ui">
+															<f:converter
+																converterId="com.inventory.util.UrlConverter" />
+														</h:outputText>
+													</h:panelGroup>
+
+												</h:panelGrid>
+											</p>
+										</td>
+									</tr>
+								</table>
+						
+				</p:tab>
+				<p:tab title="Account Receivable Asset">
+
+					
+					<p:dataTable id="dataTableReceivable"
+						value="#{salesIncomeMB.salesList}" widgetVar="Receivableinfo" reflow="true"
+						var="Rinfo" paginator="true" rows="10" filteredValue="#{salesIncomeMB.filterList}"
+					 pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+						 emptyMessage="No information found with given criteria">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('Receivableinfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+
+
+						<p:column headerText="No" filterBy="#{Rinfo.sNo}" width="50"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:outputText value="#{Rinfo.sNo}" class="label_ui" />
+							</div>
+						</p:column>
+
+						<p:column headerText="Date" filterBy="#{Rinfo.tDate}" width="110"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+
+								<h:outputText value="#{Rinfo.tDate}" class="label_ui">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</div>
+						</p:column>
+
+
+						<p:column headerText="Client Name" filterBy="#{Rinfo.clientName}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:outputText value="#{Rinfo.clientName}" class="label_ui" />
+							</div>
+						</p:column>
+						<p:column headerText="Reason" filterBy="#{Rinfo.reason}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:outputText value="#{Rinfo.reason}" class="label_ui" />
+							</div>
+						</p:column>
+						<p:column headerText="Amount" filterBy="#{Rinfo.amount}" width="140"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+									<h:outputText value="#{Rinfo.amount}" class="label1_ui">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup>
+							</div>
+						</p:column>
+					</p:dataTable>
+					<table>
+						<tr>
+							<td width="700"></td>
+						</tr>
+						<tr align="right">
+							<td align="right">
+								<p>
+									<h:panelGrid columns="12" style="font-weight:bold;font-size:11; font-family:Verdana">
+
+										<h:outputText value="Total Amount"></h:outputText>&nbsp;
+										<h:panelGroup>
+
+											<h:outputText value=":"></h:outputText>&nbsp;
+											<h:outputText value="Rp  " />
+											<h:outputText value="#{salesIncomeMB.totals}"
+												class="label1_ui">
+												<f:converter converterId="com.inventory.util.UrlConverter" />
+											</h:outputText>
+										</h:panelGroup>
+									</h:panelGrid>
+								</p>
+							</td>
+						</tr>
+					</table>
+					 
+				</p:tab>
+				<p:tab title="Cash Book">
+					
+							
+
+					<p:dataTable id="dataTableCashBook" var="CashBookinfo"
+						widgetVar="CashBookwid" value="#{cashBookMB.cashBookList}"
+						paginator="true" rows="10" filteredValue="#{cashBookMB.filterList}"
+						reflow="true" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+						 emptyMessage="No information found with given criteria">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('CashBookwid').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+
+
+
+						<p:column headerText="No" filterBy="#{CashBookinfo.sNo}" width="50"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+							
+							<h:outputText value="#{CashBookinfo.sNo}" class="label_ui" /></div>
+						</p:column>
+
+						<p:column headerText="Date" filterBy="#{CashBookinfo.batch}" width="110"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+							
+							<h:outputText value="#{CashBookinfo.batch}" class="label_ui">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+							</div>
+						</p:column>
+						<p:column headerText="Client Name " filterBy="#{CashBookinfo.clientName}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+							
+							<h:outputText value="#{CashBookinfo.clientName}" class="label_ui" /></div>
+						</p:column>
+
+						<p:column headerText="Particulars" filterBy="#{CashBookinfo.particulars}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+							
+							<h:outputText value="#{CashBookinfo.particulars}" class="label_ui" /></div>
+						</p:column>
+						<p:column headerText="Debit" filterBy="#{CashBookinfo.credit}" width="140"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+							<h:panelGroup>
+								<h:outputText rendered="#{CashBookinfo.credit!=''}" class="label_ui" 
+									value="Rp&nbsp;"></h:outputText>
+								<h:outputText value="#{CashBookinfo.credit}" class="label1_ui">
+									<f:converter converterId="com.inventory.util.UrlConverter" />
+								</h:outputText>
+							</h:panelGroup>
+							<f:facet name="footer">
+								<span
+									style="font-style: normal; font-size: 11px; padding-top: 10px; font-family: 'Verdana'; color: white;">
+									Total Debit </span>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Rp&nbsp;" style="color: white;"></h:outputText>
+									<h:outputText value="#{cashBookMB.credit}" class="filter2"
+										style="font-style: normal;font-size:11px;padding-top:10px;font-family:'	Verdana';color: white;font-weight:bold">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup>
+							</f:facet></div>
+						</p:column>
+
+						<p:column headerText="Credit" filterBy="#{CashBookinfo.debit}" width="140"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+							
+							<h:panelGroup>
+								<h:outputText rendered="#{CashBookinfo.debit!=''}" class="label_ui"
+									value="Rp&nbsp;" style="color: white;"></h:outputText>
+								<h:outputText value="#{CashBookinfo.debit}" class="filter2"
+									style="font-style: normal;font-size:11px;">
+									<f:converter converterId="com.inventory.util.UrlConverter" />
+								</h:outputText>
+							</h:panelGroup>
+							<f:facet name="footer">
+								<span
+									style="font-style: normal; font-size: 11px; padding-top: 10px; font-family: 'Verdana';color: white;">
+									Total Credit </span>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Rp&nbsp;" style="color: white;"></h:outputText>
+									<h:outputText value="#{cashBookMB.debit}" class="filter2" 
+										style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana'; color: white;font_weight:bold">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup>
+
+							</f:facet></div>
+						</p:column>
+					</p:dataTable>
+<table>
+						<tr>
+							<td width="700"></td>
+						</tr>
+						<tr align="right">
+							<td align="right">
+								<p>
+									<h:panelGrid columns="12" style="font-weight:bold;font-size:14">
+								<h:outputText
+									style="font-weight: bold;font-size:11px;padding-top:5px;font-family:'Verdana';"
+									value="Balance Amount is  :  ">
+								</h:outputText>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Rp&nbsp;"
+										style="font-style: bold;font-size:11px;padding-top:5px;font-family:'Verdana';"></h:outputText>
+									<h:outputText
+										style="color:#{cashBookMB.color};font-weight: bold;font-size:11px;padding-top:10px;font-family:'Verdana';"
+										value="#{cashBookMB.balance}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup>
+							</h:panelGrid>
+							</p></td></tr></table>
+						
+				</p:tab>
+ 	
+
+
+
+
+				<p:tab title="Profit and Loss">
+				<table   border="0" class="form_background" style="width: 100%;" >
+
+
+
+<tr>
+
+<td height="0px" align="center">
+
+<table align="center">
+
+                    <tr><td>
+                 
+                  <div style="width:100%; display:#{profitLossMB.flag}" align="center">
+<table>
+<tr><td align="center">
+
+
+<h:panelGrid class="label_ui"    style=" width:0px;HEIGHT:10PX;font-family: 'Verdana'; " align="center" >
+	         
+	         <h:outputText value="Income Status" class="header_ui"/>
+	            </h:panelGrid></td><td align="center"> <h:panelGrid class="label_ui"    style=" width:0px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText value="Expense Status" class="header_ui"/>
+	            </h:panelGrid></td></tr><tr><td align="center" valign="top" width="50%">
+                   <table><tr><td> <h:panelGrid >
+                    <p:dataTable id="dataTable" var="info" widgetVar="profitLosswid" value="#{profitLossMB.profit}"
+						paginator="true" rows="10" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+						 emptyMessage="No information found with given criteria" reflow="true">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('profitLosswid').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>   
+         	
+  			<p:column  headerText="Name" style="width:40">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  No  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </p:column> 
+	        
+	        <p:column  headerText="RollNo" style="width:80">  
+	            <f:facet name="header">
+	             <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';"> Date  </span></f:facet>  
+	            
+	            <h:outputText value="#{info.sDate}"  class="label_ui"></h:outputText>
+	        </p:column>
+	        
+	        
+	        <p:column  headerText="Name" style="width:100">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Client Name </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:80">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Reason   </span>      </f:facet>
+	            <h:outputText value="#{info.reason}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:110">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Amount  </span>      </f:facet>
+	         <h:panelGroup>
+<h:outputText  class="label_ui" value="&nbsp;"></h:outputText>  
+	            <h:outputText value="#{info.amount}"  class="label1_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  </h:panelGroup>
+	        </p:column>
+ </p:dataTable> </h:panelGrid> </td></tr></table>
+                  
+  
+ 
+ </td><td align="center" valign="top" width="50%">
+<table><tr><td>
+<h:panelGrid >
+                    <p:dataTable id="dataTable1" var="info"   widgetVar="profitLosswid1"   value="#{profitLossMB.loss}" 
+						paginator="true" rows="10" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+							 emptyMessage="No information found with given criteria" reflow="true">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('profitLosswid1').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>   
+         	
+  			<p:column  headerText="Name" style="width:40">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  No  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </p:column> 
+	        
+	        <p:column  headerText="RollNo" style="width:90">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Date  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.sDate}"  class="label_ui"></h:outputText>
+	        </p:column>
+	         <p:column  headerText="Name" style="width:100" >  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Client Name </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:80">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Reason   </span>      </f:facet>
+	            <h:outputText value="#{info.reason}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:110">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:11px;padding-top:10px;font-family:'Verdana';">  Amount  </span>      </f:facet>
+	            <h:panelGroup>
+<h:outputText  class="label_ui" value="&nbsp;"></h:outputText>
+	            <h:outputText value="#{info.amount}"  class="label2_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>  
+	        </p:column>
+	        
+ </p:dataTable> </h:panelGrid>
+ 
+</td></tr></table>
+ 
+</td></tr></table>
+ </div>
+                  
+                  </td></tr>
+                  <tr><td><table ><tr><td align="left" style="width:730px;"><div align="left">
+ <h:panelGrid columns="3" style="width:200px;display:#{profitLossMB.flag} ;">
+ <h:panelGroup>
+ 	<h:outputLabel value="Income:&nbsp;" style="font-weight:bold;font-size:11"></h:outputLabel>
+ 	
+<h:outputText  value="Rp&nbsp;" style="font-weight:bold;font-size:11"></h:outputText>
+ 	<h:outputLabel  value="#{profitLossMB.pAmount}" style="font-weight:bold;font-size:11;color:#033C95;"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputLabel></h:panelGroup>
+ </h:panelGrid>
+ </div></td><td align="right" style="width: 400px;"><div align="right">
+ <h:panelGrid columns="3" style="width:200px; display:#{profitLossMB.flag};">
+  <h:panelGroup>
+ <h:outputLabel value="Expense:&nbsp;" style="font-weight:bold;font-size:11"></h:outputLabel>
+
+<h:outputText   value="Rp&nbsp;" style="font-weight:bold;font-size:11"></h:outputText>
+ 	
+ 	<h:outputLabel  value="#{profitLossMB.lAmount}" style="font-weight:bold;font-size:11;color:red"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputLabel></h:panelGroup>	
+ </h:panelGrid>
+ </div></td></tr></table></td></tr>
+                  <tr ><td align="center">
+                  <br/>
+                  <h:panelGrid columns="3" style="display:#{profitLossMB.flag} ;" >
+                  <h:panelGroup>
+ 	<h:outputLabel value="Profit And Loss :&nbsp;"  style="font-weight:bold;font-size:11"></h:outputLabel>
+ 	
+<h:outputText  class="label_ui" value="Rp&nbsp;" style="font-weight:bold;font-size:11"></h:outputText>
+ 	<h:outputLabel value="#{profitLossMB.plAmount}"  style="color:#{profitLossMB.color};font-weight:bold;font-size:11" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputLabel></h:panelGroup>
+ </h:panelGrid>
+
+  
+                  </td></tr>
+
+   
+</table> 
+
+</td></tr>
+
+</table>
+
+  
+	       </p:tab>
+	       </p:tabView>
+	 
+	 </h:form></ui:define>
+	 </ui:composition>
+	 
+	 
+	 

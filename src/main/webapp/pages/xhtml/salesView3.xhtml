@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+
+<title> Inacsys | Sales Edit  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<style>
+.ui-dialog .ui-dialog-titlebar {
+    padding: 1px 4px 6px 6px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close span{
+    display: block;
+    margin: 6px 3px 1px 7px;
+}
+</style>
+</h:head>
+ 
+ <body onload="#{salesViewMB.salesDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td height="300px" align="center">
+<br/>
+<table align="center">
+  <tr>
+<td align="left" >
+
+<table border="0"   bgcolor="">
+
+<tr><td>
+	<p:panel id="panel" style="border:0px;">
+		<table align="center">
+ 		<tr><td align="center">
+		
+		 <p:panelGrid style="width:450px;">
+            <f:facet name="header">
+            <p:row >
+              
+            <p:column  style="background:#2196f3 !important;font-size:14px;width:130px;height:25px;font-weight:normal;font-family:'Arial,san-serif'"> 
+			 <h:outputLabel value="Sales Order No" ></h:outputLabel>
+            </p:column>
+            <p:column style="background:#2196f3 !important;font-size:14px;width:170px;height:25px;font-weight:normal;font-family:'Arial,san-serif'">
+            <h:outputLabel value="Name"></h:outputLabel>
+            </p:column>
+             <p:column  style="background:#2196f3 !important;font-size:14px;width:150px;height:25px;font-weight:normal;font-family:'Arial,san-serif'">
+            <h:outputLabel value="Telephone Number"></h:outputLabel>
+            </p:column>
+         </p:row>
+         </f:facet>
+          <p:row>
+          <p:column style="height:30px;">
+         <h:outputText class="labelTxt" value="#{salesViewMB.salereferencenumber}"  />
+         </p:column>
+         
+          <p:column style="height:30px;">
+        <h:outputText class="labelTxt" value="#{salesViewMB.customerName}" id="Name"  label="name" >
+			
+				</h:outputText>
+         </p:column>
+         
+          <p:column style="height:30px;">
+      <h:outputText class="labelTxt" value="#{salesViewMB.telephonenumber}" >
+			
+</h:outputText></p:column></p:row></p:panelGrid>			
+		</td>
+		</tr>
+		<h:outputText value="#{salesViewMB.validate}" class="errorTxt" style="margin-left: 330px;"/>
+  			 <tr align="center">
+             <td height="40px"></td></tr>
+                    <h:panelGrid style="display:#{salesViewMB.flag1}">
+   					 <p:dataTable id="dataTable" var="info"  value="#{salesViewMB.resulfinal}">  
+         			<p:column   headerText="Phone">  
+	   				<f:facet name="header"> <span class="datatableTxt">   Date  </span>  </f:facet>
+	       		  <h:outputText value="#{info.orderDate}" > <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText>  
+	       			 </p:column>
+	        		<p:column  headerText="Name">  
+	        		<f:facet name="header"> <span class="datatableTxt">  Product Name   </span>      </f:facet>
+	           		 <h:outputText value="#{info.product_name}"/>  
+	       			 </p:column> 
+	      			  <p:column  headerText="Name">  
+	       			 <f:facet name="header"> <span class="datatableTxt">  Quantity   </span>      </f:facet>
+	           		 <h:inputText value="#{info.quantity}" style="width:100px">
+	           		
+	           		 </h:inputText>
+	           		 <h:inputHidden value="#{info.quantity1}" style="width:120px"></h:inputHidden>
+	           		 <h:inputHidden value="#{info.salesId}"></h:inputHidden>
+	      			  </p:column> 
+  
+	       			 
+  
+	   				<p:column  headerText="Address">  
+	   				<f:facet name="header"> <span class="datatableTxt"> Unit Price </span>      </f:facet>
+	           			 
+	           			 <h:outputText value="#{info.currency}"></h:outputText>&nbsp; <h:outputText value="#{info.sellingPrice}">
+	           			 <f:converter converterId="com.inventory.util.UrlConverter" />
+	           			 </h:outputText>  
+	       			 </p:column>  
+	       			 <p:column  headerText="RollNo">  
+	            		<f:facet name="header"> <span class="datatableTxt">  Discount Amount </span>      </f:facet>
+	            		
+	           			 <h:outputText value="#{info.currency}"></h:outputText>&nbsp;<h:outputText value="#{info.discountzAmount}"/>  
+	       			 </p:column>   
+  					<p:column    headerText="Address">  
+	   				<f:facet name="header"> <span class="datatableTxt"> Total Price </span>      </f:facet>
+	          		  
+	          		 <h:outputText value="#{info.currency}"></h:outputText>&nbsp; <h:outputText value="#{info.totalPrice}" >
+	          		   <f:converter converterId="com.inventory.util.UrlConverter" />
+	          		  </h:outputText>  
+	       			 </p:column>  
+	       			 
+	   					
+
+					 </p:dataTable></h:panelGrid><br/>
+		<center>			 
+	<p:commandButton styleClass="button_ui" value="Update" action="#{salesViewMB.updateSales1}" update="@form">
+	           			 </p:commandButton>  </center>
+ 				</table> 
+</p:panel></td></tr>
+</table> 
+  <p:dialog widgetVar="salesedit" appendTo="@(body)" header="CONGRATULATIONS...!!" width="600px" height="120" modal="true" resizable="false">
+ <center>
+ <div style="height:20px"></div>
+ <h:outputText value="Quantity has been successfully updated." class="confirmTxt"/>
+ <div style="height:30px;"></div>
+<p:commandButton value="Ok" styleClass="kbutton_ui" actionListener="#{salesViewMB.salesedit1}"></p:commandButton>
+ </center>
+</p:dialog> 
+<p:dialog widgetVar="salesedit1" appendTo="@(body)" header="ALERT" width="600px" height="120" modal="true" resizable="false">
+ <center>
+ <div style="height:20px"></div>
+ <h:outputText value="This product has only #{salesViewMB.status2} stocks"  class="confirmTxt"/>
+ <div style="height:30px;"></div>
+ </center>
+</p:dialog> 
+
+</td></tr>
+
+
+</table></td></tr></table>
+</h:form>
+
+</body>
+</ui:composition>

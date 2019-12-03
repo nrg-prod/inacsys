@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+<title> Inacsys | Purchase Order View   </title>
+ 
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+</h:head>
+ <h:body>
+ 
+   	<table class="form_background" align="center"><tr></tr><tr align="center"><td width="0"></td><td align="center">
+ 	<div align="center" style="border:solid 0px #033C95;">
+	<h:form id="print">
+	
+	<p:panel id="panel" style="border:0px;">
+<table style="border:solid 4px #033C95;"><tr><td>
+
+	<table align="center" border="0" bgcolor="" width="700px">
+	<br/>
+	<br/>
+	<br/>
+		<tr >
+		<td align="left">
+		<h:panelGrid>
+		<h:commandButton  image="/images/nrglogo.png"/>
+		
+		</h:panelGrid>
+		
+		</td>
+		
+		<td align="right">
+		<h:panelGrid >
+		<!-- <h:graphicImage  value="/images/invoicekam3.png" style="width:193px;height:121px;"/> -->
+		</h:panelGrid>
+		
+		</td>
+		
+		</tr>
+		
+		</table>
+		<table align="center" border="0" bgcolor="" width="700px" style="border-color: #033C95">
+		<tr><td>
+		</td></tr>
+		</table>
+		
+		<table align="center"  bgcolor="" width="700px" >
+		<tr><td align="left" height="100px"><hr align="left" size="2" width="270" style="background-color:#033C95;border:solid 1px #033C95" />
+		<h:panelGrid border="0" style="border-color: white">
+		
+		<p>
+Komplek Taman Persada Asri 1 blok D no.3<br/>
+Rancabolang Bandung 40286<br/>
+Telp 022-7530068
+ </p>
+		
+		</h:panelGrid>
+		<hr align="left" size="2" width="270" style="background-color:#033C95;border:solid 1px #033C95" />
+		</td>
+		<td align="right" height="100px"><hr align="right" size="2" width="350" style="background-color:#033C95;border:solid 1px #033C95" />
+		<h:panelGrid align="right" width="350px" columns="3" >
+		
+		<h:outputText value="Purchase No" class="label_ui"></h:outputText> <h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseViewMB.orderNumber}" class="label_ui"></h:outputText>
+		<h:outputText value="Firm Name" class="label_ui"></h:outputText> <h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseViewMB.vendor_phone_number}" class="label_ui"> <f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime></h:outputText>
+		<h:outputText value="Vendor Telp" class="label_ui"></h:outputText> <h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseViewMB.firmName}" class="label_ui"></h:outputText>
+		<h:outputText value="Order Date" class="label_ui"></h:outputText> <h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseViewMB.orderDate}" class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+		<h:outputText value="Estimated Delivery Date" class="label_ui"></h:outputText> <h:outputText value=" : "></h:outputText>
+		<h:outputText value="#{purchaseViewMB.targentDate}" class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+		</h:panelGrid>
+		<hr align="right" size="2" width="350" style="background-color:#033C95;border:solid 1px #033C95" />
+		</td></tr>
+		
+		</table>
+
+
+<table width="700px"  >
+<tr align="center"><td><h:panelGrid>
+                     <p:dataTable id="dataTabl" var="info"  value="#{purchaseViewMB.viewMBs}"  columnsWidth="30px,120px,155px,150px" style="font-family: 'HelveticaNeueLT Pro 55 Roman';">  
+         	
+ 
+   
+  			
+	        
+	        <p:column  headerText="RollNo" width="30" >  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white;"> No </span>      </f:facet>
+	            <div align="left">
+	            <h:outputText value="#{info.serialno1}"  class="label_ui"/>  </div>
+	        </p:column>
+	        <p:column  headerText="Name" width="120">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white">  Product Name  </span>      </f:facet>
+	             <div align="left">  <h:outputText value="#{info.product_name}" class="label_ui" /></div>
+	        </p:column> 
+	        
+	        <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white">Total  Quantity </span>      </f:facet>
+	            <div align="left">
+	            <h:outputText value="#{info.quantity}"  class="label_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+	           	</div>		
+	        </p:column>
+	       <!--  <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';" class="label_ui">  Unit Price   </span>      </f:facet>
+	         <div align="left">   <h:outputText value="Rp "  class="label_ui"></h:outputText>  <h:outputText value="#{info.price}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter"/>
+	            </h:outputText> </div> 
+	        </p:column>  -->
+	        
+	          
+	         <p:column  headerText="Name" width="100">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" >  Total Price  </span>      </f:facet>
+	             <div align="left"> <h:outputText value="Rp "  class="label_ui"></h:outputText>
+	            <h:outputText  class="label_ui" value="#{info.totalPrice}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	      </div>
+	        </p:column>  
+	         
+  
+	          
+  
+	         
+ </p:dataTable>  </h:panelGrid></td></tr>
+			<tr align="right"><td align="right" ><h:panelGrid width="350" align="right" border="" style="border-color:#806620;"> 
+			<h:panelGroup>
+			<h:outputText style="font-weight:bold;font-size:14"  value="Grand Total: Rp "></h:outputText>	
+		<h:outputText style="font-weight:bold;font-size:14" value="#{purchaseViewMB.totalPrice}"></h:outputText>	
+			</h:panelGroup>
+			
+			 </h:panelGrid>
+		</td></tr>
+		<tr><td><hr align="center" size="2" width="700" style="background-color:#033C95;border:solid 1px #033C95" /></td></tr>
+	</table>
+	
+	<table width="700px">
+	
+	
+	
+	<tr align="left"><td width="150px" height="200px"><!-- <h:outputText value="(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)"/> -->
+	</td>
+	<td width="150px"><!-- <h:outputText value="(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)"/> --> </td>
+	<td width="350px"></td>
+	<td width="150px" align="right"><!-- <h:outputText value="(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)"/> --> </td></tr>
+	</table>
+	<br /><br />
+</td></tr></table>
+ </p:panel>
+ 
+<table align="center" border="0"  width="700px" >
+<tr align="center">
+<td width="10"></td>
+<td align="center">
+<br/>
+<h:panelGrid columns="6"  align="center" border="0" style=" width: 200px;">
+
+
+<h:commandButton value="Ok"  class="button" action="purchaseView.xhtml?faces-redirect=true"></h:commandButton>
+<h:commandButton value="Print"  class="button" >  <p:printer target="panel" /></h:commandButton></h:panelGrid>
+</td></tr>
+<tr><td align="center">
+
+               </td></tr>
+               
+</table>
+</h:form></div><table><tr></tr></table>
+
+</td></tr></table>
+</h:body>
+
+</ui:composition>

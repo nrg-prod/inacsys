@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+	
+  	<ui:define name="content">
+  		<p:panel header="General Ledger">
+  		<div style="height:20px;"></div>
+  			<table align="center" >
+  			<tr><td >
+  				<h:outputText value="Report Period" style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';"></h:outputText>  			
+  			</td>
+  			</tr>
+  			<tr style="width:50%">
+  			<td width="30%"> <br/> 			
+ 				<h:selectOneMenu style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';width:200px;height:30px;" class="text_ui">
+ 					<f:selectItem itemLabel="Report Period" itemValue=""></f:selectItem>
+ 					<f:selectItem itemLabel="All dates" itemValue="All dates"></f:selectItem>
+ 					<f:selectItem itemLabel="Custom" itemValue="Custom"></f:selectItem>
+ 					<f:selectItem itemLabel="Today" itemValue="Today"></f:selectItem>
+ 					<f:selectItem itemLabel="This Week" itemValue="This Week"></f:selectItem>
+ 					<f:selectItem itemLabel="This Week-to-date " itemValue="This Week-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This month" itemValue="This month"></f:selectItem>
+ 					<f:selectItem itemLabel="This month-to-date" itemValue="This month-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This Quarter" itemValue="This Quarter"></f:selectItem>
+ 					<f:selectItem itemLabel="This Quarter-to-date" itemValue="This Quarter-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This Year" itemValue="This Year"></f:selectItem>
+ 					<f:selectItem itemLabel="This Year-to-date" itemValue="This Year-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="Yesterday" itemValue="Yesterday"></f:selectItem>
+ 					<f:selectItem itemLabel="Recent" itemValue="Recent"></f:selectItem>
+ 					<f:selectItem itemLabel="Last Week" itemValue="Last Week"></f:selectItem>
+ 					<f:selectItem itemLabel="Last Week-to-date" itemValue="Last Week-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Month" itemValue="Last Month"></f:selectItem>
+					<f:selectItem itemLabel="Last Month-to-date" itemValue="Last Month-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Quarter" itemValue="Last Quarter"></f:selectItem>
+					<f:selectItem itemLabel="Last Quarter-to-date" itemValue="Last Quarter-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Year" itemValue="Last Year"></f:selectItem>
+					<f:selectItem itemLabel="Last Year-to-date" itemValue="Last Year-to-date"></f:selectItem>
+ 				</h:selectOneMenu>
+  			</td><td width="20%"><br/>
+  				<p:calendar pattern="dd/MM/yyyy" style="line-height: normal;margin-left:-24px;" placeholder="From Date"></p:calendar>
+  			</td> <td><br/>
+  				<h:outputText value="to" style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';margin-left:10px;"></h:outputText>
+  			</td> <td width="20%"><br/>
+  				<p:calendar pattern="dd/MM/yyyy" style="line-height: normal;margin-left:-50px;" placeholder="To Date"></p:calendar>
+  			</td>  
+  			<td width="20%"><br/>
+  				<p:commandButton value="Run Report" ></p:commandButton>
+  			</td></tr>  
+  			<tr style="height:30px;"></tr>
+  			</table><br/>
+  			<table align="center" width="80%" style="height:30%;" border="1"><tr style="height:3%"><td align="center" width="10%">
+  				<h:outputText value="Date" class="udsubheads"></h:outputText>
+  			</td><td align="center" width="20%">
+  				<h:outputText value="Transaction Type" class="udsubheads"></h:outputText>
+  			</td><td align="center" width="10%">
+  				<h:outputText value="Number" class="udsubheads"></h:outputText>
+  			</td><td align="center" width="10%">
+  				<h:outputText value="Name" class="udsubheads"></h:outputText>
+  			</td><td align="center" width="10%">
+  				<h:outputText value="Description" class="udsubheads"></h:outputText>
+  			</td><td align="center" width="10%">
+  				<h:outputText value="Type" class="udsubheads"></h:outputText>
+  			</td><td align="center" width="10%">
+  				<h:outputText value="Amount" class="udsubheads"></h:outputText>
+  			</td>
+  			</tr>
+  			<tr><td colspan="7">
+  			<p:accordionPanel >
+  				<p:tab title="Income" titleStyle="text-decoration:none;">
+  					<h:dataTable id="dataTable2" var="inf" width="80%"
+						styleClass="order-table;borderless" value="#{accountsMB.accounts}"
+						headerClass="order-table-header" cellspacing="1"
+						rowClasses="order-table-odd-row,order-table-even-row" > 				  
+	  				<h:column style="width:10px;">  
+	  					<h:outputText value="#{inf.account_date}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_transaction}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_number}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_name}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_description}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_type}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_amount}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<f:facet name="footer" >
+	  				<hr style="border: 1px black;background:black;height:1px;width:126%"></hr>
+	  					<h:outputText value="Total Income" class="udLable"></h:outputText>
+	  					<h:outputText value="15,000" class="udLable" style="margin-left:80%;"> </h:outputText>
+	  				</f:facet>
+	  				</h:dataTable>
+  				</p:tab>
+  			</p:accordionPanel>
+  			</td>
+  			</tr>
+  			<tr><td colspan="7">
+  			<p:accordionPanel >
+  				<p:tab title="Expenses" titleStyle="text-decoration:none;">
+  					<h:dataTable id="dataTable2" var="inf" tableStyle="width:auto" width="80%"
+						styleClass="order-table;borderless" value="#{accountsMB.accounts}"
+						headerClass="order-table-header" cellspacing="1"
+						rowClasses="order-table-odd-row,order-table-even-row"> 				  
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_date}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_transaction}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_number}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_name}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_description}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_type}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<h:column>  
+	  					<h:outputText value="#{inf.account_amount}" class="udLable"></h:outputText>
+	  				</h:column>
+	  				<f:facet name="footer" >
+	  				<hr style="border: 1px black;background:black;height:1px;width:126%"></hr>
+	  					<h:outputText value="Total Expenses" class="udLable"></h:outputText>
+	  					<h:outputText value="5,000" class="udLable" style="margin-left:80%;"> </h:outputText>
+	  				</f:facet>
+	  				</h:dataTable>
+  				</p:tab>
+  			</p:accordionPanel>
+  			</td></tr>
+  			</table>
+  		</p:panel>  		
+  	</ui:define>
+  </ui:composition>

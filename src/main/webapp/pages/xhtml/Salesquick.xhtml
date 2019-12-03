@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+     <h:form id="qsform">
+      <div style="height:5px;"></div>
+    <table width="100%"><tr> <td width="1%"> </td>
+  <td width="91%"> <p:commandButton icon="fa fa-plus" value="New" ajax="false" style="font-size:14px;" action="#{quickSaleMB.quicksales}"></p:commandButton></td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{quickSaleViewMB.quicksaleview}" ajax="false"></p:commandButton></td>
+
+	</tr></table> 
+	    
+        <div style="height:25px;">
+						<center><h:outputText value="#{quickSaleViewMB.validate}" id="msgs" class="errorTxt"></h:outputText></center>
+						</div>
+	     
+       <center>
+        
+       
+        <p:dataTable id="dataTable" var="info" value="#{quickSaleViewMB.sales1}" style="width:98%;"
+      reflow="true" filteredValue="#{quickSaleViewMB.filteredList}" widgetVar="qsInfo" emptyMessage="No information found with given criteria">  
+                     <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('qsInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+       <p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.serialno}"/>
+			</div>
+		</p:column>
+         	<p:column  headerText="Sales Order Date" filterBy="#{info.salesdateorder}" filterMatchMode="contains" width="120"
+											filterStyle="display:none">  
+	      <center>
+	      <h:inputHidden value="#{info.qsalesid}"></h:inputHidden>
+	            <h:outputText value="#{info.salesdateorder}">  <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText></center>
+	        </p:column> 
+	        
+ 
+	         <p:column  headerText="Sales Order Number" filterBy="#{info.salesnum}" filterMatchMode="contains"  width="130" 
+											filterStyle="display:none">  
+	       <center>
+	            <h:outputText value="#{info.salesnum}">  </h:outputText></center>
+	        </p:column>
+	        <p:column  headerText="Payment Mode" filterBy="#{info.salesno}" filterMatchMode="contains"  width="100" 
+											filterStyle="display:none">  
+	       <center>
+	            <h:outputText value="#{info.salesno}" >  </h:outputText></center>
+	        </p:column>
+	         <p:column  headerText="Gross Total" filterBy="#{info.cross1}" filterMatchMode="contains" width="160"
+											filterStyle="display:none">  
+	        <center>
+	           <h:outputText value="#{info.baseCurrency}"></h:outputText>&nbsp; <h:outputText value="#{info.currencyAmount}"><f:converter converterId="com.inventory.util.UrlConverter" />  </h:outputText> 
+	            <!-- <h:outputText value="#{info.cross1}"><f:converter converterId="com.inventory.util.UrlConverter" />  </h:outputText> --></center>
+	        </p:column>
+	         <p:column headerText="Approval Status" filterBy="#{info.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      <center><h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}">
+      </h:outputText></center>
+      </p:column>
+	    
+ 			 <p:column   headerText="Phone" width="100" >
+	   				   			 <f:facet name="header"> <span class="datatableTxt"> Action  </span>      </f:facet>         
+	   			
+	           		<div align="center"> <p:commandButton  icon="fa fa-search" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" action="#{quickSaleMB.Quicksale}" >
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.salesdateorder}"  target="#{salesViewMB.salesdateorder}"> </f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.cross1}"  target="#{salesViewMB.cross1}"> </f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.qsalesid}"  target="#{salesViewMB.salesId}"> </f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.baseCurrency}"  target="#{salesViewMB.baseCurrency}"> </f:setPropertyActionListener>
+	              <f:setPropertyActionListener value="#{info.approvalStatus}"  target="#{salesViewMB.approvalStatus}"> </f:setPropertyActionListener>
+	           </p:commandButton>&nbsp;
+	           <p:commandButton icon="fa fa-pencil" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"  action="#{salesViewMB.QuicksaleEdit}" rendered="#{info.approvalStatus!='draft'}">
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	           <f:setPropertyActionListener value="#{info.baseCurrency}"  target="#{salesViewMB.baseCurrency}"> </f:setPropertyActionListener>
+	           <f:setPropertyActionListener value="#{info.qsalesid}"  target="#{salesViewMB.salesId}"> </f:setPropertyActionListener>
+	           <f:setPropertyActionListener value="#{info.cross1}"  target="#{salesViewMB.cross1}"> </f:setPropertyActionListener>
+	           </p:commandButton>&nbsp;
+	           <p:commandButton  icon="fa fa-remove" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" onclick="PF('confirm').show()" rendered="#{info.approvalStatus!='draft'}">
+	           <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesnum}"></f:setPropertyActionListener>
+	           <f:setPropertyActionListener value="#{info.baseCurrency}"  target="#{salesViewMB.baseCurrency}"> </f:setPropertyActionListener>
+	<f:setPropertyActionListener value="#{info.qsalesid}"  target="#{salesViewMB.salesId}"> </f:setPropertyActionListener>
+	           </p:commandButton>
+	           </div>  
+	        </p:column>
+	       
+	          
+ </p:dataTable><br/> <br/></center>
+		<div style="height:100px"></div>
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    			<p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   		</p:dialog> 
+   		
+		<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Sales Order has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				
+				</div><center><p:commandButton value="Ok" action="#{quickSaleViewMB.quicksaleview}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						styleClass="button_ui"></p:commandButton></center>
+			</p:dialog>
+			<p:dialog header="Confirmation" widgetVar="confirm" modal="true" width="50%" height="130"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this QuickSales Order?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:20px"></div>
+					<p:commandButton value="Yes" action="#{salesViewMB.salesOrdercancelForm3}"
+						 process="@this" immediate="true" onsuccess="PF('confirm').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('confirm').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+						<div style="height:10px"></div>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="confirmsu" modal="true" width="40%" height="130"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="Quick Sales order has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+			<p:dialog header="Alert" widgetVar="errormsg" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="This Quick Salse Order Already Deleted" styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+			
+        </h:form>
+ 	</ui:define>
+	</ui:composition>
+	

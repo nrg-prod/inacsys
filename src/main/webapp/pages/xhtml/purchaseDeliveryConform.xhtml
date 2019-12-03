@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+
+<title> Inacsys | Purchase Delivery Confirm </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body  style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table  border="0" class="form_background" align="center">
+
+
+
+
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+<tr><td height="350px" align="center">
+
+<table align="center">
+<tr><td align="center"><rich:panel style="width:500" align="center">
+          <h:panelGrid >
+                     <rich:dataTable id="dataTable" var="info"  value="#{purchaseDeliveryStatusMB.purchaselist}" columnsWidth="125px,125px,125px">  
+  	        <h:column  headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Product Name   </span>      </f:facet> 
+	            
+	            <h:outputText value="#{info.i0031.i0001.productName}"  class="label_ui"/>  
+	        </h:column>  
+  
+  <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Quantity </span>      </f:facet>
+	            <h:outputText value="#{info.quantity}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" />
+	            </h:outputText>  
+	             <h:outputText value=" "></h:outputText>
+	             <h:outputText value="#{info.i0031.i0001.unit}"  class="label_ui"/>
+	        </h:column>  
+  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-size:12px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Unit Price  </span>      </f:facet>
+	            <h:outputText class="label_ui" value="Rp "/>
+	             <h:outputText class="label_ui" value="#{info.i0031.i0001.autualPrice}">
+	             <f:converter converterId="com.inventory.util.UrlConverter" />
+	            </h:outputText>  
+	        </h:column>  
+  
+        
+ </rich:dataTable> 
+ 
+            </h:panelGrid>
+
+</rich:panel>
+</td></tr>
+
+<tr>
+                    <td align="center" >
+            
+              
+	            
+	             <rich:panel style="width:600px;" align="center">
+	            <h:panelGrid class="label_ui"    style=" width:580px;HEIGHT:10PX; " align="center" >
+	          <h:outputText   value="Click confirm to make product to reach our inventory" class="header_ui"/>
+	            </h:panelGrid></rich:panel>
+	
+             <rich:panel style="width:600px;" align="center">     
+	       <h:panelGrid class="label_ui" border="0"  cellspacing="5"   columns="5"  style="font-size:14px; width:580px;" align="left" cellpadding="3">  
+                   
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/> <h:outputText/> 
+	            <h:outputText class="label_ui" value="Firm Name"></h:outputText><h:outputText/> 
+				<h:outputText class="label_ui" value="#{purchaseDeliveryStatusMB.vendor_phone_number}"></h:outputText>
+				<h:outputText class="label_ui" value="Vendor Phone Number"></h:outputText>
+				
+				<h:outputText class="label_ui" value="#{purchaseDeliveryStatusMB.firmName}"></h:outputText>
+				
+				<h:outputText class="label_ui" value="Order Date" ></h:outputText><h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;"/> 
+				<h:outputText class="label_ui" value="#{purchaseDeliveryStatusMB.orderDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+			
+				<h:outputText class="label_ui"  value="Estimated Delivery Date"></h:outputText>
+				<h:outputText class="label_ui"  value="#{purchaseDeliveryStatusMB.targentDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+			
+				
+					
+				<h:outputText class="label_ui" value="Quantity"></h:outputText><h:outputText/> 
+				<h:outputText class="label_ui" value="#{purchaseDeliveryStatusMB.quantity}">
+				<f:converter converterId="com.inventory.util.UrlConverter" />
+	            </h:outputText>
+	            <h:outputText class="label_ui" value="Total Price"></h:outputText>
+				<h:outputText class="label_ui" value="Rp #{purchaseDeliveryStatusMB.totalPrice}"></h:outputText>
+							
+				
+				
+				
+				
+				<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       
+		        </h:panelGrid>
+		       
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+<p:commandButton styleClass="button_ui" id="save" value="Confirm"  onclick="PF('cd').show()" />
+<p:commandButton styleClass="button_ui" id="cancel" value="Cancel"  actionListener="#{purchaseDeliveryStatusMB.purchasedeliveryclose}"/>
+</h:panelGrid></rich:panel>
+	   
+                    </td>
+                  </tr>
+ 
+</table> 
+</td>
+</tr><tr><td style="height:10px;"></td></tr>             
+ 
+ </table></td></tr>
+
+<tr><td align="center">
+<p:confirmDialog widgetVar="cd" header="Confirmation" message="Yes to continue No to cancel" style="font-size:11px">
+<center>
+<p:commandButton styleClass="kbutton_ui" value="Yes" action="#{purchaseDeliveryStatusMB.deliveryStatus}" oncomplete="PF('cd').hide()"></p:commandButton>
+<p:commandButton styleClass="kbutton_ui" value="No" onclick="PF('cd').hide()"></p:commandButton>
+</center>
+</p:confirmDialog>
+          
+</td></tr>
+</table>
+</h:form></body>
+</ui:composition>

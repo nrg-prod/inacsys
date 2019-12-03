@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="messages"></p:growl>
+		
+		<h:form id="stockView">
+		<table width="100%"><tr> <td width="1%"> </td>
+  <td width="91%"> </td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{stockViewMB.stockView3}" ajax="false"></p:commandButton></td>
+
+	</tr></table> 
+	    
+       <div style="height:5px;"></div>
+
+
+
+			
+					<div align="center">
+
+
+								<p:dataTable id="dataTabl" value="#{stockViewMB.stockList}" rowKey="#{info.pName}"  selectionMode="single"
+									widgetVar="stockViewInfo" var="info" 
+									paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="width:98%">
+
+									<f:facet name="header">
+										<p:outputPanel style="text-align:right">
+
+											<p:inputText id="globalFilter"
+												onkeyup="PF('stockViewInfo').filter()"
+												style="width:20%;height:25px;" placeholder="Enter keyword" />
+										</p:outputPanel>
+									</f:facet>
+									 <p:ajax event="rowDblselect" update=":center_content:addDamage" listener="#{stockDamageMB.damagedadd}" oncomplete="PF('addDamageDialog').show();">
+									 
+
+									 </p:ajax>
+									 <p:column width="30" headerText="No">
+										<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+										<div align="center">
+											<h:outputText class="labelTxt" value="#{info.serialno}"/>
+										</div>
+									</p:column>
+									
+													
+										<p:column headerText="Product Name" filterBy="#{info.pName}"
+										filterMatchMode="contains" filterStyle="display:none">
+									
+
+										<h:outputText class="label_ui" value="#{info.pName}" />
+										
+
+									</p:column>
+									<p:column headerText="Firm Name" filterBy="#{info.s2}"
+										filterMatchMode="contains" filterStyle="display:none">
+
+
+
+										<h:outputText class="label_ui" value="#{info.s2}" />
+
+									</p:column>
+									<p:column headerText="Buying Price" filterBy="#{info.q2}"
+										filterMatchMode="contains" filterStyle="display:none">
+										
+										<h:outputText value="#{info.q2}" class="label_ui">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+
+									</p:column>
+
+
+
+									<p:column headerText="Quantity" filterBy="#{info.q1}"
+										filterMatchMode="contains" filterStyle="display:none">
+
+
+										<h:outputText class="label_ui" value="#{info.q1}">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+										<h:outputText value=" "></h:outputText>
+										<h:outputText value="#{info.unit}" class="label_ui" />
+									</p:column>
+									<p:column headerText="Total" filterBy="#{info.q}"
+										filterMatchMode="contains" filterStyle="display:none">
+										
+										<h:outputText class="label_ui" value="#{info.q}">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+
+									</p:column>
+
+
+
+								</p:dataTable>
+						</div><div style="height:10px"></div>
+						<table width="100%">
+							<tr align="center">
+								<td>
+										<h:panelGrid columns="12"
+											style="display:#{stockViewMB.flag};">
+
+											<h:outputLabel value="Total Quantity" style="font-size:12px;font-family:'Verdana';margin-bottom:1px;font-weight:normal"></h:outputLabel>
+											<h:outputText value=":" style="font-size:12px;font-family:'Verdana'"></h:outputText>
+											<h:outputText value="#{stockViewMB.totRollQuans}" style="font-size:12px;font-family:'Verdana'">
+												<f:converter converterId="com.inventory.util.UrlConverter" />
+											</h:outputText>
+											<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;" />
+											<h:outputLabel value="Total Price" style="font-size:12px;font-family:'Verdana';margin-bottom:1px;font-weight:normal"></h:outputLabel>
+
+
+											<h:outputText value=":" style="font-size:12px;font-family:'Verdana'"></h:outputText>
+											<h:panelGroup>
+												<h:outputText value="" style="font-size:12px;font-family:'Verdana'"/>
+												<h:outputText value="#{stockViewMB.net1}" style="font-size:12px;font-family:'Verdana'">
+													<f:converter converterId="com.inventory.util.UrlConverter" />
+												</h:outputText>
+											</h:panelGroup>
+										</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+					
+		</h:form>
+
+
+					
+							<p:dialog header="Add Damage" id="dlg" appendTo="@(body)" 
+								widgetVar="addDamageDialog" modal="true" 
+											 height="130px" width="35%" resizable="false">
+							<div align="center">
+						<p:outputPanel id="addDamage">
+						 <h:form id="damage">
+						 <div style="height:10px"></div>	
+						<div align="center"><h:outputText value="#{stockDamageMB.validate}" class="validation_ui" ></h:outputText></div>
+								<div style="height:10px"></div>	
+								<p:panelGrid columns="2" style="text-align:left"
+							styleClass="ui-panelgrid-blank"
+							>	
+							
+						
+										<h:outputLabel value="Damaged Quantity *" class="label_ui" />
+										<p:inputText styleClass="inputTxt" id="quan" value="#{stockDamageMB.quantity}">
+										<p:ajax process="@this" update="@form"></p:ajax>
+										</p:inputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<h:outputText></h:outputText><h:outputText></h:outputText><h:outputText></h:outputText>
+							<p:commandButton  action="#{stockDamageMB.stockDamage1}"  process="@this"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+								value="Add Damage" update="@form" ></p:commandButton>
+							</p:panelGrid>
+								</h:form></p:outputPanel></div></p:dialog>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 
+			<p:dialog header="Confirmation" appendTo="@(body)" 
+								widgetVar="confirm" modal="true" 
+											 height="120px" width="40%" resizable="false">
+											 <div style="height:30px;"></div>
+							<div align="center">
+							<h:outputText value="Damage Successfully Added" styleClass="confirmTxt"></h:outputText></div>
+							
+							 <div style="height:30px;"></div>
+														
+
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

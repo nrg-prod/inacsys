@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+	<style>
+	.ui-grid .ui-grid-row div {
+	    height: 25px;
+	    border-radius: 4px;
+	    padding: 0px;
+	}
+	</style>
+		<p:panel header="Balance Sheet">
+			<div style="height: 20px;"></div>
+			<table align="center">
+				<tr>
+					<td><h:outputText value="Report Period"
+							style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';"></h:outputText>
+					</td>
+				</tr>
+				<tr style="width: 50%">
+					<td width="30%"><br /> <h:selectOneMenu
+							style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';width:200px;height:30px;"
+							id="reperiod" value="#{accountsMB.accountsDatabean.reportPeriod}"
+							class="text_ui"
+							valueChangeListener="#{accountsMB.reportPeriodChange}">
+							<f:selectItem itemLabel="Report Period" itemValue="all"
+								noSelectionOption="true"></f:selectItem>
+							<f:selectItem itemLabel="All dates" itemValue="All dates"></f:selectItem>
+							<f:selectItem itemLabel="Custom" itemValue="Custom"></f:selectItem>
+							<f:selectItem itemLabel="Today" itemValue="Today"></f:selectItem>
+							<f:selectItem itemLabel="This Week" itemValue="This Week"></f:selectItem>
+							<f:selectItem itemLabel="This Week-to-date "
+								itemValue="This Week-to-date"></f:selectItem>
+							<f:selectItem itemLabel="This month" itemValue="This month"></f:selectItem>
+							<f:selectItem itemLabel="This month-to-date"
+								itemValue="This month-to-date"></f:selectItem>
+							<f:selectItem itemLabel="This Quarter" itemValue="This Quarter"></f:selectItem>
+							<f:selectItem itemLabel="This Quarter-to-date"
+								itemValue="This Quarter-to-date"></f:selectItem>
+							<f:selectItem itemLabel="This Year" itemValue="This Year"></f:selectItem>
+							<f:selectItem itemLabel="This Year-to-date"
+								itemValue="This Year-to-date"></f:selectItem>
+							<f:selectItem itemLabel="Yesterday" itemValue="Yesterday"></f:selectItem>
+							<f:selectItem itemLabel="Recent" itemValue="Recent"></f:selectItem>
+							<f:selectItem itemLabel="Last Week" itemValue="Last Week"></f:selectItem>
+							<f:selectItem itemLabel="Last Week-to-date"
+								itemValue="Last Week-to-date"></f:selectItem>
+							<f:selectItem itemLabel="Last Month" itemValue="Last Month"></f:selectItem>
+							<f:selectItem itemLabel="Last Month-to-date"
+								itemValue="Last Month-to-date"></f:selectItem>
+							<f:selectItem itemLabel="Last Quarter" itemValue="Last Quarter"></f:selectItem>
+							<f:selectItem itemLabel="Last Quarter-to-date"
+								itemValue="Last Quarter-to-date"></f:selectItem>
+							<f:selectItem itemLabel="Last Year" itemValue="Last Year"></f:selectItem>
+							<f:selectItem itemLabel="Last Year-to-date"
+								itemValue="Last Year-to-date"></f:selectItem>
+							<p:ajax process="@this" event="valueChange"
+								update="reperiod fdates tos tdates">
+							</p:ajax>
+						</h:selectOneMenu> <br /> <h:message for="reperiod"
+							style="color:red;font-size:11px"></h:message></td>
+					<td width="20%"><br /> <h:panelGroup id="fdates">
+							<p:calendar pattern="dd/MM/yyyy"
+								style="line-height: normal;margin-left:-24px;"
+								placeholder="From Date" id="fdate"
+								value="#{accountsMB.accountsDatabean.fromDate}"
+								rendered="#{accountsMB.accountsDatabean.customflag}">
+								<p:ajax update="fdate" process="@this" event="dateSelect"></p:ajax>
+							</p:calendar>
+							<p:inputText readonly="true"
+								value="#{accountsMB.accountsDatabean.fromDate}"
+								style="margin-left:-24px;"
+								rendered="#{accountsMB.accountsDatabean.otherflag}">
+								<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+							</p:inputText>
+							<br />
+							<h:message for="fdate" style="color:red;font-size:11px"></h:message>
+						</h:panelGroup></td>
+					<td><br /> <h:panelGroup id="tos">
+							<h:outputText value="to"
+								style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';margin-left:10px;"
+								rendered="#{accountsMB.accountsDatabean.flag}"></h:outputText>
+						</h:panelGroup></td>
+					<td width="20%"><br /> <h:panelGroup id="tdates">
+							<p:calendar pattern="dd/MM/yyyy"
+								style="line-height: normal;margin-left:-50px;"
+								placeholder="To Date" id="tdate"
+								value="#{accountsMB.accountsDatabean.toDate}"
+								rendered="#{accountsMB.accountsDatabean.customflag}">
+								<p:ajax update="tdate" process="@this" event="dateSelect"></p:ajax>
+							</p:calendar>
+							<p:inputText readonly="true"
+								value="#{accountsMB.accountsDatabean.toDate}"
+								style="margin-left:-55px;"
+								rendered="#{accountsMB.accountsDatabean.otherflag}">
+								<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+							</p:inputText>
+							<br />
+							<h:message for="tdate" style="color:red;font-size:11px"></h:message>
+						</h:panelGroup></td>
+					<td width="20%"><br /> <p:commandButton value="Run Report"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+							actionListener="#{accountsMB.runReportBS}" process="@this"
+							update="@form"></p:commandButton></td>
+				</tr>
+				<tr style="height: 30px;"></tr>
+			</table>
+			<br />
+			<div style="height: 50px;"></div>
+			<p:outputPanel id="printID" >
+				<div class="ui-g" style="width:100%;display: inline-flex; ">
+					<div class="ui-md-2" style="width: 15%">
+					
+					</div>
+					<div class="ui-md-8"
+						style="border: 1px solid #222; border-bottom-width: 0px;width:70%;">
+						<center>
+							<h:outputText value="Balance Sheet" class="udLablehead"></h:outputText>
+							<br /> <br />
+							<h:outputText value="All Dates" class="udLable"
+								rendered="#{accountsMB.accountsDatabean.flag1}"></h:outputText>
+							<h:outputText value="As of #{accountsMB.accountsDatabean.account_description}" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}"></h:outputText>
+
+						</center>
+						<div style="height: 30px;" align="right">
+							<hr
+								style="border: 1px solid #222; margin-left: 29px; margin-right:64px;"
+								align="left"></hr>
+
+						</div>
+						<div align="right" style="width:91%">
+							<h:outputText value="Total in (#{accountsMB.accountsDatabean.baseCurrency})" class="udsubheads" ></h:outputText>
+						</div>
+						<div style="height: 30px;" align="center">
+							<hr
+								style="border: 1px solid #222; margin-left: 29px; margin-right: 64px;"
+								align="left"></hr>
+
+						</div>
+
+						<p:accordionPanel style="width:100%">
+							<p:tab title="ASSETS" titleStyle="text-decoration:none;">
+								<p:accordionPanel style="width:100%">
+									<p:tab title="Current Assets" titleStyle="text-decoration:none;">
+										<p:accordionPanel style="width:100%">
+											<p:tab title="Bank Accounts" titleStyle="text-decoration:none;">
+												<h:dataTable value="#{accountsMB.accountsDatabean.bankaccountsList}"
+													var="assets" cellpadding="5" styleClass="order-table;borderless"
+													headerClass="order-table-header" style="margin:0px 1px 0px 0px" cellspacing="15" width="100%"
+													rowClasses="order-table-odd-row,order-table-even-row">
+													<p:column>
+													<h:panelGroup style="width:70%;">
+														<h:outputText value="#{assets.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+													</h:panelGroup>
+													</p:column>
+													
+													<p:column>
+													<h:panelGroup style="width:30%;">
+													<div align="right">
+														<h:outputText value="#{assets.balance}" class="udLable" style="width:30%;text-align:right;">
+															<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+														</h:outputText>
+														</div>
+													</h:panelGroup>
+													</p:column>
+													
+												</h:dataTable>
+												<hr
+								style="border: 1px solid #222;width:100%"
+								align="center"></hr>
+												 <div class="ui-grid">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Bank Accounts" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalbankassets}" class="udLable" style="text-align:right">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+											</p:tab></p:accordionPanel><p:accordionPanel style="width:100%">
+											<p:tab title="Accounts Receivable" titleStyle="text-decoration:none;">
+												<h:dataTable value="#{accountsMB.accountsDatabean.accountReceivableList}"
+													var="assets" cellpadding="5" styleClass="order-table;borderless"
+													headerClass="order-table-header" cellspacing="10" width="100%"
+													rowClasses="order-table-odd-row,order-table-even-row">
+													<p:column>
+													<h:panelGroup style="width:70%;">
+														<h:outputText value="#{assets.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+													</h:panelGroup>
+													</p:column>
+													
+													<p:column>
+													<h:panelGroup style="width:30%;">
+													<div align="right">
+														<h:outputText value="#{assets.balance}" class="udLable" style="width:30%;text-align:right;">
+															<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+														</h:outputText>
+														</div>
+													</h:panelGroup>
+													</p:column>
+													
+												</h:dataTable>
+												<hr
+								style="border: 1px solid #222;width:100%"
+								align="center"></hr>
+												 <div class="ui-grid">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Accounts Receivable" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalaccrecassets}" class="udLable" style="text-align:right">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+											</p:tab></p:accordionPanel><p:accordionPanel style="width:100%" rendered="#{not empty accountsMB.accountsDatabean.othercurrentassetsList}">
+											<p:tab title="Other Current Assets" titleStyle="text-decoration:none;">
+												<h:dataTable value="#{accountsMB.accountsDatabean.othercurrentassetsList}"
+													var="assets" cellpadding="5" styleClass="order-table;borderless"
+													headerClass="order-table-header" cellspacing="10" width="100%"
+													rowClasses="order-table-odd-row,order-table-even-row">
+													<p:column>
+													<h:panelGroup style="width:70%;">
+														<h:outputText value="#{assets.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+													</h:panelGroup>
+													</p:column>
+													
+													<p:column>
+													<h:panelGroup style="width:30%;">
+													<div align="right">
+														<h:outputText value="#{assets.balance}" class="udLable" style="width:30%;text-align:right;">
+															<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+														</h:outputText>
+														</div>
+													</h:panelGroup>
+													</p:column>
+													
+												</h:dataTable>
+												<hr
+								style="border: 1px solid #222;width:100%"
+								align="center"></hr>
+												 <div class="ui-grid">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Other Current Assets" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalothercurrentassets}" class="udLable" style="text-align:right;">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+											</p:tab>
+										</p:accordionPanel>
+										<hr
+								style="border: 1px solid #222;width:94%;"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row" style="width:94%;margin:0px 0px 0px 20px">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Current Assets" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalbankassets+accountsMB.accountsDatabean.totalaccrecassets+
+							accountsMB.accountsDatabean.totalothercurrentassets}"	class="udLable" style="text-align:right;">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									</p:tab></p:accordionPanel>
+									<p:accordionPanel style="width:100%" rendered="#{not empty accountsMB.accountsDatabean.fixedassetsList}">
+									<p:tab title="Fixed Assets" titleStyle="text-decoration:none;">
+												<h:dataTable value="#{accountsMB.accountsDatabean.fixedassetsList}"
+													var="assets" cellpadding="5" styleClass="order-table;borderless"
+													headerClass="order-table-header" cellspacing="10" width="97%"
+													rowClasses="order-table-odd-row,order-table-even-row">
+													<p:column>
+													<h:panelGroup style="width:70%;">
+														<h:outputText value="#{assets.account_name}" class="udLable" style="width:70%;padding-left:41px"></h:outputText>
+													</h:panelGroup>
+													</p:column>
+													
+													<p:column>
+													<h:panelGroup style="width:30%;">
+													<div align="right">
+														<h:outputText value="#{assets.balance}" class="udLable" style="width:30%;text-align:right;">
+															<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+														</h:outputText>
+														</div>
+													</h:panelGroup>
+													</p:column>
+													
+												</h:dataTable>
+											<hr
+								style="border: 1px solid #222;width:94%"
+								align="center"></hr>
+												 <div class="ui-grid" style="width:94%;margin:0px 0px 0px 20px">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Fixed Assets" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalfixedassets}" class="udLable" style="text-align:right;">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>	
+									</p:tab></p:accordionPanel><p:accordionPanel style="width:100%" rendered="#{not empty accountsMB.accountsDatabean.assetsList}">
+									<p:tab title="Other Assets" titleStyle="text-decoration:none;">
+												<h:dataTable value="#{accountsMB.accountsDatabean.assetsList}"
+													var="assets" cellpadding="5" styleClass="order-table;borderless"
+													headerClass="order-table-header" cellspacing="10" width="97%"
+													rowClasses="order-table-odd-row,order-table-even-row">
+													<p:column>
+													<h:panelGroup style="width:70%;">
+														<h:outputText value="#{assets.account_name}" class="udLable" style="width:70%;padding-left:41px"></h:outputText>
+													</h:panelGroup>
+													</p:column>
+													
+													<p:column>
+													<h:panelGroup style="width:30%;">
+													<div align="right">
+														<h:outputText value="#{assets.balance}" class="udLable" style="width:30%;text-align:right;">
+															<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+														</h:outputText>
+														</div>
+													</h:panelGroup>
+													</p:column>
+													
+												</h:dataTable>
+												<hr
+								style="border: 1px solid #222;width:94%;"
+								align="center"></hr>
+												 <div class="ui-grid" style="width:94%;margin:0px 0px 0px 20px">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Other Assets" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalotherassets}" class="udLable" style="text-align:right;">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>	
+									</p:tab>
+								</p:accordionPanel>
+							</p:tab>
+					</p:accordionPanel>
+						<hr  style="border: 1px solid #222;width:82%;"
+								align="center"></hr>
+								 <div class="ui-grid" style="width:88%;margin:0px 0px 0px 26px">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Assets in (#{accountsMB.accountsDatabean.baseCurrency})" class="udLable" style="font-size:18px;font-weight:bold;padding-left:41px"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalassets}" class="udLable" style="text-align:right;font-size:18px;font-weight:bold">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+							<hr align="center"
+								style="border: 1px solid #222; padding: 1px;width:82%;"
+								></hr>	
+							<p:accordionPanel style="width:100%">
+								<p:tab title="Liabilities and Equity"
+									titleStyle="text-decoration:none;">						
+									<p:accordionPanel style="width:100%">
+										<p:tab title="Current Liabilities"
+									titleStyle="text-decoration:none;">
+									<h:dataTable value="#{accountsMB.accountsDatabean.currLibList}"
+										var="currliability" cellpadding="5" styleClass="order-table;borderless"
+										headerClass="order-table-header" cellspacing="10" width="97%"
+										rowClasses="order-table-odd-row,order-table-even-row">
+										<p:column>
+										<h:panelGroup style="width:70%;">
+											<h:outputText value="#{currliability.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+										</h:panelGroup>
+										</p:column>
+										<p:column>
+										<h:panelGroup style="width:30%;">
+										<div align="right">
+											<h:outputText value="#{currliability.balance}" class="udLable" style="width:30%;text-align:right;">
+												<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+											</h:outputText>
+										</div>
+										</h:panelGroup>
+										</p:column>
+									</h:dataTable>
+									<p:accordionPanel style="width:100%">
+										<p:tab title="Accounts Payable"
+									titleStyle="text-decoration:none;">
+									<h:dataTable value="#{accountsMB.accountsDatabean.liabilityList}"
+										var="liability" cellpadding="5" styleClass="order-table;borderless"
+										headerClass="order-table-header" cellspacing="10" width="100%"
+										rowClasses="order-table-odd-row,order-table-even-row">
+										<p:column>
+										<h:panelGroup style="width:70%;">
+											<h:outputText value="#{liability.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+										</h:panelGroup>
+										</p:column>
+										<p:column>
+										<h:panelGroup style="width:30%;">
+										<div align="right">
+											<h:outputText value="#{liability.balance}" class="udLable" style="width:30%;text-align:right;">
+												<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+											</h:outputText>
+										</div>
+										</h:panelGroup>
+										</p:column>
+									</h:dataTable>
+									<hr
+								style="border: 1px solid #222;width:100%"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Accounts Payable" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalaccpayable}" style="text-align:right;" class="udLable">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									</p:tab></p:accordionPanel>
+									<p:accordionPanel style="width:100%">
+										<p:tab title="Credit Cards"
+									titleStyle="text-decoration:none;">
+									<h:dataTable value="#{accountsMB.accountsDatabean.creditcardList}"
+										var="liability" cellpadding="5" styleClass="order-table;borderless"
+										headerClass="order-table-header" cellspacing="10" width="100%"
+										rowClasses="order-table-odd-row,order-table-even-row">
+										<p:column>
+										<h:panelGroup style="width:70%;">
+											<h:outputText value="#{liability.account_name}" class="udLable" style="width:70%;padding-left:25px;"></h:outputText>
+										</h:panelGroup>
+										</p:column>
+										<p:column>
+										<h:panelGroup style="width:30%;">
+										<div align="right">
+											<h:outputText value="#{liability.balance}" class="udLable" style="width:30%;text-align:right">
+												<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+											</h:outputText>
+										</div>
+										</h:panelGroup>
+										</p:column>
+									</h:dataTable>
+									<hr
+								style="border: 1px solid #222;width:100%"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Credit Cards" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalcreditcards}" style="text-align:right;" class="udLable">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									</p:tab>
+									</p:accordionPanel>
+									<p:accordionPanel style="width:100%">
+										<p:tab title="Other Current Liabilities"
+									titleStyle="text-decoration:none;">
+									<h:dataTable value="#{accountsMB.accountsDatabean.othercurrentlibList}"
+										var="liability" cellpadding="5" styleClass="order-table;borderless"
+										headerClass="order-table-header" cellspacing="10" width="100%"
+										rowClasses="order-table-odd-row,order-table-even-row">
+										<p:column>
+										<h:panelGroup style="width:70%;">
+											<h:outputText value="#{liability.account_name}" class="udLable" style="width:70%;padding-left:25px;"></h:outputText>
+										</h:panelGroup>
+										</p:column>
+										<p:column>
+										<h:panelGroup style="width:30%;">
+										<div align="right">
+											<h:outputText value="#{liability.balance}" class="udLable" style="width:30%;text-align:right;">
+												<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+											</h:outputText>
+										</div>
+										</h:panelGroup>
+										</p:column>
+									</h:dataTable>
+									<hr
+								style="border: 1px solid #222;width:100%"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Other Current Liabilities" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalothercurrliability}" style="text-align:right;" class="udLable">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									</p:tab>
+									</p:accordionPanel></p:tab>
+									</p:accordionPanel>
+								<hr
+								style="border: 1px solid #222;width:88%;"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row" style="width:91%;margin:0px 0px 0px 20px">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Current Liabilities" class="udLable" style="padding-left:25px"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalcurrliability+accountsMB.accountsDatabean.totalaccpayable+accountsMB.accountsDatabean.totalcreditcards+
+							accountsMB.accountsDatabean.totalothercurrliability}" class="udLable">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									<p:accordionPanel style="width:100%">
+										<p:tab title="Long-Term Liabilities"
+									titleStyle="text-decoration:none;">
+									<h:dataTable value="#{accountsMB.accountsDatabean.longtermlibList}"
+										var="liability" cellpadding="5" styleClass="order-table;borderless"
+										headerClass="order-table-header" cellspacing="10" width="100%"
+										rowClasses="order-table-odd-row,order-table-even-row">
+										<p:column>
+										<h:panelGroup style="width:70%;">
+											<h:outputText value="#{liability.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+										</h:panelGroup>
+										</p:column>
+										<p:column>
+										<h:panelGroup style="width:30%;">
+										<div align="right">
+											<h:outputText value="#{liability.balance}" class="udLable" style="width:30%;text-aling:right">
+												<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+											</h:outputText>
+										</div>
+										</h:panelGroup>
+										</p:column>
+									</h:dataTable>
+									<hr
+								style="border: 1px solid #222;width:94%;"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row"  style="width:94%;margin:0px 0px 0px 20px">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Long-Term Liabilities" class="udLable"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totallongtermliability}" class="udLable" style="text-aling:right">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									</p:tab>
+									</p:accordionPanel>
+									<hr
+								style="border: 1px solid #222;width:88%"
+								align="center"></hr>
+								 <div class="ui-grid">
+								  <div class="ui-grid-row" style="width:91%;margin:0px 0px 0px 20px">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Liabilities" class="udLable" style="padding-left:20px;"></h:outputText>
+								</div>
+							<div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalliablity}" class="udLable" style="text-aling:right">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+							</div>
+						</div></div>
+									<p:accordionPanel style="width:94%;margin:0px 0px 0px 20px">
+										<p:tab title="Equity"
+									titleStyle="text-decoration:none;">
+									<h:dataTable value="#{accountsMB.accountsDatabean.equities}"
+										var="inf" cellpadding="5" styleClass="order-table;borderless"
+										headerClass="order-table-header" cellspacing="10" width="100%"
+										rowClasses="order-table-odd-row,order-table-even-row">
+										<p:column>
+										<h:panelGroup style="width:70%;">
+											<h:outputText value="#{inf.account_name}" class="udLable" style="width:70%;padding-left:25px"></h:outputText>
+										</h:panelGroup>
+										</p:column>
+										<p:column>
+										<h:panelGroup style="width:30%;">
+										<div align="right">
+											<h:outputText value="#{inf.balance}" class="udLable" style="width:30%;text-aling:right">
+												<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+											</h:outputText>
+										</div>
+										</h:panelGroup>
+										</p:column>
+									</h:dataTable>
+								</p:tab></p:accordionPanel>
+								<hr
+								style="border: 1px solid black;width:88%"
+								align="center"></hr>
+						 <div class="ui-grid">
+								  <div class="ui-grid-row" style="width:91%;margin:0px 0px 0px 20px">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Equity"
+								class="udLable" style="padding-left:25px"></h:outputText>
+						</div><div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalEquities}"
+								class="udLable" style="text-align:right">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+						</div></div></div>
+								</p:tab>
+							</p:accordionPanel>
+							<hr
+								style="border: 1px solid black;width:84%"
+								align="center"></hr>
+						 <div class="ui-grid">
+								  <div class="ui-grid-row" style="width:83%;margin:0px 0px 0px 60px">
+							<div class="ui-grid-col-6" align="left">
+							<h:outputText value="Total Liabilities and Equity in (#{accountsMB.accountsDatabean.baseCurrency})"
+								class="udLable" style="font-size:18px;font-weight:bold"></h:outputText>
+						</div><div class="ui-grid-col-6" align="right">
+							<h:outputText value="#{accountsMB.accountsDatabean.totalliablity+accountsMB.accountsDatabean.totalEquities}"
+								class="udLable" style="font-size:18px;font-weight:bold">
+								<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+							</h:outputText>
+						</div></div></div>
+							<hr
+								style="border: 1px solid #222;padding:1px;width:84%;"
+								align="center"></hr>
+						<div class="ui-g"
+							style="border: 1px solid #222; border-top-width: 0px;margin-left:-5px;margin-right:-5px"></div>
+					</div>
+
+					<div class="ui-g-3" style="width: 15%;"></div>
+
+				</div>
+			</p:outputPanel>
+			<div style="height: 100px; padding: 10px;">
+				<div style="width: 100%;" align="center">
+					<!-- <h:commandLink>
+                <p:graphicImage value="../../images/pdf.png" title="PDF" width="24"/>
+                <p:dataExporter type="pdf" target="printID" fileName="accounts"/>
+            </h:commandLink> -->
+            <div style="height:30px;"></div>
+					<h:commandLink>
+						<p:graphicImage value="../../images/Printer.png" title="Print"
+							width="24" />
+						<p:printer target="printID" />
+					</h:commandLink>
+				</div>
+
+			</div>
+		</p:panel>
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   </p:dialog>
+	</ui:define>
+</ui:composition>

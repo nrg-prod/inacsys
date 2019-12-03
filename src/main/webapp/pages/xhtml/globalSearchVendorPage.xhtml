@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+<p:panel header="#{loginMB.loginaccess.modulename} Details Form">
+<p:outputPanel id="dialogPanelModify" rendered="#{loginMB.loginaccess.modulename=='Vendor'}">
+	<h:form id="venModify">
+	<div style="height:10px;"></div>
+	<table width="98%"><tr><td align="right">
+	<h:outputText value="PENDING FOR APPROVAL" styleClass="confirmTxt" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}"></h:outputText>
+	</td></tr></table>
+			<div style="height:20px;">
+			<center><h:outputText value="#{vendorViewFormMB.validate}" styleClass="errorTxt"></h:outputText>
+			</center>
+			</div>
+			<p:panelGrid style="height:220px" columns="6" styleClass="ui-panelgrid-blank"> 
+				<h:panelGroup>
+					<h:outputText class="label_ui" for="FnameM" value="Firm Name " />
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" id="FnameM" value="#{vendorViewFormMB.vendorPhoneNumber}" readonly="true">
+					<p:ajax  process="@this" immediate="true" update="FnameM"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Website" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" value="#{vendorViewFormMB.website}" id="eweb">
+					<p:ajax  process="@this" immediate="true" update="eweb"></p:ajax>
+				</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Fax Number " />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" value="#{vendorViewFormMB.faxVendor}" id="efax">
+					<p:ajax  process="@this" immediate="true" update="efax"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Nature of Business" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" value="#{vendorViewFormMB.natureofbusiness}" id="enob">
+					<p:ajax process="@this" immediate="true" update="enob"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Person Incharge " /></h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" value="#{vendorViewFormMB.peresonIncharge}" id="pin">
+					<p:ajax  process="@this" immediate="true" update="pin"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Telephone Number " />
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" value="#{vendorViewFormMB.firmName}" id="teleno">
+					<p:ajax process="@this" immediate="true" update="teleno"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Email ID " />
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" value="#{vendorViewFormMB.email_ID_vendor}" id="eemail">
+					<p:ajax process="@this" immediate="true" update="eemail"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Vendor Code" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText styleClass="inputTxt" id="vcode" value="#{vendorViewFormMB.codeven}" readonly="true">  
+					<p:ajax process="@this" immediate="true" update="vcode"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="LicenceNo" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText value="#{vendorViewFormMB.licenceven}" styleClass="inputTxt" id="elicense">
+					<p:ajax process="@this" immediate="true" update="elicense"></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Expire Date" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar placeholder="Expire Date" id="eexpiredate" value="#{vendorViewFormMB.exDateven}" datePattern="dd/MM/yyyy" style="line-height: normal;width:210px" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')">
+					<p:ajax event="dateSelect" process="@this" immediate="true" update="eexpiredate"></p:ajax>
+					</p:calendar>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Vendor Type" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:selectOneMenu id="ventype" style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{vendorViewFormMB.typeven}">	
+						<f:selectItem itemLabel="--- Vendor Type---" itemValue="select" />
+						<f:selectItem itemLabel="Trading" itemValue="Trading"></f:selectItem> 
+		       			<f:selectItem itemLabel="Non-Trading" itemValue="Non-Trading"></f:selectItem> 
+		       			<p:ajax process="@this" immediate="true" update="ventype"></p:ajax> 
+					</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Description" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText style="width:200px;height:40px;overflow-y:scroll" value="#{vendorViewFormMB.note}" id="cusnote">
+					<p:ajax process="@this" immediate="true" update="cusnote" ></p:ajax>
+					</p:inputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText class="label_ui" value="Payment Type" /> 
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:selectOneMenu id="Credit" style="border-radius:0px;height: 25px;width: 200px;" valueChangeListener="#{vendorViewFormMB.venTypes}" value="#{vendorViewFormMB.payType}">
+						<f:selectItem itemLabel="--- Payment Type ---" itemValue="select" />
+						<f:selectItem itemLabel="Cash" itemValue="Cash" />
+						<f:selectItem itemLabel="Credit" itemValue="Credit"/>
+						<p:ajax event="valueChange" update="venModify" process="@this"></p:ajax>
+					</h:selectOneMenu>
+				</h:panelGroup>						 				
+				<h:panelGroup rendered="#{vendorViewFormMB.payType=='Credit'}" >
+					<h:outputText class="label_ui" value="Payment Days" />
+				</h:panelGroup>
+				<h:panelGroup>							
+					<h:selectOneMenu id="days" style="border-radius:0px;height: 25px;width:170px;" rendered="#{vendorViewFormMB.payType=='Credit'}" value="#{vendorViewFormMB.payDays}" >
+						<f:selectItem itemLabel="--- Payment Days ---" itemValue="select"/>
+						<f:selectItems value="#{vendorViewFormMB.daylist}"></f:selectItems> 
+						<p:ajax immediate="true" update="@form" process="@this"></p:ajax>  
+					</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton icon="fa fa-plus" process="@this" immediate="true" actionListener="#{vendorViewFormMB.dialog}" rendered="#{vendorViewFormMB.payType=='Credit'}" update="@form" style="margin-left: -47px;"></p:commandButton>
+				</h:panelGroup>
+			</p:panelGrid>
+			<table width="95%">
+					<tr>
+						<td>
+							<p:tabView id="tabviewid" style="width:100%;height:270px;border:1px !important;">
+							    <p:tab title="Address" style="min-height:300px;">
+							    <table width="100%">
+							    	<tr>
+							    		<td width="1%"></td>
+							    		<td width="44%">
+							     			<h:outputText value="Present Address" class="labelTxt"></h:outputText>
+									    </td><td width="2%"></td>
+									    <td width="45%">
+									    	<h:outputText value="Permanent Address" class="labelTxt"></h:outputText>
+									    </td>
+									    <td width="8%"></td>
+							    	</tr>
+							    </table>
+							    <p:panelGrid style="height:70px;"  columns="2" styleClass="ui-panelgrid-blank">
+									<p:inputTextarea placeholder="Street" id="preaddr" value="#{vendorViewFormMB.address}" styleClass="inputTxt" style="width:421px">
+							    	<p:ajax process="@this" immediate="true" update="preaddr"></p:ajax>
+							    	</p:inputTextarea>
+							     	<p:inputTextarea placeholder="Street" value="#{vendorViewFormMB.address1}" id="peraddr" style="width:421px">
+							         <p:ajax process="@this" immediate="true" update="peraddr"></p:ajax>
+							        </p:inputTextarea>
+							    </p:panelGrid>
+							    <p:panelGrid style="height:110px;"  columns="4" styleClass="ui-panelgrid-blank">
+							    <h:outputText value="City:" class="labelTxt"></h:outputText>
+							    <h:outputText value="Country:" class="labelTxt"></h:outputText>
+							    <h:outputText value="City:" class="labelTxt"></h:outputText>
+							    <h:outputText value="Country:" class="labelTxt"></h:outputText>
+								    <p:inputText styleClass="inputTxt" placeholder="City " id="precity" value="#{vendorViewFormMB.city}">
+								    <p:ajax process="@this" immediate="true" update="precity"></p:ajax>
+								    </p:inputText>
+							        <h:selectOneMenu value="#{vendorViewFormMB.country_ID}" id="precoun" valueChangeListener="#{vendorViewFormMB.selectState}" style="border-radius:0px;height: 25px;width: 200px;"  widgetVar="var2">         
+							         <f:selectItem itemLabel="--- Select Country---" itemValue="" />
+							               <f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+							               <f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+							               <f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+							               <f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+							               <f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+							               <p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+							        </h:selectOneMenu>
+							         <p:inputText styleClass="inputTxt" placeholder="City "  id="percity" value="#{vendorViewFormMB.city1}" >
+							         <p:ajax update="percity" process="@this" immediate="true"></p:ajax>
+							         </p:inputText>
+								     <h:selectOneMenu value="#{vendorViewFormMB.country_ID1}" valueChangeListener="#{vendorViewFormMB.selectState1}"  style="border-radius:0px;height: 25px;width: 200px;" id="cuscountrypresent" widgetVar="var2">         
+								         <f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+								               <f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+								               <f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+								               <f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+								               <f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+								               <f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+								               <p:ajax update="vstat1" process="@this" ></p:ajax>
+								        </h:selectOneMenu>
+							        
+							        <h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+							        <h:outputText value="State:" class="labelTxt"></h:outputText>
+							        <h:outputText value="Postal code:" class="labelTxt"></h:outputText>
+							        <h:outputText value="State:" class="labelTxt"></h:outputText>
+							        <p:inputText styleClass="inputTxt" placeholder="Postal Code:"
+							         value="#{vendorViewFormMB.post}"
+							         id="cuspostalcodepermenents">
+							         <p:ajax process="@this" immediate="true"
+							          update="cuspostalcodepermenents"></p:ajax>
+							        </p:inputText>
+							        <h:selectOneMenu placeholder="State" id="vstat" style="border-radius:0px;height: 25px;width: 200px;" value="#{vendorViewFormMB.state}">
+							       <f:selectItem itemLabel="--- Select State---" itemValue="select" />
+							       <f:selectItems value="#{vendorViewFormMB.stateList}"></f:selectItems>
+							       <p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+							       </h:selectOneMenu>
+							        <p:inputText styleClass="inputTxt" placeholder="Postalcode" id="perpostcode"  value="#{vendorViewFormMB.post1}" >
+							         <p:ajax process="@this" immediate="true" update="perpostcode"></p:ajax>
+							        </p:inputText>
+							      
+							        <h:selectOneMenu  placeholder="State" id="vstat1" style="border-radius:0px;height: 25px;width: 200px;" value="#{vendorViewFormMB.state1}">
+							       <f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+							       <f:selectItems value="#{vendorViewFormMB.stateList1}"></f:selectItems>
+							       <p:ajax process="@this" immediate="true" update="vstat1"></p:ajax>
+							       </h:selectOneMenu>
+							    </p:panelGrid>
+					    
+							    </p:tab>
+							   </p:tabView></td></tr>
+				</table>			
+			<center><div style="height:30px"></div>
+			<p:commandButton value="Update" update=":center_content:dialogPanelModify" process="@this" immediate="true" action="#{vendorViewFormMB.updateModify}"
+			 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}"></p:commandButton>
+			 <p:commandButton value="Cancel" action="dashboard.xhtml?faces-redirect=true" 
+			 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}"></p:commandButton>
+			 <p:commandButton value="Close" action="dashboard.xhtml?faces-redirect=true" 
+			 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}"></p:commandButton>
+			</center>
+			</h:form>
+		</p:outputPanel>
+				
+	<p:dialog header="CONGRATULATIONS...!!" widgetVar="Vuc" modal="true" width="50%"  height="130px" resizable="false" appendTo="@(body)">
+		<center><div style="height:25px"></div>
+				<h:panelGrid columns="3" border="0" align="center">
+ 				<h:outputText value="Vendor Information has been successfully modified." styleClass="confirmTxt"></h:outputText>
+				</h:panelGrid></center>
+		<div style="height:30px"></div>
+		<center><p:commandButton value="Ok" onclick="PF('Vuc').hide();" action="dashboard.xhtml?faces-redirect=true"
+				process="@this" immediate="true" update=":center_content" 
+				styleClass="button_ui"></p:commandButton></center>
+	</p:dialog>
+</p:panel>
+</ui:define>
+</ui:composition>

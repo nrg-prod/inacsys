@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<ui:define name="content" >	
+<div style="height:5px;"></div>
+	<table width="100%"><tr><td width="1%"> </td>
+  	<td width="91%"> <p:commandButton icon="fa fa-plus" value="New"  action="#{vendorRegisterFormMB.quotationPage}"  ajax="false" ></p:commandButton></td>
+    <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{vendorRegisterFormMB.quotationConsolePage}" ajax="false"></p:commandButton></td>
+	</tr></table> 
+<div style="height:25px;">
+	<center><h:outputText value="#{vendorRegisterFormMB.validate}" class="errorTxt"></h:outputText></center>
+</div>
+<center>
+	<p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationList}" widgetVar="quotInfo"  
+		id="dataTable" emptyMessage="No information found with given criteria"
+		reflow="true" filteredValue="#{vendorRegisterFormMB.filterList}">
+      	<f:facet name="header">
+       		<p:outputPanel style="text-align:right">
+       			<p:inputText id="globalFilter" onkeyup="PF('quotInfo').filter()" style="width:20%;height:25px;" placeholder="Enter keyword" />
+       		</p:outputPanel>
+      	</f:facet>
+      	<p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.serialno}"/>
+			</div>
+		</p:column>
+      	<p:column filterBy="#{info.quotationNumber}" width="120" headerText="Quotation Number" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.quotationNumber}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.orderDate}" width="100" headerText="Order Date" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText value="#{info.orderDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.status}" width="100"  headerText="Status" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="In Progress" rendered="#{info.choosenStatus!='Choosed'}"></h:outputText>
+      			<h:outputText value="Completed" rendered="#{info.choosenStatus=='Choosed'}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Approval Status" filterBy="#{info.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      			<h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column width="150" headerText="Action">
+      		<div align="center">
+      			<h:panelGroup rendered="#{info.choosenStatus!='Choosed'}">
+       			<p:commandButton icon="fa fa-search" action="#{vendorRegisterFormMB.quotationView}" update=":center_content:dialogPanelView" oncomplete="PF('quotationDialogView').show();" immediate="true" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+       				<f:setPropertyActionListener target="#{vendorRegisterFormMB.quotationNumber}" value="#{info.quotationNumber}" />
+       			</p:commandButton>&nbsp;</h:panelGroup>
+       			<h:panelGroup rendered="#{info.choosenStatus=='Choosed'}">
+       			<p:commandButton icon="fa fa-search" action="#{vendorRegisterFormMB.finalQuotationView}" update=":center_content:dialogPanelView" oncomplete="PF('quotationDialogView').show();" immediate="true" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+       				<f:setPropertyActionListener target="#{vendorRegisterFormMB.quotationNumber}" value="#{info.quotationNumber}" />
+       			</p:commandButton>&nbsp;</h:panelGroup>
+       			<h:panelGroup rendered="#{info.choosenStatus!='Choosed'}">
+       			<p:commandButton icon="fa fa-pencil" action="#{vendorRegisterFormMB.quotationEdit}" process="@this" immediate="true" update=":center_content:dialogPanelEdit" oncomplete="PF('quotationDialogEdit').show();" rendered="#{info.approvalStatus!='draft'}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+       				<f:setPropertyActionListener target="#{vendorRegisterFormMB.quotationNumber}" value="#{info.quotationNumber}" />
+       			</p:commandButton>&nbsp;</h:panelGroup>
+       			<h:panelGroup rendered="#{info.choosenStatus!='Choosed'}">
+       			<p:commandButton icon="fa fa-remove" oncomplete="PF('cd').show()" rendered="#{info.approvalStatus!='draft'}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+       				<f:setPropertyActionListener target="#{vendorRegisterFormMB.quotationNumber}" value="#{info.quotationNumber}" />
+       			</p:commandButton>&nbsp;</h:panelGroup>
+       			<h:panelGroup rendered="#{info.choosenStatus!='Choosed'}">
+       			<p:commandLink value="Click" action="#{vendorRegisterFormMB.quotationView}" update=":center_content:dialogPanelView1" oncomplete="PF('quotationDialogView1').show();" style="font-size:14px;font-family:'Arial,san-serif' !important" rendered="#{info.approvalStatus!='draft'}"
+       			process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+       			<f:setPropertyActionListener target="#{vendorRegisterFormMB.quotationNumber}" value="#{info.quotationNumber}" />
+       			</p:commandLink></h:panelGroup>
+       			<h:panelGroup rendered="#{info.choosenStatus=='Choosed'}">
+       			<p:commandLink value="Click" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" process="@this"
+       			oncomplete="PF('existfinalQuotaion').show();"></p:commandLink>
+       			</h:panelGroup>
+      		</div>
+      	</p:column>
+     </p:dataTable> 
+     <br/><br/><div style="display:#{vendorRegisterFormMB.approveButtonFlag}">
+</div></center><div style="height:200px"></div>
+<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="40%" height="120"
+	resizable="false" appendTo="@(body)">
+	<div style="height:30px"></div><center>
+			<h:outputText value="Quotation has been successfully approved." styleClass="confirmTxt"/></center>
+	<div style="height:30px"></div>
+	<center><p:commandButton value="Ok" action="#{vendorRegisterFormMB.quotationConsolePage}"
+				process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()">
+			</p:commandButton></center>
+</p:dialog>
+<p:dialog header="CONGRATULATIONS...!!" widgetVar="updateConfirm" modal="true" width="40%" height="130"
+	resizable="false" appendTo="@(body)">
+	<div style="height:10px"></div><center>
+			<h:outputText value="Quotation has been successfully modified." styleClass="confirmTxt"/></center>
+	<div style="height:30px"></div>
+	<center><p:commandButton value="Ok" oncomplete="PF('quotationDialogEdit').hide()"
+				process="@this" immediate="true" update=":center_content" onsuccess="PF('updateConfirm').hide()">
+			</p:commandButton></center>
+</p:dialog>
+<p:dialog header="Alert" widgetVar="existfinalQuotaion" modal="true" width="50%" height="100"
+	resizable="false" appendTo="@(body)">
+	<div style="height:30px"></div><center>
+			<h:outputText value="This Quotation has been chosen already for final quotation" styleClass="confirmTxt"/></center>
+	<div style="height:30px"></div>
+</p:dialog>
+<p:dialog header="Confirmation" widgetVar="cd" modal="true" width="40%" height="120"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Quotation?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:30px"></div>
+					<p:commandButton value="Yes" action="#{vendorRegisterFormMB.quotationDelete}"
+						 process="@this" immediate="true" onsuccess="PF('cd').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="cdsu" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Quotation has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				</div><center><p:commandButton value="Ok" action="#{vendorRegisterFormMB.quotationConsolePage}"
+				process="@this" immediate="true" update=":center_content" onsuccess="PF('cdsu').hide()">
+			</p:commandButton></center>
+			</p:dialog>
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+</p:dialog> 
+<p:dialog header="Quotation Details View" id="quotview" appendTo="@(body)" widgetVar="quotationDialogView" modal="true" height="400px" width="70%" resizable="false">
+   <p:outputPanel id="dialogPanelView">
+    <h:form id="quotView">
+    <div style="height:20px"></div>
+    	<center><p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationDetailList}" widgetVar="quotviewInfo"  
+		id="vdataTable" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+      	<p:column filterBy="#{info.productName}" style="height:25px" width="120" headerText="Product Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productName}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.vendorName}" style="height:25px" width="100" headerText="Vendor Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText value="#{info.vendorName}"></h:outputText>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.productCount}" style="height:25px" width="100"  headerText="Product Count" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productCount}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Price" filterBy="#{info.productPrice}" style="height:25px" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productPrice}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Delivery Date" style="height:25px" filterBy="#{info.deliveryDate}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.deliveryDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+      		</div>
+      	</p:column>
+     </p:dataTable></center> 
+    </h:form>
+   </p:outputPanel>
+</p:dialog>
+<p:dialog header="Quotation Details Edit" id="quotedit" appendTo="@(body)" widgetVar="quotationDialogEdit" modal="true" height="400px" width="80%" resizable="false">
+   <p:outputPanel id="dialogPanelEdit">
+    <h:form id="quotEdits">
+    <div style="height:20px"></div>
+    <div style="height:20px" align="center"><h:outputText value="#{vendorRegisterFormMB.validate}" class="errorTxt"></h:outputText></div>
+    	<center><p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationDetailList}" widgetVar="quoteditInfo"  
+		id="edataTable" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+      	<p:column filterBy="#{info.productName}" style="height:25px" width="170" headerText="Product Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:inputHidden value="#{info.serialNo}"></h:inputHidden>
+      			<h:inputHidden value="#{info.quotationDetailsId}"></h:inputHidden>
+      			<h:selectOneMenu id="a"  label="select one type" value="#{info.productName}" valueChangeListener="#{vendorRegisterFormMB.editProductvalueChange}" style="font-size:14px;font-family:'Arial,san-serif';width:200px;height:25px;">
+				   	<f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue=""/>
+				   	<f:selectItems  value="#{vendorRegisterFormMB.productList}" ></f:selectItems>
+				   	<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+				    <p:ajax update="@form" process="@this" event="valueChange"> </p:ajax>
+				 </h:selectOneMenu>
+      		</div>
+      	</p:column>
+      	<p:column width="200" headerText="Vendor Name" style="height:25px" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:selectCheckboxMenu style="height:28px;border-radius:1px;font-family:'Arial,san-serif';font-weight:normal !important;font-size:14px;" id="vendors" 
+				multiple="true" label="---Vendor Name---" filter="true" value="#{info.selectedVendors}" filterMatchMode="startsWith" panelStyle="width:260px">
+					<f:selectItems value="#{info.vendorList}" />
+					<p:ajax event="toggleSelect"></p:ajax>
+					<f:attribute name="product" value="#{info.productName}"></f:attribute>
+					<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+					<p:ajax update=":center_content:dialogPanelEdit" event="change"></p:ajax>
+				</p:selectCheckboxMenu>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.productCount}" width="120" style="height:25px" headerText="Product Count" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:inputText value="#{info.productCount}" id="pcount" style="width:100px"><p:ajax update="pcount" process="@this" partialSubmit="true"></p:ajax></p:inputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Delivery Date" style="height:25px" filterBy="#{info.deliveryDate}" width="180" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      		<p:calendar placeholder="Delivery Date" value="#{info.deliveryDate}" id="deldate" pattern="dd-MM-yyyy" style="line-height: normal;width:200px">
+					<p:ajax event="dateSelect" process="@this" update="deldate" partialSubmit="true"></p:ajax>
+			</p:calendar>
+      		</div>
+      	</p:column>
+      	<p:column headerText="" style="height:25px" width="30" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:commandButton action="#{vendorRegisterFormMB.removeButton}" icon="fa fa-trash" update="@form" process="@this" immediate="true">
+					<f:setPropertyActionListener value="#{info.quotationDetailsId}" target="#{vendorRegisterFormMB.quotationDetailsId}"></f:setPropertyActionListener>
+				</p:commandButton>
+      		</div>
+      	</p:column>
+     </p:dataTable></center><div style="height:5px"></div>
+     <table align="left" width="100%">
+		<tr><td width="1%"></td><td>
+		<p:commandButton action="#{vendorRegisterFormMB.addEditButton}" icon="fa fa-plus" update="@form" process="@this">
+		</p:commandButton>
+		</td></tr>
+	</table> 
+	<div style="height:30px"></div>
+	<table align="center" width="100%">
+		<tr align="center"><td>
+		<p:commandButton action="#{vendorRegisterFormMB.updateQuotation}" value="Update" update="center_content:dialogPanelEdit" process="@this" immediate="true">
+		</p:commandButton>
+		</td></tr>
+	</table> 
+    </h:form>
+   </p:outputPanel>
+</p:dialog>
+<p:dialog header="Quotation Details View" appendTo="@(body)" widgetVar="quotationDialogView1" modal="true" height="400px" width="70%" resizable="false">
+   <p:outputPanel id="dialogPanelView1">
+    <h:form id="quotView1">
+    <div style="height:20px"></div>
+     <div style="height:20px" align="center"><h:outputText value="#{vendorRegisterFormMB.validate}" class="errorTxt"></h:outputText></div>
+    	<center><p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationDetailList}" widgetVar="quotviewInfo"  
+		id="vdataTable1" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+      	<p:column filterBy="#{info.productName}" style="height:25px" width="120" headerText="Product Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:inputHidden value="#{info.quotationDetailsId}" />
+      			<h:outputText value="#{info.productName}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.vendorName}" style="height:25px" width="100" headerText="Vendor Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText value="#{info.vendorName}"></h:outputText>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.productCount}" style="height:25px" width="100"  headerText="Product Count" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productCount}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Price" filterBy="#{info.productPrice}" style="height:25px" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productPrice}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Delivery Date" filterBy="#{info.deliveryDate}" style="height:25px" width="100" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.deliveryDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Choose" width="50" style="height:25px" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<p:selectBooleanCheckbox value="#{info.quotationCheck}"><p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax></p:selectBooleanCheckbox>
+      		</div>
+      	</p:column>
+     </p:dataTable>
+     <div style="height:30px"></div><p:commandButton value="Submit" update="center_content:dialogPanelView1 center_content:dialogPanelView2" process="@this" action="#{vendorRegisterFormMB.finalQuotation}"></p:commandButton>
+     </center> 
+    </h:form>
+   </p:outputPanel>
+</p:dialog>
+
+<p:dialog header="Final Quotation View" appendTo="@(body)" widgetVar="finalQuotationDialog" modal="true" height="400px" width="70%" resizable="false">
+   <p:outputPanel id="dialogPanelView2">
+    <h:form id="quotView2">
+    <div style="height:20px"></div>
+    <div style="height:30px" align="center"><h:outputText value="Final Quotation" style="font-size:20px;font-weight:bold;font-family:'Arial,san-serif'"></h:outputText></div>
+    	<center><p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.finalquotationDetailList}" widgetVar="quotviewInfo"  
+		id="vdataTable1" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+      	<p:column filterBy="#{info.productName}" style="height:25px" width="120" headerText="Product Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productName}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.vendorName}" style="height:25px" width="100" headerText="Vendor Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText value="#{info.vendorName}"></h:outputText>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.productCount}" style="height:25px" width="100"  headerText="Product Count" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productCount}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Price" style="height:25px" filterBy="#{info.productPrice}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productPrice}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Delivery Date" style="height:25px" filterBy="#{info.deliveryDate}" width="100" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.deliveryDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+      		</div>
+      	</p:column>
+     </p:dataTable>
+     <div style="height:30px"></div><p:commandButton value="Ok" update=":center_content" process="@this" immediate="true" oncomplete="PF('finalQuotationDialog').hide();" action="#{vendorRegisterFormMB.quotationConsolePage}"></p:commandButton>
+     </center> 
+    </h:form>
+   </p:outputPanel>
+</p:dialog>
+</ui:define>
+</ui:composition>

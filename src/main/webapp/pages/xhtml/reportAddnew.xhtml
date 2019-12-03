@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+	<link type="text/css" rel="stylesheet" href="../../css/myStyles.css"></link>
+	<link type="text/css" rel="stylesheet"
+		href="../../css/customStyleSheet.css"></link>
+	<link type="text/css" rel="stylesheet" href="../../css/myStyles.css"></link>
+	<link type="text/css" rel="stylesheet"
+		href="../../css/customStyleSheet.css"></link>
+	<ui:define name="content">
+	<style>
+	.jjjj{
+	width:500px;
+	overflow: hidden !important;
+	}
+	.ui-datatable{
+	overflow: hidden;
+	}
+	</style>
+		<p:panel  toggleable="false" style="min-height:100%;width:100%;" id="teacherregBlock">		
+			 <f:facet name="header">
+			 	<center>
+				<h:outputText  value="REPORT FORM" style="font-size: 25px;"/>
+			</center>
+			</f:facet>
+			<div style="height:10%"></div>
+			<table>
+				<tr>
+					<th>
+						<h:outputLabel value="Report Name " styleClass="labelTxt" for="reportname" style="margin-left:5px;font-size: 14px;" ><span style="color: red;">*</span></h:outputLabel>
+					</th>					
+					<th>
+						<h:outputLabel value="Report Type" styleClass="labelTxt" for="reporttype" style="margin-left: 125px;font-size: 14px;"></h:outputLabel>
+					</th>
+					<th>
+						<h:outputLabel value="Report Desc" styleClass="labelTxt" for="reportdesc" style="margin-left: 125px;font-size: 14px;"></h:outputLabel>
+					</th>
+				</tr>							
+				<tr>
+					<th>
+						<h:inputText value="#{reportCardViewMB.reportCardDataBean.reportname}" id="reportname" styleClass="inputTxt" style="width:208px;font-size:12px;margin-left:5px;height:25px">
+						<p:ajax process="@this" immediate="true" update="reportname"></p:ajax></h:inputText>
+					</th>
+					<th>
+						<h:selectOneMenu value="#{reportCardViewMB.reportCardDataBean.reporttype}" id="reporttype" styleClass="selecttext_ui1" style="border-radius:0px;height: 25px;width:208px;margin-left:125px;font-size: 10px;">	
+							<f:selectItem itemLabel="Choose Report Type" noSelectionOption="true"></f:selectItem>
+							<f:selectItem itemLabel="Student" itemValue="Student"></f:selectItem>
+							<f:selectItem itemLabel="Teacher" itemValue="Teacher"></f:selectItem>
+							<p:ajax process="@this" event="valueChange" update="@form"></p:ajax>
+						</h:selectOneMenu>
+					</th>
+					<th>
+						<h:inputText value="#{reportCardViewMB.reportCardDataBean.reportname}" id="reportdesc" styleClass="inputTxt" style="width:208px;font-size:12px;height:25px;margin-left:125px;">
+						<p:ajax process="@this" immediate="true" update="reportdesc"></p:ajax></h:inputText>
+					</th>
+				</tr>
+			</table>
+			
+			<p:dataTable></p:dataTable>
+			<p:dataTable id="dataTable2" var="inf" style="width:60%"
+      styleClass="order-table" value="#{reportCardViewMB.studentMarkList}"
+       cellspacing="1" emptyMessage="No information found with given criteria"
+     paginator="true" paginatorAlwaysVisible="false" 
+      paginatorPosition="top">
+				<p:column filterBy="#{StuInfo.reportname}" headerText="Filter Items"
+					filterMatchMode="contains" filterStyle="display:none">
+				</p:column>
+				<p:column filterBy="#{StuInfo.reporttype}" headerText="Status"
+					filterMatchMode="contains" filterStyle="display:none">
+					
+				</p:column>
+
+			</p:dataTable>
+			<div style="height:10%"></div>
+			<center> 
+				<p:commandButton id="save" value="Submit" icon="fa fa-database" action="#{reportCardViewMB.reportCardsave}" update="@form" process="@this" onstart="PF('teacherblockUI').show();" onsuccess="PF('teacherblockUI').hide();"/>
+			</center>
+			<div style="height:10px"></div>
+			<p:dataTable var="StuInfo" value="#{reportCardViewMB.studentMarkList}" widgetVar="studentInfo" reflow="true" 
+			emptyMessage="No information found with given criteria" filteredValue="#{reportCardViewMB.filterList}" resizableColumns="true">
+			<f:facet name="header">
+				<p:outputPanel style="text-align:right">
+					<h:inputText id="globalFilter"  onkeyup="PF('studentInfo').filter()" style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column filterBy="#{StuInfo.reportname}" headerText="Report Name"
+					filterMatchMode="contains" filterStyle="display:none">
+					<h:outputText value="#{StuInfo.reportname}" />
+				</p:column>
+				<p:column filterBy="#{StuInfo.reporttype}" headerText="Report Type"
+					filterMatchMode="contains" filterStyle="display:none">
+					<h:outputText value="#{StuInfo.reporttype}">
+					</h:outputText>
+				</p:column>
+				<p:column filterBy="#{StuInfo.studMarkClass}" headerText="Appearance"
+					filterMatchMode="contains" filterStyle="display:none">
+					<h:outputText value="#{StuInfo.studMarkClass}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:dialog header="Confirmation Box" appendTo="@(body)" closable="false" widgetVar="parentsRegDialog" modal="true"
+		width="40%" height="40%" resizable="false" dynamic="true">
+			<h:form>
+				<center>
+					<h:outputText value="Data is Saved Successfully"></h:outputText>
+					<br></br>
+					<p:commandButton immediate="true" action="#{reportCardViewMB.reportValuesget}" process="@this" value="OK" 
+					update="XX" oncomplete="PF('parentsRegDialog').hide()"></p:commandButton>
+				</center>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

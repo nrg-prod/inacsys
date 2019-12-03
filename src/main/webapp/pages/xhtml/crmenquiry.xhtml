@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="content" >		
+
+	<div style="height:5px;"></div>
+	<table width="100%">
+		<tr>
+			<td width="1%"></td>
+  			<td width="91%"><p:commandButton icon="fa fa-plus" value="New" action="#{crmMB.crmNewNavigation}"  ajax="false"></p:commandButton></td>
+        	<td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{crmMB.crmEnquiryNavigation}" ajax="false"></p:commandButton></td>
+		</tr>
+	</table> 
+	<center>
+	<p:dataTable var="info1" style="padding:2px;width:98%" value="#{crmMB.mblist}" widgetVar="BuyersInfo"  id="dataTable1" emptyMessage="No information found with given criteria"
+     paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top"  pageLinks="5">
+		
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+					<p:inputText id="globalFilter" onkeyup="PF('BuyersInfo').filter()" style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Person Name" width="80" filterBy="#{info1.customername}" filterMatchMode="contains" filterStyle="display:none">
+					<center><h:outputText class="label_ui" value="#{info1.customername}" /></center>
+					<h:inputHidden value="#{info1.crm_customerDetails_ID}"></h:inputHidden>  
+				</p:column>
+				<p:column headerText="Product" width="80"  filterBy="#{info1.categoryName}" filterMatchMode="contains" filterStyle="display:none">
+					<center><h:outputText class="label_ui" value="#{info1.categoryName}" /></center>
+				</p:column>
+				<p:column headerText="Date" filterBy="#{info1.createddate}" width="80" filterMatchMode="contains" filterStyle="display:none">
+					<center><h:outputText class="label_ui" value="#{info1.createddate}" /></center>
+				</p:column>
+				<p:column headerText="Address" filterBy="#{info1.crmstatus}" width="80" filterMatchMode="contains" filterStyle="display:none">
+					<center><h:outputText class="label_ui" value="#{info1.crmstatus}" /></center>
+				</p:column>
+				<p:column headerText="Phone Number" filterBy="#{info1.presentCity}" width="100" filterMatchMode="contains" filterStyle="display:none">
+					<center><h:outputText class="label_ui" value="#{info1.presentCity}" /></center>
+				</p:column>
+				<p:column headerText="Email" filterBy="#{info1.presentcountryID}" width="100" filterMatchMode="contains" filterStyle="display:none">
+					<center><h:outputText class="label_ui" value="#{info1.presentcountryID}" /></center>
+				</p:column>
+		</p:dataTable>
+		</center> 
+					
+</ui:define>
+</ui:composition>

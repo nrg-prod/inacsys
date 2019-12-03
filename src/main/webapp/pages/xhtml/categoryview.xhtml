@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+	
+	       <ui:define name="content">
+	      <p:growl id="messages"></p:growl>
+<div style="height:10px;"></div>
+		<table width="100%"><tr><td width="1%"> </td>
+  <td width="91%"> </td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{productViewMB.categoryView}" ajax="false"></p:commandButton></td>
+
+	</tr></table> 
+	
+						<div style="height:25px;">
+						<center><h:outputText value="#{productViewMB.validate}" class="errorTxt"></h:outputText></center>
+						</div>
+		
+	<center>
+			<p:dataTable id="dataTable" var="info" widgetVar="categoryViewList"
+				value="#{productViewMB.categoryList}"
+				filteredValue="#{productViewMB.filterList}"
+				style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;width:98%"
+				
+				paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+
+						<p:inputText id="globalFilter"
+							onkeyup="PF('categoryViewList').filter()"
+							style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column width="30" headerText="No">
+					<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+					<div align="center">
+						<h:outputText class="labelTxt" value="#{info.serialno}"/>
+					</div>
+				</p:column>
+				<p:column headerText="Category Name" width="100" filterBy="#{info.categoryname}"
+					filterMatchMode="contains" filterStyle="display:none">
+					<h:inputHidden value="#{info.id}"></h:inputHidden>
+					<h:outputText value="#{info.categoryname}">
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Description"  filterBy="#{info.description}" width="140"
+					filterMatchMode="contains" filterStyle="display:none">
+					<center>
+					<h:outputText value="#{info.description}"/></center>
+				</p:column>
+				
+
+				<p:column headerText="Approval Status" width="120" filterMatchMode="contains" 
+					filterStyle="display:none" filterBy="#{info.approvalStatus}">
+					 <center><h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}">
+      </h:outputText></center>
+				</p:column>
+				<p:column headerText="Action" width="120">
+					<div align="center">
+					<p:commandButton icon="fa fa-search"
+							action="#{productViewMB.categoryDetailsView}"
+							oncomplete="PF('categoryDialogView').show();" update=":center_content:categoryPanelView" process="@this">
+					<f:setPropertyActionListener
+								target="#{productViewMB.id}"
+								value="#{info.id}" />
+							</p:commandButton>&nbsp;					
+						<p:commandButton icon="fa fa-pencil" rendered="#{info.approvalStatus!='draft'}" process="@this"
+							action="#{productViewMB.categoryDetailsView}"
+							oncomplete="PF('categoryDialogEdit').show();" update=":center_content:categoryPanelEdit">
+							<f:setPropertyActionListener
+								target="#{productViewMB.id}"
+								value="#{info.id}" />
+						</p:commandButton>&nbsp;
+						<p:commandButton icon="fa fa-remove" oncomplete="PF('deleteDlg').show();" rendered="#{info.approvalStatus!='draft'}"
+							>
+							<f:setPropertyActionListener
+								target="#{productViewMB.id}"
+								value="#{info.id}" />
+						</p:commandButton>
+					</div>
+				</p:column>
+	</p:dataTable>
+	  <br/> <br/></center>	
+		<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Category has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				
+				</div><center><p:commandButton value="Ok" action="#{productViewMB.categoryView}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						styleClass="button_ui"></p:commandButton></center>
+			</p:dialog>	
+			
+			
+				<p:dialog header="Category View" id="dlgview" appendTo="@(body)" widgetVar="categoryDialogView" modal="true" height="130px" width="30%" resizable="false">
+			<p:outputPanel id="categoryPanelView">
+				<h:form id="cateView">
+				<center>
+						<p:panelGrid style="height:100px;" columns="3" styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category Name" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" readonly="true" id="catevname" value="#{productViewMB.productRegister.category}"/>		
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" readonly="true" id="catevdes" value="#{productViewMB.productRegister.description}"/>		
+							</h:panelGroup>
+							</p:panelGrid>
+							</center>
+							</h:form>
+							</p:outputPanel>
+							</p:dialog>
+							
+							<p:dialog header="Category Edit" id="dlgedit" appendTo="@(body)" widgetVar="categoryDialogEdit" modal="true" height="180px" width="30%" resizable="false">
+			<p:outputPanel id="categoryPanelEdit">
+				<h:form id="cateEdit">
+				<center><div style="height:10px"></div>
+						<div style="height:10px"><h:message for="catename" class="errorTxt"></h:message></div>
+						<p:panelGrid style="height:100px;" columns="3" styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category Name" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" id="catename" value="#{productViewMB.productRegister.category}">
+								<p:ajax update="catename" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" id="catedes" value="#{productViewMB.productRegister.description}">
+								<p:ajax update="@form" process="@this"></p:ajax></p:inputText>		
+							</h:panelGroup>
+							</p:panelGrid></center>
+							
+						<div style="height:15px"></div>
+						<center>
+							
+							<p:commandButton value="Update" process="@this"
+							action="#{productViewMB.categoryEditSave}"
+							update="center_content:categoryPanelEdit" immediate="true">
+							</p:commandButton>
+						</center>
+							</h:form>
+							</p:outputPanel>
+							</p:dialog>
+							
+							<p:dialog header="CONGRATULATIONS...!!" widgetVar="updateConfirm" modal="true" width="50%"  height="120px"
+				 resizable="false"
+				appendTo="@(body)">
+				<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Category Information has been successfully modified."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:20px"></div>
+						<center><p:commandButton value="Ok" action="#{productViewMB.categoryView}" update=":center_content" oncomplete="PF('updateConfirm').hide()"
+						process="@this" immediate="true"></p:commandButton>
+						</center>
+			</p:dialog>
+			
+			<p:dialog header="Confirmation" widgetVar="deleteDlg" modal="true" width="40%" height="120"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Category?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:30px"></div>
+					<p:commandButton value="Yes" action="#{productViewMB.deleteCategory}"
+						 process="@this" immediate="true" onsuccess="PF('deleteDlg').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('deleteDlg').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="deleteonfirm" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:25px"></div>	<center>
+							<h:outputText value="Category has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+						<center><p:commandButton value="Ok" action="#{productViewMB.categoryView}" update=":center_content" oncomplete="PF('deleteonfirm').hide()"
+						process="@this" immediate="true"></p:commandButton>
+						</center>
+			</p:dialog>
+</ui:define>
+</ui:composition>

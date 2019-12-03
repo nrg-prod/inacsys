@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<h:body>
+			<p:growl id="messages"></p:growl>
+			<p:tabView id="tabviewid">
+			 <p:ajax event="tabChange"  listener="#{employeePayrollFormMB.tabchange()}" update="@form"/>
+			
+				<p:tab title="Employee">
+					
+						<div align="right">
+
+							<p:commandButton styleClass="image-align" action="#{employeeRegistrationFormMB.employeeform}"
+								value="Employee Registration">
+							</p:commandButton>
+							<h:commandButton image="../../images/refresh.png"
+								style="margin-bottom: -11px;height: 27px;" action="#{employeeDetailsViewFormMB.view}"></h:commandButton>
+						</div>
+						<div style="height: 5px;"></div>
+
+						<center>
+							<p:dataTable id="EmployeeDataTable" var="info"
+								widgetVar="Employee" value="#{employeeDetailsViewFormMB.list}"
+								style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+								styleClass="order-table" headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								paginator="true" rows="10"
+									emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:right">
+
+										<p:inputText id="Filter" onkeyup="PF('Employee').filter()"
+											style="width:20%;height:25px;" placeholder="Enter keyword" />
+									</p:outputPanel>
+								</f:facet>
+								<p:column filterBy="#{info.registrationId}"
+									headerText="Registration ID" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+										<h:outputText class="label_ui" value="#{info.registrationId}"></h:outputText></center>
+								</p:column>	
+									<p:column headerText="Employee ID" filterBy="#{info.employeeId}"
+									filterMatchMode="contains" filterStyle="display:none"><center>
+											<h:outputText class="label_ui" value="#{info.employeeId}"></h:outputText></center>
+									</p:column>
+									<p:column filterBy="#{info.employeeName}"
+									headerText="EmployeeName" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+											<h:outputText class="label_ui" value="#{info.employeeName}"></h:outputText></center>
+									</p:column>
+									<p:column filterBy="#{info.designation.type}"
+									headerText="PhoneNumber" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+										<h:outputText class="label_ui" value="#{info.phoneNumber}"></h:outputText></center>
+									</p:column>
+									<p:column filterBy="#{info.designation.type}"
+									headerText="Designation" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+										
+											<h:outputText class="label_ui"
+												value="#{info.designation.type}"></h:outputText></center>
+									</p:column>
+									<p:column headerText="View" style="align-item:center" width="44">
+											<div align="center">
+										<p:commandButton icon="fa fa-search"
+												action="#{employeeDetailsViewFormMB.viewform}">
+												<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.regid}"
+													value="#{info.registrationId}"></f:setPropertyActionListener>
+											</p:commandButton></div>
+									</p:column>
+									<p:column headerText="Modify" width="55">
+										<div align="center">
+										<p:commandButton icon="fa fa-pencil"
+												actionListener="#{employeeDetailsViewFormMB.employeemodifyform}" >
+												<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.regid}"
+													value="#{info.registrationId}"></f:setPropertyActionListener>
+												</p:commandButton>
+												</div>
+									</p:column>
+									<p:column headerText="Delete" width="55"
+									filterStyle="display:none">
+									<div align="center">
+											<p:commandButton icon="fa fa-remove"
+												onclick="PF('cd1').show()">
+												<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.regid}"
+													value="#{info.registrationId}"></f:setPropertyActionListener>
+											</p:commandButton></div>
+									</p:column>
+								</p:dataTable>
+													
+								
+									<p:dialog header="Confirmation" widgetVar="cd1" modal="true"
+				 style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Yes to continue No to cancel" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="Yes" action="#{employeeDetailsViewFormMB.delete}"
+						onsuccess="PF('cd1').hide()" process="@this" immediate="true" 
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd1').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+							
+<p:dialog header="Success Message" widgetVar="deleteconf" modal="true"
+				  style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Employee is successfully deleted" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="OK" 
+						 onclick="PF('deleteconf').hide()" process="@this" immediate="true"
+						styleClass="button_ui"></p:commandButton>
+					
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+						</center>
+					<p:blockUI  block="EmployeeDataTable" style="width:200px;height:30px;" trigger="EmployeeDataTable">
+  
+    <p:graphicImage value="/images/loadingimg.gif" />
+    <h:outputText value="Please wait, data is being processed..."
+     style="white-space: nowrap;width:150px;height:25px;" />
+ 
+  </p:blockUI>
+				</p:tab>
+				
+				<p:tab title="PayRoll">
+				
+			<div style="height:20px;">
+			<h:outputText value="#{employeePayrollFormMB.validate}" id="message"
+					styleClass="validation_ui" style="align:center;margin-left:+320px;" />
+					
+						</div>
+				<h:form id="payrollform">
+				<p:outputPanel id="payrollofemp">
+				<!-- <h:outputText value="#{employeePayrollFormMB.validate}" class="validation_ui"></h:outputText> -->
+						<p:dataTable id="EmployeeDataTable1" var="payrollinfo"
+							rowKey="#{payrollinfo.employeeId}"
+							widgetVar="payrollEmployee"
+							value="#{employeeDetailsViewFormMB.list}" selectionMode="single"
+							style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+							styleClass="order-table" headerClass="order-table-header"
+							rowClasses="order-table-odd-row,order-table-even-row"
+							paginator="true" rows="10" 
+								emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+							<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+
+									<p:inputText id="Filter"
+										onkeyup="PF('payrollEmployee').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+							<p:ajax event="rowDblselect" update=":center_content:tabviewid:payrollform:datatableempdetail"
+								listener="#{employeePayrollFormMB.employeePayrolldetail}">
+							
+							</p:ajax>
+							<p:column filterBy="#{payrollinfo.registrationId}#{payrollinfo.registrationId}"
+								headerText="Registration ID" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.registrationId}"></h:outputText></center>
+							</p:column>
+							<p:column headerText="Employee ID"
+								filterBy="#{payrollinfo.employeeId}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui" value="#{payrollinfo.employeeId}"></h:outputText></center>
+							</p:column>
+							<p:column filterBy="#{payrollinfo.employeeName}"
+								headerText="EmployeeName" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.employeeName}"></h:outputText></center>
+							</p:column>
+							<p:column filterBy="#{payrollinfo.phoneNumber}"
+								headerText="PhoneNumber" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.phoneNumber}"></h:outputText></center>
+							</p:column>
+							<p:column filterBy="#{payrollinfo.designation.type}"
+								headerText="Designation" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.designation.type}"></h:outputText></center>
+							</p:column>
+							<p:column headerText="Months"><center>
+								<h:selectOneMenu class="text_ui" style="width:76px;"
+									value="#{employeePayrollFormMB.month}">
+									<f:selectItem itemLabel="--Select--"></f:selectItem>
+									<f:selectItems value="#{employeePayrollFormMB.monthinfo}"></f:selectItems>
+									<p:ajax process="@this" update="@form" immediate="true"></p:ajax>
+								</h:selectOneMenu></center>
+							</p:column>
+							<p:column headerText="Year"><center>
+								<h:selectOneMenu class="text_ui" style="width:76px;"
+									value="#{employeePayrollFormMB.year}" id="year">
+									<f:selectItem itemLabel="--Select--"></f:selectItem>
+									<f:selectItems value="#{employeePayrollFormMB.yearinfo}"></f:selectItems>
+									<p:ajax process="@this" update="@form" immediate="true"></p:ajax>
+								</h:selectOneMenu></center>
+
+							</p:column>
+
+							<p:column headerText="Action" width="58">
+							<div align="center">
+								<p:commandButton icon="fa fa-cog"
+									action="#{employeePayrollFormMB.entry}"
+									immediate="true" process="@form" update=":center_content:tabviewid:message" >
+
+									<f:setPropertyActionListener
+										target="#{employeePayrollFormMB.employeeid}"
+										value="#{payrollinfo.employeeId}"></f:setPropertyActionListener>
+								</p:commandButton>
+								</div>
+							</p:column>
+						</p:dataTable>
+						</p:outputPanel>
+						<br/>
+						
+<br/><br/>
+					<h:panelGrid colspan="2" >
+					<p:outputPanel id="epaydetail">
+						<p:dataTable id="datatableempdetail" var="Epaydetailinfo" widgetVar="payrolldetail"
+							style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;display:#{employeePayrollViewFormMB.flag1}" 
+							styleClass="order-table" headerClass="order-table-header"
+							rowClasses="order-table-odd-row,order-table-even-row"
+							paginator="true" rows="10" 	emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" value="#{employeePayrollViewFormMB.value1}">
+							
+								<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+
+									<p:inputText id="Filter"
+										onkeyup="PF('payrolldetail').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+							
+							
+							<p:column headerText="Payroll Number"
+								filterBy="#{Epaydetailinfo.payrollno}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.payrollno}" /></center>
+
+							</p:column>
+							<p:column headerText="Employee ID" filterBy="#{Epaydetailinfo.payrollno}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.employeeid}" /></center>
+
+							</p:column>
+							<p:column headerText="Employee name" filterBy="#{Epaydetailinfo.name}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.name}" /></center>
+
+							</p:column>
+
+							<p:column headerText="Basic salary" filterBy="#{Epaydetailinfo.basicsalary}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+									<h:outputText class="label_ui" value="#{Epaydetailinfo.basicsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup></center>
+
+							</p:column>
+
+						
+							<p:column headerText="Payroll Date" filterBy="#{Epaydetailinfo.todayDate}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.todayDate}"></h:outputText></center>
+
+							</p:column>
+
+
+							<p:column headerText="Working Days"
+								filterBy="#{Epaydetailinfo.workingdays}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.workingdays}"></h:outputText></center>
+
+							</p:column>
+
+							<p:column headerText="Total Salary" filterBy="#{Epaydetailinfo.totalsalary}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+									<h:outputText class="label_ui" value="#{Epaydetailinfo.totalsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup></center>
+
+							</p:column>
+
+									
+							<p:column headerText="View" width="54">
+								<div align="center">
+									<p:commandButton icon="fa fa-search"
+										action="#{employeePayrollViewFormMB.payrollViewz}">
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+							<p:column headerText="Modify" width="54">
+								
+								<div align="center">
+									<p:commandButton icon="fa fa-pencil"
+										action="#{employeePayrollViewFormMB.payrollEdit}">
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+							<p:column headerText="Delete" width="54">
+								
+								<div align="center">
+									<p:commandButton icon="fa fa-remove" align="center"
+										onclick="PF('payrolldelete').show()">
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+						</p:dataTable>
+
+</p:outputPanel>
+		</h:panelGrid>
+<p:blockUI  block="EmployeeDataTable1" style="width:200px;height:30px;" trigger="EmployeeDataTable1">
+  
+    <p:graphicImage value="/images/loadingimg.gif" />
+    <h:outputText value="Please wait, data is being processed..."
+     style="white-space: nowrap;width:150px;height:25px;" />
+ 
+  </p:blockUI>
+</h:form>
+
+					
+				</p:tab>
+			</p:tabView>
+			<p:dialog header="Confirmation" widgetVar="payrolldelete" modal="true"
+				 style="font-size:11px" resizable="false"
+				appendTo="@(body)">
+				<p:outputPanel>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+							<p:outputLabel value="Are you sure,you wanted to delete this Payroll?" />
+					</p:panelGrid>
+					<br></br><center>
+					<p:commandButton value="Yes" action="#{employeePayrollViewFormMB.payrolldelete}"
+						oncomplete="PF('payrolldelete').hide()" process="@this" immediate="true" update=":center_content:tabviewid:payrollform:epaydetail"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('payrolldelete').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+				</p:outputPanel>
+			</p:dialog>
+		
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px" rendered="#{employeePayrollViewFormMB.flag3}">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" ></h:commandButton>
+
+
+
+</h:panelGrid></div>
+		</h:body>
+
+	</ui:define>
+</ui:composition>

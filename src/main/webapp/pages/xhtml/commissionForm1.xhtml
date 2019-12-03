@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Commission View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body bgcolor="#d8d8d8"  style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center"><h:outputText value="Commission View" class="header_ui"/><br/><br/></td></tr>
+ <tr align="center"> <td align="center">   <h:outputText value="#{commissionFormMB.validate}" class="validation_ui"/></td></tr>
+  
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+
+<td align="center" ><p:panel id="panel" style="border:0px;">
+             <h:panelGrid>
+  <rich:dataTable  columnsWidth="40px,120px,120px,120px,120px,100px,115px,130px;" id="dataTabl"  height="50px" var="info" value="#{commissionFormMB.totallist}" enableContextMenu="false"
+   reRender="dynamicScroller"
+  rowClasses="datatable-odd,datatable-even">
+  <h:column  headerText="Name" width="350px">
+	         <f:facet name="header"> <span style="font-size:16px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; "> No  </span>      </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.sNo}"/>  
+	        </h:column> 
+   <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['orderdate']}" sortBy="#{info.orderdate}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Date" execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="orderdate"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['orderdate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['orderdate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderdate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText>  
+	            
+	        </rich:column>
+  
+	       <!--  <h:column  headerText="Name" width="350px">
+	         <f:facet name="header"> <span style="font-size:16px;width: 250px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  Date   </span>      </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.orderdate}">
+	            <f:convertDateTime pattern="dd-MM-yyyy" />
+	            </h:outputText>  
+	        </h:column>   -->
+  <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['invoiceno']}" sortBy="#{info.invoiceno}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Invoice Number" execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="invoiceno"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['invoiceno']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['invoiceno']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.invoiceno}"> </h:outputText>  
+	            
+	        </rich:column>
+	   <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['productname']}" sortBy="#{info.productname}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Description  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="productname"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['productname']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['productname']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.productname}"> </h:outputText>  
+	            
+	        </rich:column>
+	        <!-- <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['rollids']}" sortBy="#{info.rollids}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <h:outputText value="Rolls  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" >
+	            <f:param name="sortProperty" value="rollids"></f:param>
+	           </h:outputText>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['rollids']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['rollids']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.rollids}"> </h:outputText>  
+	            
+	        </rich:column> -->
+	        <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['cname']}" sortBy="#{info.cname}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Name  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="cname"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['cname']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['cname']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.cname}"> </h:outputText>  
+	           <!--  <f:facet name="footer"><h:outputLabel style="font-weight:bold;font-size:15" value="Grand Total"></h:outputLabel> 
+	             </f:facet> -->
+	        </rich:column>
+	        <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['unitprice']}" sortBy="#{info.unitprice}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="Unit Price  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="unitprice"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['unitprice']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['unitprice']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         	  <h:outputText  class="label_ui" value="Rp&nbsp;"/>
+	            <h:outputText  class="label_ui" value="#{info.unitprice}"> <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	            <f:facet name="footer"><h:outputLabel style="font-weight:bold;font-size:15" value="Grand Total:"></h:outputLabel> 
+	             </f:facet>
+	        </rich:column>
+  		 <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['totlamt']}" sortBy="#{info.totlamt}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Total Sales Amount " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="totlamt"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['totlamt']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['totlamt']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	           <h:outputText  class="label_ui" value="Rp&nbsp;"/>
+	            <h:outputText  class="label_ui" value="#{info.totlamt}"> <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	             <f:facet name="footer">
+	             <h:outputText  class="label_ui" value="Rp&nbsp;"/>
+	               <h:outputText  class="label_ui" value="#{commissionFormMB.totlsales1}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+	           </f:facet>
+	        </rich:column>
+	        <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['totlquan']}" sortBy="#{info.totlquan}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="  Quantity  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="totlquan"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['totlquan']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['totlquan']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText  class="label_ui" value="#{info.totlquan}"> <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	            
+	        </rich:column>
+  			
+	   		  <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['cmst']}" sortBy="#{info.cmst}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value="  Commission  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="cmst"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['cmst']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['cmst']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	          <h:inputText id="t1" value="#{info.cmst}" style="display:#{info.flag};height:25px;width:100px;" onchange="submit()" valueChangeListener="#{commissionFormMB.quantitychange}"> 
+	            <f:attribute name="refference" value="#{info.invoiceno}"></f:attribute>
+	            <f:attribute name="qty" value="#{info.totlquan}"></f:attribute>
+	            <f:attribute name="serial" value="#{info.sNo}"></f:attribute>
+	            <f:attribute name="odate" value="#{info.orderdate}"></f:attribute>
+	            <f:attribute name="cname" value="#{info.cname}"></f:attribute>
+	            <f:attribute name="tsalary" value="#{info.totlamt}"></f:attribute>
+	             <f:attribute name="prodname" value="#{info.productname}"></f:attribute>
+	            <f:attribute name="rolll" value="#{info.rollids}"></f:attribute>
+	             <f:attribute name="price1" value="#{info.unitprice}"></f:attribute>
+	           <f:attribute name="total" value="#{commissionFormMB.totalamount1}"/>
+	            
+	            </h:inputText> 
+	              <h:outputText  class="label_ui" value="Rp&nbsp;"/>
+	            <h:outputText  class="label_ui" value="#{info.cmst}" style="display:#{info.flag1}">
+	            
+	             <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	            <f:facet name="footer">
+	           <h:outputLabel style="font-weight:bold;font-size:15" value="Grand Total Commission:"></h:outputLabel>
+	           </f:facet>
+	        </rich:column>
+  			
+ 
+	        <rich:column  headerText="Name" sortOrder="#{commissionFormMB.sortsOrders['totcms']}" sortBy="#{info.totcms}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Total Commision Amount " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTabl" action="#{commissionFormMB.sort()}">
+	            <f:param name="sortProperty" value="totcms"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{commissionFormMB.sortsOrders['totcms']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{commissionFormMB.sortsOrders['totcms']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	           <h:outputText  class="label_ui" value="Rp&nbsp;"/>
+	            <h:outputText  class="label_ui" value="#{info.totcms}"> <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	           
+	            <f:facet name="footer"><!-- <h:outputLabel style="font-weight:normal;" value="Grand Total "></h:outputLabel>
+	            <h:outputText  class="label_ui" value="#{info.totlsales1}"/><br/>
+	            <h:outputLabel style="font-weight:normal;" value="Grand Total Commission"></h:outputLabel> -->
+	            <h:outputText  class="label_ui" value="Rp&nbsp;"/>
+	              <h:outputText  class="label_ui" value="#{commissionFormMB.totalamount1}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText><br/>
+	              
+	           </f:facet>
+	           
+	        </rich:column>
+	       
+	        <h:column    headerText="Address" width="350px"> 
+	   		 <f:facet name="header"> <span style="font-size:16px;width: 350px;color:#ffffff;font-family:'Helvetica Neue LT Pro 55'; ">  Edit  </span>      </f:facet>
+	        
+	            <h:commandButton image="../../images/edit.png" action="#{commissionFormMB.edit}" >
+	            <f:setPropertyActionListener value="#{info.invoiceno}" target="#{commissionFormMB.invoiceno}"></f:setPropertyActionListener>
+	           	<f:setPropertyActionListener value="#{info.totlquan}" target="#{commissionFormMB.totlquan}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.sNo}" target="#{commissionFormMB.sNo}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.orderdate}" target="#{commissionFormMB.orderdate}"></f:setPropertyActionListener>
+	    		<f:setPropertyActionListener value="#{info.cname}" target="#{commissionFormMB.cname}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.totlamt}" target="#{commissionFormMB.totlamt}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.cmst}" target="#{commissionFormMB.cmst}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener value="#{info.totcms}" target="#{commissionFormMB.totcms}"></f:setPropertyActionListener>
+	             <f:setPropertyActionListener value="#{info.productname}" target="#{commissionFormMB.productname}"></f:setPropertyActionListener>
+	              <f:setPropertyActionListener value="#{info.rollids}" target="#{commissionFormMB.rollids}"></f:setPropertyActionListener>
+	              <f:setPropertyActionListener value="#{info.unitprice}" target="#{commissionFormMB.unitprice}"></f:setPropertyActionListener>
+	               <f:setPropertyActionListener value="#{commissionFormMB.totalamount1}" target="#{commissionFormMB.totalamount1}"></f:setPropertyActionListener>
+	            </h:commandButton>
+	             
+	             
+	            
+	        </h:column> 
+	        
+	       
+          
+	       
+</rich:dataTable></h:panelGrid></p:panel>
+ 
+<h:panelGrid columns="2">
+						<h:commandButton value="Print" styleClass="button" ><p:printer target="panel"></p:printer></h:commandButton>
+						<h:commandButton value="Cancel" styleClass="button" action="home.xhtml?faces-redirect=true" />
+					</h:panelGrid>
+
+</td>
+
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+<!--  <h:panelGrid columns="12">
+ <h:outputLabel style="font-weight:normal;" value="Grand Total "></h:outputLabel>
+	            <h:outputText  class="label_ui" value="#{info.totlsales1}"/>
+	            <h:outputLabel style="font-weight:normal;" value="Grand Total Commission"></h:outputLabel>
+	              <h:outputText  class="label_ui" value="#{info.totalamount1}"/>
+	           
+	            </h:panelGrid> -->
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+
+</h:form>
+
+</body>
+</ui:composition>

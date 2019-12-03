@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+</h:head>
+
+ <h:form id="rform">
+ 
+ <p:dataTable id="dt" var="returnpur" selectionMode="single" value="#{purchaseReportMB.purchaseReportlist3}"  widgetVar="purchasedinfo" paginator="true"  rows="10" style="font-size:11px" rowKey="#{returnpur.orderNumber}"
+   emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <f:facet name="header">
+            <p:outputPanel>
+               
+                <p:inputText id="globalFilter" onkeyup="PF('purchasedinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+ </f:facet>
+ <p:ajax event="rowDblselect" listener="#{purchaseReportMB.onRowSelectEvent2}" update="@all" />
+ <p:column headerText="PO Number" filterBy="#{returnpur.orderNumber}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:100px;">
+ <h:outputText value="#{returnpur.orderNumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Total Quantity" filterBy="#{returnpur.quantity}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:100px;"> 
+ <h:outputText value="#{returnpur.quantity}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Normal Return" filterBy="#{returnpur.normalReturn}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:100px;">
+ <h:outputText value="#{returnpur.normalReturn}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Damage Return" filterBy="#{returnpur.damageReurn}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:100px;">
+ <h:outputText value="#{returnpur.damageReurn}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Return Status" filterBy="#{delipurchase.returnStatus}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:100px;">
+ <h:outputText value="#{returnpur.returnStatus}" class="text_ui"></h:outputText>
+ </p:column>
+ </p:dataTable>
+ 
+ <p:spacer height="10px;"></p:spacer>
+ 
+ 
+ <p:dataTable rendered="#{purchaseReportMB.purchasereturnDtFlag1}"  value="#{purchaseReportMB.purchaseReportlist1}" id="dt1" var="detpurchase"  paginator="true"  rows="5" 
+   emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" lazy="true">
+ <p:column headerText="PO Number" style="color:white;font-size:10px;font-weight:bold;width:80px;">
+ <h:outputText value="#{detpurchase.orderNumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Vendor Name" style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{detpurchase.vendorName}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Phone Number" style="color:white;font-size:11px;font-weight:bold;width:90px;">
+ <h:outputText value="#{detpurchase.phoneNumber}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Return Date" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detpurchase.returnDate}" class="text_ui"> <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+ </p:column>
+ <p:column headerText="Product" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detpurchase.productName}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Normal Return" style="color:white;font-size:11px;font-weight:bold"> 
+ <h:outputText value="#{detpurchase.normalReturn}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Damage Return" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detpurchase.damageReurn}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Return Status" style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{detpurchase.returnStatus}" class="text_ui"></h:outputText>
+ </p:column>
+ 
+ </p:dataTable>
+ 
+ 
+ 
+ 
+</h:form>
+
+</ui:composition>

@@ -1,0 +1,3749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+   xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+   http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+   version="2.0">
+<!--  JSF with Spring Integration start -->
+	<!--   <application>
+		<el-resolver>
+    		    org.springframework.web.jsf.el.SpringBeanFacesELResolver
+		</el-resolver>
+  	</application> -->
+<!--  JSF with Spring Integration end -->
+
+<!-- Dialog Frameworks -->
+<application>
+<action-listener>org.primefaces.application.DialogActionListener</action-listener>
+<navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+<view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+</application>
+
+<!-- Login -->
+<managed-bean>
+<managed-bean-name>loginMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.LoginMB</managed-bean-class>
+ <managed-bean-scope>session</managed-bean-scope> 
+ <managed-property>
+ <property-name>buyersViewMB</property-name>
+ <value>#{buyersViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>vendorViewFormMB</property-name>
+ <value>#{vendorViewFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>employeeDetailsViewFormMB</property-name>
+ <value>#{employeeDetailsViewFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>chartView2</property-name>
+ <value>#{chartView2}</value>
+ </managed-property>
+  <managed-property>
+ <property-name>quickSaleViewMB</property-name>
+ <value>#{quickSaleViewMB}</value>
+ </managed-property>
+  <managed-property>
+ <property-name>purchaseViewMB</property-name>
+ <value>#{purchaseViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>salesViewMB</property-name>
+ <value>#{salesViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>productViewMB</property-name>
+ <value>#{productViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>stockViewMB</property-name>
+ <value>#{stockViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>profitLossMB</property-name>
+ <value>#{profitLossMB}</value>
+ </managed-property>
+  <managed-property>
+ <property-name>vendorRegisterFormMB</property-name>
+ <value>#{vendorRegisterFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>productRegisterFormMB</property-name>
+ <value>#{productRegisterFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>cashBookMB</property-name>
+ <value>#{cashBookMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>employeePayrollFormMB</property-name>
+ <value>#{employeePayrollFormMB}</value>
+ </managed-property>
+  <managed-property>
+ <property-name>salesIncomeMB</property-name>
+ <value>#{salesIncomeMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>clientMB</property-name>
+ <value>#{clientMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>purchaseExpenseMB</property-name>
+ <value>#{purchaseExpenseMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>purchaseOrderFromMB</property-name>
+ <value>#{purchaseOrderFromMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>userCreateMB</property-name>
+ <value>#{userCreateMB}</value>
+ </managed-property>
+  <managed-property>
+ <property-name>salesOrderFormMB</property-name>
+ <value>#{salesOrderFormMB}</value>
+ </managed-property>
+</managed-bean>
+  
+
+<managed-bean>
+<managed-bean-name>StockReportMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.StockReportMB</managed-bean-class>
+ <managed-bean-scope>session</managed-bean-scope> 
+ <managed-property>
+ <property-name>stockDamageMB</property-name>
+ <value>#{stockDamageMB}</value>
+ </managed-property>
+ </managed-bean>
+
+<managed-bean>
+<managed-bean-name>chartView</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ChartView</managed-bean-class>
+ <managed-bean-scope>session</managed-bean-scope> 
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>chartView2</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ChartView2</managed-bean-class>
+ <managed-bean-scope>session</managed-bean-scope> 
+</managed-bean>
+
+
+ <!-- userCreateMB -->
+
+<managed-bean>
+<managed-bean-name>userCreateMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.UserCreateMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+<managed-bean-name>SalesReportMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesReportMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+ <navigation-rule>
+<from-view-id>pages/xhtml/stockInForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>view</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderView2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+ <navigation-rule>
+<from-view-id>pages/xhtml/login.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/buyerRegistration.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>redirectBuyer1</from-outcome>
+<to-view-id>/pages/xhtml/buyerRegisterForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/login.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/login.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failureAccountOut</from-outcome>
+<to-view-id>/pages/xhtml/accountOut.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1AccountOut</from-outcome>
+<to-view-id>/pages/xhtml/accountOut.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>successAccountOut</from-outcome>
+<to-view-id>/pages/xhtml/accountOut.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/accountOut.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>successdrop</from-outcome>
+<to-view-id>/pages/xhtml/accountOut.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<!-- purchaseOrderPaymentMB -->
+<managed-bean>
+<managed-bean-name>purchaseOrderPaymentMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseOrderPaymentMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+
+<!-- jeni 12.1.2015 -->
+<!-- BuyersViewMB -->
+<managed-bean>
+<managed-bean-name>buyersViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.BuyersViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>salesOrderFormMB</property-name>
+ <value>#{salesOrderFormMB}</value>
+ </managed-property>
+</managed-bean>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectBuyersView</from-outcome>
+<to-view-id>/pages/xhtml/buyersView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/buyersView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>redirectBuyer</from-outcome>
+<to-view-id>/pages/xhtml/buyersView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/buyersView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>buyersView</from-outcome>
+<to-view-id>/pages/xhtml/buyersView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- jeni 12.1.2015 upto this -->
+<!-- stockInFormMB -->
+<managed-bean>
+<managed-bean-name>stockInFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.StockInFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>purchaseViewMB</property-name>
+ <value>#{purchaseViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>stockInFormdirect</from-outcome>
+<to-view-id>/pages/xhtml/stockInForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/stockInForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/stockInConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<!-- stockViewMB -->
+<managed-bean>
+<managed-bean-name>stockViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.StockViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+<navigation-rule>
+<navigation-case>
+<from-outcome>StockViewdirect</from-outcome>
+<to-view-id>/pages/xhtml/stockView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+<!-- jeni 12.1.2015 -->
+<!-- vendorViewFormMB -->
+<managed-bean>
+<managed-bean-name>vendorViewFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.VendorViewFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+
+<managed-property>
+ <property-name>vendorUpdateFormMB</property-name>
+ <value>#{vendorUpdateFormMB}</value>
+ </managed-property>
+ 
+ <managed-property>
+ <property-name>vendorRegisterFormMB</property-name>
+ <value>#{vendorRegisterFormMB}</value>
+ </managed-property>
+</managed-bean>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorViewsuccessv</from-outcome>
+<to-view-id>/pages/xhtml/vendorView.xhtml</to-view-id>
+<redirect />
+</navigation-case></navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorViewsuccess2</from-outcome>
+<to-view-id>/pages/xhtml/vendorViewUpdate.xhtml</to-view-id>
+<redirect />
+</navigation-case></navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorViewdeletesuccess</from-outcome>
+<to-view-id>/pages/xhtml/vendordeleteConform.xhtml</to-view-id>
+<redirect />
+</navigation-case></navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorViewUpdate.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorViewsuccess3</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpadateConformation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorViewUpdate.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorViewfailure3</from-outcome>
+<to-view-id>/pages/xhtml/vendorViewUpdate.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<navigation-case>
+
+<from-outcome>vendorViewsucsuccess4</from-outcome>
+<to-view-id>/pages/xhtml/vendorViewForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>venorForm</from-outcome>
+<to-view-id>/pages/xhtml/vendorViewForm.xhtml</to-view-id>
+<redirect />
+</navigation-case></navigation-rule>
+
+<!-- jeni 12.1.2015 upto this -->
+
+
+
+<!-- VendorUpdateFormMB -->
+<managed-bean>
+<managed-bean-name>vendorUpdateFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.VendorUpdateFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorUpdateForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorUpdatsuccess1</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpdateForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorUpdateForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorUpdatfailure1</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpdateForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorUpdateForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorUpdatsuccess2</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpdate.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorUpdateForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorUpdatfailure2</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpdateForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorUpdate.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorUpdatsuccess3</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpadateConformation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorUpdate.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>vendorUpdatfailure3</from-outcome>
+<to-view-id>/pages/xhtml/vendorUpdate.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+
+
+<!-- jeni 12.1.2015 -->
+
+<!-- productViewMB -->
+<managed-bean>
+<managed-bean-name>productViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ProductViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success6</from-outcome>
+<to-view-id>/pages/xhtml/productEditForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productEditForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success7</from-outcome>
+<to-view-id>/pages/xhtml/productEditConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/productEditForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure7</from-outcome>
+<to-view-id>/pages/xhtml/productEditForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>view</from-outcome>
+<to-view-id>/pages/xhtml/productView1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productReject.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/productRejectForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/productReject.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/productReject.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/productView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/productRemove.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/productRemove.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/productRemoveConformation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<navigation-case>
+<from-outcome>product4</from-outcome>
+<to-view-id>/pages/xhtml/productView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>productViewForm</from-outcome>
+<to-view-id>/pages/xhtml/productView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+<!-- jeni 12.1.2015 up to this -->
+
+
+
+
+<!-- InvoicePurhcaseMB -->
+<managed-bean>
+<managed-bean-name>invoicePurhcaseMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.InvoicePurhcaseMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>purchaseViewMB</property-name>
+ <value>#{purchaseViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/invoicePurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success6</from-outcome>
+<to-view-id>/pages/xhtml/invoicePurchase.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/invoicePurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success4</from-outcome>
+<to-view-id>/pages/xhtml/purchaseInvoiceForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<navigation-case>
+<from-outcome>success7</from-outcome>
+<to-view-id>/pages/xhtml/invoicePurchase.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/invoicePurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure4</from-outcome>
+<to-view-id>/pages/xhtml/purchaseInvoiceForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/invoicePurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/invoicePurchase.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/invoicePurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/purchaseInvoiceForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/invoicePurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseInvoiceForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseInvoiceForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>home</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+<!-- invoiceSalesMB -->
+
+  <managed-bean>
+<managed-bean-name>invoiceSalesMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.InvoiceSalesMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>salesViewMB</property-name>
+ <value>#{salesViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>invoiceSalesDirect</from-outcome>
+<to-view-id>/pages/xhtml/invoiceSales.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/invoiceSales.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/salesInvoiceForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/invoiceSales.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesInvoiceForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<!--ProductReject  -->
+<managed-bean>
+<managed-bean-name>productRejectFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ProductRejectFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRejectForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/productRejectForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRejectForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/productReject.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productReject.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/productRejectForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productReject.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/productReject.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+
+
+<!--ProductRemove  -->
+<managed-bean>
+<managed-bean-name>productRemoveFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ProductRemoveFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRemoveForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/productRemoveForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRemoveForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/productRemoveForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRemoveForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/productRemove.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRemove.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/productRemoveConformation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/productRemove.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/productRemove.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<!--ProductRegistration  -->
+<managed-bean>
+<managed-bean-name>productRegisterFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ProductRegisterFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>productRegisterDirect</from-outcome>
+<to-view-id>/pages/xhtml/productRegisterForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/productRegisterForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>productregistersuccess1</from-outcome>
+<to-view-id>/pages/xhtml/productRegisterForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/productRegisterForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>productregisterfailure1</from-outcome>
+<to-view-id>/pages/xhtml/productRegisterForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productRegisterForm1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>productregistersuccess2</from-outcome>
+<to-view-id>/pages/xhtml/productRegisterForm3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/productRegisterForm1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/productRegisterForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/productRegisterForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- accountOutMB  -->
+ <managed-bean>
+<managed-bean-name>accountOutMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.AccountOutMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>purchaseViewMB</property-name>
+ <value>#{purchaseViewMB}</value>
+ </managed-property>
+</managed-bean>
+<navigation-rule>
+<navigation-case>
+<from-outcome>direct1</from-outcome>
+<to-view-id>/pages/xhtml/accountOut.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ 
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/accountOut1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/accountOut.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/accountOut3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/accountOut1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/accountOut1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ 
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>salesPaymentPage</from-outcome>
+<to-view-id>pages/xhtml/salesPayment.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<!-- PurchaseOrderForm  -->
+<managed-bean>
+<managed-bean-name>purchaseOrderFromMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseOrderFromMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>purchaseViewMB</property-name>
+ <value>#{purchaseViewMB}</value>
+ </managed-property>
+<managed-property>
+ <property-name>purchaseReturnFormMB</property-name>
+ <value>#{purchaseReturnFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>invoicePurhcaseMB</property-name>
+ <value>#{invoicePurhcaseMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>accountOutMB</property-name>
+ <value>#{accountOutMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>stockInFormMB</property-name>
+ <value>#{stockInFormMB}</value>
+ </managed-property>
+ 
+</managed-bean>
+
+<navigation-rule>
+
+<navigation-case>
+<from-outcome>redirect</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderSave1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success6</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderForm2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderSave1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure6</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderSave1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderSave.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>successClose1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdersaveConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderSave.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>successClose</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderSave1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>successClose</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdersaveConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failureClose</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderForm2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success7</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderSave1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+ 
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure7</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderForm2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderSave.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderSave.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderSave1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderSave.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderSave.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purhcaseOrderPaymentsStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseOrderPayment</from-outcome>
+<to-view-id>/pages/xhtml/purhcaseOrderPaymentsStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+
+
+<!-- PurchaseOrderCancel  -->
+<managed-bean>
+<managed-bean-name>purchaseOrderCancelMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseOrderCancelMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderCancel.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderCancel.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderCancel.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderCancel.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderCancel.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdercancelconform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderCancel.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderCancel.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrdercancelconform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdercancel2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrdercancelconform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdercancelconform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+
+<!-- purchaseDeliveryStatusMB -->
+<managed-bean>
+<managed-bean-name>purchaseDeliveryStatusMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseDeliveryStatusMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirect3</from-outcome>
+<to-view-id>/pages/xhtml/purhcaseDeliveryStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purhcaseDeliveryStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseDeliveryConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purhcaseDeliveryStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/purhcaseDeliveryStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>  
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseDeliveryConform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderDeliveryConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseDeliveryConform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseDeliveryConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>  
+
+
+<!-- **** -->
+<navigation-rule>
+<from-view-id>pages/xhtml/home.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>rempurchasedelivery</from-outcome>
+<to-view-id>/pages/xhtml/rempurhcaseDeliveryStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- **** -->
+<navigation-rule>
+<from-view-id>pages/xhtml/rempurhcaseDeliveryStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>rempurchasedeliv</from-outcome>
+<to-view-id>/pages/xhtml/rempurchaseDeliveryConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- **** -->
+<navigation-rule>
+<from-view-id>pages/xhtml/rempurchaseDeliveryConform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderDeliveryConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- **** -->
+<navigation-rule>
+<from-view-id>pages/xhtml/purhcaseDeliveryStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseDeliveryConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+<!-- jeni 12.1.2015 -->
+
+<!-- PurchaseViewMB -->
+<managed-bean>
+<managed-bean-name>purchaseViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderEdit.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> successtest</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderEdit1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderEdit1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> updatePurchasesuccess</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderEdit.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderEdit1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> updatePurchasefailure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderEdit1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderEdit.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> successfailure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderEdit.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> successeditpurchase</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderEdit.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/purchaseView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> success</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdercancelconform1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/purchaseView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseOrderView</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/purhcaseOrderPaymentsStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome> view</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderView1.xhtml</to-view-id>
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrdercancelconform1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrdercancel3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<navigation-case>
+<from-outcome>redirect1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+			
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseView</from-outcome>
+<to-view-id>/pages/xhtml/purchaseView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 			
+			
+			<!-- jeni 12.1.2015  upto this-->
+							
+				<!-- udhaya 2.1.2015 -->			
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderApprovalStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseOrderApprovalForm</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderApprovalForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderApprovalForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseOrderApprovalConform</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderApprovalConform1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <!--
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>  -->
+
+
+
+<!-- stockDamageMB  -->
+<managed-bean>
+<managed-bean-name>stockDamageMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.StockDamageMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>stockViewMB</property-name>
+ <value>#{stockViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>stockDamagedirect</from-outcome>
+<to-view-id>/pages/xhtml/stockDamage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+ <navigation-rule>
+<from-view-id>pages/xhtml/stockDamage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/stockdamageconform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/stockDamage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/stockDamage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/stockdamageconform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/stockDamageConform1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/stockdamageconform.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/stockdamageconform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<!-- stockOutFormMB  -->
+<managed-bean>
+<managed-bean-name>stockOutFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.StockOutFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<!-- crmMB  -->
+<managed-bean>
+<managed-bean-name>crmMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.CrmMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+<!-- salesOrderFormMB -->
+<managed-bean>
+<managed-bean-name>salesOrderFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesOrderFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>salesViewMB</property-name>
+ <value>#{salesViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>salesReturnFormMB</property-name>
+ <value>#{salesReturnFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>invoiceSalesMB</property-name>
+ <value>#{invoiceSalesMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>accountinReMB</property-name>
+ <value>#{accountinReMB}</value>
+ </managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>stockoutDirect</from-outcome>
+<to-view-id>/pages/xhtml/stockOutForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectbuyerRegister</from-outcome>
+<to-view-id>/pages/xhtml/buyerRegistration.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+ <navigation-rule>
+<navigation-case>
+<from-outcome>saledirect</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm3.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/salesorderForm2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm3.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesorderForm2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/salesorderForm4.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesorderForm2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure3</from-outcome>
+<to-view-id>/pages/xhtml/salesorderForm2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesorderForm4.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success4</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesorderForm4.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure4</from-outcome>
+<to-view-id>/pages/xhtml/salesorderForm4.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- salesOrdercancelFormMB -->
+<managed-bean>
+<managed-bean-name>salesOrdercancelFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesOrdercancelFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+ 
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>direct6</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderCancelForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderCancelForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/saleOrderCancel1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesOrderCancelForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderCancelForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/saleOrderCancel1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/saleOrderCancel2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/saleOrderCancel1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/saleOrderCancel1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<!-- salesPaymentMB -->
+<managed-bean>
+<managed-bean-name>salesPaymentMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesPaymentMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>salepayDirect</from-outcome>
+<to-view-id>/pages/xhtml/salesPayment.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesPayment.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salepayStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesPaymentPending.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salepayStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+<!-- salesdeliveryMB -->
+<managed-bean>
+<managed-bean-name>salesdeliveryMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesdeliveryMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>saleDirectDelivery</from-outcome>
+<to-view-id>/pages/xhtml/salesdelivery.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/salesdelivey3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/salesDelivery1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesdelivery.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesDelivery1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salesdelivery2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesDelivery1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/salesDelivery1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- **** -->
+ <navigation-rule>
+<from-view-id>pages/xhtml/remsalesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/remsalesDelivery1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/remsalesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/remsalesDelivery.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- **** -->
+ <navigation-rule>
+<from-view-id>pages/xhtml/remsalesDelivery1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>delivered</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<!-- salesPaymentMB -->
+<!-- <managed-bean>
+<managed-bean-name>salesPaymentMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesPaymentMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+ --> 
+ <!-- <navigation-rule>
+<from-view-id>pages/xhtml/salesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/salesDelivery1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesdelivery.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesdelivery.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> -->
+
+
+
+
+<!-- salesViewMB -->
+
+<managed-bean>
+<managed-bean-name>salesViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+
+<navigation-case>
+<from-outcome>direct3</from-outcome>
+<to-view-id>/pages/xhtml/salesView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesEdit.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSales1Failure</from-outcome>
+<to-view-id>/pages/xhtml/salesEdit.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesEdit.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSales1Success</from-outcome>
+<to-view-id>/pages/xhtml/salesView3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success4</from-outcome>
+<to-view-id>/pages/xhtml/salesView3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView3.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSalesSuccess</from-outcome>
+<to-view-id>/pages/xhtml/salesEdit.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView3.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSalesFailure</from-outcome>
+<to-view-id>/pages/xhtml/salesView3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/salesview2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salesView1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- salesReturnFormMB -->
+<managed-bean>
+<managed-bean-name>salesReturnFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesReturnFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>salesViewMB</property-name>
+ <value>#{salesViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>salesReturn1</from-outcome>
+<to-view-id>/pages/xhtml/salesReturnForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesReturnForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/salesReturn11.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesReturnForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salesReturns1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesReturnForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/salesReturn1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesReturnForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/salesReturnForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesReturnForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/salesReturn3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/salesReturnForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/salesReturnForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+
+<!-- accountinReMB -->
+<managed-bean>
+<managed-bean-name>accountinReMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.AccountinReMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>salesViewMB</property-name>
+ <value>#{salesViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>direct</from-outcome>
+<to-view-id>/pages/xhtml/accountIn.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/accountIn.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/accountIn1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/accountIn.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/accountIn.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/accountIn1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/accountIn3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/accountIn1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/accountIn1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+<!-- vendorRegisterFormMB -->
+<managed-bean>
+<managed-bean-name>vendorRegisterFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.VendorRegisterFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>purchaseOrderFromMB</property-name>
+ <value>#{purchaseOrderFromMB}</value>
+ </managed-property>
+</managed-bean>
+ <navigation-rule>
+<navigation-case>
+<from-outcome>vendorDirect</from-outcome>
+<to-view-id>/pages/xhtml/vendorRegisterForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorRegisterForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>countryDropsuccess</from-outcome>
+<to-view-id>/pages/xhtml/vendorRegistrationConformation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorRegisterForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>countryDropfailure</from-outcome>
+<to-view-id>/pages/xhtml/vendorRegisterForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+
+
+<!-- vendorRegisterFormMB -->
+<managed-bean>
+<managed-bean-name>vendorDeleteFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.VendorDeleteFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/vendorDeleteForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>deleteVendorsuccess</from-outcome>
+<to-view-id>/pages/xhtml/vendordeleteConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/vendorRegisterForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>deleteVendorsuccess</from-outcome>
+<to-view-id>/pages/xhtml/vendorRegistrationConformation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+
+
+<managed-bean>
+<managed-bean-name>approvalViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ApprovalViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/approvalpage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>gotoapprovalhome</from-outcome>
+<to-view-id>/pages/xhtml/approvalpage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>approvalDirect</from-outcome>
+<to-view-id>/pages/xhtml/approvalpage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<!-- reportMB -->
+<managed-bean>
+<managed-bean-name>reportMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ReportMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<!-- StockReportMB -->
+<managed-bean>
+<managed-bean-name>stockReportMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.StockReportMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<!-- PurchaseReportMB -->
+
+<managed-bean>
+<managed-bean-name>purchaseReportMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseReportMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>reportinvoiceDirect</from-outcome>
+<to-view-id>/pages/xhtml/reportInvoices.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<navigation-case>
+<from-outcome>reportsalesDirect</from-outcome>
+<to-view-id>/pages/xhtml/reportsales.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<navigation-case>
+<from-outcome>reportpurchaseDirect</from-outcome>
+<to-view-id>/pages/xhtml/reportPurchase.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- jeni 12.1.2015 -->
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportInvoices.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/reportInvoice1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportInvoices.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/reportInvoice2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/reportInvoices.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/reportInvoices.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportPurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/reportPurachase2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportPurchase.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure2</from-outcome>
+<to-view-id>/pages/xhtml/reportPurchase.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportsales.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/reportSales2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportsales.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure3</from-outcome>
+<to-view-id>/pages/xhtml/reportsales.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<!-- jeni up to this -->
+
+
+
+
+
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseApproval.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/purchaseApproval1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseApproval.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseApproval1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseApproval1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>redirecthome</from-outcome>
+<to-view-id>/pages/xhtml/purchaseApproval.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseApproval1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/purchaseApproval.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseApproval1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/purchaseApproval.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/approvalpage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>approvalView3success</from-outcome>
+<to-view-id>/pages/xhtml/approvalView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/approvalpage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>approvalView3failure</from-outcome>
+<to-view-id>/pages/xhtml/approvalpage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/approvalpage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>approvalView4success</from-outcome>
+<to-view-id>/pages/xhtml/approvalpagedelete.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/approvalpage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>approvalView4failure</from-outcome>
+<to-view-id>/pages/xhtml/approvalpage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportInvoice1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>reportM</from-outcome>
+<to-view-id>/pages/xhtml/reportInvoices.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportPurachase2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>reportM</from-outcome>
+<to-view-id>/pages/xhtml/reportPurchase.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/reportSales2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>reportM</from-outcome>
+<to-view-id>/pages/xhtml/reportsales.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+				<!-- udhaya 30.12.2014 -->
+
+<!-- category Registration -->
+<managed-bean>
+<managed-bean-name>categoryRegistrationMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.CategoryRegistrationMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<!-- <navigation-rule>
+<from-view-id>pages/xhtml/categoryRegistrationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> -->
+
+<navigation-rule>
+<from-view-id>pages/xhtml/categoryRegistrationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>/pages/xhtml/categoryRegistrationForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/categoryRegistrationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>categoryRegistrationConform</from-outcome>
+<to-view-id>/pages/xhtml/categoryRegistrationConform.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+			<!-- udhaya 7.1.2015 -->
+<!-- QuickSale -->
+<managed-bean>
+<managed-bean-name>quickSaleViewMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.QuickSaleViewMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSaleView1</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleView1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSaleEdit</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleEdit.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleEdit.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSaleEditConfirm</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleEditConfirm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSaleDelete</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleDelete.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>QuickSaleHomeviewpage</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectQuickHome</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- ranjini -->
+<!-- Quicksale -->
+<managed-bean>
+<managed-bean-name>quickSaleMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.QuickSaleMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+ <managed-property>
+ <property-name>salesViewMB</property-name>
+ <value>#{salesViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>quickSaleViewMB</property-name>
+ <value>#{quickSaleViewMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>accountsMB</property-name>
+ <value>#{accountsMB}</value>
+</managed-property>
+</managed-bean>
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSaleFormsuccess</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleForm1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSalesConfirmSuccess</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleAdd.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleAdd.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quickSaleFormsuccess</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/salesViewj.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success4</from-outcome>
+<to-view-id>/pages/xhtml/salesView5.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView5.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSalesSuccess</from-outcome>
+<to-view-id>/pages/xhtml/salesEdit1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>  
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesEdit1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSales1Success</from-outcome>
+<to-view-id>/pages/xhtml/salesView5.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesEdit1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>updateSales1Failure</from-outcome>
+<to-view-id>/pages/xhtml/salesEdit1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success3</from-outcome>
+<to-view-id>/pages/xhtml/salesview2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>QucikSuccess</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>QucikSuccess1</from-outcome>
+<to-view-id>/pages/xhtml/quickSaleForm1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>productb</from-outcome>
+<to-view-id>pages/xhtml/productViewBarcode.xhtml</to-view-id>
+<redirect/>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/productViewBarcode.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>barcodegenerate</from-outcome>
+<to-view-id>/pages/xhtml/pbarcode.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- jeni 12.1.2015 -->
+
+<!-- PurchaseOrderCloseMB  -->
+<managed-bean>
+<managed-bean-name>PurchaseOrderCloseMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseOrderCloseMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purhcaseOrderClose.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseOrder</from-outcome>
+<to-view-id>/pages/xhtml/purhcaseOrderClose.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<!-- jeni 12.1.2015 up to this -->
+
+
+<!-- siva 18_2_15 -->
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purhcaseOrderPaymentsStatus</from-outcome>
+<to-view-id>/pages/xhtml/purhcaseOrderPaymentsStatus.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<!-- siva 20_2_!5 -->
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>categoryRegistrationForm</from-outcome>
+<to-view-id>/pages/xhtml/categoryRegistrationForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>viewBuyer</from-outcome>
+<to-view-id>/pages/xhtml/viewBuyer.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>buyersView</from-outcome>
+<to-view-id>/pages/xhtml/buyersView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>modifyBuyerRegistration</from-outcome>
+<to-view-id>/pages/xhtml/modifyBuyerRegistration.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>stockLimitView</from-outcome>
+<to-view-id>/pages/xhtml/stockLimitView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+
+
+<!-- siva 23_2_15 -->
+
+<managed-bean>
+<managed-bean-name>aTransactionMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ATransactionMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+	<property-name>accountsMB</property-name>
+	<value>#{accountsMB}</value>
+</managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>transactionclear</from-outcome>
+<to-view-id>pages/xhtml/aTransactionForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>submit</from-outcome>
+<to-view-id>pages/xhtml/aTransactionConfirmForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>pages/xhtml/aTransactionForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionConfirmForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>save</from-outcome>
+<to-view-id>pages/xhtml/aTransactionFormConfirmation.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>transactionview</from-outcome>
+<to-view-id>pages/xhtml/aTransactionView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aTransactionViewForm</from-outcome>
+<to-view-id>pages/xhtml/aTransactionViewForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aTransactionView</from-outcome>
+<to-view-id>pages/xhtml/aTransactionView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aTransactionEditForm</from-outcome>
+<to-view-id>pages/xhtml/aTransactionEditForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionEditForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>edit</from-outcome>
+<to-view-id>pages/xhtml/aTransactionViewEditConform.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>delete</from-outcome>
+<to-view-id>pages/xhtml/aTransactionDeleteForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionDeleteForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>deleteback</from-outcome>
+<to-view-id>pages/xhtml/aTransactionView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<managed-bean>
+<managed-bean-name>payrollLiablityMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PayrollLiablityMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>cashAssetMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.CashAssetMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>salesIncomeMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.SalesIncomeMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>purchaseExpenseMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseExpenseMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+ <property-name>salesIncomeMB</property-name>
+ <value>#{salesIncomeMB}</value>
+ </managed-property>
+ 
+<managed-property>
+ <property-name>cashBookMB</property-name>
+ <value>#{cashBookMB}</value>
+ </managed-property>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>profitLossMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ProfitLossMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>cashBookMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.CashBookMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aPayrollLiabilites</from-outcome>
+<to-view-id>/pages/xhtml/aPayrollLiabilites.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aAccountsReceivableAssets</from-outcome>
+<to-view-id>/pages/xhtml/aAccountsReceivableAssets.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aCashAssets</from-outcome>
+<to-view-id>/pages/xhtml/aCashAssets.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>accountPayableLiabilites</from-outcome>
+<to-view-id>/pages/xhtml/accountPayableLiabilites.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aProfitAndLossStatement</from-outcome>
+<to-view-id>/pages/xhtml/aProfitAndLossStatement.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+
+<!-- employeeRegistration -->
+<managed-bean>
+<managed-bean-name>employeeRegistrationFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.EmployeeRegistrationFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeRegistrationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aEmployeeRegConfirmationForm</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeRegistrationConfirmationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeRegistrationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeRegistrationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeRegistrationConfirmationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aEmployeeRegistrationConfirmation</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeRegistrationConfirmation.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeRegistrationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aEmployeeRegistrationForm</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeRegistrationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeRegistrationConfirmation.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>home</from-outcome>
+<to-view-id>pages/xhtml/home.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<!-- employeePayroll -->
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aPayrollGenerationConfirmation.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>payrollgenerate</from-outcome>
+<to-view-id>pages/xhtml/aPayrollForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/hr.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>generation</from-outcome>
+<to-view-id>pages/xhtml/aPayrollGenerationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aPayrollGenerationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>submit</from-outcome>
+<to-view-id>pages/xhtml/aPayrollGenerationConfirmationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aPayrollGenerationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure</from-outcome>
+<to-view-id>pages/xhtml/aPayrollGenerationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aPayrollGenerationConfirmationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aPayrollGenerationConfirmation</from-outcome>
+<to-view-id>pages/xhtml/aPayrollGenerationConfirmation.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectSuccess</from-outcome>
+<to-view-id>pages/xhtml/aPayrollForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<!-- employeeRegistrationView -->
+<managed-bean>
+<managed-bean-name>employeeDetailsViewFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.EmployeeDetailsViewFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>employeeviewz</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsViewForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aEmployeeDetailsEditForm</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsEditForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsEditForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aEmployeeDetailsEditConfirmationForm</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsEditConfirmationForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>aEmployeeDetailsDeleteForm</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsDeleteForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>employeeview</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsDeleteForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>delete</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aEmployeeDetailsEditConfirmationForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>details</from-outcome>
+<to-view-id>pages/xhtml/aEmployeeDetailsView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<!-- employeePayrollView -->
+<managed-bean>
+<managed-bean-name>employeePayrollViewFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.EmployeePayrollViewFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>nodata</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>payrollviewz</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollViewForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/aEmployeePayrollViewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>payrollview</from-outcome>
+<to-view-id>/pages/xhtml/hr.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/aEmployeePayrollDeleteForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>deleteback</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>emppayrollviewsuccess</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+
+<!-- <navigation-rule>
+<from-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>payrolldelete</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollDeleteForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+ -->
+<navigation-rule>
+<from-view-id>/pages/xhtml/aEmployeePayrollEditForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>editconfirm</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<!-- <navigation-rule>
+<from-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>payrolledit</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollEditForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule> -->
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>success</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeePayrollView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>NonSaleProductView</from-outcome>
+<to-view-id>/pages/xhtml/nonSaleProductView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aEmployeeRegistrationForm</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeeRegistrationForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aEmployeeDetailsView</from-outcome>
+<to-view-id>/pages/xhtml/aEmployeeDetailsView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purchaseOrderView3</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderView3.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>login</from-outcome>
+<to-view-id>/pages/xhtml/login.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/aTransactionView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>transactionHome</from-outcome>
+<to-view-id>pages/xhtml/home.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>accreceivableassetshome</from-outcome>
+<to-view-id>/pages/xhtml/aAccountsReceivableAssets.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>printokpurchaseorder</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>pages/xhtml/buyersView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>buyerDeleteFormpage</from-outcome>
+<to-view-id>pages/xhtml/buyerDeleteForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/buyerDeleteForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>customersViewpage</from-outcome>
+<to-view-id>pages/xhtml/buyersView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>salesdeletepage</from-outcome>
+<to-view-id>pages/xhtml/salesOrderDeleteForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesOrderDeleteForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>salesdeleteconfirmpage</from-outcome>
+<to-view-id>pages/xhtml/salesview2.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/approvalpage.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>approvalviewpage</from-outcome>
+<to-view-id>pages/xhtml/approvalpage.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salepayStatus.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>salesPayment</from-outcome>
+<to-view-id>pages/xhtml/salesPayment.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/modifyBuyerRegistration.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>buyersEdidConf</from-outcome>
+<to-view-id>pages/xhtml/buyersEditConform.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+
+<!-- Commission -->
+<managed-bean>
+<managed-bean-name>commissionFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.CommissionFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>commissionMenuCall</from-outcome>
+<to-view-id>/pages/xhtml/CommissionForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/CommissionForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>commissionvalue</from-outcome>
+<to-view-id>/pages/xhtml/CommissionForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<!-- Purchase Return -->
+<managed-bean>
+<managed-bean-name>purchaseReturnFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.PurchaseReturnFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+ <managed-property>
+ <property-name>purchaseViewMB</property-name>
+ <value>#{purchaseViewMB}</value>
+ </managed-property>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purchaseReturn1</from-outcome>
+<to-view-id>/pages/xhtml/purchaseReturn.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purchaseRetForminfo</from-outcome>
+<to-view-id>/pages/xhtml/purchaseReturnForm1.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purchaseReturnSubmitSuccess</from-outcome>
+<to-view-id>/pages/xhtml/purchaseReturnForm2.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>dispatchview</from-outcome>
+<to-view-id>/pages/xhtml/dispatch.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/dispatch.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>dispatchview1</from-outcome>
+<to-view-id>/pages/xhtml/dispatchview.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseReturnView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purReturnView1</from-outcome>
+<to-view-id>pages/xhtml/purchaseReturnView1.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseReturnView1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purReturnView2</from-outcome>
+<to-view-id>pages/xhtml/purchaseReturnView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purReturnView3</from-outcome>
+<to-view-id>pages/xhtml/purchaseReturnView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>commissionForm1</from-outcome>
+<to-view-id>pages/xhtml/commissionForm1.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>aCashBook</from-outcome>
+<to-view-id>pages/xhtml/aCashBook.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<!-- siva 10-4-15 -->
+
+ <navigation-rule>
+<navigation-case>
+<from-outcome>outofstock</from-outcome>
+<to-view-id>/pages/xhtml/outofstock.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+
+ <navigation-rule>
+<navigation-case>
+<from-outcome>salesreturnviewRemainder</from-outcome>
+<to-view-id>/pages/xhtml/salesreturnviewRemainder.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>saledirect1</from-outcome>
+<to-view-id>pages/xhtml/salesOrderForm5.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectQucikReturnSale</from-outcome>
+<to-view-id>pages/xhtml/quickSaleReturn.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectQucikReturnSaleView</from-outcome>
+<to-view-id>pages/xhtml/quickSaleReturnView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesOrderForm5.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>saleNewSuccess</from-outcome>
+<to-view-id>/pages/xhtml/salesOrderForm6.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>purchaseOrder1</from-outcome>
+<to-view-id>pages/xhtml/purchaseOrderNewForm.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderNewForm.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseSuccess</from-outcome>
+<to-view-id>/pages/xhtml/purchaseOrderNewConfirmation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseOrderNewConfirmation.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>homepurchase</from-outcome>
+<to-view-id>/pages/xhtml/home.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/purchaseReturn.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>purchaseReturnz</from-outcome>
+<to-view-id>/pages/xhtml/purchaseReturnConfirmation.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>redirectsalesreturn</from-outcome>
+<to-view-id>/pages/xhtml/salesReturnNewForm.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesReturnView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>salezReturnView1</from-outcome>
+<to-view-id>pages/xhtml/salesReturnView1.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleReturnView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quicksaleReturnView1</from-outcome>
+<to-view-id>pages/xhtml/quickSaleReturnView1.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/quickSaleReturnView1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>quicksalezReturnView2</from-outcome>
+<to-view-id>pages/xhtml/quickSaleReturnView</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>pages/xhtml/salesReturnView1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>salezReturnView2</from-outcome>
+<to-view-id>pages/xhtml/salesReturnView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>salezReturnView3</from-outcome>
+<to-view-id>pages/xhtml/salesReturnView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/userManagement.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>userNameChange</from-outcome>
+<to-view-id>/pages/xhtml/userManagement1.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/userManagement.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>userPasswordChange</from-outcome>
+<to-view-id>/pages/xhtml/userManagement2.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/productView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>productOpeningStockPage</from-outcome>
+<to-view-id>/pages/xhtml/productOpeningStock.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>DesignRegisterPage</from-outcome>
+<to-view-id>/pages/xhtml/DesignRegister.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>DesignViewPage</from-outcome>
+<to-view-id>/pages/xhtml/DesignView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>DesignViewsPage</from-outcome>
+<to-view-id>/pages/xhtml/DesignViews.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>DesignViewDeletePage</from-outcome>
+<to-view-id>/pages/xhtml/DesignViewDelete.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+ 
+<navigation-rule>
+<navigation-case>
+<from-outcome>DesignConfirmationPage</from-outcome>
+<to-view-id>/pages/xhtml/DesignConfirmation.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/DesignViews.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>DesignViewsFilterPage</from-outcome>
+<to-view-id>/pages/xhtml/DesignViewsFilter.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule> 
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/DesignViewsFilter.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>SaveConfirmationPage</from-outcome>
+<to-view-id>/pages/xhtml/DesignConfirmation.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule> 
+
+
+<navigation-rule>
+<from-view-id>/pages/xhtml/purchaseOrderView.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>redirect5</from-outcome>
+<to-view-id>/pages/xhtml/purchaseView.xhtml</to-view-id>
+<redirect></redirect>
+</navigation-case>
+</navigation-rule> 
+
+ <navigation-rule>
+<from-view-id>pages/xhtml/login.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/superAdminPage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+ <navigation-rule>
+<from-view-id>pages/xhtml/login2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success1</from-outcome>
+<to-view-id>/pages/xhtml/superAdminPage.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/dashboard.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>superadminsuccess</from-outcome>
+<to-view-id>/pages/xhtml/superadmindashboard.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>superadminsuccess</from-outcome>
+<to-view-id>/pages/xhtml/superadmindashboard.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>superadminsuccess</from-outcome>
+<to-view-id>/pages/xhtml/superadmindashboard.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/dashboard.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/login2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>success2</from-outcome>
+<to-view-id>/pages/xhtml/dashboard.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+<navigation-rule>
+<from-view-id>pages/xhtml/login.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/login.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login2.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/login2.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+<navigation-rule>
+<from-view-id>pages/xhtml/login1.xhtml</from-view-id>
+<navigation-case>
+<from-outcome>failure1</from-outcome>
+<to-view-id>/pages/xhtml/login1.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule> 
+
+<managed-bean>
+<managed-bean-name>employeePayrollFormMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.EmployeePayrollFormMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+ <managed-property>
+ <property-name>employeeDetailsViewFormMB</property-name>
+ <value>#{employeeDetailsViewFormMB}</value>
+ </managed-property>
+ <managed-property>
+ <property-name>employeePayrollViewFormMB</property-name>
+ <value>#{employeePayrollViewFormMB}</value>
+ </managed-property>
+</managed-bean>
+<managed-bean>
+    <managed-bean-name>currentDate</managed-bean-name>
+    <managed-bean-class>java.util.Date</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>clientMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.ClientMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+<managed-bean-name>ClientDataBean</managed-bean-name>
+<managed-bean-class>com.inacsys.domain.ClientDataBean</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>clientViews</from-outcome>
+<to-view-id>/pages/xhtml/clientView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+<navigation-case>
+<from-outcome>userViews</from-outcome>
+<to-view-id>/pages/xhtml/userView.xhtml</to-view-id>
+<redirect />
+</navigation-case>
+</navigation-rule>
+
+<managed-bean>
+<managed-bean-name>accountsMB</managed-bean-name>
+<managed-bean-class>com.inacsys.managedBean.AccountsMB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+</faces-config>
+ 

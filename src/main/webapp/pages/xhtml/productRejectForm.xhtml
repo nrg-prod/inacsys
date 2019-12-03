@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+<h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Product Reject Form  </title>
+<link rel="stylesheet" href="../../css/css.css">
+</link>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"></link>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" />
+
+ <script>
+ 
+ 
+$(document).ready(function(){
+  
+  
+  
+     $("#form\\:reg").css("color","red").slideUp(1000).slideDown(1000);  
+     /*$("#form\\:product").css("color","red").slideUp(1000).slideUp(1000);*/
+
+   	 
+  
+   $("#form\\:find").mouseenter(function(){
+		$("#form\\:find").css("color", "black");
+   	});
+   	$("#form\\:find").mouseleave(function(){
+   	    $("#form\\:find").css("color", "#E6EBF5");
+   	});  
+   	  $("#form\\:dataTable").hide();
+   	 $("#form\\:find").click(function()
+   	{
+   	   	 $("#form\\:dataTable").show();
+   	});
+  
+   	
+   
+ 
+   	
+   	
+});
+</script>
+
+
+</h:head>
+<h:body class="appl_background" onload="#{productRemoveFormMB.dropdown()} #{productRejectFormMB.load()}">
+<h:form id="form1">
+<table  style="margin: -10 auto;margin-bottom: auto;" align="center" border="0" class="back_ground">
+<tr>
+<td>
+<h:graphicImage value="/images/home_header_5.jpg" width="1020"></h:graphicImage>
+<br /><br />
+</td>
+</tr>
+
+<tr><td ><p>Welcome #{loginMB.invusername} <h:commandButton action="#{loginMB.logout()}" value="Logout"  ajax="false"></h:commandButton>
+</p></td></tr>
+
+<tr>
+<td align="center"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+</td>
+</tr>
+</table></h:form>
+
+<h:form id="form">
+<table align="center" border="0" class="back_ground">
+<tr><td width="1020"></td>
+</tr>
+<tr>
+</tr>
+
+<tr>
+<td align="left" >
+<table border="0"  >
+<tr ><td align="center"><h:outputText value="#{productRejectFormMB.validate}" class="validation_ui"/></td></tr>
+
+<tr>
+                    <td align="left"  >
+                    <rich:panel style="font-size:14px; width:600px" header="Search"  >  
+	        <h:panelGrid  columns="9"  style="font-size:14px; width:600px;height: 143px;" align="center">  
+	           &nbsp;<h:outputText  />&nbsp;<h:outputText  />&nbsp;<h:outputText  />
+	            <h:outputLabel value="Product Name"  class="label_ui"/>
+	             &nbsp;
+	            <h:selectOneMenu class="text_ui"  value="#{productRejectFormMB.productName}" maxlength="10" id="Name" required="true" label="name">
+				   	 <f:selectItem itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{productRemoveFormMB.productDrop}"/>
+				    
+				 </h:selectOneMenu> 
+	            <h:outputText  />
+	            <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	            <h:outputText value="Product ID"  class="label_ui" /> 
+	           &nbsp;
+	            <h:inputText class="text_ui" value="#{productRejectFormMB.productID}"  size="30"    maxlength="10" id="ID"    required="true" label="productID"/>
+				
+ <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	          
+	           &nbsp;
+	            <h:outputText value="" /><h:commandButton class="button"   value="FIND"  action="#{productRejectFormMB.productReject()}"></h:commandButton> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px">
+                  </td></tr>
+                    </table>
+                    <table width="1000px" border="0">
+                    <tr>
+                    <td width="1000px" >
+                     <h:panelGrid style="display:#{productRejectFormMB.flag}">
+               <rich:dataTable  var="info"   value="#{productRejectFormMB.i0001s}"   width="100%"  columnsWidth="250px,250px,250px,250px" >  
+         	
+ 
+   
+  
+	        <h:column  headerText="Name" width="50%">  
+	        <f:facet name="header" width="50%"> <span style="font-style: normal;font-size:14px;padding-top:10px;" width="50%">  Product Name   </span>      </f:facet>
+	            <h:outputText value="#{info.productName}" class="label_ui" />  
+	        </h:column>  
+  
+	        <h:column  headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;">  Product ID  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.sellingPrice}" class="label_ui"/>  
+	        </h:column>  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;">  Batch  </span>      </f:facet>
+	            <h:outputText class="label_ui" value="#{info.batch}" />  
+	        </h:column>  
+  
+	   		<h:column  headerText="Phone"  >  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;">  Click me  </span>      </f:facet>
+	        <div align="center"> <h:commandButton class="button_table"   value="Reject"  action="#{productRejectFormMB.reject()}" /></div>
+	        </h:column>  
+  
+          
+ </rich:dataTable> 
+ 
+     </h:panelGrid>       
+    </td></tr>
+</table> 
+</td>
+</tr>
+<tr>
+<td height="200px"></td>
+</tr>
+  <tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;width:1040px;text-align:center;padding:5px;align:center; background-color:#12b2ce;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+
+</h:form>
+</h:body>
+</ui:composition>

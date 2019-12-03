@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Customer Registration Confirmation </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <!-- <div style="background-image: url('../../images/home_new copy.jpg'); height: 1000px;background-repeat:no-repeat; background-position: center;">
+ <br/>
+ <br/> -->
+ <body onload="#{productRegisterFormMB.dropDown()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+<h:form>
+			<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+				<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+				<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+<!-- <ui:include src="/pages/xhtml/templates/menunew.xhtml" /> -->
+ </td>
+</tr>
+				<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+
+										<tr align="center"><td align="center"><h:outputText value="#{productRegisterFormMB.invalidate2}" style="font-style: normal;font-size:18px;color:#F51313;font-family: 'HelveticaNeueLT Pro 55 Roman';"/></td></tr>
+
+<tr>
+                    <td align="center" >
+                   
+	      
+
+	        
+				 
+				 
+	   <rich:panel style="width:900px;">  
+	        <h:panelGrid class="label_ui"   style="font-size:14px; width:990px;" align="left" >
+	       
+	        <h:outputText value="Customer Registration Confirmation" class="header_ui"/>
+	        </h:panelGrid></rich:panel>
+	        <rich:panel style="width:900px;">  
+	        <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:900px;" align="left" cellpadding="3">  
+<h:outputText/><h:outputText/><h:outputText/><h:outputText/>
+				
+				<h:outputText class="label_ui" value="Date"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.salesorderdate1}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				
+				
+				<h:outputText class="label_ui" value="Shipping Address"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.shipingaddress}"/>
+				
+ 				<h:outputText class="label_ui" value="City"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.city}"/>
+				<h:outputText class="label_ui" value=" State"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.state}"/>
+				<h:outputText class="label_ui" value="Country"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.countryID}"/>
+								
+				<h:outputText class="label_ui" value="Phone Number"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.phonenumber}"/>
+				<h:outputText class="label_ui" value="Email"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.email}"/>
+				<h:outputText class="label_ui" value="Tax Number"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.taxnumber}"/>
+				<h:outputText class="label_ui" value="Category Name"/>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.categoryName}">
+				</h:outputText>
+				<h:outputText class="label_ui" value="Note"></h:outputText>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.note}"/>
+				<h:outputText class="label_ui" value="Customer Name" ></h:outputText>
+				
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.customername}" />
+				
+				<!-- <h:outputText class="label_ui" value="Free Lancer Name" style="display:#{salesOrderFormMB.flagFree}"/>
+				<h:outputText class="text_ui" value="#{salesOrderFormMB.freelancerName}" style="display:#{salesOrderFormMB.flagFree}"/> -->
+				
+				
+				
+				
+<h:outputText/>
+</h:panelGrid>
+
+
+
+
+
+                       
+
+	         
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+<h:commandButton  value="Confirm" class="button_ui" action="#{salesOrderFormMB.confirmBuyerRegister}" ></h:commandButton>
+<h:commandButton  value="Cancel" class="button_ui" action="#{salesOrderFormMB.buyerConfirm}" ></h:commandButton>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid>
+	   </rich:panel>
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="170">
+                      
+ 
+            
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

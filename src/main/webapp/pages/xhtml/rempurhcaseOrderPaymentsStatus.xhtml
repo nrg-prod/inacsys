@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys |Purchase Order Payments Status  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <h:form>
+ <body onload="#{purchaseOrderPaymentMB.remPurchasePaymentStatus()} " background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+
+<table style="margin-top:-10px " align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1050px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}.</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+
+
+   <table align="center" border="0" class="form_background">
+
+<tr><td width="1020px"></td>
+</tr>
+<tr>
+</tr>
+<tr>
+<td align="center" >
+<table border="0"   bgcolor="">
+             <tr align="center"> <td align="center">   <h:outputText value="#{purchaseViewMB.validate}" class="validation_ui"/></td></tr> 
+
+<tr>
+                    <td align="left" >
+                    
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="30px">
+                  </td>
+                  </tr>
+                  </table>
+                  
+                  <table border="0">                    <tr>
+                    <td>
+                    <h:panelGrid >
+                     <rich:dataTable id="dataTable" var="info"  value="#{purchaseOrderPaymentMB.result5}" columnsWidth="125px,125px,125px,125px,125px,165px,100px,80px">  
+         	 <rich:column  headerText="Name" sortOrder="#{purchaseOrderPaymentMB.sortsOrders['orderDate']}" sortBy="#{info.orderDate}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Date " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{purchaseOrderPaymentMB.sort()}">
+	            <f:param name="sortProperty" value="orderDate"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['orderDate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['orderDate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	             <h:outputText value="#{info.orderDate}"  class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>  
+	            
+	        </rich:column>
+  <rich:column  headerText="Name" sortOrder="#{purchaseOrderPaymentMB.sortsOrders['orderNumber']}" sortBy="#{info.orderNumber}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Order Number " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{purchaseOrderPaymentMB.sort()}">
+	            <f:param name="sortProperty" value="orderNumber"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['orderNumber']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['orderNumber']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	             <h:outputText value="#{info.orderNumber}"  class="label_ui"></h:outputText>  
+	            
+	        </rich:column>
+   
+  
+   <rich:column  headerText="Name" sortOrder="#{purchaseOrderPaymentMB.sortsOrders['firmName']}" sortBy="#{info.firmName}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Firm Name " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{purchaseOrderPaymentMB.sort()}">
+	            <f:param name="sortProperty" value="firmName"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['firmName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['firmName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	             <h:outputText value="#{info.firmName}"  class="label_ui"></h:outputText>  
+	            
+	        </rich:column>
+	   		 
+  <rich:column  headerText="Name" sortOrder="#{purchaseOrderPaymentMB.sortsOrders['q1']}" sortBy="#{info.q1}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Phone Number " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{purchaseOrderPaymentMB.sort()}">
+	            <f:param name="sortProperty" value="q1"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['q1']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['q1']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	             <h:outputText value="#{info.q1}"  class="label_ui"></h:outputText>  
+	            
+	        </rich:column>
+	   		<!-- <h:column  headerText="Phone">
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;"> Phone Number    </span>      </f:facet>  
+	           <h:outputText value="#{info.telephonenumber}"  class="label_ui"/>  </h:column>   -->
+   <rich:column  headerText="Name" sortOrder="#{purchaseOrderPaymentMB.sortsOrders['q']}" sortBy="#{info.q}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Total Amount " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{purchaseOrderPaymentMB.sort()}">
+	            <f:param name="sortProperty" value="q"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['q']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['q']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	           <h:outputText value="Rp " class="label_ui"/>
+	            <h:outputText  class="label_ui" value="#{info.q}"> <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	            
+	        </rich:column>
+   			 <rich:column  headerText="Name" sortOrder="#{purchaseOrderPaymentMB.sortsOrders['q2']}" sortBy="#{info.q2}" sortType="custom"> 
+	        
+	         <f:facet name="header"> 
+	         <a4j:commandLink value=" Outstanding Balance  " execute="@this" style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{purchaseOrderPaymentMB.sort()}">
+	            <f:param name="sortProperty" value="q2"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['q2']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{purchaseOrderPaymentMB.sortsOrders['q2']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	            </f:facet>
+	         
+	            <h:outputText value="Rp " class="label_ui"/>
+	            <h:outputText value="#{info.q2}"  class="label_ui">  <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+	            
+	        </rich:column>
+	        <!-- <h:column  headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;"> Outstanding Balance    </span>      </f:facet> 
+	              <h:outputText value="IDR " class="label_ui"/>
+	            <h:outputText value="#{info.payableAmount}0"  class="label_ui">  <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+	        </h:column>  --> 
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">Status  </span>      </f:facet>
+	              <h:outputText class="filter2" value="#{info.status}" rendered="#{info.status=='pending'}"  />
+	        </h:column>  
+  
+	   		<h:column  headerText="Phone">
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:16px;padding-top:10px;">View    </span>      </f:facet>  
+	             <div align="center">
+ 	            <h:commandButton   image="/images/view.png" action="#{purchaseViewMB.view}">
+	             <f:setPropertyActionListener target="#{purchaseViewMB.orderNumber}" value="#{info.orderNumber}" />
+	           </h:commandButton></div> </h:column>  
+        
+ </rich:dataTable> 
+ 
+            </h:panelGrid>
+    </td></tr>
+    <tr><td height="400px"></td>
+</tr>
+
+</table> 
+</td>
+</tr>
+</table>                
+ 
+ 
+   
+
+
+</td></tr>
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+
+</table>
+
+
+</body></h:form>
+</ui:composition>

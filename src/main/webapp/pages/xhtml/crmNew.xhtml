@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content" >	
+  	<body>
+	<p:panel header="Customer Relationship Management Form" style="min-height:100%;width:100%;" >
+	<div style="height:5px;"></div>
+	<h:form id="cus">
+		<h:outputText id="msg" style="text-align:center;"></h:outputText>
+		<h:message for="msg" style="color:red"></h:message>
+	<center>
+		<table width="95%">
+			<tr>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="First Name *" value="#{crmMB.customername}" id="cfname" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Middle Name" value="#{crmMB.customerMiddleName}" id="cmname" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Last Name" value="#{crmMB.customerLastName}" id="clname" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Email-1 *" value="#{crmMB.email}" styleClass="inputTxt" id="cemail">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+			</tr>
+		</table>
+		<table width="95%">
+			<tr>
+				<td width="15%" style="height:20px"><p id="cnameicon" style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p id="crmemail" style="padding:1px;margin:0px"></p></td> 
+			</tr>
+		</table>
+		<table width="95%" style="height:20px;">
+			<tr>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Mobile *" id="cusmno" value="#{crmMB.phonenumber}" styleClass="inputTxt"> 
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Phone Number" value="#{crmMB.custMobile}" id="cuspno" styleClass="inputTxt"> 
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>		
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Trade Licence Number" value="#{crmMB.cusLicence}" id="tlic" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>								
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Other" value="#{crmMB.other}" id="other" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+			</tr>
+		</table>
+		<table width="95%">
+			<tr>
+				<td width="15%" style="height:20px"><p id="cuspnoicon" style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>		
+				<td width="15%" style="height:20px"><p id="custrade" style="padding:1px;margin:0px"></p></td> 
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+								
+			</tr>
+		</table>
+		<table width="95%" style="height:20px;">
+			<tr>	
+				<td width="15%" style="height:20px;">
+					<p:calendar placeholder="Date *" id="cdate" value="#{crmMB.salesorderdate}" datePattern="dd/MM/yyyy" style="line-height: normal;width:210px" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')">
+					<p:ajax event="dateSelect" process="@this" immediate="true" update="@form"></p:ajax> 
+					</p:calendar>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Company" value="#{crmMB.company}" id="comp" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>		
+				<td width="15%" style="height:20px;">			
+					<p:inputText placeholder="Website" value="#{crmMB.website}" id="web" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText styleClass="labelTxt" value="#{crmMB.crmcode}" readonly="true"></p:inputText>
+				</td>
+			</tr>
+		</table>
+		<table width="95%">
+			<tr>		
+				<td width="15%" style="height:20px"><p id="cdateicon"  style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p id="cusweb" style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td> 
+			</tr>
+		</table>
+		<table width="95%" style="height:20px;">
+			<tr>	
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Tax Number" value="#{crmMB.taxnumber}" id="ctax" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Fax Number" value="#{crmMB.faxnumber}" id="cfax" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+				<td width="15%" style="height:20px;">
+					<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{crmMB.cusType}">	
+						<f:selectItem itemLabel="--- Customer Type---" itemValue="select" />
+						<f:selectItem itemLabel="Trading" itemValue="Trading"></f:selectItem> 
+				       	<f:selectItem itemLabel="Non-Trading" itemValue="Non-Trading"></f:selectItem> 
+				       	<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+					</h:selectOneMenu>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputText placeholder="Email-2" value="#{crmMB.email2}" id="cmail" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+				</td>
+			</tr>
+		</table>
+		<table width="95%">
+			<tr>		
+				<td width="15%" style="height:20px"><p id="custax"  style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p id="cusfax" style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p id="cma" style="padding:1px;margin:0px"></p></td> 
+			</tr>
+		</table>
+		<table width="95%" style="height:20px;">
+			<tr>	
+				<td width="15%" style="height:20px;">
+					<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{crmMB.crmmodeofcommunications}">	
+						<f:selectItem itemLabel="--- Choose mode ---" itemValue="select" />
+						<f:selectItem itemLabel="Direct" itemValue="Direct"></f:selectItem> 
+					    <f:selectItem itemLabel="Email" itemValue="Email"></f:selectItem>
+					    <f:selectItem itemLabel="Phone" itemValue="Phone"></f:selectItem>
+					    <f:selectItem itemLabel="Others" itemValue="Others"></f:selectItem> 
+					     <p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+					</h:selectOneMenu>
+				</td>
+				<td width="15%" style="height:20px;">
+					<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{crmMB.crmstatus}" id="statuss">	
+						<f:selectItem itemLabel="--- Status ---" itemValue="select" />
+						<f:selectItems value="#{crmMB.statusList}"></f:selectItems> 
+				       	<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+					</h:selectOneMenu>
+				</td>		
+				<td width="15%" style="height:20px;">			
+					<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{crmMB.crmcusproduct}" id="crmproduct">	
+						<f:selectItem itemLabel="--- Choose product ---" itemValue="select" />
+						<f:selectItems value="#{crmMB.crmproductlist}" /> 
+				       	<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+					</h:selectOneMenu>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:inputTextarea placeholder="Description" value="#{crmMB.crmcomments}">
+					<p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+					</p:inputTextarea>
+				</td>
+			</tr>
+		</table>
+		<table width="95%">
+			<tr>		
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p id="cstatuss" style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p id="crmpr" style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td> 
+			</tr>
+		</table>
+		<table width="95%" style="height:20px;">
+			<tr>	
+				<td width="1%" style="height:20px;">
+					<h:selectOneMenu  style="border-radius:0px;height: 25px;width: 160px;" widgetVar="var1" value="#{crmMB.categoryName}" id="ccate">	
+						<f:selectItem itemLabel="--- Industry ---" itemValue="select"></f:selectItem>		
+						<f:selectItems value="#{crmMB.crmindustrylist}"></f:selectItems>
+					    <p:ajax process="@this" immediate="true" update="@form"></p:ajax> 
+					</h:selectOneMenu>
+				</td>
+				<td width="15%" style="height:20px;">
+					<p:commandButton icon="fa fa-plus" action="#{crmMB.addnew}"></p:commandButton>
+				</td>
+				<td width="15%" style="height:20px;"></td>	
+				<td width="15%" style="height:20px;"></td>	
+			</tr>
+			
+		</table>
+		<table width="95%">
+			<tr>		
+				<td width="15%" style="height:20px"><p id="ccateicon" style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>	
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td>
+				<td width="15%" style="height:20px"><p style="padding:1px;margin:0px"></p></td> 
+			</tr>
+		</table>
+		<table width="95%" style="height:20px;">
+			<tr> 
+				<td width="56%" style="height:20px;"></td>
+			</tr>
+		</table>
+		<div style="height:3px;"></div>
+		<table width="95%">
+			<tr>
+				<td>
+					<p:tabView id="tabviewid" style="width:98%;height:230px;border:1px !important;">
+					<p:tab title="Address" style="min-height:300px;">
+					<table width="100%">
+						<tr>
+							<td width="50%">
+								<h:outputText value="Present Address" class="labelTxt"></h:outputText>
+							</td>
+							<td width="15%">
+								<h:outputText value="Permanent Address" class="labelTxt"></h:outputText>
+							</td>
+							<td width="3%">
+								<p:selectBooleanCheckbox valueChangeListener="#{crmMB.checkBoxValueChange}" value="#{crmMB.sameCheckBox}">
+								<p:ajax event="valueChange" update=":center_content" process="@this"></p:ajax>
+								</p:selectBooleanCheckbox></td>
+							<td width="20%"> 
+								<h:outputText value="Same as Present Address" class="labelTxt"></h:outputText></td>
+							<td width="17%"></td>
+						</tr>
+					</table>
+					<table width="100%">
+						<tr>
+							<td width="50%">
+								<p:inputTextarea placeholder="Street *" value="#{crmMB.shipingaddress}" id="saddr" style="width:409px">
+								<p:ajax rocess="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputTextarea>
+								<p id="caddricon" style="padding:1px;margin:0px"></p>
+							</td>
+							<td width="50%">
+								<p:inputTextarea placeholder="Street" value="#{crmMB.permanentaddress}" rendered="#{crmMB.showFlag}" id="saddr1" styleClass="inputTxt" style="width:409px">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputTextarea>
+								<p:inputTextarea placeholder="Street" value="#{crmMB.permanentaddress}" rendered="#{crmMB.hiddenFlag}" id="saddr2" styleClass="inputTxt" style="width:409px" readonly="true">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputTextarea>
+								<p id="caddricon" style="font-size: 10px; color: red;padding:1px;" />
+							</td>
+						</tr>
+					</table>
+					<table width="100%">
+						<tr>
+							<td width="21%" style="height:10px">
+								<p:inputText placeholder="City *" value="#{crmMB.presentCity}" id="ccity1" styleClass="inputTxt" onblur="city('center_content:cus:tabviewid:ccity1','cuscityicon')">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputText>
+								
+							</td>
+							<td width="21%" style="height:10px">
+								<h:selectOneMenu value="#{crmMB.presentcountryID}" valueChangeListener="#{crmMB.crmPresentStateChange}" style="border-radius:0px;height: 25px;width: 200px;" id="ccoun1" widgetVar="var1">	
+									<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+									<f:selectItem itemLabel="India" itemValue="India"></f:selectItem> 
+				       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+				       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+				       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+				       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+				       				<f:ajax render="@form" execute="ccoun1"></f:ajax> 
+								</h:selectOneMenu>						
+							</td>		
+							<td width="8%"></td>		
+							<td width="21%" style="height:10px">
+								<p:inputText styleClass="inputTxt" placeholder="City " rendered="#{crmMB.showFlag}" value="#{crmMB.city}" id="ccity">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText value="#{crmMB.city}" styleClass="inputTxt" rendered="#{crmMB.hiddenFlag}" readonly="true"></p:inputText>
+							<br/>
+							</td>
+							<td width="21%"  style="height:10px">
+								<h:selectOneMenu value="#{crmMB.countryID}" rendered="#{crmMB.showFlag}" valueChangeListener="#{crmMB.crmPermenantStateChange}" 
+								style="border-radius:0px;height: 25px;width: 200px;" id="ccoun" widgetVar="var2" >
+								<f:selectItem itemLabel="--Select Country--" itemValue="select"></f:selectItem>
+			       				<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+			       				<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+			       				<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+			       				<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+			       				<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+			      				<p:ajax update="cstate" process="@this"></p:ajax>
+								</h:selectOneMenu>
+								<p:inputText value="#{crmMB.countryID}" styleClass="inputTxt" rendered="#{crmMB.hiddenFlag}" readonly="true"></p:inputText>
+							<br/>
+							</td>
+							<td width="8%"  style="height:10px"></td>
+						</tr>
+						<tr>
+							<td width="21%" style="height:10px"><p id="cuscityicon" style="padding:1px;margin:0px"></p></td>
+							<td width="21%" style="height:10px"><p id="ccounicon" style="padding:1px;margin:0px"></p></td>				
+						</tr>
+					</table>
+					<table width="100%">
+						<tr>
+							<td width="21%">
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code" value="#{crmMB.prePostCode}" id="cpcode1" onblur="city('center_content:cus:ccity','cuscityicon')">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cuscityicon" style="font-size: 10px; color: red;padding:1px;" />
+							</td>
+							<td width="21%">
+								<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{crmMB.presentstate}" id="cstate1">
+								<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+								<f:selectItems value="#{crmMB.stateList1}"></f:selectItems>
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</h:selectOneMenu>
+								<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" />
+							</td>
+							<td width="8%"></td>
+							<td width="21%">
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code"  value="#{crmMB.perPostCode}" rendered="#{crmMB.showFlag}" id="cpcode" onblur="city('center_content:cus:ccity','cuscityicon')">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code" readonly="true" value="#{crmMB.perPostCode}" rendered="#{crmMB.hiddenFlag}">
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cuscityicon" style="font-size: 10px; color: red;padding:2px;" />
+							</td>
+							<td width="21%">	
+								<h:selectOneMenu placeholder="State" style="border-radius:0px;height: 25px;width: 200px;" value="#{crmMB.state}" id="cstate" rendered="#{crmMB.showFlag}">
+								<f:selectItem itemLabel="--- Select State---" itemValue="" noSelectionOption="true"/>
+								<f:selectItems value="#{crmMB.stateList}"></f:selectItems> 
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</h:selectOneMenu>
+								<p:inputText styleClass="inputTxt" placeholder="State"  value="#{crmMB.state}" readonly="true" rendered="#{crmMB.hiddenFlag}" >
+								<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cstateicon" style="font-size: 10px; color: red;padding:1px;" /></td><td width="8%">
+							</td>
+						</tr>
+					</table>
+					</p:tab>
+					</p:tabView>
+				</td>
+				</tr>
+			</table>
+			<div style="height:30px"></div>
+		</center>					
+		<center>
+			<p:commandButton value="Submit" onclick="crmRegistrationValidation()" style="margin-left:-66px;"></p:commandButton>
+			<p:commandButton value="Reset"  process="@this" immediate="true" update="center_content" action="#{crmMB.crmreset}" ></p:commandButton>
+			<p:commandButton id="hidenBtn" update="center_content" process="@this" immediate="true" action="#{crmMB.crmRegister}" style="display:none" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+		</center><br></br><br></br><br></br>
+			<p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="confirm" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+				<center><div style="height:25px"></div>
+					<h:panelGrid columns="3" border="0" align="center">
+ 					<h:outputText value="Customer Registration has been successfully completed." styleClass="confirmTxt"></h:outputText>
+					</h:panelGrid></center>
+					<div style="height:30px"></div>
+				<center>
+				<p:commandButton value="Ok"  process="@this" immediate="true" update="center_content" oncomplete="PF('confirm').hide()" action="#{crmMB.crmNewNavigation}" ></p:commandButton></center>						
+				<br /><br />
+			</p:dialog>								
+       	</h:form>
+       	 </p:panel>
+       	<p:dialog header="NEW FORM" id="di" widgetVar="confirm1" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+				<p:outputPanel id="daypanelid1">
+				<h:form id="forms">
+				<table>
+				<tr>
+				<td>
+				<h:outputText value="#{crmMB.validate}" class="errorTxt" style="margin-left: 294px;"></h:outputText>
+				</td>
+				</tr>
+				</table><div style="height:10px"></div>
+				<table><tr>
+						<td><br />
+							<h:outputText value="Industry Name" class="labelTxt" style="margin-left: 150px;"></h:outputText>
+						</td>
+						<td width="1%"></td>
+						<td><br />
+							<p:inputText id="venday" styleClass="inputTxt" value="#{crmMB.crmcash}">
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+							</p:inputText> 
+						</td>
+					</tr>										
+				</table>
+				<table>
+				<tr>
+				<td style="height:20px"></td> 
+				</tr>
+				</table>
+				<center>			
+					<p:commandButton value="Save" process="@this"  update=":center_content:daypanelid1" action="#{crmMB.crmIndustrySave}"></p:commandButton>					
+				</center>
+				</h:form>
+				</p:outputPanel>
+			</p:dialog>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      			<p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+  			 </p:dialog> 
+       	<p:remoteCommand action="#{crmMB.customernamecheck}" name="customernamecheck"></p:remoteCommand>
+      </body>
+     </ui:define>
+    </ui:composition>
+  
+    

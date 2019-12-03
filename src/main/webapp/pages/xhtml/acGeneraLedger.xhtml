@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+  	<ui:define name="content">
+  		<p:panel header="General Ledger">
+  		<div style="height:20px;"></div>
+  			<table align="center" >
+  			<tr><td >
+  				<h:outputText value="Report Period" style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';"></h:outputText>  			
+  			</td>
+  			</tr>
+  			<tr style="width:50%">
+  			<td width="30%"> <br/> 			
+ 				<h:selectOneMenu style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';width:200px;height:30px;" id="reperiod"
+ 					value="#{accountsMB.accountsDatabean.reportPeriod}" class="text_ui" valueChangeListener="#{accountsMB.reportPeriodChange}">
+ 					<f:selectItem itemLabel="Report Period" itemValue="all" noSelectionOption="true"></f:selectItem>
+ 					<f:selectItem itemLabel="All dates" itemValue="All dates"></f:selectItem>
+ 					<f:selectItem itemLabel="Custom" itemValue="Custom"></f:selectItem>
+ 					<f:selectItem itemLabel="Today" itemValue="Today"></f:selectItem>
+ 					<f:selectItem itemLabel="This Week" itemValue="This Week"></f:selectItem>
+ 					<f:selectItem itemLabel="This Week-to-date " itemValue="This Week-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This month" itemValue="This month"></f:selectItem>
+ 					<f:selectItem itemLabel="This month-to-date" itemValue="This month-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This Quarter" itemValue="This Quarter"></f:selectItem>
+ 					<f:selectItem itemLabel="This Quarter-to-date" itemValue="This Quarter-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This Year" itemValue="This Year"></f:selectItem>
+ 					<f:selectItem itemLabel="This Year-to-date" itemValue="This Year-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="Yesterday" itemValue="Yesterday"></f:selectItem>
+ 					<f:selectItem itemLabel="Recent" itemValue="Recent"></f:selectItem>
+ 					<f:selectItem itemLabel="Last Week" itemValue="Last Week"></f:selectItem>
+ 					<f:selectItem itemLabel="Last Week-to-date" itemValue="Last Week-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Month" itemValue="Last Month"></f:selectItem>
+					<f:selectItem itemLabel="Last Month-to-date" itemValue="Last Month-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Quarter" itemValue="Last Quarter"></f:selectItem>
+					<f:selectItem itemLabel="Last Quarter-to-date" itemValue="Last Quarter-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Year" itemValue="Last Year"></f:selectItem>
+					<f:selectItem itemLabel="Last Year-to-date" itemValue="Last Year-to-date"></f:selectItem>
+					<p:ajax process="@this" event="valueChange" update="reperiod fdates tos tdates"> </p:ajax>
+ 				</h:selectOneMenu>
+ 				<br/><h:message for="reperiod" style="color:red;font-size:11px"></h:message>
+  			</td><td width="20%"><br/>
+  				<h:panelGroup id="fdates">
+  					<p:calendar pattern="dd/MM/yyyy" style="line-height: normal;margin-left:-24px;" placeholder="From Date"
+  						id="fdate" value="#{accountsMB.accountsDatabean.fromDate}" rendered="#{accountsMB.accountsDatabean.customflag}">
+  						<p:ajax update="fdate" process="@this" event="dateSelect"></p:ajax>	
+  					</p:calendar>
+  					<p:inputText readonly="true" value="#{accountsMB.accountsDatabean.fromDate}" style="margin-left:-24px;"
+  						 rendered="#{accountsMB.accountsDatabean.otherflag}">
+  						<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>	 
+  					</p:inputText>
+  					<br/><h:message for="fdate" style="color:red;font-size:11px"></h:message>
+  				</h:panelGroup> 
+  			</td> <td><br/>
+  				<h:panelGroup id="tos">
+  					<h:outputText value="to" style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';margin-left:10px;" 
+  						rendered="#{accountsMB.accountsDatabean.flag}"></h:outputText>
+  				</h:panelGroup>
+  			</td> <td width="20%"><br/>
+  				<h:panelGroup id="tdates">
+  					<p:calendar pattern="dd/MM/yyyy" style="line-height: normal;margin-left:-50px;" placeholder="To Date"
+  						id="tdate" value="#{accountsMB.accountsDatabean.toDate}" rendered="#{accountsMB.accountsDatabean.customflag}">
+  						<p:ajax update="tdate" process="@this" event="dateSelect"></p:ajax>	
+  					</p:calendar>
+  					<p:inputText readonly="true" value="#{accountsMB.accountsDatabean.toDate}" style="margin-left:-55px;" 
+  						 rendered="#{accountsMB.accountsDatabean.otherflag}">
+  						 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+  					</p:inputText>
+  					<br/><h:message for="tdate" style="color:red;font-size:11px"></h:message>
+  				</h:panelGroup>
+  			</td>  
+  			<td width="20%"><br/>
+  				<p:commandButton value="Run Report" actionListener="#{accountsMB.runReportGL}" process="@this" update="@form" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+  			</td></tr>  
+  			<tr style="height:30px;"></tr>
+  			</table><br/>
+  			<table align="center" width="100%">  			
+  			<tr align="center"><td>
+  			<h:outputText value="General Ledger" class="udLablehead"></h:outputText>
+  			<br/><br/>
+  			<h:outputText value="All Dates" class="udLable" rendered="#{accountsMB.accountsDatabean.flag1}"></h:outputText>  			
+  			<h:outputText value="#{accountsMB.accountsDatabean.fromDate}" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}">
+  			 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+  			</h:outputText>&nbsp;&nbsp;
+  			<h:outputText value="to" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}"></h:outputText>&nbsp;&nbsp;
+  			<h:outputText value="#{accountsMB.accountsDatabean.toDate}" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}">
+  			 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+  			</h:outputText>
+  			</td></tr></table><br/>
+  			<table width="100%"><tr><td width="92%"></td>
+	  		<td width="3%">
+	  		<h:commandLink>
+        		 <p:graphicImage value="../../images/pdf.png" title="PDF" width="24"/>
+        		<pe:exporter type="pdf" target="dataTable" fileName="General Ledger" subTable="true">
+        		</pe:exporter>
+    		</h:commandLink>
+	  		</td>
+            <td width="3%"><h:commandLink>
+             <p:graphicImage value="../../images/Printer.png" title="Print" width="24"/>
+				    <p:printer target="dataTable"  />
+				</h:commandLink></td><td width="2%"></td></tr></table><div style="height:10px"></div>
+  			<center>
+   <p:dataTable var="info" value="#{accountsMB.glLists}" id="dataTable" style="width:100%">
+       <p:columnGroup type="header">
+            <p:row>
+		        <p:column headerText="Date" style="width:90px">
+		       	</p:column>
+		       	<p:column headerText="Type" style="width:80px">
+		       	</p:column>
+		       	<p:column headerText="No." style="width:110px">
+		       	</p:column>
+		       	<p:column headerText="Name" style="width:90px">
+		      		</p:column>
+		       	<p:column headerText="Memo" style="width:80px">
+		       	</p:column>
+		       	<p:column headerText="Account" style="width:100px">
+		       	</p:column>
+		       	<p:column headerText="Amount" style="width:90px">
+		       	<f:facet name="header"><span>Amount<br/>(#{accountsMB.accountsDatabean.baseCurrency})</span></f:facet>
+		       	</p:column>
+		       	<p:column headerText="Balance" style="width:100px">
+		       	<f:facet name="header"><span>Balance<br/>(#{accountsMB.accountsDatabean.baseCurrency})</span></f:facet>
+		       	</p:column>
+            </p:row>
+       </p:columnGroup>
+       <p:subTable var="inf" value="#{info.generalLedgerList}" id="dataTable1" style="width:100%">
+            <f:facet name="header">
+                <h:outputText value="#{info.name}" />
+            </f:facet>
+            <p:column>
+                <h:outputText value="#{inf.date}" ><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>	
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.transactionType}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.transactionNo}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.payeeName}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.description}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.accounts}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.transamount}" style="text-align:right !important"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{inf.balance}" style="text-align:right !important"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+            </p:column>
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column colspan="6" footerText="Total for #{info.name} in #{accountsMB.accountsDatabean.baseCurrency}" styleClass="labelTxt" style="border:1px solid #9a9a9a;text-align:left;background:#fff;font-weight:bold;font-size:14px"/>
+                   	<p:column footerText="#{info.accountAmount}" styleClass="labelTxt" style="text-align:left;border:1px solid #9a9a9a;background:#fff;font-weight:bold;font-size:14px"></p:column>
+                    <p:column  style="text-align:right;border:1px solid #9a9a9a;background:#fff"></p:column>
+                </p:row>
+            </p:columnGroup>
+      </p:subTable>
+   </p:dataTable>
+</center><div style="height:200px;"></div>
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   	</p:dialog> 			
+</p:panel>  		
+</ui:define>
+</ui:composition>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+ <h:head>
+ 
+	<title> Inacsys | Purchase Report </title>
+ 	<link rel="stylesheet" href="../../css/css.css">
+ 
+	</link>
+</h:head>
+<body>
+
+			<h:form id="form">
+				
+				 <table align="center">
+				 <tr>
+				 <td>
+				 <center>
+				 <h:panelGrid>
+					<h:outputText value="#{purchaseReportMB.validate}" class="validation_ui" />
+				</h:panelGrid>
+				</center>
+				 <h:panelGrid columns="4" style="font-size:10px; width:650px; height: 70px;" align="center" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
+					<h:panelGroup>
+						<h:outputText value="From Date" class="label_ui"></h:outputText>
+						<h:outputText style="color:red" value="*"></h:outputText>
+					</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar  pattern="yyyy-MM-dd" value="#{purchaseReportMB.pFromDate}" id="fdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar>
+					 <h:message for="fdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="To Date" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar pattern="yyyy-MM-dd" value="#{purchaseReportMB.pToDate}" id="tdate">
+						<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar>
+					 <h:message for="tdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Type" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+				<h:selectOneRadio id="vt" value="#{purchaseReportMB.purchaseType}" style="font-size:10px;" valueChangeListener="#{purchaseReportMB.valueChange}">
+				<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+				<f:selectItem itemLabel="Multiple" itemValue="multiple"></f:selectItem>
+				<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+				 <h:message for="vt" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Vendor Name" class="label_ui" for="venauto" style="display:#{purchaseReportMB.singleTypeFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{purchaseReportMB.singleTypeFlag}" value="*" ></h:outputText>
+					<h:outputText value="All" class="label_ui" style="display:#{purchaseReportMB.multipleTypeFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{purchaseReportMB.multipleTypeFlag}" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText value="#{purchaseReportMB.vendorName}" styleClass="inputTxt" id="v1" style="display:#{purchaseReportMB.singleTypeFlag}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</p:inputText>
+					 <h:message for="v1" style="color:red;font-size:11px"></h:message>
+					<h:selectOneMenu id="av1" style="font-size:10px;width:200px;height:25px;display:#{purchaseReportMB.multipleTypeFlag}"  styleClass="ui-selectdropd" value="#{purchaseReportMB.allPurchaseType}" >
+		  	 			<f:selectItem itemLabel="--- Select ---" itemValue="---Select---"/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Purchase Delivery" itemValue="Purchase Delivery"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Purchase Return" itemValue="Purchase Return"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Purchase Close" itemValue="Purchase Close"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu>
+					 <h:message for="av1" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+			</h:panelGrid>
+			<center>
+				<h:panelGrid>
+						<p:commandButton  styleClass="button" style="font-size:15px" value="search" action="#{purchaseReportMB.searchReport}" ajax="false"></p:commandButton>
+				</h:panelGrid>
+			</center>
+				
+				 </td>
+				 </tr>
+				 </table>
+				 
+				<center>
+			<p:panel rendered="#{purchaseReportMB.purchaseReportDtFlag}" style="width:730px;border-width:0px">
+				<ui:include src="../../pages/xhtml/purchaseReportDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel rendered="#{purchaseReportMB.purchaseDetailReportDtFlag}" style="width:730px;border-width:0px">
+				<ui:include src="../../pages/xhtml/purchaseDetailedReportDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel  rendered="#{purchaseReportMB.purchaseDeliveredDtFlag}" style="width:730px;border-width:0px">
+			<ui:include src="../../pages/xhtml/purchaseDeliRepDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel  rendered="#{purchaseReportMB.purchasePaymentDtFlag}" style="width:730px;border-width:0px">
+			<ui:include src="../../pages/xhtml/purchasepayRepDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel  rendered="#{purchaseReportMB.purchasereturnDtFlag}" style="width:730px;border-width:0px">
+			<ui:include src="../../pages/xhtml/purchaseReturnDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:dialog visible="#{purchaseReportMB.norecordFlag}" header="Confirmation" widgetVar="cd" width="200px" height="60px" modal="true" resizable="false">
+	<center>
+	<h:panelGrid columns="3">
+	<p style="font-size:12px;">No Records Found</p></h:panelGrid><br/>
+	<p:commandButton value="Ok" onclick="PF('cd').hide()"></p:commandButton>
+	</center>
+	</p:dialog>
+			</center> 
+				 
+			</h:form>
+			
+	
+	</body>
+
+</ui:composition>

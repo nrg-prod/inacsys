@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Purchase Order Cancel </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javascript" src="../../js/mycustom.js"></script>
+     <script type="text/javascript" src="../../js/mycustompurchase.js"></script>
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table   border="0" class="form_background" align="center">
+
+
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+
+
+<tr>
+                    <td height="170">
+                      
+ 
+            
+    </td></tr>
+<tr>
+<td align="center" >
+<p:panel style="width:600px;">  
+	        <h:panelGrid class="labelTxt" columns="3"  style="width:500px;" align="left" >
+	       
+	         <h:outputText value="Purchase Order is Successfully Cancelled" style="font-size:18px;font-family:'Arial-san-serif'"/>
+	        
+<p:commandButton value="Ok"  styleClass="kbutton_ui" actionListener="#{purchaseViewMB.purchaseviewclose}"></p:commandButton>
+	        </h:panelGrid></p:panel>
+	        
+
+</td>
+</tr>     
+<tr>
+                    <td height="10">
+                      
+ 
+            
+    </td></tr>
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td  align="center">
+<br/>
+<table align="center">
+
+  
+
+ 
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

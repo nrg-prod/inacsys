@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Account out  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("paymentPurchase:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body onload="#{accountOutMB.dropAccount()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+<h:form id="paymentPurchase">
+<table   border="0" class="form_background" style="width:100%" >
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+
+  
+
+
+<tr><td align="center">
+<h:outputText value= "Purchase Payment"  class="header_ui"/>
+<br/>
+</td></tr>
+<tr ><td align="center"><h:outputText value="#{accountOutMB.validate}" class="validation_ui"/></td></tr>
+
+<tr>
+                    <td align="center"><table align="center"><tr><td>
+                    <rich:panel style="font-size:10px; width:450px;text-align:center; align:center" header="Search by Order Number">  
+	        <h:panelGrid  columns="9"  style="font-size:10px; width:450px;height: 103px;" align="center">  
+	           &nbsp;<h:outputText  />&nbsp;<h:outputText  />&nbsp;
+	            <h:outputLabel value="Order Number *"  class="label_ui" />
+	             &nbsp;
+	             
+	           
+				   	
+				  
+				  <h:selectOneMenu onkeypress="return process(event);" class="text_ui"  value="#{accountOutMB.orderNumbervalue}"  label="select one type" >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{accountOutMB.ordernumber}" />
+				    
+				 </h:selectOneMenu>
+				
+	          <h:outputText  />   <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	            
+	           &nbsp;
+	            <h:outputText value="" /><h:commandButton class="button" id="find" value="Find" action="#{accountOutMB.AccountOut}" /> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	    </rich:panel></td></tr></table>
+                   		 </td>
+                  </tr>
+                  <tr align="center">
+                  <td >
+                  <div style="height:200px ; width:750px; overflow-x:scroll; overflow-y:scroll;display:#{accountOutMB.flag}" align="center">
+                  <h:panelGrid style="display:#{accountOutMB.flag}">
+                   <rich:dataTable id="dataTable" var="info" value="#{accountOutMB.purchaselist}" columnsWidth="70px,125px,135px,145px,145px,165px">  
+         
+	        <h:column headerText="Product name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date  </span>      </f:facet>
+	            <h:outputText   class="label_ui" value="#{info.i0022.i0015.orderDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  </h:outputText>
+	        </h:column>  
+  
+	        <h:column headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Order Number  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.i0022.i0015.temOrderNumber}"  class="label_ui"/>  
+	        </h:column>  
+	         <h:column headerText="RollNo">  
+	            <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Firm Name </span>      </f:facet>
+	            
+	            <h:outputText value="#{accountOutMB.vendornumber}"  class="label_ui"/>  
+	        </h:column>  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Total Amount  </span>      </f:facet>
+	            <h:outputText class="label_ui"  value="Rp " />
+	            <h:outputText class="label_ui" value="#{info.payableAmount}" >
+	            <f:converter converterId="com.inventory.util.UrlConverter"/>
+	            </h:outputText>  
+	        </h:column>  
+  
+	   		<h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Paid Amount  </span>      </f:facet>
+	        <h:outputText class="label_ui"  value="Rp " />
+	        <h:outputText class="label_ui" value="#{info.paidAmount}" >
+	        <f:converter converterId="com.inventory.util.UrlConverter"/>
+	        </h:outputText>      
+	        </h:column> 
+	        <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Outstanding Amount  </span>      </f:facet>
+	            <h:outputText class="label_ui"  value="Rp " />
+	            <h:outputText class="label_ui" value="#{info.balanceAmount}" >
+	            <f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	        </h:column>   
+  <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Action </span>      </f:facet>
+	             <div align="center"> <h:commandButton class="button_ui"   value="Pay Now" action="#{accountOutMB.payNow}"/></div> 
+	        </h:column>
+          
+ </rich:dataTable> </h:panelGrid></div>
+  
+            
+                  </td></tr>
+                    
+</table> 
+
+</td></tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

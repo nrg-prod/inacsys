@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+
+ 
+
+	       <ui:define name="content">
+	       <h:form>
+	      <div style="height:5px;"></div>
+	     <table width="100%"><tr><td width="1%"> </td>
+  <td width="91%"> <p:commandButton icon="fa fa-plus" value="New" actionListener="#{aTransactionMB.transactionform}" ></p:commandButton></td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{aTransactionMB.search}" ajax="false"></p:commandButton></td>
+
+	</tr></table> 
+	
+						<div style="height:5px;"></div>
+	       
+          
+			<h:form>
+			<center>
+			<p:dataTable id="datatable" var="info"  style="font-size:10;width:98%;" widgetVar="salesInfo"
+								paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" value="#{aTransactionMB.tarns}" filteredValue="#{aTransactionMB.filteredList}">
+  							 <f:facet name="header">
+								<p:outputPanel style="text-align:right">
+									<p:inputText id="globalFilter"
+										onkeyup="PF('salesInfo').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+			<p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.serialno}"/>
+			</div>
+		</p:column>
+  	        <p:column  headerText="Transaction Number" width="140" filterBy="#{info.transactionNo}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+			<div align="center">
+	         <h:outputText  value="#{info.transactionNo}"></h:outputText> 
+	         </div>    
+	        </p:column>
+			 <p:column width="120" headerText="Transaction Date" filterBy="#{info.transdate}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+			<div align="center">
+	        <h:outputText  value="#{info.transdate}">
+	        <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText></div>    
+	        </p:column>		
+			 <p:column width="100" headerText="Payment Mode" filterBy="#{info.paymentMode}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+			<div align="center">
+	        <h:outputText  value="#{info.paymentMode}"></h:outputText></div>
+	         </p:column>				
+			<p:column width="120" headerText="Transaction Type" filterBy="#{info.transactionType}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<div align="center"> 
+		    <h:outputText  value="#{info.transactionType}"></h:outputText></div>
+	        </p:column>		
+	      	
+				 <p:column width="90" headerText="Amount" filterBy="#{info.amt1}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+	         	<h:panelGroup>
+               <div align="center">
+	            <h:outputText value="#{info.amt1}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+	            <h:outputText value="#{info.baseCurrency}"></h:outputText>
+	            </div> </h:panelGroup>
+ 	           </p:column>				
+							
+							<p:column width="50" headerText="Mode" filterBy="#{info.status}" filterMatchMode="contains"
+								filterStyle="display:none">
+							<h:outputText rendered="#{info.status=='credited'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.status=='debited'}" value="debit" class="filter2"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Bill'}" value="debit" class="filter2"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Expense'}" value="debit" class="filter2"></h:outputText>
+							<h:outputText rendered="#{info.transactionType=='Cheque'}"  value="debit" class="filter2"/>
+							<h:outputText rendered="#{info.transactionType=='Vendor Credit'}"  value="debit" class="filter2"/>
+							<h:outputText rendered="#{info.transactionType=='Invoice'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.transactionType=='Payment'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.transactionType=='Estimate'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.transactionType=='Sales Receipt'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.transactionType=='Credit Memo'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.transactionType=='Delayed Charge'}"  value="credit" class="filter1"/>
+							<h:outputText rendered="#{info.transactionType=='Time Activity'}"  value="credit" class="filter1"/>
+							</p:column>						
+						 <p:column width="110" headerText="Payment Status" filterBy="#{info.paymentStatus}" filterMatchMode="contains"
+								filterStyle="display:none"> 
+							<div align="center">
+					        <h:outputText  value="#{info.paymentStatus}" rendered="#{info.paymentStatus=='Paid'}"></h:outputText>
+					        <p:commandLink  value="Make Payment" style="color:blue;font-family:'Arial,san-serif' !important;;text-decoration: none !important;" update="center_content:payPanel" process="@this" immediate="true"
+					        	action="#{aTransactionMB.paymentTrans}" rendered="#{info.paymentStatus=='Pending'}">
+					        <f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>	
+					         <f:setPropertyActionListener target="#{aTransactionMB.transStatus}" value="#{info.transStatus}"></f:setPropertyActionListener>
+					        </p:commandLink></div>
+				         </p:column>	
+						
+							<p:column width="100" headerText="Action">
+							<div align="center"> <p:commandButton onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" align="center" icon="fa fa-search" action="#{aTransactionMB.transactionviewform1}">
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</p:commandButton>&nbsp;
+							<p:commandButton onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{info.paymentStatus!='Paid'}" align="center" icon="fa fa-pencil" action="#{aTransactionMB.transactionmodifyform}">							
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener target="#{aTransactionMB.mode}" value="#{info.mode}"></f:setPropertyActionListener>
+							<f:setPropertyActionListener target="#{aTransactionMB.paymentStatus}" value="#{info.paymentStatus}"></f:setPropertyActionListener>
+							</p:commandButton>&nbsp;
+							<p:commandButton icon="fa fa-remove" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" onclick="PF('cd1').show()"  align="center" >
+							<f:setPropertyActionListener target="#{aTransactionMB.transactionNo}" value="#{info.transactionNo}"></f:setPropertyActionListener>
+							</p:commandButton>
+							</div></p:column>						
+							
+							</p:dataTable>
+							</center>
+							
+					<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 					
+							
+			
+							<p:dialog header="Confirmation" widgetVar="cd1" modal="true" width="40%" height="120"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Transaction?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:30px"></div>
+					<p:commandButton value="Yes" action="#{aTransactionMB.delete}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+						 process="@this" immediate="true" oncomplete="PF('cd1').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd1').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="deleteconf" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="Transaction has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+							
+						
+								</h:form>
+	 </h:form>
+	 
+	 <p:dialog widgetVar="payment" header="Make Payment" modal="true" width="66%" id="paypanels"
+ 		height="100%" resizable="false" appendTo="@(body)">
+ 		<p:outputPanel id="payPanel">
+ 			<h:form>
+				<h:panelGrid columns="4" cellpadding="10" cellspacing="5" width="100%">
+					<h:outputLabel class="labelTxt" value="Payment Date"></h:outputLabel>
+					<p:inputText readonly="true" value="#{aTransactionMB.paydate}">
+						<p:ajax update="@form" process="@this"></p:ajax>
+					</p:inputText>
+					<h:outputLabel class="labelTxt" value="Due Date"></h:outputLabel>
+					<p:inputText readonly="true" value="#{aTransactionMB.duedate}">
+						<p:ajax update="@form" process="@this"></p:ajax>
+					</p:inputText>
+					<h:outputLabel class="labelTxt" value="Amount"></h:outputLabel>
+					<p:inputText readonly="true" value="#{aTransactionMB.amount}">
+						<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+						<p:ajax update="@form" process="@this"></p:ajax>
+					</p:inputText>
+					<h:outputLabel class="labelTxt" value="Deposit To"></h:outputLabel>
+					<h:panelGroup>					
+						<h:selectOneMenu value="#{aTransactionMB.accounts}" style="width:200px;height:25px;" rendered="#{aTransactionMB.transStatus=='credited'}" 
+						    id="details" valueChangeListener="#{aTransactionMB.addAccount}">
+							<f:selectItem itemLabel="Select" itemValue=""></f:selectItem>
+							<f:selectItem itemLabel="+ Add New" itemValue="add"></f:selectItem>
+							<f:selectItems value="#{aTransactionMB.atypeList}"></f:selectItems>
+							<p:ajax update="center_content:payPanel1" process="@this" event="valueChange"></p:ajax>
+						</h:selectOneMenu>
+						<p:inputText readonly="true" value="#{aTransactionMB.accounts}" rendered="#{aTransactionMB.transStatus=='debited'}" >
+						<p:ajax update="@form" process="@this"></p:ajax>
+					</p:inputText>
+						
+						<br/>
+						<h:message for="details" styleClass="errorTxt"></h:message>
+					</h:panelGroup>
+					<h:outputLabel class="labelTxt" value="Balance Amount" rendered="#{aTransactionMB.aflag}"></h:outputLabel>
+					<p:inputText styleClass="inputTxt" readonly="true" value="#{aTransactionMB.balAmount}" rendered="#{aTransactionMB.aflag}">
+						<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+						<p:ajax update="@form" process="@this"></p:ajax>
+					</p:inputText>
+					<h:outputLabel class="labelTxt" value="Paying Amount"></h:outputLabel>
+					<h:panelGroup>
+						<p:inputText id="payamt" styleClass="inputTxt" value="#{aTransactionMB.payAmount}">
+							<p:ajax update="@form" process="@this"></p:ajax>
+						</p:inputText>
+						<br/>
+						<h:message for="payamt" styleClass="errorTxt"></h:message>
+					</h:panelGroup>
+				</h:panelGrid>
+				<center>
+					<p:commandButton value="Pay" action="#{aTransactionMB.makePayment}" update="@form" process="@this"></p:commandButton>
+				</center>
+				<br/>
+			</h:form>
+ 		</p:outputPanel>
+ 	</p:dialog>
+ 
+ 	<p:dialog widgetVar="addAccount" header="Account" modal="true" width="70%" 
+ 		height="100%" resizable="false" appendTo="@(body)">
+ 		<p:outputPanel id="payPanel1">
+ 			<h:form>
+ 			<div style="height:20px;"></div>
+ 			<center><h:outputText value="#{aTransactionMB.payValidate}" style="color:red;" class="labelTxt"></h:outputText> </center>
+				<br/>
+				<h:panelGrid columns="4" cellpadding="10" cellspacing="5" width="50%" style="height:100%;">
+					<h:outputLabel class="labelTxt" value="Account Type"></h:outputLabel>
+					<h:selectOneMenu value="#{aTransactionMB.accounts}" id="acc" style="width:200px;height:25px;" valueChangeListener="#{aTransactionMB.accountType}">
+						<f:selectItem itemLabel="Other Current Assets" itemValue="Other Current Assets"></f:selectItem>
+						<f:selectItem itemLabel="Bank" itemValue="Bank"></f:selectItem>
+						<p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+					</h:selectOneMenu>
+					<h:outputLabel class="labelTxt" value="Name"></h:outputLabel>
+					<h:panelGroup>
+						<p:inputText styleClass="inputTxt" readonly="true" id="detName" value="#{aTransactionMB.detailName}">
+						<p:ajax update="@form" process="@this"></p:ajax>
+						</p:inputText>
+						<br/>
+						<h:message for="detName" styleClass="errorTxt"></h:message>
+					</h:panelGroup>
+					<h:outputLabel></h:outputLabel><h:outputLabel ></h:outputLabel>
+					<h:outputLabel ></h:outputLabel><h:outputLabel></h:outputLabel>
+					<h:outputLabel class="labelTxt" value="Detail Type"></h:outputLabel>
+					<h:selectOneListbox style="width:240px;height:20%;" valueChangeListener="#{aTransactionMB.detailSelect}">
+						<f:selectItems value="#{aTransactionMB.detailTypes}"></f:selectItems>
+						<p:ajax update="@form" process="@this"></p:ajax>
+					</h:selectOneListbox>
+					
+					<h:outputLabel class="labelTxt" value="Balance"></h:outputLabel>
+					<p:inputText styleClass="inputTxt" id="bal" value="#{aTransactionMB.balance}">
+					<p:ajax update="bal" process="@this" ></p:ajax>
+					</p:inputText>
+				</h:panelGrid>
+				<br/>
+				<center>
+					<p:commandButton value="Save" icon="fa fa-database" action="#{aTransactionMB.accountDeposit}"
+						update="center_content:payPanel center_content:payPanel1" process="@this"></p:commandButton>
+				</center>
+			</h:form>
+ 		</p:outputPanel>
+ 	</p:dialog>
+ 	<p:dialog header="CONGRATULATIONS...!!" styleClass="confirm" widgetVar="payDialog" modal="true"
+							width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Payment has been successfully completed."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:30px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="@form"
+		 actionListener="#{aTransactionMB.viewForm}" oncomplete="PF('payDialog').hide()"></p:commandButton></center>						
+						<br /><br /></p:dialog>	
+ </ui:define>
+ </ui:composition>

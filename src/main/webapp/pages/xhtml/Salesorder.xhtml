@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	 xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+	      <h:form id="sform">
+	     <div style="height:5px;"></div>
+	      <table width="100%"><tr> <td width="1%"> </td>
+  <td width="91%"> <p:commandButton icon="fa fa-plus" value="New" ajax="false" style="font-size:14px;" action="#{salesOrderFormMB.salesOrderpage}"></p:commandButton></td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{salesViewMB.salesView}" ajax="false"></p:commandButton></td>
+
+	</tr></table> 
+	    
+       <div style="height:25px;">
+						<center><h:outputText value="#{salesViewMB.validate}" id="msgs" class="errorTxt"></h:outputText></center>
+						</div>
+       <center>
+	     <p:dataTable id="dataTabl" var="info" widgetVar="salesInfo" value="#{salesViewMB.sales}" filteredValue="#{salesViewMB.filterList}"  
+	    reflow="true" 
+	    emptyMessage="No information found with given criteria" style="width:98%">
+    <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               <p:inputText id="globalFilter" onkeyup="PF('salesInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+         <p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.serialno}"/>
+			</div>
+		</p:column>
+        <p:column filterBy="#{info.salesOrderDate}" headerText="Date"  filterMatchMode="contains" filterStyle="display:none" style="width:80px">
+             <div align="center">
+             <h:inputHidden value="#{info.salesId}"></h:inputHidden>
+             <h:outputText  value="#{info.salesOrderDate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText></div>  
+        </p:column>         
+         <p:column filterBy="#{info.salesorder}" headerText="SO Number"  filterMatchMode="contains" filterStyle="display:none" style="width:120px">
+           <div align="center"><h:outputText  value="#{info.salesorder}"></h:outputText></div> 
+        </p:column>           
+		<p:column filterBy="#{info.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="width:130px">
+           <div align="center"><h:outputText   value="#{info.customerName}"></h:outputText></div>
+        </p:column>
+		<p:column filterBy="#{info.phones}" headerText="Number"  filterMatchMode="contains" filterStyle="display:none" style="width:110px">
+           <div align="center"><h:outputText  value="#{info.phones}"></h:outputText></div>  
+        </p:column>
+        <p:column filterBy="#{info.currency}" headerText="Amount"  filterMatchMode="contains" filterStyle="display:none" style="width:100px">
+	           <div align="center"><h:outputText  value="#{info.baseCurrency}">  </h:outputText>&nbsp; <h:outputText  value="#{info.currencyAmount}">  
+			<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+			</div>  
+        </p:column>
+        <p:column filterBy="#{info.status2}" headerText="Payment"  filterMatchMode="contains" filterStyle="display:none" style="width:75px">
+           <div align="center"><h:outputText class="filter1" value="#{info.status2}" rendered="#{info.status2== 'paid' || info.status2== 'Paid'}" />
+		   <h:outputText class="filter2" value="#{info.status2}" rendered="#{info.status2== 'pending'}" />
+		   <h:outputText class="filter2" value="#{info.status2}" rendered="#{info.status2== 'unpaid'}" /> 
+		   <h:outputText class="filter2" value="#{info.status2}" rendered="#{info.status2== 'Partial'}"/>
+		   </div> 
+        </p:column>
+        <p:column filterBy="#{info.status}" headerText="Delivery Status"  filterMatchMode="contains" filterStyle="display:none" style="width:140px">
+          <div align="center"> <h:outputText class="filter3" value="#{info.status}" rendered="#{info.status== 'insert'}" />
+		   <h:outputText class="filter3" value="#{info.status}" rendered="#{info.status== 'inprocess'}" />
+		   <h:outputText class="filter1" value="#{info.status}" rendered="#{info.status== 'Delivered'}" />
+		   <h:outputText class="filter2" value="#{info.status}" rendered="#{info.status== 'cancelled'}" /></div>
+        </p:column>
+        <p:column headerText="Approval Status" filterBy="#{info.approvalStatus}" width="140" filterMatchMode="contains" filterStyle="display:none">
+      <center><h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}">
+      </h:outputText></center>
+      </p:column>
+        <p:column headerText="RollNo" style="width:110px" >
+			<f:facet name="header">
+				<span class="datatableTxt">Action </span>
+			</f:facet>
+			<div align="center">
+				<p:commandButton icon="fa fa-search" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" action="#{salesOrderFormMB.salesorderview}">
+					<f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesorder}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.salesId}" value="#{info.salesId}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.customerName}" value="#{info.customerName}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.odate}" value="#{info.salesOrderDate}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.currency}" value="#{info.currency}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.baseCurrency}" value="#{info.baseCurrency}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.approvalStatus}" value="#{info.approvalStatus}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.totalPrice}" value="#{info.crossTotal}"></f:setPropertyActionListener>
+				</p:commandButton>
+				<h:panelGroup  rendered="#{info.status2=='pending' or info.status2=='paid'}" >
+		            <p:commandButton  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" icon="fa fa-pencil" onclick="PF('edits').show();"></p:commandButton>
+		            <p:dialog header="Alert" widgetVar="edits" modal="true" width="40%" height="100" resizable="false" appendTo="@(body)">
+					 	<div style="height:40px"></div>
+					    <center><h:outputText value="It cannot be Edited! " styleClass="confirmTxt"/></center>
+					 	<div style="height:30px"></div>
+					</p:dialog>
+             </h:panelGroup> 
+    			<h:panelGroup  rendered="#{info.status2=='unpaid'}" > 
+	            <p:commandButton icon="fa fa-pencil" action="#{salesViewMB.salesedit}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" rendered="#{info.approvalStatus!='draft'}">
+					<f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesorder}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener target="#{salesViewMB.salesId}" value="#{info.salesId}"></f:setPropertyActionListener>
+				</p:commandButton>
+			</h:panelGroup>
+			<h:panelGroup  rendered="#{info.status2!='unpaid' or info.status!='insert'}" ></h:panelGroup> 
+   			<h:panelGroup  rendered="#{info.status2=='unpaid' and info.status=='insert'}" > 
+	           <p:commandButton icon="fa fa-remove" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('conf').show();" rendered="#{info.approvalStatus!='draft'}">
+			   <f:setPropertyActionListener target="#{salesViewMB.salereferencenumber}" value="#{info.salesorder}"></f:setPropertyActionListener>
+			   <f:setPropertyActionListener target="#{salesViewMB.salesId}" value="#{info.salesId}"></f:setPropertyActionListener>
+			   </p:commandButton>
+			</h:panelGroup>
+		</div>
+	</p:column>
+			
+		</p:dataTable><br/> <br/></center>
+	<div style="height:100px"></div>
+	
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 
+	
+		<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="45%" height="130"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Sales Order has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:20px">
+				
+				</div><center><p:commandButton value="Ok" action="#{salesViewMB.salesView}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						styleClass="button_ui"></p:commandButton></center>
+			</p:dialog>
+<p:dialog header="Confirmation" widgetVar="conf" modal="true" width="45%" height="130"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Sales Order?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:20px"></div>
+					<p:commandButton value="Yes" action="#{salesViewMB.salesOrderdelete}"
+						 process="@this" immediate="true" onsuccess="PF('conf').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('conf').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+						<div style="height:10px"></div>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="confirmsu" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="Sales order has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+	    </h:form>
+               
+ 	</ui:define>
+	</ui:composition>
+	

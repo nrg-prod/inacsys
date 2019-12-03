@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title>  Modify Buyer Registration  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+	
+<table align="center">
+
+
+<tr><td align="center">   <h:outputText value="#{buyersViewMB.validate}" class="validation_ui"/></td></tr> 
+
+<tr>
+<td align="center" >
+	  <rich:panel style="width:625px;">  
+	        <h:panelGrid class="label_ui" border="0"  cellspacing="7"   columns="4"  style="font-size:14px; width:620px;" align="left" cellpadding="3">  
+
+				
+				<h:outputText class="label_ui" value="Customer Name *"></h:outputText>
+				<h:inputText class="text_ui" value="#{buyersViewMB.customerName}"/>
+ 				<h:outputText class="label_ui" value="City *"></h:outputText>
+				<h:inputText class="text_ui" value="#{buyersViewMB.city}"  />
+				<h:outputText class="label_ui" value=" State "></h:outputText>
+				<h:inputText class="text_ui" value="#{buyersViewMB.state}"  />
+				<h:outputText class="label_ui" value="Country *"></h:outputText>
+				<h:selectOneMenu value="#{buyersViewMB.country}" class="text_ui">
+				<f:selectItem itemLabel="---select---" itemValue=""></f:selectItem>
+				<f:selectItems value="#{buyersViewMB.countrys}"></f:selectItems>
+				</h:selectOneMenu>
+				<h:outputText class="label_ui" value="Phone Number *"></h:outputText>
+				<h:outputText class="text_ui" value="#{buyersViewMB.phoneNumber}" />
+				<h:outputText class="label_ui" value="Email"></h:outputText>
+				<h:inputText class="text_ui" value="#{buyersViewMB.mail}" />
+				
+<h:outputText class="label_ui" value="Tax Number"></h:outputText>
+				<h:inputText class="text_ui" value="#{buyersViewMB.taxnumber}"/>
+					<h:outputText class="label_ui" value="Category Name *"/>
+				<h:selectOneMenu class="text_ui" value="#{buyersViewMB.categoryName}" onchange="submit()" valueChangeListener="#{buyersViewMB.categoryChange}">
+				<f:selectItem itemLabel="--- select ---" itemValue=""></f:selectItem>
+				<f:selectItem itemLabel="Store" itemValue="Store"></f:selectItem>
+				<f:selectItem itemLabel="Personal" itemValue="Personal"></f:selectItem>
+				<f:selectItem itemLabel="Company" itemValue="Company"></f:selectItem>
+				<!-- <f:ajax render="@form" execute="@form"></f:ajax> -->
+				</h:selectOneMenu>
+ 				
+				<h:outputText class="label_ui" value="Note"></h:outputText>
+				<h:inputTextarea class="text_ui" value="#{buyersViewMB.note}" />
+				<h:outputText class="label_ui" value="Shipping Address "></h:outputText>
+				<h:inputTextarea class="text_ui" value="#{buyersViewMB.address}" />
+
+				
+				</h:panelGrid>
+ </rich:panel>
+
+
+<rich:panel style="width:625px;">  
+
+                       
+
+	         
+		         <h:panelGrid class="label_ui" border="0" columns="2" style=" width: 100px;" >
+
+<p:commandButton  value="Update" styleClass="button_ui" action="#{buyersViewMB.buyerUpdate}" ></p:commandButton>
+
+
+
+</h:panelGrid>
+	  </rich:panel>
+      <p:dialog widgetVar="confirm" header="Confirmation">
+  <h:panelGrid class="label_ui" columns="4"  style="font-size:14px;width:250px; " align="left" >	       
+	        							<h:outputText value="Successfully updated the customer details" class="header_ui"/>
+	        							
+	       							 </h:panelGrid>
+  </p:dialog>              
+</td>
+</tr>                 
+ 
+
+   
+</table> 
+
+
+</h:form>
+
+</body>
+</ui:composition>

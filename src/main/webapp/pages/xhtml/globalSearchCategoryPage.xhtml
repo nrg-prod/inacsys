@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+<p:panel header="#{loginMB.loginaccess.modulename} Details Form">
+<p:outputPanel id="categoryPanelEdit">
+				<h:form id="cateEdit">
+				<center><div style="height:10px"></div>
+				<table width="98%"><tr><td align="right">
+	<h:outputText value="PENDING FOR APPROVAL" styleClass="confirmTxt" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}"></h:outputText>
+	</td></tr></table>
+						<div style="height:10px"><h:message for="catename" class="errorTxt"></h:message></div>
+						<p:panelGrid style="height:100px;" columns="3" styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category Name" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" id="catename" value="#{productViewMB.productRegister.category}">
+								<p:ajax update="catename" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" id="catedes" value="#{productViewMB.productRegister.description}">
+								<p:ajax update="@form" process="@this"></p:ajax></p:inputText>		
+							</h:panelGroup>
+							</p:panelGrid></center>
+							
+						<div style="height:15px"></div>
+						<center>
+							
+							<p:commandButton value="Update" process="@this" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}"
+							action="#{productViewMB.categoryEditSave}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+							update="center_content:categoryPanelEdit" immediate="true">
+							</p:commandButton>
+							<p:commandButton value="Cancel" process="@this" rendered="#{loginMB.loginaccess.approvalStatus=='Approved'}"
+							action="dashboard.xhtml?faces-redirect=true" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+							update="center_content:categoryPanelEdit" immediate="true">
+							</p:commandButton>
+							<p:commandButton value="Close" process="@this" rendered="#{loginMB.loginaccess.approvalStatus=='draft'}"
+							action="dashboard.xhtml?faces-redirect=true" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+							update="center_content:categoryPanelEdit" immediate="true">
+							</p:commandButton>
+						</center>
+							</h:form>
+							</p:outputPanel>
+							<p:dialog header="CONGRATULATIONS...!!" widgetVar="updateConfirm" modal="true" width="50%"  height="120px"
+				 resizable="false"
+				appendTo="@(body)">
+				<center><div style="height:15px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Category Information has been successfully modified."
+									styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:20px"></div>
+						<center><p:commandButton value="Ok" action="#{productViewMB.categoryView}" update=":center_content" oncomplete="PF('updateConfirm').hide()"
+						process="@this" immediate="true"></p:commandButton>
+						</center>
+			</p:dialog>
+</p:panel>
+</ui:define>
+</ui:composition>

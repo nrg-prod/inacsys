@@ -1,0 +1,2165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../../pages/xhtml/home.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:a4j="http://richfaces.org/a4j" xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+<p:panel header="Approval Console Form" id="panelID">
+<br /><br /> 
+<center>
+<p:dataTable var="info" style="padding:2px;width:50%" value="#{loginMB.approvalConsoleList}" widgetVar="ApprovalInfo"  id="dataTables" emptyMessage="No information found with given criteria"
+      paginator="true" paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top"
+      pageLinks="5">
+     <p:column headerText="Menu Name" width="80">
+		<div align="center">
+			<h:outputText value="#{info.menuName}"></h:outputText>
+		</div>
+     </p:column>
+     <p:column headerText="Approval Queue Count" width="100">
+    	<div align="center">
+			<h:outputText value="#{info.approvalCount}"></h:outputText>
+		</div>
+     </p:column>
+     <p:column headerText="View" width="50">
+     	<div align="center">
+			<p:commandButton icon="fa fa-search" action="#{loginMB.approvalView}" update="@form" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('approvalDlg').show();">
+				<f:setPropertyActionListener value="#{info.menuName}" target="#{loginMB.menuName}"></f:setPropertyActionListener>
+			</p:commandButton>
+		</div>
+     </p:column>
+</p:dataTable>
+</center>
+</p:panel>
+		<p:dialog id="dlgid" header="Approval Form" widgetVar="approvalDlg" width="85%" resizable="false" appendToBody="true" height="500px">
+				<p:outputPanel id="vendorPanelid" rendered="#{loginMB.menuName=='Vendor'}">
+    			<h:form id="vendorappview">
+    			<div style="height: 10px;"></div>
+				<div style="height: 15px;">
+				<center>
+					<h:outputText value="#{vendorViewFormMB.validate}" class="errorTxt"></h:outputText>
+				</center>
+				</div><div style="height: 10px;"></div>
+				<center>
+					<p:dataTable var="info" style="padding:2px;width:98%" filteredValue="#{vendorViewFormMB.filterList1}"
+						value="#{vendorViewFormMB.ven1}" widgetVar="VendorInfo"
+						id="dataTable"
+						emptyMessage="No information found with given criteria"
+						paginator="true" paginatorAlwaysVisible="false"
+						reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+								<p:inputText id="globalFilter"
+									onkeyup="PF('VendorInfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword">
+								</p:inputText>
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{vendorViewFormMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox id="chk" value="#{info.vendorCheck}"
+								rendered="#{info.approvalStatus=='draft'}"
+								style="display:#{vendorViewFormMB.approveButtonFlag}">
+							<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>	
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column filterBy="#{info.vendorPhoneNumber}" width="120" style="height:25px"
+							headerText="Vendor Name" filterMatchMode="contains"
+							filterStyle="display:none">
+							<h:outputText value="#{info.vendorPhoneNumber}" />
+							<h:inputHidden value="#{info.vendor_Id}"></h:inputHidden>
+						</p:column>
+						<p:column filterBy="#{info.phonenumberv}" width="100" style="height:25px"
+							headerText="Number" filterMatchMode="contains"
+							filterStyle="display:none">
+							<h:outputText value="#{info.phonenumberv}">
+							</h:outputText>
+						</p:column>
+						<p:column filterBy="#{info.peresonIncharge}" width="100" style="height:25px"
+							headerText="Incharge" filterMatchMode="contains"
+							filterStyle="display:none">
+							<h:outputText value="#{info.peresonIncharge}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Country" filterBy="#{info.country1}" style="height:25px"
+							width="80" filterMatchMode="contains" filterStyle="display:none">
+							<h:outputText value="#{info.country1}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="State" filterBy="#{info.state}" width="100" style="height:25px"
+							filterMatchMode="contains" filterStyle="display:none">
+							<h:outputText value="#{info.state}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Approval Status" style="height:25px"
+							filterBy="#{info.approvalStatus}" width="130"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{info.approvalStatus}"
+									rendered="#{info.approvalStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column width="150" headerText="Action" style="height:25px">
+							<div align="center">
+								<p:commandButton icon="fa fa-search"
+									action="#{vendorViewFormMB.Viewven}"
+									update=":center_content:dialogPanelView"
+									oncomplete="PF('vendorDialogView').show();" immediate="true"
+									process="@this" onstart="PF('statusDialog').show();"
+									onsuccess="PF('statusDialog').hide();">
+									<f:setPropertyActionListener
+										target="#{vendorViewFormMB.vendor_Id}"
+										value="#{info.vendor_Id}" />
+								</p:commandButton>
+
+							</div>
+						</p:column>
+					</p:dataTable>
+				<div style="height: 30px"></div>
+					<p:commandButton value="Approve" icon="fa fa-check" onstart="PF('statusDialog').show();"
+						onsuccess="PF('statusDialog').hide();"
+						action="#{vendorViewFormMB.vendorApproval}" 
+						rendered="#{vendorViewFormMB.userType=='Maker/Authorizer'}"
+						update=":center_content:vendorPanelid" process="@this">
+						</p:commandButton>
+				</center>
+				<div style="height: 20px"></div>
+				</h:form>
+</p:outputPanel>				
+			<p:panel rendered="#{loginMB.menuName=='Customer'}">
+				<p:outputPanel id="customerPanelid">
+    			<h:form id="customerappview">
+    			<div style="height: 5px;"></div>
+				<div style="height: 25px;">
+					<center>
+						<h:outputText value="#{buyersViewMB.validate}" class="errorTxt"></h:outputText>
+					</center>
+				</div>
+
+				<center>
+
+					<p:dataTable id="dataTable1" var="info1" widgetVar="BuyersInfo"
+						value="#{buyersViewMB.catbuy}" filteredValue="#{buyersViewMB.filterList}"
+						style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;width:98%;"
+						pageLinks="10" reflow="true" paginatorPosition="top"
+						paginatorAlwaysVisible="false" paginator="true" rows="10"
+						emptyMessage="No information found with given criteria">
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+								<p:inputText id="globalFilter" onkeyup="PF('BuyersInfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword">
+								</p:inputText>
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{buyersViewMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox value="#{info1.customerCheck}"
+								rendered="#{info1.approvalStatus=='draft'}"
+								style="display:#{buyersViewMB.approveButtonFlag}">
+								<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>	
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column headerText="Name" width="80" style="height:25px"
+							filterBy="#{info1.customerName}" filterMatchMode="contains"
+							filterStyle="display:none">
+							<h:outputText class="label_ui" value="#{info1.customerName}" />
+							<h:inputHidden value="#{info1.buyer_ID}"></h:inputHidden>
+						</p:column>
+						<p:column headerText="Number" width="80" style="height:25px"
+							filterBy="#{info1.phoneno}" filterMatchMode="contains"
+							filterStyle="display:none">
+
+							<h:outputText class="label_ui" value="#{info1.phoneno}" />
+
+						</p:column>
+						<!-- <p:column headerText="City" filterBy="#{info1.city}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.city}" />
+
+							</p:column> -->
+						<p:column headerText="Country" filterBy="#{info1.country}" style="height:25px"
+							width="80" filterMatchMode="contains" filterStyle="display:none">
+							<h:outputText class="label_ui" value="#{info1.country}" />
+
+						</p:column>
+						<p:column headerText="Category" filterBy="#{info1.categoryName}" style="height:25px"
+							width="80" filterMatchMode="contains" filterStyle="display:none">
+
+							<h:outputText class="label_ui" value="#{info1.categoryName}" />
+
+						</p:column>
+						<!-- <p:column headerText="Email" filterBy="#{info1.mail}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.mail}" />
+
+							</p:column> -->
+						<p:column headerText="Company" filterBy="#{info1.company}" style="height:25px"
+							width="100" filterMatchMode="contains" filterStyle="display:none">
+
+							<h:outputText class="label_ui" value="#{info1.company}" />
+
+						</p:column>
+						<p:column headerText="State" filterBy="#{info1.state}" width="100" style="height:25px"
+							filterMatchMode="contains" filterStyle="display:none">
+
+							<h:outputText class="label_ui" value="#{info1.state}" />
+
+						</p:column>
+
+						<!-- <p:column headerText="Code" filterBy="#{info1.postCode}" width="60"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.postCode}" />
+
+							</p:column>  -->
+						<p:column headerText="Approval Status" style="height:25px"
+							filterBy="#{info1.approvalStatus}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{info1.approvalStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{info1.approvalStatus}"
+									rendered="#{info1.approvalStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column> 
+						<p:column headerText="Action" width="130" style="height:25px">
+							<div align="center">
+								<p:commandButton icon="fa fa-search"
+									action="#{buyersViewMB.buyerView}"
+									onstart="PF('statusDialog').show();"
+									onsuccess="PF('statusDialog').hide();"
+									oncomplete="PF('customerDialogView').show();"
+									update=":center_content:dialogPanel1View" process="@this">
+
+									<f:setPropertyActionListener target="#{buyersViewMB.phoneno}"
+										value="#{info1.phoneno}">
+									</f:setPropertyActionListener>
+									<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}"
+										value="#{info1.buyer_ID}">
+									</f:setPropertyActionListener>
+								</p:commandButton>
+
+							</div>
+						</p:column>
+
+
+					</p:dataTable>
+				<div style="height: 20px"></div>
+
+					<p:commandButton value="Approve" icon="fa fa-check"
+						action="#{buyersViewMB.customerApproval}"
+						onstart="PF('statusDialog').show();"
+						onsuccess="PF('statusDialog').hide();"
+						rendered="#{buyersViewMB.userType=='Maker/Authorizer'}"
+						update=":center_content:customerPanelid" process="@this"></p:commandButton>
+				</center>
+				<div style="height: 200px"></div>
+
+				</h:form>
+				</p:outputPanel>
+			</p:panel>
+
+				<p:outputPanel id="purchasePanelid" rendered="#{loginMB.menuName=='Purchase'}">
+    			<h:form id="purchaseappview">
+    			<div style="height: 10px;"></div>
+					<div style="height: 15px;">
+						<center>
+							<h:outputText value="#{purchaseViewMB.validate}" class="errorTxt"></h:outputText>
+						</center>
+					</div>
+					<center>
+					<p:dataTable id="dataTable2" var="info" widgetVar="purchaseInfo"
+						value="#{purchaseViewMB.result4}" reflow="true" pageLinks="10"
+						style="width:98%" paginatorPosition="top" filteredValue="#{purchaseViewMB.purchaseOrder.filterList}"
+						paginatorAlwaysVisible="false" paginator="true" rows="10"
+						emptyMessage="No information found with given criteria">
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('purchaseInfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{purchaseViewMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox value="#{info.purchaseCheck}"
+								rendered="#{info.approveStatus=='draft'}"
+								style="display:#{purchaseViewMB.approveButtonFlag}">
+								<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column filterBy="#{info.orderDate}" headerText="Date" style="height:25px"
+							filterMatchMode="contains" filterStyle="display:none" width="80">
+							<div align="center">
+								<h:inputHidden value="#{info.purchaseid}"></h:inputHidden>
+								<h:outputText value="#{info.orderDate}">
+									<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.orderNumber}" headerText="PO Number" style="height:25px"
+							filterMatchMode="contains" filterStyle="display:none" width="110">
+							<div align="center">
+								<h:outputText value="#{info.orderNumber}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.firmName}" headerText="Firm Name" width="100"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="height:25px">
+							<div align="center">
+								<h:outputText value="#{info.firmName}" />
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.currency}" headerText="Amount"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:90px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.currency}">
+									<f:converter converterId="com.inventory.util.UrlConverter" />
+								</h:outputText>
+								<h:outputText value="#{info.baseCurrency}"></h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.status2}" headerText="Payment Status"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:140px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.status2}" class="filter2"
+									rendered="#{info.status2=='pending'}" />
+								<h:outputText value="#{info.status2}" class="filter2"
+									rendered="#{info.status2=='unpaid'}" />
+								<h:outputText value="#{info.status2}" class="filter1"
+									rendered="#{info.status2=='paid'}" />
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.status3}" headerText="Delivery Status" 
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:140px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.status3}" class="filter1"
+									rendered="#{info.status3=='delivered'}" />
+								<h:outputText value="#{info.status3}" class="filter3"
+									rendered="#{info.status3=='Waiting'}" />
+								<h:outputText value="#{info.status3}" class="filter3"
+									rendered="#{info.status3=='inprocess'}" />
+								<h:outputText value="#{info.status3}" class="filter2"
+									rendered="#{info.status3=='cancelled'}" />
+							</div>
+						</p:column>
+						<p:column headerText="Approval Status" style="height:25px"
+							filterBy="#{info.approveStatus}" width="140"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{info.approveStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{info.approveStatus}"
+									rendered="#{info.approveStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column filterBy="#{info.firmName}" headerText="View" style="height:25px"
+							filterMatchMode="contains" filterStyle="display:none" width="50">
+							<div align="center">
+								<h:panelGroup rendered="#{info.status!='cancelled'}">
+									<p:commandButton icon="fa fa-search" update="@form" process="@this"
+										action="#{purchaseOrderFromMB.purchaseorderview}"
+										onstart="PF('statusDialog').show();"
+										onsuccess="PF('statusDialog').hide();">
+										<f:setPropertyActionListener
+											target="#{purchaseViewMB.orderNumber}"
+											value="#{info.orderNumber}" />
+										<f:setPropertyActionListener
+											target="#{purchaseViewMB.approveStatus}"
+											value="#{info.approveStatus}" />
+										<f:setPropertyActionListener
+											target="#{purchaseViewMB.purchaseid}"
+											value="#{info.purchaseid}" />
+										<f:setPropertyActionListener
+											target="#{purchaseViewMB.currency}" value="#{info.currency}" />
+										<f:setPropertyActionListener
+											target="#{purchaseViewMB.baseCurrency}"
+											value="#{info.baseCurrency}" />
+									</p:commandButton>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{info.status=='cancelled'}">
+
+									<p:commandButton icon="fa fa-search" 
+										onclick="PF('confirm').show()"
+										onstart="PF('statusDialog').show();"
+										onsuccess="PF('statusDialog').hide();">
+									</p:commandButton>
+								</h:panelGroup>
+							</div>
+
+						</p:column>
+
+
+					</p:dataTable>
+					<div style="height:20px"></div>
+					
+					<p:commandButton value="Approve"
+						action="#{purchaseViewMB.purchaseApproval}"
+						onstart="PF('statusDialog').show();"
+						onsuccess="PF('statusDialog').hide();"
+						rendered="#{purchaseViewMB.userType=='Maker/Authorizer'}"
+						update="center_content:purchasePanelid" process="@this"></p:commandButton></center>
+				</h:form>
+				</p:outputPanel>
+				
+			<p:outputPanel id="salesquote" rendered="#{loginMB.menuName=='Sales Quote'}">
+			<h:form id="salform">
+			<div style="height: 10px;"></div>
+			<div style="height:25px;">
+			<center><h:outputText value="#{salesOrderFormMB.validate}" class="errorTxt"></h:outputText></center>
+			</div>
+			<center>
+				<p:dataTable var="info" style="padding:2px;width:98%" value="#{salesOrderFormMB.quoteTablelist}" widgetVar="quotInfo"  
+					id="dataTable" emptyMessage="No information found with given criteria" paginator="true" 
+					paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5" filteredValue="#{salesOrderFormMB.filterList}">
+			      	<f:facet name="header">
+			       		<p:outputPanel style="text-align:right">
+			       			<p:inputText id="globalFilter" onkeyup="PF('quotInfo').filter()" style="width:20%;height:25px;" placeholder="Enter keyword" />
+			       		</p:outputPanel>
+			      	</f:facet>
+			      	<p:column headerText="" width="30" style="height:25px">
+							<p:selectBooleanCheckbox rendered="#{info.approvalStatus == 'PENDING FOR APPROVAL'}" value="#{info.purchaseCheck}" style="display:#{salesOrderFormMB.approveButtonFlag}">
+								<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+			      	<p:column width="30" headerText="No">
+						<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+						<div align="center">
+							<h:outputText class="labelTxt" value="#{info.serialno}"/>
+						</div>
+					</p:column>
+			      	<p:column filterBy="#{info.productName}" width="120" headerText="Name" filterMatchMode="contains" filterStyle="display:none">
+			      		<div align="center">
+			      			<h:outputText value="#{info.productName}" />
+			      		</div>
+			      	</p:column>
+			      	<p:column filterBy="#{info.quotationcode}" width="100" headerText="Sales Quote" filterMatchMode="contains" filterStyle="display:none">
+			      		<div align="center">
+			     			<h:outputText class="labelTxt" value="#{info.quotationcode}"/>
+			     			<h:inputHidden value="#{info.quoteID}"></h:inputHidden>
+			     		</div>
+			      	</p:column>
+			      	<p:column filterBy="#{info.phoneNumber}" width="100"  headerText="Phone Number" filterMatchMode="contains" filterStyle="display:none">
+			      		<div align="center">
+			      			<h:outputText class="labelTxt" value="#{info.phoneNumber}"/>
+			      		</div>
+			      	</p:column>
+			      	<p:column headerText="Approval Status" filterBy="#{info.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+			      		<div align="center">
+			      			<h:outputText class="labelTxt" value="#{info.approvalStatus}" />
+			      		</div>
+			      	</p:column>
+			     </p:dataTable> 
+			     <div style="height:20px"></div>
+					<p:commandButton value="Approve" update="center_content:salesquote" process="@this" action="#{salesOrderFormMB.quoteconsoleApproval}" onstart="PF('statusDialog').show();"	onsuccess="PF('statusDialog').hide();"></p:commandButton>
+			     </center>
+				</h:form>
+				</p:outputPanel>
+				
+			<p:outputPanel id="salesPanelid" rendered="#{loginMB.menuName=='Sales'}">
+    			<h:form id="salesappview">
+    			<div style="height: 10px;"></div>
+				<div style="height: 25px;">
+					<center>
+						<h:outputText value="#{salesViewMB.validate}" id="msgs"
+							class="errorTxt"></h:outputText>
+					</center>
+				</div>
+				<center>
+					<p:dataTable id="dataTablsales" var="info" widgetVar="salesInfo"
+						value="#{salesViewMB.sales}"
+						filteredValue="#{salesViewMB.filterList}" reflow="true"
+						paginator="true" rows="10" pageLinks="10" paginatorPosition="top"
+						paginatorAlwaysVisible="false"
+						emptyMessage="No information found with given criteria"
+						style="width:98%">
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+								<p:inputText id="globalFilter"
+									onkeyup="PF('salesInfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{salesViewMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox value="#{info.salesCheck}"
+								rendered="#{info.approvalStatus=='draft'}"
+								style="display:#{salesViewMB.approveButtonFlag}">
+							<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>	
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column filterBy="#{info.salesOrderDate}" headerText="Date"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:80px;height:25px">
+							<div align="center">
+								<h:inputHidden value="#{info.salesId}"></h:inputHidden>
+								<h:outputText value="#{info.salesOrderDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.salesorder}" headerText="SO Number"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:110px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.salesorder}"></h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.customerName}"
+							headerText="Customer Name" filterMatchMode="contains"
+							filterStyle="display:none" style="width:130px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.customerName}"></h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.phones}" headerText="Number"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:110px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.phones}"></h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.currency}" headerText="Amount"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:100px;height:25px">
+							<div align="center">
+								<h:outputText value="#{info.currency}">
+									<f:converter converterId="com.inventory.util.UrlConverter" />
+								</h:outputText>
+								<h:outputText value="#{info.baseCurrency}">
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.status2}" headerText="Payment"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:75px;height:25px">
+							<div align="center">
+								<h:outputText class="filter1" value="#{info.status2}"
+									rendered="#{info.status2== 'paid'}" />
+								<h:outputText class="filter2" value="#{info.status2}"
+									rendered="#{info.status2== 'pending'}" />
+								<h:outputText class="filter2" value="#{info.status2}"
+									rendered="#{info.status2== 'unpaid'}" />
+							</div>
+						</p:column>
+						<p:column filterBy="#{info.status}" headerText="Delivery Status"
+							filterMatchMode="contains" filterStyle="display:none"
+							style="width:140px;height:25px">
+							<div align="center">
+								<h:outputText class="filter3" value="#{info.status}"
+									rendered="#{info.status== 'insert'}" />
+								<h:outputText class="filter3" value="#{info.status}"
+									rendered="#{info.status== 'inprocess'}" />
+								<h:outputText class="filter1" value="#{info.status}"
+									rendered="#{info.status== 'Delivered'}" />
+								<h:outputText class="filter2" value="#{info.status}"
+									rendered="#{info.status== 'cancelled'}" />
+							</div>
+						</p:column>
+						<p:column headerText="Approval Status"
+							filterBy="#{info.approvalStatus}" width="140" style="height:25px"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{info.approvalStatus}"
+									rendered="#{info.approvalStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="RollNo" style="width:110px;height:25px">
+							<f:facet name="header">
+								<span class="datatableTxt"> Action </span>
+							</f:facet>
+
+							<div align="center">
+								<p:commandButton icon="fa fa-search"
+									onstart="PF('statusDialog').show();"
+									onsuccess="PF('statusDialog').hide();" update="@form" process="@this"
+									action="#{salesOrderFormMB.salesorderview}">
+									<f:setPropertyActionListener
+										target="#{salesViewMB.salereferencenumber}"
+										value="#{info.salesorder}"></f:setPropertyActionListener>
+
+									<f:setPropertyActionListener target="#{salesViewMB.salesId}"
+										value="#{info.salesId}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener
+										target="#{salesViewMB.customerName}"
+										value="#{info.customerName}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener target="#{salesViewMB.odate}"
+										value="#{info.salesOrderDate}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener target="#{salesViewMB.currency}"
+										value="#{info.currency}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener
+										target="#{salesViewMB.baseCurrency}"
+										value="#{info.baseCurrency}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener
+										target="#{salesViewMB.approvalStatus}"
+										value="#{info.approvalStatus}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener target="#{salesViewMB.totalPrice}"
+										value="#{info.crossTotal}"></f:setPropertyActionListener>
+								</p:commandButton>
+								<h:panelGroup
+									rendered="#{info.status2=='pending' or info.status2=='paid'}">
+									<p:commandButton onstart="PF('statusDialog').show();"
+										onsuccess="PF('statusDialog').hide();" icon="fa fa-pencil"
+										onclick="PF('edits').show();">
+									</p:commandButton>
+									<p:dialog header="Alert" widgetVar="edits" modal="true"
+										width="40%" height="100" resizable="false" appendTo="@(body)">
+										<div style="height: 40px"></div>
+										<center>
+											<h:outputText value="It cannot be Edited! "
+												styleClass="confirmTxt" />
+										</center>
+
+
+										<div style="height: 30px"></div>
+									</p:dialog>
+								</h:panelGroup>
+							</div>
+						</p:column>
+
+					</p:dataTable>
+					<div style="height: 20px;"></div>
+					<p:commandButton value="Approve"
+						action="#{salesViewMB.salesApproval}"
+						onstart="PF('statusDialog').show();"
+						onsuccess="PF('statusDialog').hide();" update=":center_content:salesPanelid" process="@this"></p:commandButton>
+				</center>
+				<div style="height: 100px"></div>
+</h:form>
+</p:outputPanel>
+<p:outputPanel id="qsalesPanelid" rendered="#{loginMB.menuName=='Quick Sales'}">
+    			<h:form id="qsalesappview">
+    			<div style="height: 10px;"></div>
+				<div style="height: 25px;">
+					<center>
+						<h:outputText value="#{quickSaleViewMB.validate}" id="msgss"
+							class="errorTxt"></h:outputText>
+					</center>
+				</div>
+				<center>
+					<p:dataTable id="dataTableQSC" var="info"
+						value="#{quickSaleViewMB.sales1}" style="width:98%;"
+						paginator="true" rows="10" pageLinks="10" paginatorPosition="top"
+						paginatorAlwaysVisible="false" reflow="true"
+						filteredValue="#{quickSaleViewMB.filteredList}" widgetVar="qsInfo"
+						emptyMessage="No information found with given criteria">
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter" onkeyup="PF('qsInfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{quickSaleViewMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox value="#{info.quicksalesCheck}"
+								rendered="#{info.approvalStatus=='draft'}"
+								style="display:#{quickSaleViewMB.approveButtonFlag}">
+								<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column headerText="Sales Order Date" style="height:25px"
+							filterBy="#{info.salesdateorder}" filterMatchMode="contains"
+							width="120" filterStyle="display:none">
+							<center>
+								<h:inputHidden value="#{info.qsalesid}"></h:inputHidden>
+								<h:outputText value="#{info.salesdateorder}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</center>
+						</p:column>
+
+
+						<p:column headerText="Sales Order Number" style="height:25px"
+							filterBy="#{info.salesnum}" filterMatchMode="contains"
+							width="130" filterStyle="display:none">
+							<center>
+								<h:outputText value="#{info.salesnum}">
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="Payment Mode" filterBy="#{info.salesno}" style="height:25px"
+							filterMatchMode="contains" width="100" filterStyle="display:none">
+							<center>
+								<h:outputText value="#{info.salesno}">
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="Gross Total" filterBy="#{info.cross1}" style="height:25px"
+							filterMatchMode="contains" width="160" filterStyle="display:none">
+							<center>
+
+								<h:outputText value="#{info.cross1}">
+									<f:converter converterId="com.inventory.util.UrlConverter" />
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="Approval Status" style="height:25px"
+							filterBy="#{info.approvalStatus}" width="130"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{info.approvalStatus}"
+									rendered="#{info.approvalStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column>
+
+						<p:column headerText="Phone" width="100" style="height:25px">
+							<f:facet name="header">
+								<span class="datatableTxt"> Action </span>
+							</f:facet>
+
+							<div align="center">
+								<p:commandButton icon="fa fa-search" update="@form" process="@this"
+									onstart="PF('statusDialog').show();"
+									onsuccess="PF('statusDialog').hide();"
+									action="#{quickSaleMB.Quicksale}">
+									<f:setPropertyActionListener
+										target="#{salesViewMB.salereferencenumber}"
+										value="#{info.salesnum}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info.salesdateorder}"
+										target="#{salesViewMB.salesdateorder}">
+									</f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info.cross1}"
+										target="#{salesViewMB.cross1}">
+									</f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info.qsalesid}"
+										target="#{salesViewMB.salesId}">
+									</f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info.approvalStatus}"
+										target="#{salesViewMB.approvalStatus}">
+									</f:setPropertyActionListener>
+								</p:commandButton>
+								&nbsp;
+							</div>
+						</p:column>
+
+
+					</p:dataTable>
+					<div style="height:20px"></div>
+
+					<p:commandButton value="Approve"
+						action="#{quickSaleViewMB.quickSalesApproval}"
+						onstart="PF('statusDialog').show();"
+						onsuccess="PF('statusDialog').hide();"
+						rendered="#{quickSaleViewMB.userType=='Maker/Authorizer'}"
+						update=":center_content:qsalesPanelid" process="@this"></p:commandButton>
+				</center>
+				<div style="height: 100px"></div>
+			</h:form>
+			</p:outputPanel>
+			<p:outputPanel id="employeePanelid" rendered="#{loginMB.menuName=='Employee'}">
+    			<h:form id="employeeappview">
+    			<div style="height: 10px;"></div>
+
+				<div style="height: 25px;">
+					<center>
+						<h:outputText value="#{employeeDetailsViewFormMB.validate}"
+							class="errorTxt"></h:outputText>
+					</center>
+				</div>
+
+				<center>
+					<p:dataTable id="EmployeeDataTable" var="info" widgetVar="Employee"
+						value="#{employeeDetailsViewFormMB.employeeDetailList}"
+						style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row"
+						paginator="true" rows="10" filteredValue="#{employeeDetailsViewFormMB.filterList}"
+						emptyMessage="No information found with given criteria"
+						pageLinks="10" paginatorAlwaysVisible="false"
+						paginatorPosition="top" reflow="true">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter" onkeyup="PF('Employee').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{employeeDetailsViewFormMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox value="#{info.employeeCheck}"
+								rendered="#{info.approvalStatus=='draft'}"
+								style="display:#{employeeDetailsViewFormMB.approveButtonFlag}">
+							<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>	
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column filterBy="#{info.regid}" width="100" style="height:25px"
+							headerText="Registration ID" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+								<h:inputHidden value="#{info.employeeDetailsId}"></h:inputHidden>
+								<h:outputText class="label_ui" value="#{info.regid}"></h:outputText>
+							</center>
+						</p:column>
+						<p:column width="100" headerText="Employee ID" style="height:25px"
+							filterBy="#{info.employeeid}" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+								<h:outputText class="label_ui" value="#{info.employeeid}"></h:outputText>
+							</center>
+						</p:column>
+						<p:column width="100" filterBy="#{info.name}" style="height:25px"
+							headerText="Employee Name" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+								<h:outputText class="label_ui" value="#{info.name}"></h:outputText>
+							</center>
+						</p:column>
+						<p:column width="100" filterBy="#{info.phno}" style="height:25px"
+							headerText="Phone Number" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+								<h:outputText class="label_ui" value="#{info.phno}"></h:outputText>
+							</center>
+						</p:column>
+						<p:column width="100" filterBy="#{info.designation}" style="height:25px"
+							headerText="Designation" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+
+								<h:outputText class="label_ui" value="#{info.designation}"></h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="Approval Status" style="height:25px"
+							filterBy="#{info.approvalStatus}" width="130"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{info.approvalStatus}"
+									rendered="#{info.approvalStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column width="120" headerText="Action"
+							style="align-item:center;height:25px">
+							<div align="center">
+								<p:commandButton icon="fa fa-search" update="@form" process="@this"
+									action="#{employeeDetailsViewFormMB.viewform}">
+									<f:setPropertyActionListener
+										target="#{employeeDetailsViewFormMB.regid}"
+										value="#{info.regid}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener
+										target="#{employeeDetailsViewFormMB.employeeDetailsId}"
+										value="#{info.employeeDetailsId}"></f:setPropertyActionListener>
+								</p:commandButton>
+
+
+
+							</div>
+						</p:column>
+					</p:dataTable>
+					<div style="height:20px"></div>
+					<p:commandButton value="Approve" 
+						action="#{employeeDetailsViewFormMB.employeeApproval}"
+						rendered="#{employeeDetailsViewFormMB.userType=='Maker/Authorizer'}"
+						update="center_content:employeePanelid" process="@this"></p:commandButton>
+				</center>
+				</h:form>
+				</p:outputPanel>
+				<p:outputPanel id="payrollPanelid" rendered="#{loginMB.menuName=='Payroll'}">
+    			<h:form id="payrollappview">
+    			<div style="height: 10px;"></div>
+				<p:outputPanel id="epaydetail">
+					<center>
+						<div style="height: 20px;"><h:outputText value="#{employeePayrollViewFormMB.validate}"
+							class="errorTxt" id="msgspayroll"></h:outputText></div>
+					</center><div style="height: 20px;"></div>
+					<p:dataTable id="datatableempdetail" var="Epaydetailinfo"
+						widgetVar="payrolldetail" filteredValue="#{employeePayrollViewFormMB.employeePayroll.filterList}"
+						style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row"
+						paginator="true" rows="10"
+						emptyMessage="No information found with given criteria"
+						pageLinks="10" paginatorAlwaysVisible="false"
+						paginatorPosition="top" reflow="true"
+						value="#{employeePayrollViewFormMB.value1}">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter" onkeyup="PF('payrolldetail').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column headerText="" width="30" style="height:25px"
+							rendered="#{employeePayrollViewFormMB.userType=='Maker/Authorizer'}">
+							<p:selectBooleanCheckbox value="#{Epaydetailinfo.payrollCheck}"
+								rendered="#{Epaydetailinfo.approvalStatus=='draft'}">
+								<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column headerText="Payroll Number" width="140" style="height:25px"
+							filterBy="#{Epaydetailinfo.payrollno}" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+								<h:inputHidden value="#{Epaydetailinfo.id}"></h:inputHidden>
+								<h:outputText class="label_ui"
+									value="#{Epaydetailinfo.payrollno}" />
+							</center>
+
+						</p:column>
+						<p:column headerText="Employee ID" width="110" style="height:25px"
+							filterBy="#{Epaydetailinfo.payrollno}" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+
+								<h:outputText class="label_ui"
+									value="#{Epaydetailinfo.employeeid}" />
+							</center>
+
+						</p:column>
+						<p:column headerText="Name" width="100" style="height:25px"
+							filterBy="#{Epaydetailinfo.name}" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.name}" />
+							</center>
+
+						</p:column>
+
+						<p:column headerText="Date" width="80" style="height:25px"
+							filterBy="#{Epaydetailinfo.todayDate}" filterMatchMode="contains"
+							filterStyle="display:none">
+							<center>
+
+
+								<h:outputText class="label_ui"
+									value="#{Epaydetailinfo.todayDate}"></h:outputText>
+							</center>
+
+						</p:column>
+
+
+						<p:column headerText="Working Days" width="110" style="height:25px"
+							filterBy="#{Epaydetailinfo.workingdays}"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+
+
+								<h:outputText class="label_ui"
+									value="#{Epaydetailinfo.workingdays}"></h:outputText>
+							</center>
+
+						</p:column>
+
+						<p:column headerText="Total Salary" width="120" style="height:25px"
+							filterBy="#{Epaydetailinfo.totalsalary}"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui"
+										value="#{Epaydetailinfo.totalsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup>
+							</center>
+
+						</p:column>
+						<p:column headerText="Approval Status" style="height:25px"
+							filterBy="#{Epaydetailinfo.approvalStatus}" width="130"
+							filterMatchMode="contains" filterStyle="display:none">
+							<center>
+								<h:outputText value="Waiting for Approval"
+									rendered="#{Epaydetailinfo.approvalStatus=='draft'}"></h:outputText>
+								<h:outputText value="#{Epaydetailinfo.approvalStatus}"
+									rendered="#{Epaydetailinfo.approvalStatus!='draft'}">
+								</h:outputText>
+							</center>
+						</p:column>
+
+						<p:column headerText="Action" width="100" style="height:25px">
+							<div align="center">
+								<p:commandButton icon="fa fa-search" update="@form" process="@this"
+									action="#{employeePayrollViewFormMB.payrollViewz}">
+									<f:setPropertyActionListener
+										target="#{employeePayrollViewFormMB.payrollno}"
+										value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener
+										target="#{employeePayrollViewFormMB.employeeid1}"
+										value="#{Epaydetailinfo.id}"></f:setPropertyActionListener>
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-pencil"
+									rendered="#{Epaydetailinfo.approvalStatus!='draft'}"
+									action="#{employeePayrollViewFormMB.payrollEdit}">
+									<f:setPropertyActionListener
+										target="#{employeePayrollViewFormMB.payrollno}"
+										value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-remove" align="center"
+									rendered="#{Epaydetailinfo.approvalStatus!='draft'}"
+									onclick="PF('payrolldelete').show()">
+									<f:setPropertyActionListener
+										target="#{employeePayrollViewFormMB.payrollno}"
+										value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+								</p:commandButton>
+							</div>
+						</p:column>
+						<f:facet name="footer">
+							<div style="height: 20px;"></div>
+						
+								<p:commandButton value="Approve"
+									action="#{employeePayrollViewFormMB.payrollApproval}"
+									rendered="#{employeePayrollViewFormMB.userType=='Maker/Authorizer'}"
+									update=":center_content:payrollPanelid" process="@this"></p:commandButton>
+							
+
+
+						</f:facet>
+					</p:dataTable>
+
+					<br />
+					<br />
+				</p:outputPanel>
+</h:form>
+</p:outputPanel>
+<p:outputPanel id="categoryPanelid" rendered="#{loginMB.menuName=='Category'}">
+    			<h:form id="categoryappview">
+    			<div style="height: 10px;"></div>
+					
+					<div style="height:25px;">
+						<center><h:outputText value="#{productViewMB.validate}" class="errorTxt"></h:outputText></center>
+						</div>
+		
+	<center>
+			<p:dataTable id="dataTableCategory" var="info" widgetVar="categoryViewList"
+				value="#{productViewMB.categoryList}" filteredValue="#{productViewMB.filterList}"
+				
+				style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;width:98%"
+				
+				paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+
+						<p:inputText id="globalFilter"
+							onkeyup="PF('categoryViewList').filter()"
+							style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				 <p:column headerText="" width="30" rendered="#{productViewMB.userType=='Maker/Authorizer'}" style="height:25px">
+      <p:selectBooleanCheckbox value="#{info.categoryCheck}" rendered="#{info.approvalStatus=='draft'}" style="display:#{productViewMB.approveButtonFlag}">
+      <p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>
+      </p:selectBooleanCheckbox>
+      </p:column> 
+				<p:column headerText="Category Name" width="100" filterBy="#{info.categoryname}"
+					filterMatchMode="contains" filterStyle="display:none" style="height:25px">
+					<h:inputHidden value="#{info.id}"></h:inputHidden>
+					<h:outputText value="#{info.categoryname}">
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Description" style="height:25px" filterBy="#{info.description}" width="140"
+					filterMatchMode="contains" filterStyle="display:none">
+					<center>
+					<h:outputText value="#{info.description}"/></center>
+				</p:column>
+				
+
+				<p:column headerText="Approval Status" style="height:25px" width="120" filterMatchMode="contains" 
+					filterStyle="display:none" filterBy="#{info.approvalStatus}">
+					 <center><h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}">
+      </h:outputText></center>
+				</p:column>
+				<p:column headerText="Action" width="120" style="height:25px">
+					<div align="center">
+					<p:commandButton icon="fa fa-search"
+							action="#{productViewMB.categoryDetailsView}"
+							oncomplete="PF('categoryDialogView').show();" update=":center_content:categoryPanelView" process="@this">
+					<f:setPropertyActionListener
+								target="#{productViewMB.id}"
+								value="#{info.id}" />
+					</p:commandButton>&nbsp;		
+					</div>
+				</p:column>
+	</p:dataTable>
+	 <div style="height:20px;"></div><div style="display:#{productViewMB.approveButtonFlag}"><p:commandButton value="Approve" action="#{productViewMB.categoryApproval}" rendered="#{productViewMB.userType=='Maker/Authorizer'}"
+	   update=":center_content:categoryPanelid" process="@this"></p:commandButton>
+		</div></center>	
+					
+			</h:form>
+			</p:outputPanel>
+			
+			<p:outputPanel id="quotationPanelid" rendered="#{loginMB.menuName=='Quotation'}">
+    			<h:form id="quotappview">
+    			<div style="height: 10px;"></div>
+			<div style="height:25px;">
+	<center><h:outputText value="#{vendorRegisterFormMB.validate}" class="errorTxt"></h:outputText></center>
+</div>
+<center>
+	<p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationList}" widgetVar="quotInfo"  
+		id="dataTable" emptyMessage="No information found with given criteria" paginator="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5" filteredValue="#{vendorRegisterFormMB.filterList}">
+      	<f:facet name="header">
+       		<p:outputPanel style="text-align:right">
+       			<p:inputText id="globalFilter" onkeyup="PF('quotInfo').filter()" style="width:20%;height:25px;" placeholder="Enter keyword" />
+       		</p:outputPanel>
+      	</f:facet>
+      	<p:column headerText="" width="30" style="height:25px" rendered="#{vendorRegisterFormMB.userType=='Maker/Authorizer'}">
+      		<div align="center">
+      			<p:selectBooleanCheckbox value="#{info.quotationCheck}" rendered="#{info.approvalStatus=='draft'}" style="display:#{vendorRegisterFormMB.approveButtonFlag}">
+      			<p:ajax process="@this" update="@form" partialSubmit="true"></p:ajax>
+      			</p:selectBooleanCheckbox>
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.quotationNumber}" style="height:25px" width="120" headerText="Quotation Number" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.quotationNumber}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.orderDate}" style="height:25px" width="100" headerText="Order Date" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText value="#{info.orderDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.status}" width="100" style="height:25px" headerText="Status" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="In Progress" rendered="#{info.choosenStatus!='Choosed'}"></h:outputText>
+      			<h:outputText value="Completed" rendered="#{info.choosenStatus=='Choosed'}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Approval Status" style="height:25px" filterBy="#{info.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      			<h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column width="150" headerText="Action" style="height:25px">
+      		<div align="center">
+      			<h:panelGroup rendered="#{info.choosenStatus!='Choosed'}">
+       			<p:commandButton icon="fa fa-search" action="#{vendorRegisterFormMB.quotationView}" update=":center_content:qdialogPanelView" oncomplete="PF('quotationDialogView').show();" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+       				<f:setPropertyActionListener target="#{vendorRegisterFormMB.quotationNumber}" value="#{info.quotationNumber}" />
+       			</p:commandButton>&nbsp;</h:panelGroup>
+      		</div>
+      	</p:column>
+     </p:dataTable> 
+     <div style="height:20px"></div><div style="display:#{vendorRegisterFormMB.approveButtonFlag}"><p:commandButton value="Approve" action="#{vendorRegisterFormMB.quotationApproval}" rendered="#{vendorRegisterFormMB.userType=='Maker/Authorizer'}" process="@this" update=":center_content:quotationPanelid" onstart="PF('statusDialog').show();" 
+      onsuccess="PF('statusDialog').hide();"></p:commandButton>
+</div></center><div style="height:20px"></div>
+</h:form>
+</p:outputPanel>
+
+<p:outputPanel id="productPanelid" rendered="#{loginMB.menuName=='Product'}">
+    			<h:form id="prodappview">
+    			<div style="height: 10px;"></div>
+    			<div style="height: 20px;" align="center"><h:outputText value="#{productViewMB.validate}" class="errorTxt"></h:outputText></div>
+    			<center>
+    			<p:dataTable id="dataTable" var="info" widgetVar="ProductViewListS"
+				value="#{productViewMB.finalList}"
+				filteredValue="#{productViewMB.filterList}"
+				style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;width:98%"
+				
+				paginator="true" rows="10" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+
+						<p:inputText id="globalFilter"
+							onkeyup="PF('ProductViewListS').filter()"
+							style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="" width="30" style="height:25px" rendered="#{productViewMB.userType=='Maker/Authorizer'}">
+      				<p:selectBooleanCheckbox value="#{info.productCheck}" rendered="#{info.approvalStatus=='draft'}" style="display:#{productViewMB.approveButtonFlag}">
+      				<p:ajax update="@form" process="@this" partialSubmit="true"></p:ajax>
+      				</p:selectBooleanCheckbox>
+     	 		</p:column>
+				<p:column headerText="Date" width="70" style="height:25px" filterBy="#{info.date}"
+					filterMatchMode="contains" filterStyle="display:none">
+					<h:inputHidden value="#{info.product_ID}"></h:inputHidden>
+					<h:outputText value="#{info.date}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Product Name" style="height:25px" filterBy="#{info.productName}" width="120"
+					filterMatchMode="contains" filterStyle="display:none">
+					<center>
+					<h:outputText value="#{info.productName}"/></center>
+				</p:column>
+				
+
+				<p:column headerText="Category" width="90" style="height:25px" filterMatchMode="contains" 
+					filterStyle="display:none" filterBy="#{info.categoryname}"><center>
+					<h:outputText value="#{info.categoryname}"/></center>
+				</p:column>
+				<p:column headerText="Product Code" filterMatchMode="contains" style="height:25px" width="110"
+					filterStyle="display:none" filterBy="#{info.productlimit}"><center>
+					<h:outputText value="#{info.productlimit}"/></center>
+				</p:column>
+				<p:column headerText="Unit" width="50" style="height:25px" filterMatchMode="contains"
+					filterStyle="display:none" filterBy="#{info.unit}">
+					<h:outputText value="#{info.unit}"/>
+				</p:column>
+
+				<p:column headerText="Buying Price" style="height:25px" width="110" filterMatchMode="contains"
+					filterStyle="display:none" filterBy="#{info.actual}">
+					<center><h:outputText value="#{info.actual}">
+						<f:converter converterId="com.inventory.util.UrlConverter" />
+					</h:outputText></center>
+				</p:column>
+				
+				<p:column headerText="Opening Stock" width="125" style="height:25px">
+					<div align="center">
+					<h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+						<p:inputText id="add" value="#{info.openingStock}" style="height:23px;" 
+							styleClass="inputcls" rendered="#{info.approvalStatus=='Approved'}">
+								<p:ajax update="@form" process="@this"></p:ajax>
+							</p:inputText>&nbsp;
+						
+						<h:commandButton value="ADD" 
+							action="#{productViewMB.openingStocks}"
+							
+							style="font-size:8 !important;height:20px;width:42px;padding:1px 1px 1px 1px;" rendered="#{info.approvalStatus=='Approved'}">
+							<f:setPropertyActionListener
+								target="#{productViewMB.productName}"
+								value="#{info.productName}" />
+							<f:setPropertyActionListener
+								target="#{productViewMB.openingStock}"
+								value="#{info.openingStock}" />
+							<f:setPropertyActionListener
+								target="#{productViewMB.autual_price}"
+								value="#{info.autual_price}" />
+								<p:ajax update="@form" process="@this"></p:ajax>
+						</h:commandButton>
+					</div>
+				</p:column>
+					
+				<p:column headerText="Approval Status" width="130" style="height:25px" filterMatchMode="contains" 
+					filterStyle="display:none" filterBy="#{info.approvalStatus}">
+					 <center><h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}">
+      </h:outputText></center>
+				</p:column>
+
+				<p:column headerText="Action" width="120" style="height:25px">
+					<div align="center">
+						<p:commandButton icon="fa fa-search" 
+							action="#{productViewMB.productReject}"
+							oncomplete="PF('productDialogV').show();"
+							update=":center_content:dialogPanelViews">
+
+							<f:setPropertyActionListener
+								target="#{productViewMB.productName}"
+								value="#{info.productName}" />
+								<f:setPropertyActionListener
+								target="#{productViewMB.product_ID}"
+								value="#{info.product_ID}" />
+						</p:commandButton>&nbsp;						
+					</div>
+				</p:column>
+
+				
+			</p:dataTable></center>
+			<center>
+	<div style="height:20px"></div><div style="display:#{productViewMB.approveButtonFlag}"><p:commandButton value="Approve" action="#{productViewMB.productApproval}" rendered="#{productViewMB.userType=='Maker/Authorizer'}" update=":center_content:productPanelid" process="@this"></p:commandButton>
+		</div></center><div style="height:20px"></div>
+    			</h:form>
+    			</p:outputPanel>
+			</p:dialog>
+		
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:graphicImage value="../../images/loadingimg.gif"
+					style="width:80px" />
+			</p:dialog>
+
+<p:dialog header="CONGRATULATIONS...!!" widgetVar="rejectConfirm"
+				modal="true" width="40%" height="120" resizable="false"
+				appendTo="@(body)">
+				<div style="height: 30px"></div>
+				<center>
+					<h:outputText value="Vendor has been rejected."
+						rendered="#{loginMB.menuName=='Vendor'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Customer has been rejected."
+						rendered="#{loginMB.menuName=='Customer'}"
+						styleClass="confirmTxt" />
+				</center>
+				<div style="height: 30px"></div>
+				<center>
+					<p:commandButton value="Ok"
+						rendered="#{loginMB.menuName=='Vendor'}"
+						process="@this" action="#{loginMB.approvalPage}" actionListener="#{loginMB.approvalView}" 
+						immediate="true" update=":center_content" 
+						onsuccess="PF('rejectConfirm').hide()" styleClass="button_ui"></p:commandButton>
+					<p:commandButton value="Ok"
+						rendered="#{loginMB.menuName=='Customer'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content" action="#{loginMB.approvalPage}"
+						onsuccess="PF('rejectConfirm').hide()"></p:commandButton>	
+				</center>
+				</p:dialog>
+				
+
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm"
+				modal="true" width="40%" height="120" resizable="false"
+				appendTo="@(body)">
+				<div style="height: 20px"></div>
+				<center>
+					<h:outputText value="Vendor has been successfully approved."
+						rendered="#{loginMB.menuName=='Vendor'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Customer has been successfully approved."
+						rendered="#{loginMB.menuName=='Customer'}"
+						styleClass="confirmTxt" />
+					<h:outputText
+						value="Purchase Order has been successfully approved."
+						rendered="#{loginMB.menuName=='Purchase'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Sales Order has been successfully approved."
+						rendered="#{loginMB.menuName=='Sales'}"
+						styleClass="confirmTxt" />
+					<h:outputText
+						value="Quick Sales Order has been successfully approved."
+						rendered="#{loginMB.menuName=='Quick Sales'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Employee has been successfully approved."
+						rendered="#{loginMB.menuName=='Employee'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Payroll has been successfully approved."
+						rendered="#{loginMB.menuName=='Payroll'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Category has been successfully approved."
+						rendered="#{loginMB.menuName=='Category'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Product has been successfully approved."
+						rendered="#{loginMB.menuName=='Product'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Quotation has been successfully approved."
+						rendered="#{loginMB.menuName=='Quotation'}"
+						styleClass="confirmTxt" />
+					<h:outputText value="Sales Quote has been successfully approved."
+						rendered="#{loginMB.menuName=='Sales Quote'}"
+						styleClass="confirmTxt" />
+				</center>
+				<div style="height: 20px"></div>
+				<center>
+					<p:commandButton value="Ok"
+						rendered="#{loginMB.menuName=='Vendor'}"
+						process="@this" action="#{loginMB.approvalPage}" actionListener="#{loginMB.approvalView}" 
+						immediate="true" update=":center_content" 
+						onsuccess="PF('approvalConfirm').hide()" styleClass="button_ui"></p:commandButton>
+					<p:commandButton value="Ok"
+						rendered="#{loginMB.menuName=='Customer'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content" action="#{loginMB.approvalPage}"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Purchase'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Sales'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}" actionListener="#{loginMB.approvalView}" 
+						rendered="#{loginMB.menuName=='Quick Sales'}"
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Employee'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Payroll'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Category'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Product'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Quotation'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>	
+					<p:commandButton value="Ok"
+						action="#{loginMB.approvalPage}"
+						rendered="#{loginMB.menuName=='Sales Quote'}" actionListener="#{loginMB.approvalView}" 
+						process="@this" immediate="true" update=":center_content"
+						onsuccess="PF('approvalConfirm').hide()"></p:commandButton>	
+				</center>
+			</p:dialog>
+			
+			<!-- product View -->
+
+			<p:dialog header="Inacsys | Product View" appendTo="@(body)"
+				widgetVar="productDialogV" modal="true" 
+				height="300px" width="700px" resizable="false">
+				<p:outputPanel id="dialogPanelViews">
+
+					<h:form id="product-view1">
+						<h:outputText id="msg"></h:outputText>
+						<h:message for="msg" style="color:red"></h:message>
+						
+						<p:panelGrid style="height:220px" columns="4" styleClass="ui-panelgrid-blank">
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Category " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{productViewMB.categoryname}" readonly="true"
+									id="pcate"  styleClass="ui-selectdrop">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Product Code " 
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productlimit}" readonly="true"
+									id="vproductLimit" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Standard " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.product_standard}" readonly="true"
+									id="prod-standard" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Product Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.productName}" readonly="true"
+									id="prod-name" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Actual Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.autual_price}" readonly="true"
+									id="prod-actual-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Size " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.size_of_product}" readonly="true"
+									id="prod-size" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Market Price " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.market_price}" readonly="true"
+									id="prod-market-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Description " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.description}" readonly="true"
+									id="prod-desc" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Unit " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.unit}" readonly="true"
+									id="prod-unit" styleClass="ui-selectdrop">
+							
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Vendor " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{productViewMB.vendor}" readonly="true"
+									id="vendor-id"  styleClass="ui-selectdrop">
+									
+								</p:inputText>
+
+							</h:panelGroup>
+						</p:panelGrid>
+
+						<div style="height:20px;"></div>
+
+						<center>
+							
+							<p:commandButton value="Ok" 
+								
+								onclick="PF('productDialogV').hide();">
+							</p:commandButton>
+							
+						</center>
+
+					</h:form>
+				</p:outputPanel>
+				</p:dialog>
+			<!-- Quotation View dialog	 -->	
+		<p:dialog header="Quotation Details View" id="quotviews" appendTo="@(body)" widgetVar="quotationDialogView" modal="true" height="400px" width="70%" resizable="false">
+   <p:outputPanel id="qdialogPanelView">
+    <h:form id="quotView">
+    <div style="height:20px"></div>
+    	<center><p:dataTable var="info" style="padding:2px;width:98%" value="#{vendorRegisterFormMB.quotationDetailList}" widgetVar="quotviewInfo"  
+		id="vdataTable" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+		paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+      	<p:column filterBy="#{info.productName}" style="height:25px" width="120" headerText="Product Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productName}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.vendorName}" style="height:25px" width="100" headerText="Vendor Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText value="#{info.vendorName}"></h:outputText>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.productCount}" style="height:25px" width="100"  headerText="Product Count" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productCount}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Price" style="height:25px" filterBy="#{info.productPrice}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productPrice}"></h:outputText>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Delivery Date" style="height:25px" filterBy="#{info.deliveryDate}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.deliveryDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+      		</div>
+      	</p:column>
+     </p:dataTable></center> 
+    </h:form>
+   </p:outputPanel>
+</p:dialog>
+		<!-- Category View dialog	 -->	
+	<p:dialog header="Category View" id="dlgviewcat" appendTo="@(body)" widgetVar="categoryDialogView" modal="true" height="130px" width="30%" resizable="false">
+			<p:outputPanel id="categoryPanelView">
+				<h:form id="cateView">
+				<center>
+						<p:panelGrid style="height:100px;" columns="3" styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category Name" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" readonly="true" id="catevname" value="#{productViewMB.productRegister.category}"/>		
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value=":" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" readonly="true" id="catevdes" value="#{productViewMB.productRegister.description}"/>		
+							</h:panelGroup>
+							</p:panelGrid>
+							</center>
+							</h:form>
+							</p:outputPanel>
+							</p:dialog>		
+			
+			
+			<!-- customer View dialog	 -->
+			<p:dialog header="Customer View" id="dlg1view" appendTo="@(body)"
+				widgetVar="customerDialogView" modal="true" height="500px"
+				width="75%" resizable="false">
+				<p:outputPanel id="dialogPanel1View">
+					<h:form id="cusView">
+						<center>
+							<p:panelGrid style="height:250px;" columns="6"
+								styleClass="ui-panelgrid-blank">
+
+								<h:panelGroup>
+									<h:outputText class="labelTxt" value="Title: " />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.customerTitle}"
+										readonly="true" id="custitle" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="First name: "
+										lass="label_ui" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.customerName}"
+										readonly="true" id="cusfirstname" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Middle name: "
+										for="vproductLimit" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.customerMiddleName}"
+										readonly="true" id="cusmidname" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Suffix " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.customerSuffix}"
+										readonly="true" id="cussuffix" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Email:" />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.mail}" readonly="true"
+										id="cusemail" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Code :" />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.code}" readonly="true"
+										id="cuscode" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Mobile: " />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.phoneno}" readonly="true"
+										id="cusMobile" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Phone Number: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.custMobile}" readonly="true"
+										id="cusphone" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Category: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.categoryName}"
+										readonly="true" id="cuscategory" styleClass="ui-selectdrop">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Other: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.other}" readonly="true"
+										id="others" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Date:" />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.date}" readonly="true"
+										id="cusdate" datePattern="dd/MM/yyyy">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Company: " />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.company}" readonly="true"
+										id="cusCompany" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Website: " />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.website}" readonly="true"
+										id="cuswebsite" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Tax number: " />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value=" #{buyersViewMB.taxnumber}" readonly="true"
+										id="taxnumber" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Fax number:" />
+
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.faxnumber}" readonly="true"
+										id="faxnumber" styleClass="inputTxt">
+
+									</p:inputText>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="LicenceNo: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.cuslicNo}" readonly="true"
+										styleClass="inputTxt"></p:inputText>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Customer Type: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.custype}" readonly="true"
+										styleClass="inputTxt"></p:inputText>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Description: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputTextarea styleClass="inputTxt"
+										placeholder="Description" style="width:200px;" readonly="true"
+										value="#{buyersViewMB.note}" id="cusnote1">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputTextarea>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Expire Date: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.cusexDate}" readonly="true"
+										styleClass="inputTxt"></p:inputText>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Customer Code: " />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.cusCode}" readonly="true"
+										styleClass="inputTxt"></p:inputText>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="Payment Type:" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{buyersViewMB.paytype}" readonly="true"
+										styleClass="inputTxt"></p:inputText>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{buyersViewMB.paytype=='Credit'}">
+									<h:outputText class="label_ui" value="Payment Cash:" />
+								</h:panelGroup>
+								<h:panelGroup rendered="#{buyersViewMB.paytype=='Credit'}">
+									<p:inputText value="#{buyersViewMB.paydays}" readonly="true"
+										styleClass="inputTxt"></p:inputText>
+								</h:panelGroup>
+							</p:panelGrid>
+						</center>
+						<br></br>
+						<p:tabView id="tabviewid"
+							style="width:100%;height:270px;border:1px !important;">
+							<p:tab title="Address" style="min-height:300px;">
+								<center>
+									<table width="100%">
+										<tr>
+											<td width="1%"></td>
+											<td width="46%"><h:outputText value="Present Address:"
+													class="labelTxt"></h:outputText></td>
+											<td width="17%"><h:outputText value="Permanent Address:"
+													class="labelTxt"></h:outputText></td>
+											<td width="3%"><p:selectBooleanCheckbox
+													value="#{salesOrderFormMB.sameCheckBox}"
+													valueChangeListener="#{salesOrderFormMB.checkBoxValueChange}">
+													<p:ajax event="valueChange" update=":center_content"
+														process="@this"></p:ajax>
+												</p:selectBooleanCheckbox></td>
+											<td width="20%"><h:outputText
+													value="Same as Present Address" class="labelTxt"></h:outputText></td>
+											<td width="17%"></td>
+										</tr>
+									</table>
+								</center>
+								<p:panelGrid style="height:70px;" columns="2"
+									styleClass="ui-panelgrid-blank">
+									<p:inputTextarea placeholder="Street"
+										value="#{buyersViewMB.permanentaddress}" readonly="true"
+										id="cusstreetpresentt" styleClass="inputTxt"
+										style="width:421px">
+									</p:inputTextarea>
+
+									<p:inputTextarea placeholder="Street"
+										value="#{buyersViewMB.address}" readonly="true"
+										id="cusstreetspermanent" styleClass="inputTxt"
+										style="width:421px">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputTextarea>
+								</p:panelGrid>
+
+								<p:panelGrid style="height:110px;" columns="4"
+									styleClass="ui-panelgrid-blank">
+									<h:outputText value="City:" class="labelTxt"></h:outputText>
+									<h:outputText value="Country:" class="labelTxt"></h:outputText>
+									<h:outputText value="City:" class="labelTxt"></h:outputText>
+									<h:outputText value="Country:" class="labelTxt"></h:outputText>
+									<p:inputText styleClass="inputTxt" placeholder="City *"
+										readonly="true" value="#{buyersViewMB.cities}"
+										id="cuscitypresent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="Country *"
+										readonly="true" value="#{buyersViewMB.presentcountry}"
+										id="cuscountrypresent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="City *"
+										readonly="true" value="#{buyersViewMB.city}"
+										id="cuscitypermenent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="Country *"
+										readonly="true" value="#{buyersViewMB.country}"
+										id="cuscountrypermenent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+									<h:outputText value="State:" class="labelTxt"></h:outputText>
+									<h:outputText value="postal code:" class="labelTxt"></h:outputText>
+									<h:outputText value="State:" class="labelTxt"></h:outputText>
+									<p:inputText styleClass="inputTxt" placeholder="Postal Code:"
+										readonly="true" value="#{buyersViewMB.prePostCode}"
+										id="cuspostalcodepresent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="State "
+										readonly="true" value="#{buyersViewMB.perstate}"
+										id="cusstatepresent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="Postalcode"
+										readonly="true" value="#{buyersViewMB.postCode}"
+										id="cuspostalcodepermenent">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="State "
+										readonly="true" value="#{buyersViewMB.state}"
+										id="cusstateperment">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+								</p:panelGrid>
+							</p:tab>
+						</p:tabView>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+
+
+			<!-- //vendor View -->
+			<p:dialog header="Vendor View" id="dlgview" appendTo="@(body)"
+				widgetVar="vendorDialogView" modal="true" height="500px"
+				width="1100px" resizable="false">
+				<p:outputPanel id="dialogPanelView">
+					<h:form id="venView">
+						<p:panelGrid style="height:200px" columns="6"
+							styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Firm Name " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" readonly="true"
+									id="vFirmName" value="#{vendorViewFormMB.vendorPhoneNumber}" />
+							</h:panelGroup>
+							<h:outputText class="label_ui" value="Website" />
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.website}"
+									styleClass="inputTxt" id="vweb" readonly="true">
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Fax Number" for="vFaxNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.faxVendor}" id="vFaxNo"
+									styleClass="inputTxt" readonly="true"></p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Nature Of Business"
+									for="vNoB" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.natureofbusiness}"
+									id="vNoB" styleClass="inputTxt" readonly="true"></p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Person Incharge"
+									for="vpinc" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.peresonIncharge}"
+									id="vpinc" styleClass="inputTxt" readonly="true">
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Telephone Number "
+									for="vtpno" styleClass="inputTxt" readonly="true" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.firmName}" id="vtpno"
+									styleClass="inputTxt" readonly="true">
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email ID" for="vemail" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.email_ID_vendor}"
+									id="vemail" styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Company" for="vcomp" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.companyven}"
+									styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="LicenseNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.licenceven}"
+									styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Expire Date" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.exDateven}"
+									styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Vendor Type" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.typeven}"
+									styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputTextarea styleClass="inputTxt" placeholder="Description"
+									style="width:200px;" readonly="true"
+									value="#{vendorViewFormMB.note}" id="cusnote">
+									<p:ajax process="@this" update="@form"></p:ajax>
+								</p:inputTextarea>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Vendor Code" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.codeven}"
+									styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Payment Type" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.payType}"
+									styleClass="inputTxt" readonly="true" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Payment Days"
+									rendered="#{vendorViewFormMB.payType=='Credit'}" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{vendorViewFormMB.payDays}"
+									styleClass="inputTxt" readonly="true"
+									rendered="#{vendorViewFormMB.payType=='Credit'}" />
+							</h:panelGroup>
+						</p:panelGrid>
+						<br></br>
+
+						<p:tabView id="tabviewid"
+							style="width:100%;height:270px;border:1px !important;">
+							<p:tab title="Address" style="min-height:300px;">
+								<center>
+									<table width="100%">
+										<tr>
+											<td width="1%"></td>
+											<td width="35%"><h:outputText value="Present Address:"
+													class="labelTxt"></h:outputText></td>
+											<td width="46%"><h:outputText value="Permanent Address:"
+													class="labelTxt"></h:outputText></td>
+										</tr>
+									</table>
+								</center>
+								<p:panelGrid style="height:70px;" columns="2"
+									styleClass="ui-panelgrid-blank">
+									<p:inputTextarea value="#{vendorViewFormMB.address}"
+										readonly="true" id="vaddr" styleClass="inputTxt"
+										style="width:421px">
+									</p:inputTextarea>
+
+									<p:inputTextarea value="#{vendorViewFormMB.address1}"
+										readonly="true" styleClass="inputTxt" style="width:421px">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputTextarea>
+								</p:panelGrid>
+
+								<p:panelGrid style="height:110px;" columns="4"
+									styleClass="ui-panelgrid-blank">
+									<h:outputText value="City:" class="labelTxt"></h:outputText>
+									<h:outputText value="Country:" class="labelTxt"></h:outputText>
+									<h:outputText value="City:" class="labelTxt"></h:outputText>
+									<h:outputText value="Country:" class="labelTxt"></h:outputText>
+									<p:inputText styleClass="inputTxt" placeholder="City *"
+										readonly="true" value="#{vendorViewFormMB.city}" id="vcity">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="Country *"
+										readonly="true" value="#{vendorViewFormMB.country_ID}">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="City *"
+										readonly="true" value="#{vendorViewFormMB.city1}">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="Country *"
+										readonly="true" value="#{vendorViewFormMB.country_ID1}">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+									<h:outputText value="State:" class="labelTxt"></h:outputText>
+									<h:outputText value="postal code:" class="labelTxt"></h:outputText>
+									<h:outputText value="State:" class="labelTxt"></h:outputText>
+									<p:inputText styleClass="inputTxt" placeholder="Postal Code:"
+										readonly="true" value="#{vendorViewFormMB.post}">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="State "
+										readonly="true" value="#{vendorViewFormMB.state}" id="vstate">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="Postalcode"
+										readonly="true" value="#{vendorViewFormMB.post1}">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+									<p:inputText styleClass="inputTxt" placeholder="State "
+										readonly="true" value="#{vendorViewFormMB.state1}">
+										<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+									</p:inputText>
+								</p:panelGrid>
+
+
+
+							</p:tab>
+						</p:tabView>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+</ui:define>
+</ui:composition>

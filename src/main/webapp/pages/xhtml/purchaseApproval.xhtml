@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | purchase Approval  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("purchaseAp:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body onload="#{invoicePurhcaseMB.invoicePurachaseDrop1()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form id="purchaseAp">
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right">
+<h:commandButton value="Translate" style="font-weight:bold;"  ajax="false"> 
+<rich:componentControl target="popup" operation="show" />
+</h:commandButton>&nbsp;
+<h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+<div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Persetujuan Upload" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:350px;" align="left" bgcolor="#f4f4f4">
+
+
+<h:outputText  value="Purchase Reference Number" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Pembelian Nomor Referensi" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+
+
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+<tr><td height="350px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Approval Upload" class="header_ui"/><br/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText value="#{invoicePurhcaseMB.invalidate}" style="font-style: normal;font-size:18px;color:#F51313"/>
+</td></tr></table>
+<table border="0"   bgcolor=""><tr>
+                    <td align="left" >
+                    <rich:panel style="font-size:14px; width:490px" header="Search by Purchase Reference Number"  >  
+	        <h:panelGrid  columns="5"  style="font-size:14px; width:490px;height: 143px;" align="center">  
+	            <tr><td> 
+	             <h:outputLabel value="Purchase Reference Number *"  class="label_ui"/>
+	          </td>  <td>
+	             <h:selectOneMenu onkeypress="return process(event);" class="text_ui"  value="#{invoicePurhcaseMB.s}" >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{invoicePurhcaseMB.finallist1}" />				    
+				 </h:selectOneMenu>
+	            </td></tr>
+	        <tr align="center" ><td >
+	        <h:outputText/><h:outputText/>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;
+	       <h:commandButton class="button"  value="Find" action="#{invoicePurhcaseMB.invoicePurhcase}" id="find"/> 
+	        </td></tr>
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                  <td height="30px">
+                  </td></tr>
+                    <tr>
+                    <td>
+    </td></tr>
+</table> 
+<div style="height:250px ; width:600px; overflow-x:scroll; overflow-y:scroll;display:#{invoicePurhcaseMB.flag};" align="center">
+<h:panelGrid style="display:#{invoicePurhcaseMB.flag};" >
+                    <rich:dataTable id="dataTable" var="info"  value="#{invoicePurhcaseMB.result4}"   style="max-width:800px;max-height:250px ;font-size:14;" 
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row" columnsWidth="135px,150px,150px,150px" >  
+         	
+  			 <h:column   headerText="RollNo">  
+	            
+	            <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date   </span>      </f:facet>  
+ 
+	            <h:outputText value="#{info.orderDate}"  class="label_ui"> 
+	            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+	            </h:outputText> 
+	        </h:column>  
+   
+  
+	         <h:column  headerText="Name">  
+					<f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Firm Name   </span>      </f:facet>  
+ 
+	            <h:outputText value="#{info.firmName}"  class="label_ui"/>  
+
+	        </h:column>  
+  
+  
+  
+	   		<h:column    headerText="Address">  
+	         <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount   </span>      </f:facet>  
+ 	            <h:outputText class="label_ui"  value="#{info.totalPrice}" >
+ 	          
+ 	            </h:outputText>  
+	        </h:column>  
+  
+	   		
+  
+  
+	   		<h:column  headerText="Phone"> 
+	   		 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Action   </span>      </f:facet> 
+	        <div align="center" > <h:commandButton value="upload"  action="#{invoicePurhcaseMB.redirect1}"> <f:setPropertyActionListener target="#{invoicePurhcaseMB.orderNumber}" value="#{inf.orderNumber}" />
+	           </h:commandButton></div>    
+	        </h:column>  
+  
+          
+ </rich:dataTable> </h:panelGrid></div> 
+ <div style="height:100px ; width:900px; overflow-x:scroll; overflow-y:scroll;display:#{invoicePurhcaseMB.flag1}" align="center">
+ <h:panelGrid style="display:#{invoicePurhcaseMB.flag1}" >
+                     <rich:dataTable id="dataTable1" var="inf"  value="#{invoicePurhcaseMB.result4}" columnsWidth="210px,210px,210px,210px,140px">  
+         		        <h:column   headerText="RollNo"> 	            
+	            <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Date   </span>      </f:facet>  
+ 	            <h:outputText value="#{inf.orderDate}"  class="label_ui"> <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText>
+	        </h:column>
+	         <h:column  headerText="Name">  
+					<f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Firm Name   </span>      </f:facet>  
+ 	            <h:outputText value="#{inf.firmName}"  class="label_ui"/>  
+	        </h:column>   
+	   		<h:column    headerText="Address">  
+	         <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Sales Order Number  </span>      </f:facet>  
+ 	            <h:outputText class="label_ui"  value="#{inf.orderNumber}" />  
+	        </h:column>    
+<h:column    headerText="Address">  
+	         <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Total Amount   </span>      </f:facet>  
+ 	            <h:outputText class="label_ui"  value="#{inf.totalPrice}" />  
+	        </h:column>  
+  	<h:column   headerText="Phone">  
+	   		 <f:facet name="header"> <span style="font-style: normal;font-size:14px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Find  </span>      </f:facet>  
+ 	          <div align="center">
+ 	            <h:commandButton class="button_table1"  image="/images/view.png" action="#{invoicePurhcaseMB.invoiceView}">
+	             <f:setPropertyActionListener target="#{invoicePurhcaseMB.orderNumber}" value="#{inf.orderNumber}" />
+	           </h:commandButton></div>
+	        </h:column>
+ </rich:dataTable> </h:panelGrid></div>
+</td></tr>
+<tr><td style="height:100px;"></td></tr>      
+</table> 
+</td></tr>
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+	<h:body>
+	<p:panel header="Employee Payroll View" id="panelID">
+	<center>
+		<p:dataTable id="EmployeeDataTable" var="Epaydetailinfo"
+	widgetVar="Employee" value="#{employeePayrollViewFormMB.datalist}"
+	style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+	styleClass="order-table" headerClass="order-table-header"
+	rowClasses="order-table-odd-row,order-table-even-row"
+	paginator="true" rows="10" rowIndexVar="rowindex"
+		emptyMessage="No information found with given criteria" 
+		pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top">
+
+	<f:facet name="header">
+		<p:outputPanel style="text-align:right">
+
+			<p:inputText id="globalFilter" onkeyup="PF('Employee').filter()"
+				style="width:20%;height:25px;backgroud:#ffffff" placeholder="Enter keyword" />
+		</p:outputPanel>
+	</f:facet>
+	<p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				#{rowindex+1}
+			</div>
+		</p:column>
+	<p:column headerText="Payroll Number"
+								filterBy="#{Epaydetailinfo.payrollno}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:inputHidden value="#{Epaydetailinfo.id}"></h:inputHidden>
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.payrollno}" /></center>
+						
+							</p:column>
+							<p:column headerText="Employee ID" filterBy="#{Epaydetailinfo.payrollno}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.employeeid}" /></center>
+
+							</p:column>
+							<p:column headerText="Employee name" filterBy="#{Epaydetailinfo.name}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.name}" /></center>
+
+							</p:column>
+
+							<p:column headerText="Basic salary" filterBy="#{Epaydetailinfo.basicsalary}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="#{Epaydetailinfo.basicsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup></center>
+
+							</p:column>
+
+						
+							<p:column headerText="Payroll Date" filterBy="#{Epaydetailinfo.todayDate}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.todayDate}"></h:outputText></center>
+
+							</p:column>
+
+
+							<p:column headerText="Working Days"
+								filterBy="#{Epaydetailinfo.workingdays}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.workingdays}"></h:outputText></center>
+
+							</p:column>
+
+							<p:column headerText="Total Salary" filterBy="#{Epaydetailinfo.currencyAmount}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+							<h:panelGroup>
+									<h:outputText class="label_ui" value="#{employeePayrollViewFormMB.baseCurrency}">
+									</h:outputText>&nbsp;<h:outputText class="label_ui" value="#{Epaydetailinfo.currencyAmount}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup> 
+								<!-- <h:panelGroup>
+									<h:outputText class="label_ui" value="#{Epaydetailinfo.totalsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup> --></center>
+
+							</p:column>
+				<p:column headerText="View" width="54" exportable="false">
+								<div align="center">
+									<p:commandButton icon="fa fa-search" id="search" 
+										action="#{employeePayrollViewFormMB.payrollViewz}" >
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+											<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.employeeid1}"
+											value="#{Epaydetailinfo.id}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+	</p:dataTable>
+	
+	<br/>
+	<p:commandButton value="Print"> <p:printer target="EmployeeDataTable"></p:printer></p:commandButton>
+	</center>	
+	</p:panel>
+	</h:body>
+</ui:define>
+</ui:composition>

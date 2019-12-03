@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<ui:define name="content" >	
+<div style="height:5px;"></div>
+	<table width="100%">
+		<tr>
+			<td width="1%"> </td>
+  			<td width="91%"> 
+  				<p:commandButton icon="fa fa-plus" value="New"  action="#{salesOrderFormMB.getDataLoad}"  ajax="false" ></p:commandButton>
+  			</td>
+    		<td width="8%">
+    			<p:commandButton icon="fa fa-refresh" value="Refresh" action="#{salesOrderFormMB.getSalesQuoteView}" ajax="false"></p:commandButton>
+    		</td>
+		</tr>
+	</table> 
+<div style="height:25px;">
+	<center><h:outputText value="#{salesOrderFormMB.validate}" class="errorTxt"></h:outputText></center>
+</div>
+<center>
+	<p:dataTable var="info" style="padding:2px;width:98%" value="#{salesOrderFormMB.quoteTablelist}" widgetVar="quotInfo"  
+		id="dataTable" emptyMessage="No information found with given criteria"
+		reflow="true" filteredValue="#{salesOrderFormMB.filterList}">
+      	<f:facet name="header">
+       		<p:outputPanel style="text-align:right">
+       			<p:inputText id="globalFilter" onkeyup="PF('quotInfo').filter()" style="width:20%;height:25px;" placeholder="Enter keyword" />
+       		</p:outputPanel>
+      	</f:facet>
+      	<p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{info.serialno}"/>
+			</div>
+		</p:column>
+      	<p:column filterBy="#{info.productName}" width="120" headerText="Name" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText value="#{info.productName}" />
+      		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.quotationcode}" width="100" headerText="Sales Quote" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+     			<h:outputText class="labelTxt" value="#{info.quotationcode}"/>
+     			<h:inputHidden value="#{info.quoteID}"></h:inputHidden>
+     		</div>
+      	</p:column>
+      	<p:column filterBy="#{info.phoneNumber}" width="100"  headerText="Phone Number" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText class="labelTxt" value="#{info.phoneNumber}"/>
+      		</div>
+      	</p:column>
+      	<p:column headerText="Approval Status" filterBy="#{info.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      		<div align="center">
+      			<h:outputText class="labelTxt" value="#{info.approvalStatus}" />
+      		</div>
+      	</p:column>
+      	<p:column width="100" headerText="Action">
+      		<div align="center">
+       		<p:commandButton icon="fa fa-search" update=":center_content:quoteView" action="#{salesOrderFormMB.getQuoteViewandEdit}"
+       		 oncomplete="PF('quoteview').show();" immediate="true" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+	       	<f:setPropertyActionListener target="#{salesOrderFormMB.quotationcode}" value="#{info.quotationcode}" />
+	       	<f:setPropertyActionListener target="#{salesOrderFormMB.quoteID}" value="#{info.quoteID}" />
+	       	</p:commandButton>&nbsp;
+	       	<p:commandButton icon="fa fa-pencil" update=":center_content:quoteedit" oncomplete="PF('quotationEdit').show();" rendered="#{info.approvalStatus=='Approved'}"
+	       	action="#{salesOrderFormMB.getQuoteViewandEdit}" immediate="true" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+	       	<f:setPropertyActionListener target="#{salesOrderFormMB.quotationcode}" value="#{info.quotationcode}" />
+	       	<f:setPropertyActionListener target="#{salesOrderFormMB.quoteID}" value="#{info.quoteID}" />
+	       	</p:commandButton>&nbsp;
+	       	<p:commandButton icon="fa fa-remove" oncomplete="PF('quoteDelete').show()" action="#{salesOrderFormMB.removeSalesQuote}" rendered="#{info.approvalStatus=='Approved'}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+	       	<f:setPropertyActionListener target="#{salesOrderFormMB.quoteID}" value="#{info.quoteID}" />
+	       	</p:commandButton>
+	      	</div>
+      	</p:column>
+     </p:dataTable> 
+     </center><div style="height:200px"></div>
+     
+     <!-- View dialog box start  -->
+     
+     <p:dialog header="Sales Quote View"  appendTo="@(body)" widgetVar="quoteview" modal="true" height="500px" width="70%" resizable="false">
+   		<p:outputPanel id="quoteView">
+    	<h:form id="quoteview">
+			<div style="height:27px"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-3">
+						<h:outputText class="labelTxt" value="Customer Contact Details" style="font-weight:bold;"></h:outputText>
+					</div>
+					<div class="col-sm-2"></div>
+				 	<div class="col-sm-4">
+				 		<h:outputText class="labelTxt" value="Customer Details" style="font-weight:bold;" ></h:outputText>
+				 	</div>
+				</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.customername}"/>
+				</div>
+				<div class="col-sm-2"></div>
+		  		<div class="col-sm-4">
+		  			<h:outputText class="labelTxt" value="Business Name:" style="font-weight:bold;font-size:12px"></h:outputText>
+		  		</div>
+			</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="Tel :" style="font-weight:bold;font-size:12px;"></h:outputText>
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.phoneNumber}"/>
+				</div>
+				<div class="col-sm-2"></div>
+			 	<div class="col-sm-4">
+			 		<h:outputText class="labelTxt" value="#{salesOrderFormMB.businessname}"/>
+			 	</div>
+			</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="Mobile :" style="font-weight:bold;font-size:12px;"></h:outputText>
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.mobile}"/>
+				</div>
+				<div class="col-sm-2"></div>
+		  		<div class="col-sm-4">
+		  			<h:outputText class="labelTxt" value="Address :" style="font-weight:bold;font-size:12px;" ></h:outputText>
+		  		</div>
+			</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="Email :" style="font-weight:bold;font-size:12px;"></h:outputText>
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.email}"/>
+				</div>
+				<div class="col-sm-2"></div>
+		  		<div class="col-sm-4">
+		  			<h:outputText class="labelTxt" value="#{salesOrderFormMB.permanentaddress}"/> 
+		  		</div>
+			</div>
+			</div>
+			<div style="height:2%"></div>
+			<div style="height:10px" align="center"></div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+			<center>
+				<p:dataTable var="quote" value="#{salesOrderFormMB.quoteListDetails}" widgetVar="quotviewInfo"  
+				id="viewdataTable" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+				paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+					<p:column width="30" headerText="No">
+						<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+						<div align="center">
+							<h:outputText class="labelTxt" value="#{quote.serialno}"/>
+						</div>
+					</p:column>
+					<p:column width="120" headerText="Product Name">
+						<f:facet name="header"> <span class="dataTableTxt"> Product-service Name </span> </f:facet>
+						<div align="center">
+						<h:outputText class="labelTxt" value="#{quote.productName}"/>
+						<h:inputHidden value="#{quote.quoteDetailsID}"></h:inputHidden>
+						</div>
+					</p:column>
+					<p:column width="100" headerText="Unit Price">
+						<f:facet name="header"> <span class="dataTableTxt"> Unit Price  </span> </f:facet>
+						<div align="center">
+							<h:outputText class="labelTxt" value="#{quote.unit}"/>
+						</div>
+					</p:column>
+					<p:column width="100" headerText="Quantity" >
+						<f:facet name="header"> <span class="dataTableTxt"> Quantity </span> </f:facet>
+						<div align="center">
+							<h:outputText class="labelTxt" value="#{quote.quantity}"/>
+						</div> 
+					</p:column>
+					<p:column width="100" headerText="Total Amount" >
+						<f:facet name="header"> <span class="dataTableTxt"> Total Amount </span> </f:facet>
+						<div align="center">
+						<h:outputText class="labelTxt" value="#{quote.netAmount}" /> 
+						</div>
+					</p:column>
+				</p:dataTable>
+			</center></div>
+			</div>
+		</h:form>
+	</p:outputPanel>
+	</p:dialog>
+	
+	<!--  View dialog box end -->
+	
+	<!-- Edit dialog box start  -->
+	
+	<p:dialog header="Sales quote Edit"  appendTo="@(body)" widgetVar="quotationEdit" modal="true" height="500px" width="65%" resizable="false">
+   		<p:outputPanel id="quoteedit">
+    	<h:form id="quoteedit1">
+      		<div style="height:27px"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-3">
+						<h:outputText class="labelTxt" value="Customer Contact Details" style="font-weight:bold;"></h:outputText>
+					</div>
+					<div class="col-sm-2"></div>
+				 	<div class="col-sm-4">
+				 		<h:outputText class="labelTxt" value="Customer Details" style="font-weight:bold;" ></h:outputText>
+				 	</div>
+				</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.customername}"/>
+				</div>
+				<div class="col-sm-2"></div>
+		  		<div class="col-sm-4">
+		  			<h:outputText class="labelTxt" value="Business Name:" style="font-weight:bold;font-size:12px"></h:outputText>
+		  		</div>
+			</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="Tel :" style="font-weight:bold;font-size:12px;"></h:outputText>
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.phoneNumber}"/>
+				</div>
+				<div class="col-sm-2"></div>
+			 	<div class="col-sm-4">
+			 		<h:outputText class="labelTxt" value="#{salesOrderFormMB.businessname}"/>
+			 	</div>
+			</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="Mobile :" style="font-weight:bold;font-size:12px;"></h:outputText>
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.mobile}"/>
+				</div>
+				<div class="col-sm-2"></div>
+		  		<div class="col-sm-4">
+		  			<h:outputText class="labelTxt" value="Address :" style="font-weight:bold;font-size:12px;" ></h:outputText>
+		  		</div>
+			</div>
+			</div>
+			<div style="height:20px"></div>
+			<div class="row">
+			<div class="col-md-12">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<h:outputText class="labelTxt" value="Email :" style="font-weight:bold;font-size:12px;"></h:outputText>
+					<h:outputText class="labelTxt" value="#{salesOrderFormMB.email}"/>
+				</div>
+				<div class="col-sm-2"></div>
+		  		<div class="col-sm-4">
+		  			<h:outputText class="labelTxt" value="#{salesOrderFormMB.permanentaddress}"/> 
+		  		</div>
+			</div>
+			</div>
+			<div style="height:2%"></div>
+			<div style="height:10px" align="center"></div>
+			<div style="height:20px"></div>
+			<center>
+				<p:dataTable var="quote" style="padding:2px;width:98%" value="#{salesOrderFormMB.quoteListDetails}" widgetVar="quotviewInfo"  
+				id="table" emptyMessage="No information found with given criteria" paginator="true" lazy="true"
+				paginatorAlwaysVisible="false" reflow="true" rows="10" paginatorPosition="top" pageLinks="5">
+				<p:column width="30" headerText="No">
+			<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+			<div align="center">
+				<h:outputText class="labelTxt" value="#{quote.serialno}"/>
+			</div>
+			</p:column>
+					<p:column width="120" headerText="Product Name">
+						<f:facet name="header"> <span class="dataTableTxt"> Product-service Name </span> </f:facet>
+						<div align="center">
+							<h:selectOneMenu id="a" value="#{quote.productName}" label="select one type" valueChangeListener="#{salesOrderFormMB.onClickProductChange}" style="font-size:14px;font-family:'Arial,san-serif';width:200px;height:25px;">
+							   	<f:selectItem  itemLabel="--- select ---" noSelectOption="true" itemValue=""/>
+							   	<f:selectItems value="#{salesOrderFormMB.prodlist}"></f:selectItems> 
+							   	<f:attribute value="#{quote.serialno}" name="serial"></f:attribute>
+							   	<f:attribute value="#{quote.productName}" name="product"></f:attribute>
+							    <f:ajax render="@form" execute="a"> </f:ajax>
+							 </h:selectOneMenu>
+							 <h:inputHidden value="#{quote.quoteDetailsID}"></h:inputHidden> 
+						</div>
+					</p:column>
+					<p:column width="100" headerText="Unit Price">
+						<f:facet name="header"> <span class="dataTableTxt"> Unit Price  </span> </f:facet>
+						<div align="center">
+							<h:outputText class="labelTxt" value="#{quote.unit}"/>
+						</div>
+					</p:column>
+					<p:column width="100" headerText="Quantity" >
+						<f:facet name="header"> <span class="dataTableTxt"> Quantity </span> </f:facet>
+						<div align="center">
+							<p:inputText style="width:100px" id="pcount" value="#{quote.quantity}" valueChangeListener="#{salesOrderFormMB.onClickQuantityChange}"> 
+							<f:attribute value="#{quote.serialno}" name="serial"></f:attribute>
+							<f:attribute value="#{quote.unit}" name="unit"></f:attribute>
+							<p:ajax update="in" process="@this"></p:ajax>
+							</p:inputText>
+						</div> 
+					</p:column>
+					<p:column width="100" headerText="Total Amount" >
+						<f:facet name="header"> <span class="dataTableTxt"> Total Amount </span> </f:facet>
+						<div align="center"> 
+						<h:outputText class="labelTxt" value="#{quote.netAmount}" id="in"/> 
+						</div>
+					</p:column>
+				</p:dataTable>
+			</center>
+			<div style="height:5px;"></div>
+				<table>
+					<tr>
+						<td width="25	%"></td>
+						<td>
+							<h:commandButton id="addbut"  value="Add" action="#{salesOrderFormMB.addNewRow}" image="/images/addimg.png" >
+							<f:ajax render="@form" execute="addbut"></f:ajax>
+							</h:commandButton>
+						</td> 
+					</tr>
+				</table>
+			<div style="height:30px"></div>
+				<table align="center" width="100%">
+					<tr align="center"><td>
+					<p:commandButton action="#{salesOrderFormMB.updateSalesQuote}" value="Update" update="center_content:quoteedit" process="@this" immediate="true">
+					</p:commandButton>
+					</td></tr>
+				</table> 
+		</h:form>
+	</p:outputPanel>
+	</p:dialog>
+	
+	<!-- Edit dialog box end  -->
+	
+	<!-- Delete dialog box start  -->
+	
+	<p:dialog header="CONGRATULATIONS...!!" widgetVar="quoteDelete" modal="true" width="45%" height="130" resizable="false" appendTo="@(body)">
+		<div style="height:20px"></div>	
+		<center>
+			<h:outputText value="Quotation has been successfully deleted." styleClass="confirmTxt"/>
+		</center>
+		<div style="height:20px"></div>
+		<center>
+			<p:commandButton value="Ok" action="#{salesOrderFormMB.getSalesQuoteView}" process="@this" immediate="true" update=":center_content" onsuccess="PF('quoteDelete').hide()">
+			</p:commandButton>
+		</center>
+	</p:dialog>
+	
+	<!-- Delete dialog box end  -->
+	
+	<!-- Update dialog box start  -->
+	
+	<p:dialog header="CONGRATULATIONS...!!" widgetVar="updateSalesquote" modal="true" width="40%" height="130" resizable="false" appendTo="@(body)">
+		<div style="height:20px"></div>	
+		<center>
+			<h:outputText value="Quotation has been successfully modified" styleClass="confirmTxt"/>
+		</center>
+		<div style="height:30px"></div>
+		<center>
+			<p:commandButton value="Ok" action="#{salesOrderFormMB.getSalesQuoteView}" process="@this" immediate="true" update=":center_content" onsuccess="PF('quoteDelete').hide()">
+			</p:commandButton>
+		</center>
+	</p:dialog>
+	
+	<!-- Update dialog box end  -->
+	
+	<!-- Loading image dialog box start  -->
+	
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+	      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+	</p:dialog> 
+	
+	<!-- Loading image dialog box end  -->
+</ui:define>
+</ui:composition>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+<h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Invoice Purchase  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{invoicePurhcaseMB.checkPage()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+
+<h:form>
+<table style="margin: -10 auto;width: 1050px" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+
+<div style="height: 600" align="center">
+<div style="height: 100" align="center"></div>
+<div  style="color: blue;background-color: #3053A6;width: 500;border-radius:20" align="center">
+<table align="center" cellpadding="15">
+<tr align="center"><td align="center">
+<h:outputLabel style="color:white" value="Upload the purchase approval document for #{invoicePurhcaseMB.s}"></h:outputLabel>  </td></tr>
+<tr><td align="center"><h:outputText class="validation_ui" value="#{invoicePurhcaseMB.validate}"></h:outputText> </td></tr>
+<tr><td>
+
+ 
+ </td></tr>
+                    
+                    <tr></tr><tr><td align="center">
+                    
+                     <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}"
+                maxFilesQuantity="#{fileUploadBean.uploadsAvailable}"
+                id="upload"
+                immediateUpload="#{fileUploadBean.autoUpload}"
+                acceptedTypes="jpg, gif, png, bmp" allowFlash="#{fileUploadBean.useFlash}">
+                <a4j:ajax event="uploadcomplete" 
+                            render="info, imgs" />
+            </rich:fileUpload>
+                    <h:panelGroup id="info">
+                <rich:panel bodyClass="info">
+                    <f:facet name="header">
+                        <h:outputText value="Uploaded Files Info" />
+                    </f:facet>
+                    <h:outputText value="No files currently uploaded"
+                        rendered="#{fileUploadBean.size==0}" />
+                    <rich:dataGrid columns="1" value="#{fileUploadBean.files}"
+                        var="file" rowKeyVar="row">
+                        <rich:panel bodyClass="rich-laguna-panel-no-header">
+                            <h:panelGrid columns="2">
+                           
+
+                                <a4j:mediaOutput element="img" mimeType="#{file.mime}"
+                                    createContent="#{fileUploadBean.paint}" value="#{row}"
+                                    style="width:100px; height:100px;" cacheable="false">
+                                    <f:param value="#{fileUploadBean.timeStamp}" name="time"/>  
+                                </a4j:mediaOutput>
+                                
+                            
+                             <a4j:mediaOutput element="img" cacheable="false" session="false" createContent="#{mediaBean.paint}" value="#{mediaData}" mimeType="image/jpeg"/>
+                                
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="File Name:" />
+                                    <h:outputText value="#{file.name}" />
+                                    <h:outputText value="File Length(bytes):" />
+                                    <h:outputText value="#{file.length}" />
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </rich:panel>
+                    </rich:dataGrid>
+                </rich:panel>
+              
+                <br />
+                aa
+                <h:commandButton  action="#{fileUploadBean.clearUploadData}"
+                    reRender="info, upload" value="Clear Uploaded Data"
+                    rendered="#{fileUploadBean.size>0}" />
+            </h:panelGroup>
+                    <h:commandButton class="button" value="ok" action="#{invoicePurhcaseMB.redirecthome}"></h:commandButton> </td></tr></table>
+
+</div>
+
+
+</div>
+</td>
+
+</tr>
+
+</table>
+
+    </h:form>
+
+</body>
+</ui:composition>

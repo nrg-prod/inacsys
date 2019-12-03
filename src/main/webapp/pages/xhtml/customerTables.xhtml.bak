@@ -1,0 +1,2041 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content" >		
+		<div style="height:5px;"></div>
+				<table width="100%"><tr><td width="1%"> </td>
+  		<td width="2%"> <p:commandButton icon="fa fa-plus" value="New" action="#{salesOrderFormMB.redirectbuyerRegister}"  ajax="false"></p:commandButton></td>
+        <td width="88%"><p:commandButton icon="fa fa-money" action="#{salesOrderFormMB.revenueButtonclick}" value="Revenue" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+		oncomplete="PF('revenueForm').show();" update="rev" process="@this" rendered="#{buyersViewMB.newFlag}"/> </td>
+        <td width="8%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{buyersViewMB.buyerSearch1}" ajax="false"></p:commandButton></td>
+		</tr></table> 
+	
+						<div style="height:25px;">
+						<center><h:outputText value="#{buyersViewMB.validate}" class="errorTxt"></h:outputText></center>
+						</div>
+					
+					<center>
+					
+				<p:dataTable id="dataTable1" var="info1" widgetVar="BuyersInfo" filteredValue="#{buyersViewMB.filterList}"
+							value="#{buyersViewMB.catbuy}"
+							style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;width:98%;"
+							reflow="true"
+							emptyMessage="No information found with given criteria" rendered="#{!buyersViewMB.newFlag}">
+
+
+							<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+
+									<p:inputText id="globalFilter" onkeyup="PF('BuyersInfo').filter()"
+										style="width:20%;height:25px;backgroud:#ffffff" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+							<p:column width="30" headerText="No">
+								<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+								<div align="center">
+									<h:outputText class="labelTxt" value="#{info1.serialno}"/>
+								</div>
+							</p:column>
+							<p:column headerText="Name" width="80"
+								filterBy="#{info1.customerName}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.customerName}" />
+								<h:inputHidden value="#{info1.buyer_ID}"></h:inputHidden>
+							</p:column>
+							<p:column headerText="Number" width="80"  filterBy="#{info1.phoneno}"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.phoneno}" />
+
+							</p:column>
+							<!-- <p:column headerText="City" filterBy="#{info1.city}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.city}" />
+
+							</p:column> -->
+							<p:column headerText="Country" filterBy="#{info1.country}" width="80"
+								filterMatchMode="contains" filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.country}" />
+
+							</p:column>
+							<p:column headerText="Category" filterBy="#{info1.categoryName}" width="80"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.categoryName}" />
+
+							</p:column>
+							<!-- <p:column headerText="Email" filterBy="#{info1.mail}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.mail}" />
+
+							</p:column> -->
+							 <p:column headerText="Company" filterBy="#{info1.company}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.company}" />
+
+							</p:column>
+							<p:column headerText="State" filterBy="#{info1.state}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.state}" />
+
+							</p:column>
+							
+							<!-- <p:column headerText="Code" filterBy="#{info1.postCode}" width="60"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.postCode}" />
+
+							</p:column>  -->
+							<p:column headerText="Approval Status" filterBy="#{info1.approvalStatus}" width="120"
+								filterMatchMode="contains" filterStyle="display:none">
+								 <center><h:outputText value="Waiting for Approval" rendered="#{info1.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info1.approvalStatus}" rendered="#{info1.approvalStatus!='draft'}">
+      </h:outputText></center>
+							</p:column>
+							<p:column headerText="Action" width="130">
+								<div align="center">
+									<p:commandButton icon="fa fa-search"
+										action="#{buyersViewMB.buyerView}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+										oncomplete="PF('customerDialogView').show();"
+										update=":center_content:dialogPanel1View" process="@this">
+
+										<f:setPropertyActionListener target="#{buyersViewMB.phoneno}"
+											value="#{info1.phoneno}">
+										</f:setPropertyActionListener>
+										<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}"
+											value="#{info1.buyer_ID}">
+										</f:setPropertyActionListener>
+									</p:commandButton>&nbsp;
+									<p:commandButton icon="fa fa-pencil" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+										action="#{buyersViewMB.modifyLoad}" oncomplete="PF('customerDialogModify').show();"
+										update=":center_content:dialogPanel1Modify" rendered="#{info1.approvalStatus!='draft'}" process="@this">
+										<f:setPropertyActionListener target="#{buyersViewMB.phoneno}"
+											value="#{info1.phoneno}"></f:setPropertyActionListener>
+												<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}"
+											value="#{info1.buyer_ID}">
+										</f:setPropertyActionListener>
+									</p:commandButton>&nbsp;
+									<p:commandButton icon="fa fa-remove" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" 
+									oncomplete="PF('cd1').show()" rendered="#{info1.approvalStatus!='draft'}">
+										<f:setPropertyActionListener target="#{buyersViewMB.phoneno}"
+											value="#{info1.phoneno}"></f:setPropertyActionListener>
+												<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}"
+											value="#{info1.buyer_ID}">
+										</f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+
+
+						</p:dataTable>
+							<p:dataTable id="memberdataTable" var="info1" widgetVar="MemberInfo" filteredValue="#{buyersViewMB.filterList}"
+							value="#{buyersViewMB.catbuy}" rowIndexVar="rowindex"
+							style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;width:98%;"
+							reflow="true"
+							emptyMessage="No information found with given criteria" rendered="#{buyersViewMB.newFlag}">
+
+
+							<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+
+									<p:inputText id="globalFilter" onkeyup="PF('MemberInfo').filter()"
+										style="width:20%;height:25px;backgroud:#ffffff" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+							<p:column width="30" headerText="No">
+								<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+								<div align="center">
+									<h:outputText class="labelTxt" value="#{info1.serialno}"/>
+								</div>
+							</p:column>
+							<p:column headerText="Member ID" width="80"
+								filterBy="#{info1.cusCode}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.cusCode}" />
+							</p:column>
+							<p:column headerText="Name" width="80"
+								filterBy="#{info1.customerName}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.customerName}" />
+								<h:inputHidden value="#{info1.buyer_ID}"></h:inputHidden>
+							</p:column>
+							
+							<p:column headerText="Date of Join" width="80"
+								filterBy="#{info1.dateofjoin}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<h:outputText class="label_ui" value="#{info1.dateofjoin}" >
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Patner / Nominee" width="80"
+								filterBy="#{info1.partnerShipName}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<p:commandLink value="#{info1.partnerShipName}" action="#{buyersViewMB.partnerNomineeDetail(rowindex)}" update="center_content:paymentPanel center_content:pnDetailView" process="@this" 
+								style="color:blue" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('partnerNomineeDialog').show()">
+									<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}" value="#{info1.buyer_ID}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info1.cusCode}" target="#{buyersViewMB.cusCode}"></f:setPropertyActionListener>
+								</p:commandLink>
+							</p:column>
+							
+							<p:column headerText="Number" width="80"  filterBy="#{info1.phoneno}"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.phoneno}" />
+
+							</p:column>
+							
+							<p:column headerText="Owner's Name" filterBy="#{info1.categoryName}" width="80"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.categoryName}" />
+
+							</p:column>
+							 <p:column headerText="Nominee Name" filterBy="#{info1.company}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.company}" />
+
+							</p:column>
+					<!-- 		<p:column headerText="Member ID" filterBy="#{info1.cusCode}" width="100"
+								filterMatchMode="contains" filterStyle="display:none">
+
+								<h:outputText class="label_ui" value="#{info1.cusCode}" />
+
+							</p:column> -->
+							
+							<p:column headerText="Approval Status" filterBy="#{info1.approvalStatus}" width="120"
+								filterMatchMode="contains" filterStyle="display:none">
+								 <center><h:outputText value="Waiting for Approval" rendered="#{info1.approvalStatus=='draft'}"></h:outputText>
+     						 <h:outputText value="#{info1.approvalStatus}" rendered="#{info1.approvalStatus!='draft'}">
+     						 </h:outputText></center>
+							</p:column>
+							<p:column headerText="Receipt"  width="100">
+								<p:commandLink value="Receipt" action="#{buyersViewMB.memberPayment}" update="center_content:paymentPanel" process="@this" style="color:blue" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('paymentDialog').show()">
+									<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}" value="#{info1.buyer_ID}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{info1.cusCode}" target="#{buyersViewMB.cusCode}"></f:setPropertyActionListener>
+								</p:commandLink>
+							</p:column>
+							<p:column headerText="Action" width="130">
+								<div align="center">
+									<p:commandButton icon="fa fa-search"
+										action="#{buyersViewMB.buyerView}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+										oncomplete="PF('customerDialogView').show();"
+										update=":center_content:dialogPanel1View" process="@this">
+
+										<f:setPropertyActionListener value="#{info1.cusCode}" target="#{buyersViewMB.cusCode}"></f:setPropertyActionListener>
+										<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}" value="#{info1.buyer_ID}">
+										</f:setPropertyActionListener>
+									</p:commandButton>&nbsp;
+									<p:commandButton icon="fa fa-pencil" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+										action="#{buyersViewMB.modifyLoad}" oncomplete="PF('customerDialogModify').show();"
+										update=":center_content:dialogPanel1Modify" rendered="#{info1.approvalStatus!='draft'}" process="@this">
+										<f:setPropertyActionListener value="#{info1.cusCode}" target="#{buyersViewMB.cusCode}"></f:setPropertyActionListener>
+										<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}" value="#{info1.buyer_ID}">
+										</f:setPropertyActionListener>
+									</p:commandButton>&nbsp;
+									<p:commandButton icon="fa fa-remove" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" 
+									oncomplete="PF('cd1').show()" rendered="#{info1.approvalStatus!='draft'}">
+										<f:setPropertyActionListener value="#{info1.cusCode}" target="#{buyersViewMB.cusCode}"></f:setPropertyActionListener>
+										<f:setPropertyActionListener target="#{buyersViewMB.buyer_ID}"
+											value="#{info1.buyer_ID}">
+										</f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+
+
+						</p:dataTable>
+						<br/> <br/><div style="display:#{buyersViewMB.approveButtonFlag}">
+						
+		</div></center>
+	<div style="height:200px"></div>
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 
+			<p:dialog header="Confirmation" widgetVar="cd1" modal="true" width="40%" height="120"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Customer?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:20px"></div>
+					<p:commandButton value="Yes" action="#{buyersViewMB.buyerDelete}"
+						 process="@this" immediate="true" onsuccess="PF('cd1').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd1').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="cd1su" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="Customer has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+	<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:30px"></div>	<center>
+							<h:outputText value="Customer has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				
+				</div><center><p:commandButton value="Ok" action="#{buyersViewMB.buyerSearch1}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						></p:commandButton></center>
+			</p:dialog>
+		
+		
+		<p:dialog header="Partnar / Nominee Detail" id="pnDetailView" appendTo="@(body)"
+				widgetVar="partnerNomineeDialog" modal="true"  height="300px" width="60%"
+				 resizable="false">
+			<p:outputPanel id="pnDetailViewPanel">
+				<h:form id="pndetails">
+						<center>
+							<p:panelGrid style="height:250px;"  columns="4" styleClass="ui-panelgrid-blank">
+										<h:panelGroup rendered="#{buyersViewMB.paytype=='Yes'}">
+											<h:outputText class="labelTxt" value="Partner's Name :" />
+										</h:panelGroup>
+										<h:panelGroup rendered="#{buyersViewMB.paytype=='No'}">
+											<h:outputText class="labelTxt" value="Nominee's Name :" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<p:inputText  value="#{buyersViewMB.partnerShipName}" readonly="true"
+												id="pnnameview"  styleClass="inputTxt">
+											</p:inputText>
+										</h:panelGroup>
+										
+										<h:panelGroup rendered="#{buyersViewMB.paytype=='No'}">
+											<h:outputText class="labelTxt" value="Nominee's RelationShip :" />
+										</h:panelGroup>
+										<h:panelGroup rendered="#{buyersViewMB.paytype=='Yes'}">
+											<h:outputText class="labelTxt" value="Partner Father Name:" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<p:inputText  value="#{buyersViewMB.partnerFnamerelation}" readonly="true"
+												id="pnFnamerelationview"  styleClass="inputTxt">
+											</p:inputText>
+										</h:panelGroup>
+										
+										<h:panelGroup>
+											<h:outputText class="labelTxt" value="DOB:" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<p:inputText  value="#{buyersViewMB.pnDOB}" readonly="true"
+												id="pndobview"  styleClass="inputTxt">
+												<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+											</p:inputText>
+										</h:panelGroup>
+										
+										<h:panelGroup>
+											<h:outputText class="labelTxt" value="Email ID:" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<p:inputText  value="#{buyersViewMB.pnEmailID}" readonly="true"
+												id="pnEmailview"  styleClass="inputTxt">
+											</p:inputText>
+										</h:panelGroup>
+										
+										<h:panelGroup>
+											<h:outputText class="labelTxt" value="Phone Number 1:" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<p:inputText  value="#{buyersViewMB.pnPhoneNumber1}" readonly="true"
+												id="pnPhone1view"  styleClass="inputTxt">
+											</p:inputText>
+										</h:panelGroup>
+										
+										<h:panelGroup>
+											<h:outputText class="labelTxt" value="Phone Number 2:" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<p:inputText  value="#{buyersViewMB.pnPhoneNumber2}" readonly="true"
+												id="pnPhone2view"  styleClass="inputTxt">
+											</p:inputText>
+										</h:panelGroup>
+										
+									<h:panelGroup >
+											<h:outputText class="labelTxt" value="Address:" />
+										</h:panelGroup>
+										<h:panelGroup>
+												<p:inputTextarea placeholder="Street" value="#{buyersViewMB.pnAddress}" readonly="true"
+											 		styleClass="inputTxt" style="width: 280%;">
+											</p:inputTextarea>
+										</h:panelGroup>
+									<h:outputText class="labelTxt" value="" />
+									<h:outputText class="labelTxt" value="" />
+										
+							</p:panelGrid>
+						</center>
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>	
+
+	<!-- customer View dialog	 -->	
+			<p:dialog header="Customer View" id="dlg1view" appendTo="@(body)"
+				widgetVar="customerDialogView" modal="true"  height="600px" width="75%"
+				 resizable="false">
+				<p:outputPanel id="dialogPanel1View">
+					<h:form id="cusView">
+					<h:panelGroup rendered="#{!buyersViewMB.newFlag}">
+					<center>
+					<p:panelGrid style="height:250px;"  columns="6" styleClass="ui-panelgrid-blank">
+
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Title: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.customerTitle}" readonly="true"
+									id="custitle"  styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="First name: " lass="label_ui"/>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerName}" readonly="true"
+									id="cusfirstname"  styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Middle name: " 
+									for="vproductLimit" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerMiddleName}" readonly="true"
+									id="cusmidname" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email:" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.mail}" readonly="true"
+									id="cusemail" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Code :" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.code}" readonly="true"
+									id="cuscode" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Mobile: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.phoneno}" readonly="true"
+									id="cusMobile" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.custMobile}" readonly="true"
+									id="cusphone" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.categoryName}" readonly="true"
+									id="cuscategory" styleClass="ui-selectdrop">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Other: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.other}" readonly="true"
+									id="others" styleClass="inputTxt">
+							
+								</p:inputText>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date:" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.date}" readonly="true"
+									id="cusdate"  datePattern="dd/MM/yyyy">
+									
+								</p:inputText>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Company: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.company}" readonly="true"
+									id="cusCompany"  styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+							
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Website: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.website}" readonly="true"
+									id="cuswebsite"  styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Fax number:" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.faxnumber}" readonly="true"
+									id="faxnumber"  styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="LicenceNo: " />								
+							</h:panelGroup>	
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.cuslicNo}" readonly="true" styleClass="inputTxt"></p:inputText>
+							</h:panelGroup>					
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Customer Type: " />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.custype}" readonly="true" styleClass="inputTxt"></p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description: " />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputTextarea styleClass="inputTxt" placeholder="Description" style="width:200px;" readonly="true"
+									value="#{buyersViewMB.note}" id="cusnote1">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputTextarea>
+							</h:panelGroup>		
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Customer Code: " />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.cusCode}" readonly="true" styleClass="inputTxt"></p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Payment Type:" />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.paytype}" readonly="true" styleClass="inputTxt"></p:inputText>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{buyersViewMB.paytype=='Credit'}">
+								<h:outputText class="label_ui" value="Payment Cash:" />								
+							</h:panelGroup>
+							<h:panelGroup rendered="#{buyersViewMB.paytype=='Credit'}">
+								<p:inputText  value="#{buyersViewMB.paydays}" readonly="true" styleClass="inputTxt"></p:inputText>
+							</h:panelGroup>
+						</p:panelGrid></center><br></br>
+				<p:tabView id="tabviewid" style="width:100%;height:270px;border:1px !important;">
+				<p:tab title="Address" style="min-height:300px;">
+				<center>
+				<table width="100%">
+				<tr><td width="1%"></td>
+				<td width="46%">
+					<h:outputText value="Present Address:" class="labelTxt"></h:outputText>
+				</td>
+				<td width="17%">
+				<h:outputText value="Permanent Address:" class="labelTxt"></h:outputText>
+				</td><td width="3%"><p:selectBooleanCheckbox value="#{salesOrderFormMB.sameCheckBox}" valueChangeListener="#{salesOrderFormMB.checkBoxValueChange}" >
+				<p:ajax event="valueChange" update=":center_content" process="@this"></p:ajax>
+				</p:selectBooleanCheckbox></td>
+				<td width="20%"><h:outputText value="Same as Present Address" class="labelTxt"></h:outputText></td>
+				<td width="17%"></td>
+				</tr></table></center>
+				<p:panelGrid style="height:70px;"  columns="2" styleClass="ui-panelgrid-blank">
+				<p:inputTextarea placeholder="Street" value="#{buyersViewMB.permanentaddress}" readonly="true"
+									id="cusstreetpresentt" styleClass="inputTxt" style="width:421px">
+				</p:inputTextarea>
+					
+				<p:inputTextarea placeholder="Street" value="#{buyersViewMB.address}" readonly="true"
+									id="cusstreetspermanent" styleClass="inputTxt" style="width:421px">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputTextarea>
+				</p:panelGrid>
+				
+				<p:panelGrid style="height:110px;"  columns="4" styleClass="ui-panelgrid-blank">
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<p:inputText styleClass="inputTxt" placeholder="City " readonly="true"
+									value="#{buyersViewMB.cities}"
+									id="cuscitypresent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Country *" readonly="true" 
+									value="#{buyersViewMB.presentcountry}"
+									id="cuscountrypresent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="City " readonly="true" 
+									value="#{buyersViewMB.city}"
+									id="cuscitypermenent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Country *" readonly="true"
+									value="#{buyersViewMB.country}"
+									id="cuscountrypermenent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<h:outputText value="postal code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code:" readonly="true"
+									value="#{buyersViewMB.prePostCode}"
+									id="cuspostalcodepresent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="State " readonly="true"
+									value="#{buyersViewMB.perstate}"
+									id="cusstatepresent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postalcode" readonly="true"
+									value="#{buyersViewMB.postCode}"
+									id="cuspostalcodepermenent">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="State " readonly="true" 
+									value="#{buyersViewMB.state}"
+									id="cusstateperment">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+				</p:panelGrid>
+				
+				
+				
+				</p:tab>
+				
+			</p:tabView>
+			</h:panelGroup>
+			</h:form></p:outputPanel></p:dialog>
+			
+			<p:dialog header="Member Details" id="dlg1view1" appendTo="@(body)"
+				widgetVar="customerDialogView" modal="true"  height="600px" width="75%"
+				 resizable="false" rendered="#{buyersViewMB.newFlag}">
+				<p:outputPanel id="dialogPanel2View">
+					<h:form id="cusView1">
+					<p:commandButton icon="fa fa-arrow-circle-left" update="@form" process="@this" action="#{buyersViewMB.buyerSearch1}"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('customerDialogView').hide()"></p:commandButton>
+			<h:panelGroup >
+				<p:panelGrid style="height:200px;"  columns="6" styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Unit Name" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.customerName}" readonly="true" styleClass="inputTxt">
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit Owner's Name: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerMiddleName}" readonly="true"
+									 styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Owner Father's Name: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerLastName}" readonly="true"
+									 styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Nominee Name:" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerTitle}" readonly="true" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date of Birth :" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.date}" readonly="true"
+									 styleClass="inputTxt" >
+									<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.phoneno}" readonly="true"
+									 styleClass="inputTxt">
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email ID: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.mail}" readonly="true"
+									 styleClass="inputTxt">
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date of Recepit " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.deliveryDate}" readonly="true"
+									 styleClass="ui-selectdrop" >
+									 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Blood Group: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.other}" readonly="true"
+									styleClass="inputTxt">
+								</p:inputText>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit in Membership:" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneRadio value="#{buyersViewMB.paytype}" disabled="true">
+								<f:selectItem itemLabel="Yes" itemValue="Yes" />
+        						<f:selectItem itemLabel="No" itemValue="No" />
+								</p:selectOneRadio>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="MemberID: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.cusCode}" readonly="true"
+									  styleClass="inputTxt">
+								</p:inputText>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date Of Join: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.dateofjoin}" readonly="true"
+									  styleClass="inputTxt">
+									  <f:convertDateTime pattern="dd/mm/yyyy"></f:convertDateTime>
+								</p:inputText>
+							</h:panelGroup>
+							
+						</p:panelGrid>
+						<p:panelGrid columns="6" styleClass="ui-panelgrid-blank" style="width:100%" >
+			<h:outputText value="Photo" styleClass="labelTxt" rendered="#{not empty buyersViewMB.photoPath}"></h:outputText>
+			<a4j:mediaOutput style="width:100px;height:100px;" rendered="#{not empty buyersViewMB.photoPath}"
+							element="img" cacheable="false" session="true" 
+							createContent="#{buyersViewMB.imageview}" mimeType="image/png" />
+			<h:outputText value="Propritor Photo" styleClass="labelTxt" rendered="#{not empty buyersViewMB.attachmentfile1}"></h:outputText>
+			<a4j:mediaOutput style="width:100px;height:100px;" rendered="#{not empty buyersViewMB.attachmentfile1}"
+							element="img" cacheable="false" session="true" 
+							createContent="#{buyersViewMB.imageview1}" mimeType="image/png" />
+			<h:outputText value="Nominee Photo" styleClass="labelTxt" rendered="#{not empty buyersViewMB.freelancerName}"></h:outputText>
+			<a4j:mediaOutput style="width:100px;height:100px;" rendered="#{not empty buyersViewMB.freelancerName}"
+							element="img" cacheable="false" session="true" 
+							createContent="#{buyersViewMB.imageview2}" mimeType="image/png" />
+			</p:panelGrid>
+						<br></br>
+		<p:tabView id="tabviewpartnerShip" style="width:98%;height:200px;border:1px !important;" >
+			<p:tab title="Partner Ship / Nominee detail" id="partnerTab" style="min-height:200px;">
+				<p:panelGrid style="height:150px;"  columns="4" styleClass="ui-panelgrid-blank">
+				<h:outputText value="Partner Name:" class="labelTxt" rendered="#{buyersViewMB.paytype=='Yes'}"></h:outputText>
+				<h:outputText value="Partner Father Name:" class="labelTxt" rendered="#{buyersViewMB.paytype=='Yes'}"></h:outputText>
+				<h:outputText value="Nominee's Name:" class="labelTxt" rendered="#{buyersViewMB.paytype=='No'}"></h:outputText>
+				<h:outputText value="Nominee's Relation:" class="labelTxt" rendered="#{buyersViewMB.paytype=='No'}"></h:outputText>
+				<h:outputText value="Date of Birth:" class="labelTxt"></h:outputText>
+				<h:outputText value="Email ID:" class="labelTxt"></h:outputText>
+				<p:inputText styleClass="inputTxt" placeholder="Name " readonly="true" value="#{buyersViewMB.partnerShipName}">
+				</p:inputText>
+				<p:inputText styleClass="inputTxt" placeholder="" readonly="true" 
+					value="#{buyersViewMB.partnerFnamerelation}">
+				</p:inputText>
+				<p:inputText styleClass="inputTxt" placeholder="Date of Birth " readonly="true" 
+							value="#{buyersViewMB.pnDOB}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</p:inputText>
+				<p:inputText styleClass="inputTxt" placeholder="Email ID" readonly="true"
+							value="#{buyersViewMB.pnEmailID}">
+				</p:inputText>
+				
+				
+						<h:outputText value="Phone Number 1:" class="labelTxt"></h:outputText>
+						<h:outputText value="Phone Number 2:" class="labelTxt"></h:outputText>
+						<h:outputText value="Address:" class="labelTxt"></h:outputText>
+						<h:outputText value="" class="labelTxt"></h:outputText>
+								<p:inputText styleClass="inputTxt" placeholder="Phone Number" readonly="true"
+									value="#{buyersViewMB.pnPhoneNumber1}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Phone Number" readonly="true"
+									value="#{buyersViewMB.pnPhoneNumber2}">
+								</p:inputText>
+								<p:inputTextarea placeholder="Address"  id="paddr" style="width: 211%;" value="#{buyersViewMB.pnAddress}">
+								</p:inputTextarea>
+				</p:panelGrid>
+			</p:tab>
+			
+			</p:tabView>	
+						
+						
+						<br></br>
+				<p:tabView id="tabviewmember" style="width:100%;height:270px;border:1px !important;">
+				<p:tab title="memberAddress" style="min-height:300px;">
+				<center>
+				<table width="100%">
+				<tr><td width="1%"></td>
+				<td width="46%">
+					<h:outputText value="Present Address:" class="labelTxt"></h:outputText>
+				</td>
+				<td width="17%">
+				<h:outputText value="Permanent Address:" class="labelTxt"></h:outputText>
+				</td><td width="3%"></td>
+				<td width="20%"></td>
+				<td width="17%"></td>
+				</tr></table></center>
+				<p:panelGrid style="height:70px;"  columns="2" styleClass="ui-panelgrid-blank">
+				<p:inputTextarea placeholder="Street" value="#{buyersViewMB.permanentaddress}" readonly="true"
+									 styleClass="inputTxt" style="width:421px">
+				</p:inputTextarea>
+					
+				<p:inputTextarea placeholder="Street" value="#{buyersViewMB.address}" readonly="true"
+									 styleClass="inputTxt" style="width:421px">
+								</p:inputTextarea>
+				</p:panelGrid>
+				
+				<p:panelGrid style="height:110px;"  columns="4" styleClass="ui-panelgrid-blank">
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<p:inputText styleClass="inputTxt" placeholder="City " readonly="true" value="#{buyersViewMB.cities}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Country *" readonly="true" 
+									value="#{buyersViewMB.presentcountry}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="City " readonly="true" 
+									value="#{buyersViewMB.city}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Country *" readonly="true"
+									value="#{buyersViewMB.country}">
+								</p:inputText>
+								<h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<h:outputText value="postal code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code:" readonly="true"
+									value="#{buyersViewMB.prePostCode}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="State " readonly="true"
+									value="#{buyersViewMB.perstate}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postalcode" readonly="true"
+									value="#{buyersViewMB.postCode}">
+								</p:inputText>
+								<p:inputText styleClass="inputTxt" placeholder="State " readonly="true" 
+									value="#{buyersViewMB.state}">
+								</p:inputText>
+				</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+			</h:panelGroup>
+			<center>
+			<p:commandButton value="Ok" update="@form" process="@this" action="#{buyersViewMB.buyerSearch1}"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('customerDialogView').hide()"></p:commandButton>
+			</center>
+			</h:form>
+				</p:outputPanel>
+			</p:dialog>
+			
+			
+<!-- customer Modify -->
+		<p:dialog header="Customer Modify" id="dlg1Modify" appendTo="@(body)"
+			widgetVar="customerDialogModify" modal="true" height="500px"
+			width="75%" resizable="false">
+			<p:outputPanel id="dialogPanel1Modify">
+				<h:form id="cusModify">
+				<h:panelGroup rendered="#{!buyersViewMB.newFlag}">
+						<center>
+						<div style="height:10px"></div>
+					<div style="height:10px"><h:outputLabel value="#{buyersViewMB.validate}"
+							styleClass="errorTxt"></h:outputLabel>
+							<p id="cwebicon" style="padding:1px;margin:0px"></p>
+							</div>
+							<div style="height:10px"></div>
+					<p:panelGrid style="height:250px" columns="6" styleClass="ui-panelgrid-blank"> 
+
+						
+						<h:panelGroup>
+								<h:outputText class="label_ui" value="Title: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.customerTitle}" 
+									id="custitle"  styleClass="inputTxt">
+									<p:ajax update="custitle" process="@this" immediate="true"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="First name: " lass="label_ui"/>
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerName}"  
+									id="cusfirstname"  styleClass="inputTxt">
+									<p:ajax update="cusfirstname" immediate="true" process="@this"></p:ajax>
+									<h:message for="cusfirstname" style="color:red"></h:message>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Middle name: " 
+									for="vproductLimit" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerMiddleName}" 
+									id="cusmidname" styleClass="inputTxt">
+									<p:ajax update="cusmidname" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email:" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.mail}" 
+									id="cusemail" styleClass="inputTxt">
+									<p:ajax update="cusemail" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Code: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.code}" 
+									id="cuscode" styleClass="inputTxt" readonly="true">
+									<p:ajax update="cuscode" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Mobile:  " />
+							
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.phoneno}" 
+									id="cusMobile" styleClass="inputTxt">
+									<p:ajax update="cusMobile" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number: " /> 
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.custMobile}"  
+									id="cusphone" styleClass="inputTxt">
+									
+									<p:ajax update="cusphone" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category: " />
+							</h:panelGroup>
+							<h:panelGroup>
+							<h:selectOneMenu value="#{buyersViewMB.categoryName}"
+									id="ccate" widgetVar="var3"  style="border-radius:0px;height: 25px;width: 200px;"
+									styleClass="ui-selectdrop">
+									<f:selectItem itemLabel="--- Select Category---" itemValue="select"></f:selectItem>
+									<f:selectItem itemLabel="Personal" itemValue="Personal"></f:selectItem>
+									<f:selectItem itemLabel="Company" itemValue="Company"></f:selectItem>
+									<f:selectItem itemLabel="Others" itemValue="Store"></f:selectItem>
+									<p:ajax process="@this" immediate="true"
+										update="ccate"></p:ajax>
+								</h:selectOneMenu>
+								
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Other: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.other}" 
+									id="others" styleClass="inputTxt">
+							<p:ajax update="others" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:calendar  value="#{buyersViewMB.date}" 
+									id="cusdate" pattern="dd/MM/yyyy">
+									<p:ajax update="@form" event="dateSelect" process="@this"></p:ajax>
+									<p:ajax update="@form" event="valueChange" process="@this"></p:ajax>
+								</p:calendar>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Company: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.company}" 
+									id="cusCompany"  styleClass="inputTxt">
+									<p:ajax update="cusCompany" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Website :" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.website}" 
+									id="cuswebsite"  styleClass="inputTxt">
+									<p:ajax update="cuswebsite" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Fax number: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.faxnumber}" 
+									id="faxnumber"  styleClass="inputTxt">
+									<p:ajax update="faxnumber" immediate="true" process="@this"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="LicenceNo: " />								
+							</h:panelGroup>	
+							<h:panelGroup>
+								<p:inputText id="clicno" value="#{buyersViewMB.cuslicNo}" styleClass="inputTxt"> 
+								<p:ajax process="@this" immediate="true" update="clicno"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>					
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Customer Type: " />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:selectOneMenu id="custype" style="border-radius:0px;height: 25px;width: 200px;" widgetVar="var1" value="#{buyersViewMB.custype}">	
+									<f:selectItem itemLabel="--- Customer Type---" itemValue="select" />
+									<f:selectItem itemLabel="Trading" itemValue="Trading"></f:selectItem> 
+					       			<f:selectItem itemLabel="Non-Trading" itemValue="Non-Trading"></f:selectItem> 
+					       			<p:ajax process="@this" immediate="true" update="custype"></p:ajax> 
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Description: " />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText style="width:200px;height:40px;overflow-y:scroll"  
+									value="#{buyersViewMB.note}" id="cusnote">
+									<p:ajax process="@this" immediate="true"
+										update="cusnote"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>		
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Customer Code: " />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText id="cuscodes" styleClass="inputTxt" value="#{buyersViewMB.cusCode}" readonly="true"> 
+								<p:ajax process="@this" immediate="true" update="cuscodes"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Payment Type" />								
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:selectOneMenu  id="patyp" style="border-radius:0px;height: 25px;width: 200px;" valueChangeListener="#{buyersViewMB.venTypes}" value="#{buyersViewMB.paytype}">
+								<f:selectItem itemLabel="--- Select Type---" itemValue="select" />
+								<f:selectItem itemLabel="Cash" itemValue="Cash" />
+								<f:selectItem itemLabel="Credit" itemValue="Credit"/>
+								<p:ajax update="cusModify" event="valueChange" immediate="true" process="@this"></p:ajax>
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Payment Days" rendered="#{buyersViewMB.paytype == 'Credit'}"/>								
+							</h:panelGroup>
+							<h:panelGroup>							
+								<h:selectOneMenu id="days" style="border-radius:0px;height: 25px;width:170px;" value="#{buyersViewMB.paydays}" rendered="#{buyersViewMB.paytype == 'Credit'}" >
+									<f:selectItem itemLabel="--- Payment Days ---" itemValue="select"/>
+									<f:selectItems value="#{buyersViewMB.daylist}"></f:selectItems> 
+									<p:ajax immediate="true" update="@form" process="@this"></p:ajax>  
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:commandButton icon="fa fa-plus" process="@this" immediate="true" actionListener="#{buyersViewMB.dialog}" rendered="#{buyersViewMB.paytype =='Credit'}" update="@form" style="margin-left: -47px;"></p:commandButton>
+							</h:panelGroup>
+						</p:panelGrid></center>	<br></br>
+<p:tabView id="tabviewid" style="width:100%;height:270px;border:1px !important;">
+				<p:tab title="Address" style="min-height:300px;">
+				<table width="100%">
+				<tr><td width="1%"></td>
+				<td width="46%">
+					<h:outputText value="Present Address;" class="labelTxt"></h:outputText>
+				</td>
+				<td width="17%">
+				<h:outputText value="Permanent Address:" class="labelTxt"></h:outputText>
+				</td><td width="3%"></td>
+				<td width="20%"></td>
+				<td width="17%"></td>
+				</tr></table>
+				<p:panelGrid style="height:70px;"  columns="2" styleClass="ui-panelgrid-blank">
+				
+				<p:inputTextarea placeholder="Street" value="#{buyersViewMB.permanentaddress}"
+									id="cusstreetpresentt" style="width:421px">
+				<p:ajax process="@this" immediate="true"
+										update="cusstreetpresentt"></p:ajax>
+				</p:inputTextarea>
+					<p:inputTextarea placeholder="Street" value="#{buyersViewMB.address}"
+									id="cusstreetspermanent" style="width:421px">
+									<p:ajax process="@this" immediate="true"
+										update="cusstreetspermanent"></p:ajax>
+								</p:inputTextarea>
+				</p:panelGrid>
+				
+				<p:panelGrid style="height:110px;"  columns="4" styleClass="ui-panelgrid-blank">
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<p:inputText styleClass="inputTxt" placeholder="City "
+									value="#{buyersViewMB.cities}"
+									id="cuscitypresent">
+									<p:ajax process="@this" immediate="true"
+										update="cuscitypresent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu value="#{buyersViewMB.presentcountry}" valueChangeListener="#{buyersViewMB.counSelectValueChange1}"
+							     	style="border-radius:0px;height: 25px;width: 200px;" id="cuscountrypresent" widgetVar="var2">									
+									<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+       								<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       								<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       								<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       								<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       								<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      								 <p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+								</h:selectOneMenu>
+								<p:inputText styleClass="inputTxt" placeholder="City "
+									value="#{buyersViewMB.city}"
+									id="cuscitypermenent">
+									<p:ajax process="@this" immediate="true"
+										update="cuscitypermenent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu value="#{buyersViewMB.country}" valueChangeListener="#{buyersViewMB.counSelectValueChange}"
+							     	style="border-radius:0px;height: 25px;width: 200px;" id="cuscountrypermanent" widgetVar="var2">									
+									<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+       								<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       								<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       								<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       								<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       								<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      								 <p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+								</h:selectOneMenu>
+								<h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<h:outputText value="postal code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code:"
+									value="#{buyersViewMB.prePostCode}"
+									id="cuspostalcodepresent">
+									<p:ajax process="@this" immediate="true"
+										update="cuspostalcodepresent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu placeholder="State" id="vstat" style="border-radius:0px;height: 25px;width: 200px;" value="#{buyersViewMB.perstate}">
+							<f:selectItem itemLabel="--- Select State---" itemValue="select" />
+							<f:selectItems value="#{buyersViewMB.stateList1}"></f:selectItems>
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+							</h:selectOneMenu>
+								<p:inputText styleClass="inputTxt" placeholder="Postalcode" 
+									value="#{buyersViewMB.postCode}"
+									id="cuspostalcodepermenent">
+									<p:ajax process="@this" immediate="true"
+										update="cuspostalcodepermenent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu placeholder="State" id="vstat1" style="border-radius:0px;height: 25px;width: 200px;" value="#{buyersViewMB.state}">
+							<f:selectItem itemLabel="--- Select State---" itemValue="select" />
+							<f:selectItems value="#{buyersViewMB.stateList}"></f:selectItems>
+							<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+							</h:selectOneMenu>
+				</p:panelGrid>
+				
+				
+				
+				</p:tab>
+				
+			</p:tabView><br/><br/><br/>					
+					<center>
+			<p:commandButton value="Update" update=":center_content:dialogPanel1Modify" process="@this" immediate="true" action="#{buyersViewMB.buyerUpdate}"
+			 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+				<br/><br/>
+					</center>
+			</h:panelGroup>
+			</h:form></p:outputPanel></p:dialog>
+			
+			<p:dialog header="Member Details Modify" id="dlg1view2" appendTo="@(body)"
+				widgetVar="customerDialogModify" modal="true"  height="600px" width="75%"
+				 resizable="false" rendered="#{buyersViewMB.newFlag}">
+				<p:outputPanel id="dialogPanel3View">
+					<h:form id="cusView2">
+					<p:commandButton icon="fa fa-arrow-circle-left" update="@form" process="@this" action="#{buyersViewMB.buyerSearch1}"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" oncomplete="PF('customerDialogModify').hide()"></p:commandButton>
+				<h:panelGroup>
+				<p:panelGrid style="height:200px;"  columns="6" styleClass="ui-panelgrid-blank">
+							<h:panelGroup>
+								<h:outputText class="labelTxt" value="Unit Name" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.customerName}" styleClass="inputTxt" id="unitname">
+								<p:ajax process="@this" immediate="true" update="unitname"></p:ajax>
+								</p:inputText><br></br><h:message for="unitname" style="font-size:11px;color:red"></h:message>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit Owner's Name: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerMiddleName}" id="ownername"
+									 styleClass="inputTxt"><p:ajax process="@this" immediate="true" update="ownername"></p:ajax>
+								</p:inputText><br></br><h:message for="ownername" style="font-size:11px;color:red"></h:message>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Owner Father's Name: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerLastName}" id="fathername"
+									 styleClass="inputTxt">
+									<p:ajax process="@this" immediate="true" update="fathername"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Nominee Name:" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.customerTitle}"  styleClass="inputTxt" id="nomineename">
+								<p:ajax process="@this" immediate="true" update="nomineename"></p:ajax>
+								</p:inputText><br></br><h:message for="nomineename" style="font-size:11px;color:red"></h:message>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date of Birth :" />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:calendar value="#{buyersViewMB.date}" pattern="dd-MM-yyyy" id="memdob">
+								<p:ajax process="@this" immediate="true" update="memdob" event="dateSelect"></p:ajax>
+								</p:calendar>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number: " />
+								
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.phoneno}" id="memphone"
+									 styleClass="inputTxt">
+									 <p:ajax process="@this" immediate="true" update="memphone"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email ID: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.mail}" id="mememail"
+									 styleClass="inputTxt"><p:ajax process="@this" immediate="true" update="mememail"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date of Recepit " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:calendar value="#{buyersViewMB.deliveryDate}" id="memdateofrec"
+									 styleClass="ui-selectdrop" pattern="dd-MM-yyyy">
+									 <p:ajax process="@this" immediate="true" update="memdateofrec" event="dateSelect"></p:ajax>
+								</p:calendar>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Blood Group: " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.other}" id="memblood"
+									styleClass="inputTxt"><p:ajax process="@this" immediate="true" update="memblood"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Unit in Membership:" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneRadio value="#{buyersViewMB.paytype}" id="memtype">
+								<f:selectItem itemLabel="Yes" itemValue="Yes" />
+        						<f:selectItem itemLabel="No" itemValue="No" />
+        						<p:ajax process="@this" immediate="true" update="memtype tabupdatepartnerShip"></p:ajax>
+								</p:selectOneRadio>
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="MemberID: " />
+								
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.cusCode}" readonly="true" id="memcode"
+									  styleClass="inputTxt">
+									  <p:ajax process="@this" immediate="true" update="memcode"></p:ajax>
+								</p:inputText>
+							</h:panelGroup>
+							
+							
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date of Join " />
+								
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<p:calendar value="#{buyersViewMB.dateofjoin}" id="memdateofjoin"
+									 styleClass="ui-selectdrop" pattern="dd-MM-yyyy">
+									 <p:ajax process="@this" immediate="true" update="memdateofjoin" event="dateSelect"></p:ajax>
+								</p:calendar>
+							</h:panelGroup>
+							
+						</p:panelGrid>
+						<p:panelGrid columns="6" styleClass="ui-panelgrid-blank" style="width:100%" >
+			<h:outputText value="Uploaded Photo" styleClass="labelTxt" rendered="#{not empty buyersViewMB.photoPath}"></h:outputText>
+			<a4j:mediaOutput style="width:100px;height:100px;" rendered="#{not empty buyersViewMB.photoPath}"
+							element="img" cacheable="false" session="true" 
+							createContent="#{buyersViewMB.imageview}" mimeType="image/png" />
+			<h:outputText value="Uploaded Propritor Photo" styleClass="labelTxt" rendered="#{not empty buyersViewMB.attachmentfile1}"></h:outputText>
+			<a4j:mediaOutput style="width:100px;height:100px;" rendered="#{not empty buyersViewMB.attachmentfile1}"
+							element="img" cacheable="false" session="true" 
+							createContent="#{buyersViewMB.imageview1}" mimeType="image/png" />
+			<h:outputText value="Uploaded Nominee Photo" styleClass="labelTxt" rendered="#{not empty buyersViewMB.freelancerName}"></h:outputText>
+			<a4j:mediaOutput style="width:100px;height:100px;" rendered="#{not empty buyersViewMB.freelancerName}"
+							element="img" cacheable="false" session="true" 
+							createContent="#{buyersViewMB.imageview2}" mimeType="image/png" />
+			</p:panelGrid>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" style="height:70px;width:100%">
+       	  <h:outputText value="Photo" class="labelTxt"></h:outputText>
+       	 <p:fileUpload id="photo" mode="advanced" auto="true" skinSimple="true" value="#{buyersViewMB.photoUploadFile}" 
+       	 fileUploadListener="#{buyersViewMB.dummyAction}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:-21px">
+       	 </p:fileUpload>
+       	  <h:outputText value="Propritor Photo" class="labelTxt"></h:outputText>
+       	 	<p:fileUpload  mode="advanced" auto="true"   skinSimple="true" value="#{buyersViewMB.attachmentFile}"
+       	 	fileUploadListener="#{buyersViewMB.dummyAction1}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:-21px"/>
+       	  <h:outputText value="Nominee Photo" class="labelTxt"></h:outputText>
+       	 <p:fileUpload  mode="advanced" auto="true" skinSimple="true" value="#{buyersViewMB.nomineePhoto}"
+       	  fileUploadListener="#{buyersViewMB.dummyAction2}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:-21px"/>
+       	 
+       	 </p:panelGrid>
+       	 <br></br>
+       
+       
+       	 <p:tabView id="tabupdatepartnerShip" style="width:98%;height:200px;border:1px !important;" >
+			<p:tab title="Partner Ship / Nominee detail" id="partnerTab" style="min-height:200px;">
+				<p:panelGrid style="height:150px;"  columns="4" styleClass="ui-panelgrid-blank">
+				<h:outputText value="Partner Name:" class="labelTxt" rendered="#{buyersViewMB.paytype=='Yes'}"></h:outputText>
+				<h:outputText value="Partner Father Name:" class="labelTxt" rendered="#{buyersViewMB.paytype=='Yes'}"></h:outputText>
+				<h:outputText value="Nominee's Name:" class="labelTxt" rendered="#{buyersViewMB.paytype=='No'}"></h:outputText>
+				<h:outputText value="Nominee's Relation:" class="labelTxt" rendered="#{buyersViewMB.paytype=='No'}"></h:outputText>
+				<h:outputText value="Date of Birth:" class="labelTxt"></h:outputText>
+				<h:outputText value="Email ID:" class="labelTxt"></h:outputText>
+				
+				
+				<p:inputText value="#{buyersViewMB.partnerShipName}" id="pnNameupdate" placeholder="Name" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="pnNameupdate"></p:ajax>
+				</p:inputText>
+				
+				<p:inputText value="#{buyersViewMB.partnerFnamerelation}" id="pnFNRelationupdate" placeholder="" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="pnFNRelationupdate"></p:ajax>
+				</p:inputText>
+				
+				<p:calendar value="#{buyersViewMB.pnDOB}" id="pndobupdate" placeholder="Date of Birth"
+									 styleClass="ui-selectdrop" pattern="dd-MM-yyyy">
+					<p:ajax process="@this" immediate="true" update="pndobupdate" event="dateSelect"></p:ajax>
+				</p:calendar>
+				
+				<p:inputText value="#{buyersViewMB.pnEmailID}" id="pnemailupdate" placeholder="Email Id" styleClass="inputTxt">
+					<p:ajax process="@this" immediate="true" update="pnemailupdate"></p:ajax>
+				</p:inputText>
+				
+				<h:outputText value="Phone Number 1:" class="labelTxt"></h:outputText>
+				<h:outputText value="Phone Number 2:" class="labelTxt"></h:outputText>
+				<h:outputText value="Address:" class="labelTxt"></h:outputText>
+				<h:outputText value="" class="labelTxt"></h:outputText>
+				
+								<p:inputText value="#{buyersViewMB.pnPhoneNumber1}" id="pnPhone1update" placeholder="Phone Number" styleClass="inputTxt">
+									<p:ajax process="@this" immediate="true" update="pnPhone1update"></p:ajax>
+								</p:inputText>
+								<p:inputText value="#{buyersViewMB.pnPhoneNumber2}" id="pnPhone2update" placeholder="Phone Number" styleClass="inputTxt">
+									<p:ajax process="@this" immediate="true" update="pnPhone2update"></p:ajax>
+								</p:inputText>
+							<p:inputTextarea placeholder="Address" value="#{buyersViewMB.pnAddress}"
+									id="pnAddressupdate" style="width: 211%;">
+									<p:ajax process="@this" immediate="true"
+										update="pnAddressupdate"></p:ajax>
+								</p:inputTextarea>
+				</p:panelGrid>
+			</p:tab>
+			
+			</p:tabView>
+       	 
+						<br></br>
+				<p:tabView id="membertabviewid" style="width:100%;height:270px;border:1px !important;">
+				<p:tab title="updatetabAddress" style="min-height:300px;">
+				<table width="100%">
+				<tr><td width="1%"></td>
+				<td width="46%">
+					<h:outputText value="Present Address;" class="labelTxt"></h:outputText>
+				</td>
+				<td width="17%">
+				<h:outputText value="Permanent Address:" class="labelTxt"></h:outputText>
+				</td><td width="3%"></td>
+				<td width="20%"></td>
+				<td width="17%"></td>
+				</tr></table>
+				<p:panelGrid style="height:70px;"  columns="2" styleClass="ui-panelgrid-blank">
+				
+				<p:inputTextarea placeholder="Street" value="#{buyersViewMB.permanentaddress}"
+									id="mecusstreetpresentt" style="width:421px">
+				<p:ajax process="@this" immediate="true"
+										update="mecusstreetpresentt"></p:ajax>
+				</p:inputTextarea>
+					<p:inputTextarea placeholder="Street" value="#{buyersViewMB.address}"
+									id="mecusstreetspermanent" style="width:421px">
+									<p:ajax process="@this" immediate="true"
+										update="mecusstreetspermanent"></p:ajax>
+								</p:inputTextarea>
+				</p:panelGrid>
+				
+				<p:panelGrid style="height:110px;"  columns="4" styleClass="ui-panelgrid-blank">
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<h:outputText value="City:" class="labelTxt"></h:outputText>
+				<h:outputText value="Country:" class="labelTxt"></h:outputText>
+				<p:inputText styleClass="inputTxt" placeholder="City "
+									value="#{buyersViewMB.cities}"
+									id="mecuscitypresent">
+									<p:ajax process="@this" immediate="true"
+										update="mecuscitypresent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu value="#{buyersViewMB.presentcountry}" valueChangeListener="#{buyersViewMB.counSelectValueChange1}"
+							     	style="border-radius:0px;height: 25px;width: 200px;" id="mecuscountrypresent" widgetVar="var2">									
+									<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+       								<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       								<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       								<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       								<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       								<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      								 <p:ajax update="mvstat" process="@this" event="valueChange"></p:ajax>
+								</h:selectOneMenu>
+								<p:inputText styleClass="inputTxt" placeholder="City "
+									value="#{buyersViewMB.city}"
+									id="mecuscitypermenent">
+									<p:ajax process="@this" immediate="true"
+										update="mecuscitypermenent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu value="#{buyersViewMB.country}" valueChangeListener="#{buyersViewMB.counSelectValueChange}"
+							     	style="border-radius:0px;height: 25px;width: 200px;" id="mecuscountrypermanent" widgetVar="var2">									
+									<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+       								<f:selectItem itemLabel="India" itemValue="India"></f:selectItem>
+       								<f:selectItem itemLabel="Indonesia" itemValue="Indonesia"></f:selectItem>
+       								<f:selectItem itemLabel="Malaysia" itemValue="Malaysia"></f:selectItem>
+       								<f:selectItem itemLabel="Singapore" itemValue="Singapore"></f:selectItem>
+       								<f:selectItem itemLabel="UAE" itemValue="UAE"></f:selectItem>
+      								 <p:ajax update="mevstat1" process="@this" event="valueChange"></p:ajax>
+								</h:selectOneMenu>
+								<h:outputText value="Postal Code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<h:outputText value="postal code:" class="labelTxt"></h:outputText>
+								<h:outputText value="State:" class="labelTxt"></h:outputText>
+								<p:inputText styleClass="inputTxt" placeholder="Postal Code:"
+									value="#{buyersViewMB.prePostCode}"
+									id="mecuspostalcodepresent">
+									<p:ajax process="@this" immediate="true"
+										update="mecuspostalcodepresent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu placeholder="State" id="mvstat" style="border-radius:0px;height: 25px;width: 200px;" value="#{buyersViewMB.perstate}">
+							<f:selectItem itemLabel="--- Select State---" itemValue="select" />
+							<f:selectItems value="#{buyersViewMB.stateList1}"></f:selectItems>
+							<p:ajax process="@this" immediate="true" update="mvstat"></p:ajax>
+							</h:selectOneMenu>
+								<p:inputText styleClass="inputTxt" placeholder="Postalcode" 
+									value="#{buyersViewMB.postCode}"
+									id="mecuspostalcodepermenent">
+									<p:ajax process="@this" immediate="true"
+										update="mecuspostalcodepermenent"></p:ajax>
+								</p:inputText>
+								<h:selectOneMenu placeholder="State" id="mevstat1" style="border-radius:0px;height: 25px;width: 200px;" value="#{buyersViewMB.state}">
+							<f:selectItem itemLabel="--- Select State---" itemValue="select" />
+							<f:selectItems value="#{buyersViewMB.stateList}"></f:selectItems>
+							<p:ajax process="@this" immediate="true" update="mevstat1"></p:ajax>
+							</h:selectOneMenu>
+				</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<br/><br/><br/>
+			<center>
+			<p:commandButton value="Update" update=":center_content:dialogPanel3View" process="@this" immediate="true" action="#{buyersViewMB.buyerUpdate}"
+			 onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton></center>
+			 </h:panelGroup>
+			</h:form>
+			</p:outputPanel>
+			</p:dialog>
+			
+		<p:dialog header="CONGRATULATIONS...!!" widgetVar="cuc" modal="true" width="50%"  height="130px"
+				 resizable="false"
+				appendTo="@(body)">
+				<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0"
+								align="center">
+ <h:outputText value="Customer Information has been successfully modified." styleClass="confirmTxt" rendered="#{!buyersViewMB.newFlag}"></h:outputText>
+ <h:outputText value="Member Information has been successfully modified." styleClass="confirmTxt" rendered="#{buyersViewMB.newFlag}"></h:outputText>
+							</h:panelGrid>
+						<div style="height:30px"></div>
+						<center><p:commandButton value="Ok" action="#{buyersViewMB.buyerSearch1}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('cuc').hide()" onclick="PF('customerDialogModify').hide();"
+						></p:commandButton></center>
+						</center>
+						
+			</p:dialog>
+			
+			<p:dialog header="NEW FORM" widgetVar="confirm1" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+				<p:outputPanel id="daypanelid">
+				<h:form id="form2"> 
+				<table>
+				<tr>
+				<td>
+				<h:outputText value="#{buyersViewMB.validate1}" class="errorTxt" style="margin-left: 265px;"></h:outputText>
+				<p id="vendaysss"  style="padding:1px;margin:0px;margin-left: 265px;"></p>
+				</td>
+				</tr>
+				</table><div style="height:15px"></div>
+				<table><tr>
+						<td><br />
+							<h:outputText value="Days" class="labelTxt" style="margin-left: 169px;"></h:outputText>
+						</td>
+						<td width="5%"></td>
+						<td><br />
+							<p:inputText id="neww" styleClass="inputTxt" value="#{buyersViewMB.newcash}">
+							<p:ajax process="@this" immediate="true" update="neww"></p:ajax>
+							</p:inputText> 
+						</td>
+					</tr>										
+				</table>
+				<center>		
+						<p:commandButton value="Save" onclick="vendornewvalidation()" style=" margin-top: 15px;"></p:commandButton>	
+						<p:commandButton id="hid" update="center_content:daypanelid" process="@this"  action="#{buyersViewMB.vendorRegistercash}" style="display:none"></p:commandButton>
+				</center>
+				</h:form>
+				</p:outputPanel>
+			</p:dialog>	
+			<p:dialog header="Payment Receipt" widgetVar="paymentDialog" width="75%" height="50%" draggable="false" appendTo="@(body)" position="center" modal="true">
+			<p:outputPanel id="paymentPanel">
+			<h:form id="payment">
+			<div class="ui-g">
+			<div class="ui-g-10">
+			<center>
+         	<p:outputLabel style="font-size: 28px; font-family: Times New Roman;color:black;font-weight:600;margin-left: 17%;" value="SOUTH INDIAN DIGITAL CINEMA AND TV"></p:outputLabel>
+        	</center>
+        	<center> 
+         	<p:outputLabel style="font-size: 28px; font-family: Times New Roman;color:black;font-weight:600;margin-left: 17%;"  value="OUTDOOR UNIT OWNERS ASSOCIATION"></p:outputLabel>
+         	</center>
+         	<center> 
+         	<p:outputLabel style="font-size: 20px; font-family: Times New Roman;color:black;margin-left: 135px;"  value="No.126, D.No.F-5, Baskar Colony Street, Sallgramam,"></p:outputLabel>
+         	</center>
+         	<center> 
+         	<p:outputLabel style="font-size: 20px; font-family: Times New Roman;color:black;margin-left: 145px;"  value="Chennai-600 093. Ph:044 23764113"></p:outputLabel>
+         	</center>
+         	</div>
+			</div>
+			<div class="ui-g">
+			 <div class="ui-g-12">
+			 <center><p:outputLabel value="PAYMENT RECEIPT" style="font-size:22px;font-weight:600;color:black;;text-decoration: underline;"></p:outputLabel></center>
+			 </div>
+			 </div>
+			 <div class="ui-g">
+          	<div class="ui-g-6" align="left">
+          	<p:outputLabel value="No :" styleClass="outlabel" style="font-size: 15px;"></p:outputLabel>
+          	<p:inputText style="margin-left: 15px;border-top: 0px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+          	</div>
+         	<div class="ui-g-6" align="right">
+	         <p:outputLabel value="Date :" styleClass="outlabel" style="font-size: 15px;"></p:outputLabel>
+	         <p:calendar styleClass="dateTimeField" id="createdate" pattern="dd-MM-yyyy">
+	         <p:ajax event="dateSelect" update="createdate"></p:ajax> </p:calendar>
+	         </div>
+	         </div>
+	         <p:outputPanel>
+	         <div style="height:30px"></div>
+	         <div class="ui-g">
+	         <div class="ui-g-12 autoclass" >
+	         <div style="height:5%"></div>
+	         <label class="outlabel" style="font-size: 15px;font-style: italic;"> Received with thanks from Mr./Mrs</label>
+	         <p:inputText style="width: 622px;margin-left: 15px;border-top: 0px;font-size: 15px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+			<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			</p:inputText>
+	         </div>
+	         <div class="ui-g-12 autoclass" >
+	          <label class="outlabel" style="font-size: 15px;font-style: italic;"> Rupees</label>
+	          <p:inputText style="width: 830px;margin-left: 15px;border-top: 0px;font-size: 15px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+				<p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+	         </div>
+	         <div class="ui-g-12 autoclass" >
+	         <label class="outlabel" style="font-size: 15px;font-style: italic;"> by Cash/Cheque/Draft No</label>
+	          <p:inputText style="margin-left: 15px;border-top: 0px;font-size: 15px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+			  <p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			  </p:inputText>
+			<label class="outlabel" style="font-size: 15px;font-style: italic;"> dt</label>
+			<p:inputText style="margin-left: 15px;border-top: 0px;font-size: 15px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+			  <p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			  </p:inputText>
+			  <label class="outlabel" style="font-size: 15px;font-style: italic;"> Bank</label>
+			  <p:inputText style="margin-left: 15px;border-top: 0px;font-size: 15px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+			  <p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			  </p:inputText>
+	         </div>
+	          <div class="ui-g-12 autoclass" >
+	          <label class="outlabel" style="font-size: 15px;font-style: italic;"> of</label>
+	          <p:inputText style="width: 870px;margin-left: 15px;border-top: 0px;font-size: 15px;border-left: 0px;border-right: 0px;border-bottom-style: dashed;border-bottom-color: black;">
+			  <p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			  </p:inputText>
+	          </div>
+	          <div class="ui-g-12 autoclass" align="center">
+	          <label class="outlabel" style="font-size: 15px;font-style: italic;margin-left: 164px;"> for</label>
+	          <label class="outlabel" style="font-size: 17px; font-family: Times New Roman;color:black;font-weight:600;"> SOUTH INDIAN DIGITAL CINEMA AND TV OUTDOOR UNIT OWNERS ASSOCIATIONS</label>
+	          </div>
+	          <div class="ui-g-12 autoclass">
+	          <p:commandButton icon="fa fa-inr" style="height: 29px;"></p:commandButton>
+	          <p:inputText style="font-size: 15px;margin-left: -1px;">
+			  <p:ajax process="@this" immediate="true" update="@form"></p:ajax>
+			  </p:inputText>
+	          </div>
+	          <div class="ui-g-12 autoclass" align="right">
+	          <label class="outlabel" style="font-size: 17px; font-style: italic;color:black;">Accounts Officer</label>
+	          </div>
+	          <div style="height:40px"></div>
+	         </div>
+	         </p:outputPanel> 
+			</h:form>
+			<center>
+			<h:commandLink>
+	          <p:graphicImage value="../../images/Printer.png" title="Print" width="24"/>
+			<p:printer target="payment"  />
+				</h:commandLink></center>
+			</p:outputPanel>
+			</p:dialog>
+			<p:dialog header="Payment Modify" widgetVar="paymentEditDialog" width="35%" height="150px" draggable="false" appendTo="@(body)" position="center" modal="true">
+			<p:outputPanel id="paymenteditPanel">
+			<h:form>	
+				<center><p:panelGrid columns="3" styleClass="ui-panelgrid-blank" style="height:100px">
+				<h:outputText value="Amount" styleClass="labelTxt"></h:outputText>
+				<h:outputText value=":"></h:outputText>
+				<h:panelGroup>
+				<p:inputText styleClass="inputTxt"  id="epayamount" value="#{buyersViewMB.amount}">
+				<p:ajax update="epayamount" process="@this"></p:ajax> </p:inputText><br></br>
+				<h:message for="epayamount" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:outputText value="Description" styleClass="labelTxt" ></h:outputText>
+				<h:outputText value=":"></h:outputText>
+				<p:inputTextarea styleClass="inputTxt" id="epaydescription" value="#{buyersViewMB.note}">
+				<p:ajax update="epaydescription" process="@this"></p:ajax></p:inputTextarea>
+			</p:panelGrid>
+			<p:commandButton value="Update" action="#{buyersViewMB.mamberPaymentUpdate}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" update=":center_content:paymentPanel" process="@this"></p:commandButton>
+			</center>	
+			</h:form>
+			</p:outputPanel>
+			</p:dialog>
+			<p:confirmDialog global="true">
+        		<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       			 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    		</p:confirmDialog>
+    		<p:dialog header="REVENUE FORM" widgetVar="revenueForm" modal="true" width="80%" height="auto" resizable="false" draggable="false" appendTo="@(body)" id="dia">
+					<p:panel toggleable="false"  id="classblockUI2">
+						<h:form id="rev">
+						<div style="height:10px"/>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.programmeName}" styleClass="inputTxt" style="width: 200px;margin-left: 50px;" placeholder="Programme Name" id="rpgname">
+									<p:ajax process="@this" immediate="true" update="rpgname"></p:ajax>
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:calendar placeholder="Date " value="#{salesOrderFormMB.salesorderdate}" datePattern="dd/MM/yyyy" style="line-height: normal;" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')" id="rdate">
+									<p:ajax event="dateSelect" process="@this" immediate="true" update="rdate"></p:ajax> 
+									</p:calendar>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.schedules}" styleClass="inputTxt" style="width: 200px;" placeholder="Schedules" id="rsched">
+									<p:ajax process="@this" immediate="true" update="rsched"></p:ajax>
+									</p:inputText>
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="3%" style="height:20px;"></td>
+								<td width="15%" style="height:20px;"><p id="pname"></p></td>
+								<td width="15%" style="height:20px;"></td><td width="15%" style="height:20px;"></td>
+							</tr>
+						</table>
+						<div style="height:15px"/>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.billedAmount}" styleClass="inputTxt" style="width: 200px;margin-left: 50px;" placeholder="Billed Amount" id="rbil">
+									<p:ajax process="@this" immediate="true" update="rbil"></p:ajax>
+									</p:inputText>
+									
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.billedAmountPercentage}" styleClass="inputTxt" style="width: 200px;" placeholder="1 percentage in the Billed amount" id="rbb">
+									<p:ajax process="@this" immediate="true" update="rbb"></p:ajax>
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.totalAmount}" styleClass="inputTxt" style="width: 200px;" placeholder="Total Payable" id="rtot">
+									<p:ajax process="@this" immediate="true" update="rtot"></p:ajax>
+									</p:inputText>
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="3%" style="height:20px;"></td>
+								<td width="15%" style="height:20px;"><p id="bil"></p></td>
+								<td width="15%" style="height:20px;"><p id="bilper" ></p></td>
+								<td width="15%" style="height:20px;"><p id="tot" ></p></td>
+							</tr>
+						</table>
+						<div style="height:15px"/>
+						<center>
+							<p:commandButton value="Submit" onclick="revenue()" ></p:commandButton>
+							<p:commandButton id="hid" update="rev" process="@this" immediate="true" action="#{salesOrderFormMB.revenueInsertion}" style="display:none"></p:commandButton>							
+						</center>
+						<div style="height:15px"/>
+				<p:outputPanel id="timetables" style="width:100%;align:center">
+				<p:dataTable value="#{salesOrderFormMB.quotationDetailList}" var="revenue" id="rdataTable">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:right">
+						<p:inputText id="globalFilter" onkeyup="PF('BuyersInfo').filter()" style="width:20%;height:25px;backgroud:#ffffff" placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column width="30" headerText="No">
+						<f:facet name="header"> <span class="dataTableTxt"> Programme Name </span> </f:facet>
+						<div align="center">
+						<h:outputText class="labelTxt" value="#{revenue.programmeName}"/>
+						<h:inputHidden value="#{revenue.id}"></h:inputHidden>
+						</div>
+					</p:column>
+					<p:column width="30" headerText="No">
+						<f:facet name="header"> <span class="dataTableTxt"> schedules </span> </f:facet>
+						<div align="center">
+						<h:outputText class="labelTxt" value="#{revenue.schedules}"/>
+						</div>
+					</p:column>
+					<p:column width="30" headerText="No">
+						<f:facet name="header"> <span class="dataTableTxt"> Total Payable </span> </f:facet>
+						<div align="center">
+						<h:outputText class="labelTxt" value="#{revenue.totalAmount}"/>
+						</div>
+					</p:column>
+					<p:column headerText="Action" width="30">
+								<div align="center">
+									<p:commandButton icon="fa fa-search" action="#{salesOrderFormMB.revenueView}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+									oncomplete="PF('revenuevie').show();" update=":center_content:revenuepannel" process="@this">
+									<f:setPropertyActionListener target="#{salesOrderFormMB.id}" value="#{revenue.id}" />
+									</p:commandButton>&nbsp;
+									<p:commandButton icon="fa fa-pencil" action="#{salesOrderFormMB.revenueView}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+									oncomplete="PF('revenueedit').show();" update=":center_content:revenuepanneledit" process="@this">
+									<f:setPropertyActionListener target="#{salesOrderFormMB.id}" value="#{revenue.id}" />
+									</p:commandButton>&nbsp;
+									<p:commandButton icon="fa fa-remove" oncomplete="PF('delt').show();" onclick="PF('revenueForm').hide()"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+									<f:setPropertyActionListener target="#{salesOrderFormMB.id}" value="#{revenue.id}" />
+									</p:commandButton>
+								</div>
+							</p:column>
+				</p:dataTable>
+				</p:outputPanel>
+				</h:form>
+				</p:panel>
+			</p:dialog>
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="suceess" modal="true" width="80%" height="auto" resizable="false" appendTo="@(body)" id="a">
+				<center>
+					<div style="height:25px"></div>
+					<h:panelGrid columns="3" border="0" align="center">
+ 					<h:outputText value="Revenue Information has been successfully saved." styleClass="confirmTxt"></h:outputText>
+					</h:panelGrid><div style="height:15px"/>
+					<p:commandButton update="a" immediate="true" process="@this" value="Ok" oncomplete="PF('suceess').hide()" styleClass="button_ui">
+					</p:commandButton>	
+				</center>
+			</p:dialog>
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="delt" modal="true" width="45%" height="140px" resizable="false" appendTo="@(body)" id="delete">
+				<center>
+					<div style="height:25px"></div>
+					<h:panelGrid columns="3" border="0" align="center">
+ 					<h:outputText value="Are you sure,you wanted to delete this Revenue?" styleClass="confirmTxt"></h:outputText>
+					</h:panelGrid><div style="height:15px"/>
+					<p:commandButton value="Yes" action="#{salesOrderFormMB.revenueDelete}" update="@form" process="@this" immediate="true" onsuccess="PF('delt').hide()" styleClass="button_ui"></p:commandButton>
+					<p:commandButton value="No" onclick="PF('delt').hide()" styleClass="button_ui"></p:commandButton>
+				</center>
+			</p:dialog>
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="deltconform" modal="true" width="45%" height="140px" resizable="false" appendTo="@(body)" >
+				<center>
+					<div style="height:25px"></div>
+					<h:panelGrid columns="3" border="0" align="center">
+ 					<h:outputText value="Revenue has been successfully deleted." styleClass="confirmTxt"></h:outputText>
+					</h:panelGrid>
+				</center>
+			</p:dialog>
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="upform" modal="true" width="45%" height="140px" resizable="false" appendTo="@(body)" >
+				<center>
+					<div style="height:25px"></div>
+					<h:panelGrid columns="3" border="0" align="center">
+ 					<h:outputText value="Revenue has been successfully updated." styleClass="confirmTxt"></h:outputText>
+					</h:panelGrid>
+				</center>
+			</p:dialog>
+			<p:dialog header="Revenue View" appendTo="@(body)" widgetVar="revenuevie" modal="true" height="auto" width="70%" resizable="false">
+				<p:outputPanel id="revenuepannel">
+				<h:form id="rev1">
+				<div style="height:10px"/>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Programme Name " />
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Salesorder Date " />
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Schedules " />
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.programmeName}" styleClass="inputTxt" style="width: 200px;" readonly="true">
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.salesorderdate}" styleClass="inputTxt" style="width: 200px;" readonly="true">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.schedules}" styleClass="inputTxt" style="width: 200px;" readonly="true">
+									</p:inputText>
+								</td>
+							</tr>
+						</table>
+						<div style="height:15px"/>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Billed Amount "/>
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Billed Amount Percentage " />
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Total Amount " />
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.billedAmount}" styleClass="inputTxt" style="width: 200px;" readonly="true">
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.billedAmountPercentage}" styleClass="inputTxt" style="width: 200px;" readonly="true">
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.totalAmount}" styleClass="inputTxt" style="width: 200px;" readonly="true">
+									</p:inputText>
+								</td>
+							</tr>
+						</table>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+			<p:dialog header="Revenue Edit" appendTo="@(body)" widgetVar="revenueedit" modal="true" height="auto" width="70%" resizable="false">
+				<p:outputPanel id="revenuepanneledit">
+				<h:form id="revedit">
+				<div style="height:10px"/>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Programme Name "/>
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Salesorder Date " />
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Schedules " />
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.programmeName}" styleClass="inputTxt" style="width: 200px;" placeholder="Programme Name" id="rpgname1">
+									<p:ajax process="@this" immediate="true" update="rpgname1"></p:ajax>
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:calendar placeholder="Date " value="#{salesOrderFormMB.salesorderdate}" datePattern="dd/MM/yyyy" style="line-height: normal;" onblur="customerpno('center_content:cus:cusmno','cuspnoicon')" id="rdate">
+									<p:ajax event="dateSelect" process="@this" immediate="true" update="rdate"></p:ajax> 
+									</p:calendar>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.schedules}" styleClass="inputTxt" style="width: 200px;" placeholder="Schedules" id="rsched">
+									<p:ajax process="@this" immediate="true" update="rsched"></p:ajax>
+									</p:inputText>
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;"><p id="pname1"></p></td>
+								<td width="15%" style="height:20px;"></td><td width="15%" style="height:20px;"></td>
+							</tr>
+						</table>
+						<div style="height:15px"/>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Billed Amount " 	/>
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Billed Amount Percentage " />
+								</td>
+								<td width="15%" style="height:20px;">
+									<h:outputText class="label_ui" value="Total Amount " />
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.billedAmount}" styleClass="inputTxt" style="width: 200px;" placeholder="Billed Amount" id="rbil1">
+									<p:ajax process="@this" immediate="true" update="rbil1"></p:ajax>
+									</p:inputText>
+									
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.billedAmountPercentage}" styleClass="inputTxt" style="width: 200px;" placeholder="1 percentage in the Billed amount" id="rbb1">
+									<p:ajax process="@this" immediate="true" update="rbb1"></p:ajax>
+									</p:inputText>
+								</td>
+								<td width="15%" style="height:20px;">
+									<p:inputText value="#{salesOrderFormMB.totalAmount}" styleClass="inputTxt" style="width: 200px;" placeholder="Total Payable" id="rtot1">
+									<p:ajax process="@this" immediate="true" update="rtot1"></p:ajax>
+									</p:inputText>
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td width="15%" style="height:20px;"><p id="bil1"></p></td>
+								<td width="15%" style="height:20px;"><p id="bilper1" ></p></td>
+								<td width="15%" style="height:20px;"><p id="tot1" ></p></td>
+							</tr>
+						</table>
+						<center>
+						<p:commandButton value="update" onclick="revenueUpdatevalidation()"></p:commandButton>	
+						<p:commandButton oncomplete="PF('revenueedit').hide()" immediate="true" id="updatehid" update="revedit" process="@this"  action="#{salesOrderFormMB.revenueUpdate}" style="display:none"></p:commandButton>
+						</center>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+	</ui:define>
+</ui:composition>

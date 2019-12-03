@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Account out  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+<style>
+.ui-dialog .ui-dialog-titlebar {
+    padding: 1px 4px 6px 6px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close span{
+    display: block;
+    margin: 6px 3px 1px 7px;
+}
+</style>
+</h:head>
+ 
+ <body background="../../images/bgking.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  border="0" class="form_background" style="width: 100%;">
+
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+
+
+<tr ><td align="center"><h:outputText value="#{accountOutMB.validate}" class="errorTxt"/></td></tr>
+
+<tr>
+                    <td align="center" >
+                   
+	              
+	             
+	              <h:panelGrid class="labelTxt" border="0"  cellspacing="7"   columns="4"  style="height: 20px; width:800px;" align="center" cellpadding="3">
+	            
+				<h:outputText class="labelTxt" value="Firm Name" />
+				<h:outputText  value="#{accountOutMB.vendornumber}" class="labelTxt"/>
+				<h:outputText class="labelTxt" value="Vendor Phone Number" />
+				<h:outputText  value="#{accountOutMB.vendor1}" class="labelTxt"/>
+				<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+				<h:outputText class="labelTxt" value="Payable Amount"></h:outputText>
+				<h:panelGroup>
+				 
+				<h:outputText class="labelTxt"  value="#{accountOutMB.payableAmount}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/>
+				</h:outputText></h:panelGroup>
+				<h:outputText class="labelTxt"  value="Paid Amount" rendered="#{accountOutMB.paymentTerms=='Credit'}"></h:outputText>
+				<h:panelGroup>
+				 
+				<h:outputText class="labelTxt" value="#{accountOutMB.paidAmount}" rendered="#{accountOutMB.paymentTerms=='Credit'}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+				<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+				<h:outputText class="labelTxt" value="Balance Amount" rendered="#{accountOutMB.paymentTerms=='Credit'}"></h:outputText>
+				<h:panelGroup>
+				 
+				<h:outputText class="labelTxt" value="#{accountOutMB.balanceAmount}" rendered="#{accountOutMB.paymentTerms=='Credit'}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>
+							<h:outputText class="labelTxt" value="Amount Paying Now" rendered="#{accountOutMB.paymentTerms=='Credit'}"></h:outputText>
+
+				<h:selectOneMenu class="labelTxt" value="#{accountOutMB.payType}" valueChangeListener="#{accountOutMB.payTypeChange}" 
+				   rendered="#{accountOutMB.paymentTerms=='Credit'}"	style="height:25px">
+					<f:selectItem itemLabel="---Select---" itemValue=""/>
+					<f:selectItem itemLabel="25%" itemValue="25%"></f:selectItem>
+					<f:selectItem itemLabel="50%" itemValue="50%"/>
+					<f:selectItem itemLabel="75%" itemValue="75%"/>
+					<f:selectItem itemLabel="100%" itemValue="100%"/>
+					<p:ajax update="@form" event="valueChange" process="@this"></p:ajax>
+				</h:selectOneMenu>
+					
+										
+				<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+			<h:panelGroup>	<h:outputText class="labelTxt" value="Payment Mode" rendered="#{accountOutMB.paymentTerms=='Credit'}"></h:outputText> </h:panelGroup>
+			<h:panelGroup>
+				<h:selectOneMenu class="labelTxt" value="#{accountOutMB.paymentType}" valueChangeListener="#{aTransactionMB.paymentmodechange}" 
+				  rendered="#{accountOutMB.paymentTerms=='Credit'}"	style="display:#{accountOutMB.payflag1};height:25px">
+				<f:selectItem itemLabel="---Select---" itemValue=""/>
+				<f:selectItem itemLabel="Cash" itemValue="Cash"></f:selectItem>
+				<f:selectItem itemLabel="Card" itemValue="Card"/>
+				<f:selectItem itemLabel="Cheque" itemValue="Cheque"/>
+				<f:selectItem itemLabel="Transfer" itemValue="Transfer"/>
+				<p:ajax update="@form" event="valueChange" process="@this"></p:ajax>
+				</h:selectOneMenu>
+				<h:outputText class="labelTxt" value="#{accountOutMB.paymentType}" style="display:#{accountOutMB.payflag};"></h:outputText>
+				</h:panelGroup>	
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="Account Type" ></h:outputText>	</h:panelGroup>
+				<h:panelGroup>	<h:selectOneMenu value="#{accountOutMB.accountType}"
+					id="acctypes1" style="width:200px;height:25px;display:#{accountOutMB.payflag1}" valueChangeListener="#{accountOutMB.accountTypeChange}">
+					<f:selectItem itemLabel="---Select---" itemValue="" noSelectionOption="true"/>
+					<f:selectItems value="#{accountOutMB.accountType1}"></f:selectItems>
+					<p:ajax update="@form" process="@this" event="valueChange"></p:ajax>
+				</h:selectOneMenu>
+				<h:outputText class="labelTxt" value="#{accountOutMB.accountType}" style="display:#{accountOutMB.payflag};"></h:outputText>
+				</h:panelGroup>
+							<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+							
+				<h:panelGroup>
+				<h:outputLabel class="labelTxt" value="Account Description" ></h:outputLabel></h:panelGroup>
+					<h:panelGroup>
+				<h:selectOneListbox style="height:auto;max-height:100px; width: 200px;display:#{accountOutMB.payflag1}" value="#{accountOutMB.accountdescriptionvalue}" >
+					<f:selectItems value="#{accountOutMB.accountDescription}"></f:selectItems>
+				</h:selectOneListbox>
+				<h:outputText class="labelTxt" value="#{accountOutMB.accountdescriptionvalue}"  style="display:#{accountOutMB.payflag};"></h:outputText>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+				<h:panelGrid rendered="#{accountOutMB.paymentType=='Card'}"  class="labelTxt" border="0"  cellspacing="9"   columns="4"  style="height: 20px; width:800px;display:#{accountOutMB.payflag2};" align="left" cellpadding="3">  									
+ 							<h:outputLabel value="Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{accountOutMB.bankname}" ></h:inputText>
+								<h:outputLabel value="Card Number &nbsp;" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{accountOutMB.cardno}" ></h:inputText>
+									
+									</h:panelGrid>
+							<h:panelGrid rendered="#{accountOutMB.paymentType=='Cheque'}"  class="labelTxt" border="0"  cellspacing="7"   columns="4"  style="height: 20px; width:800px;display:#{accountOutMB.payflag3};" align="center" cellpadding="3">  									
+									<h:outputLabel value="Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{accountOutMB.bankname}"></h:inputText>
+										<h:outputLabel value="Cheque Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="labelTxt"></h:outputLabel>
+										<h:inputText class="text_ui" value="#{accountOutMB.chequeno}"></h:inputText>
+										<h:outputText></h:outputText>	<h:outputText></h:outputText><h:outputText></h:outputText>	<h:outputText></h:outputText>
+										<h:outputLabel value=" Cheque Date" class="labelTxt" ></h:outputLabel>
+										<p:calendar value="#{accountOutMB.chequedate}"
+									id="cdate" datePattern="MM/dd/yyyy"></p:calendar>
+									</h:panelGrid>
+					<h:panelGrid rendered="#{accountOutMB.paymentType=='Transfer'}"  class="labelTxt" border="0"  cellspacing="9"   columns="4"  style="height: 20px; width:800px;display:#{accountOutMB.payflag4};" align="center" cellpadding="3">  									
+									<h:outputLabel value="Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="labelTxt" ></h:outputLabel>
+										<h:inputText class="text_ui" value="#{accountOutMB.bankname}"></h:inputText>
+										<h:outputLabel value="Account Number &nbsp;&nbsp;&nbsp;" class="labelTxt"></h:outputLabel>
+										<h:inputText class="text_ui" value="#{accountOutMB.accno}"></h:inputText>
+										<h:outputText></h:outputText><h:outputText></h:outputText>
+										</h:panelGrid>
+				
+				
+					
+		         <h:panelGrid class="labelTxt" border="0" columns="6" style=" width: 100px;" >
+
+<p:commandButton  value="Pay Now" styleClass="button_ui" action="#{accountOutMB.payNow1}" update="@form"></p:commandButton>
+ 
+
+                 
+                        <h:outputText/></h:panelGrid>
+	   
+                    </td>
+                  </tr>
+
+ </table> 
+</td>
+</tr>
+<p:dialog header="CONGRATULATIONS...!!" widgetVar="purpayment" appendTo="@(body)" modal="true" width="650px" height="120" resizable="false" draggable="false">
+					<div style="height:30px;"></div>
+					<center>
+					<h:outputText
+						value="Succesfully paid  #{accountOutMB.remaining} for  Order Number #{purchaseViewMB.orderNumber}" class="confirmTxt"/></center>
+					<div style="height:20px;"></div>
+					<center><p:commandButton value="Ok" update="@form" actionListener="#{accountOutMB.purchasepayclose}"></p:commandButton></center>
+				</p:dialog>
+
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

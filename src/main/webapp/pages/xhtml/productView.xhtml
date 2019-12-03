@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Product View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("product:find1").click();
+            return false;
+        }
+        return true;
+        
+        }
+        function process1(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("product:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ <!-- <div style="background-image: url('../../images/home_new copy.jpg'); height: 1000px;background-repeat:no-repeat; background-position: center;">
+ <br/>
+ <br/> -->
+ <body onload="#{productRemoveFormMB.dropdown()} #{productRegisterFormMB.dropDown()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form id="product">
+<table  border="0" class="form_background" width="100%" align="center">
+
+
+<!-- #E0E0E0 -->
+
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+
+  
+<tr><td height="150px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Product View" class="header_ui"/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText value="#{productViewMB.validate}" class="validation_ui"/>
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td align="left" >
+                    <rich:panel style="font-size:14px; width:365px" header="Search by Product Name"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:365px;height: 120px;" align="center">  
+	          
+	            <h:outputLabel value="Product Name"  class="label_ui"/>
+	            
+	            <h:selectOneMenu class="text_ui" onkeypress="return process1(event);"  value="#{productViewMB.like}">
+				   	 <f:selectItem  itemLabel="--- select ---" itemValue=""/>
+				   	 <f:selectItem  itemLabel="All Product" itemValue="All"/>
+				   		 <f:selectItems  value="#{productViewMB.productList}"/>
+				  
+				 </h:selectOneMenu>
+	            <h:outputText value="" /><h:commandButton class="button"  value="Search" id="find1" action="#{productViewMB.likeProductView}" ></h:commandButton> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                     <td align="left" >
+                    <rich:panel style="font-size:14px; width:365px" header="Search by Category"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:365px;height: 120px;" align="center">  
+	          
+	            <h:outputLabel value="Category"  class="label_ui"/>
+	         
+	             <h:selectOneMenu onkeypress="return process1(event);" class="text_ui"  value="#{productViewMB.categoryname}"  >
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{productRegisterFormMB.categorytype}" />
+				    
+				 </h:selectOneMenu>
+	            <h:outputText class="text_ui" />
+	        <h:commandButton class="button"  value="Search" id="find" action="#{productViewMB.categorysearch}" ></h:commandButton> 
+	            
+	            
+	            
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                  <tr>
+                  <td height="20px">
+                  </td></tr>
+                    <tr>
+                    <td>
+                  
+            
+    </td></tr>
+</table> 
+<div style="height:200px ; width:700px; overflow-x:scroll; overflow-y:scroll;display:#{productViewMB.flag}" align="center">
+<h:panelGrid style="display:#{productViewMB.flag} ;" >
+<td align="center">
+<h:outputText  value="#{productViewMB.message}" styleClass="validation_ui" style="align:center;margin-left:+420px;" />
+       </td>             <rich:dataTable id="dataTable" var="info"  value="#{productViewMB.finalList}"   style="max-width:800px;max-height:250px ;font-size:14;" 
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row" columnsWidth="100px,105px,150px,135px,100px,75px,75px,100px,3px,3px,3px" >  
+         	
+  			<rich:column  headerText="Name" sortOrder="#{productViewMB.sortsOrders['date']}" sortBy="#{info.date}" sortType="custom">  
+	        <f:facet name="header">  
+	        <a4j:commandLink execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Entry Date" render="dataTable" action="#{productViewMB.sort()}">
+	        <f:param name="sortProperty" value="date"></f:param>
+	        </a4j:commandLink>
+	        <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['date']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['date']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	           </f:facet>
+	            <h:outputText value="#{info.date}"  class="label_ui">  <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+	        </rich:column> 
+	        
+	      
+	        <rich:column  headerText="Name" sortOrder="#{productViewMB.sortsOrders['productName']}" sortBy="#{info.productName}" sortType="custom">  
+	        <f:facet name="header">  
+	         <a4j:commandLink value="Product Name" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{productViewMB.sort()}">
+	            <f:param name="sortProperty" value="productName"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{productViewMB.sortsOrders['productName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{productViewMB.sortsOrders['productName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	          </f:facet>
+	            <h:outputText value="#{info.productName}"  class="label_ui"/>  
+	        </rich:column>
+	        <rich:column  headerText="Name" sortOrder="#{productViewMB.sortsOrders['brand']}" sortBy="#{info.brand}" sortType="custom">  
+	        <f:facet name="header"> <a4j:commandLink value="Brand Name" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{productViewMB.sort()}">
+	            <f:param name="sortProperty" value="brand"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{productViewMB.sortsOrders['brand']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{productViewMB.sortsOrders['brand']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	                </f:facet>
+	            <h:outputText value="#{info.brand}"  class="label_ui"/>  
+	        </rich:column> 
+	          
+	         <rich:column  headerText="Name" sortOrder="#{productViewMB.sortsOrders['categoryname']}" sortBy="#{info.categoryname}" sortType="custom">  
+	        <f:facet name="header"> <a4j:commandLink value="Category" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{productViewMB.sort()}">
+	            <f:param name="sortProperty" value="categoryname"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{productViewMB.sortsOrders['categoryname']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{productViewMB.sortsOrders['categoryname']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	                      </f:facet>
+	            <h:outputText value="#{info.categoryname}"  class="label_ui"/>  
+	        </rich:column>  
+	          <rich:column  headerText="Name" sortOrder="#{productViewMB.sortsOrders['productlimit']}" sortBy="#{info.productlimit}" sortType="custom">  
+	        <f:facet name="header">  <a4j:commandLink value="Product Code" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{productViewMB.sort()}">
+	            <f:param name="sortProperty" value="productlimit"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{productViewMB.sortsOrders['productlimit']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{productViewMB.sortsOrders['productlimit']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	                            </f:facet>
+	            <h:outputText value="#{info.productlimit}"  class="label_ui"/>  
+	        </rich:column>  
+	          <rich:column  headerText="Name" sortOrder="#{productViewMB.sortsOrders['unit']}" sortBy="#{info.unit}" sortType="custom">  
+	        <f:facet name="header">  <a4j:commandLink value="Unit" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{productViewMB.sort()}">
+	            <f:param name="sortProperty" value="unit"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{productViewMB.sortsOrders['unit']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{productViewMB.sortsOrders['unit']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	                            </f:facet>
+	            <h:outputText value="#{info.unit}"  class="label_ui"/>  
+	        </rich:column>  
+	   	
+  <rich:column   headerText="Phone" sortOrder="#{productViewMB.sortsOrders['actual']}" sortBy="#{info.actual}" sortType="custom">  
+	   		<f:facet name="header">  <a4j:commandLink value="Buying Price" execute="@this" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" render="dataTable" action="#{productViewMB.sort()}">
+	            <f:param name="sortProperty" value="actual"></f:param>
+	            </a4j:commandLink>
+	            <h:graphicImage value="../../images/downarrow.png" rendered="#{productViewMB.sortsOrders['actual']=='descending'}" style="width: 20px; "></h:graphicImage>
+	            <h:graphicImage value="../../images/uparrow.png" rendered="#{productViewMB.sortsOrders['actual']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	                            </f:facet>
+	 <h:outputText class="label_ui" value="Rp "/>  
+	<h:outputText class="label_ui" value="#{info.actual}">   <f:converter converterId="com.inventory.util.UrlConverter" />
+	  </h:outputText>
+	             </rich:column> 
+	   		
+	              <rich:column   headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Opening Stock </span>      </f:facet>
+	   			 	         
+	           		<div align="center"> 
+	           		<h:inputText value="#{info.openingStock}" style="width:70;height:20;"></h:inputText>
+	           		<h:commandButton   value="ADD"  action="#{productViewMB.openingStocks}" style="font-size:10 !important;height:20px;width:10px;padding-left:4px;">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{info.productName}" />
+	           	  <f:setPropertyActionListener target="#{productViewMB.openingStock}" value="#{info.openingStock}" />
+	               <f:setPropertyActionListener target="#{productViewMB.autual_price}" value="#{info.autual_price}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+	         
+	         <rich:column   headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> View  </span>      </f:facet>	         
+	           		<div align="center"> <h:commandButton   image="/images/view.png" action="#{productViewMB.productReject}">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{info.productName}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+	             
+	            <rich:column   headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Modify  </span>      </f:facet>	         
+	           		<div align="center"> <h:commandButton  image="/images/edit.png"  action="#{productViewMB.productEdit	}">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{info.productName}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+          
+	            
+	        
+	        
+	         <rich:column   headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Delete  </span>      </f:facet>	         
+	           		<div align="center"> <h:commandButton   image="/images/remove.png"  action="#{productViewMB.productRemove}">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{info.productName}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+	        
+	         
+ </rich:dataTable> </h:panelGrid>
+ <br/>
+<h:commandButton value="Print">
+<p:printer target="dataTable"></p:printer>
+</h:commandButton>
+ </div>
+  
+
+<div style="height:200px ; width:700px; overflow-x:scroll; overflow-y:scroll;display:#{productViewMB.flag1}" align="center">
+
+<h:panelGrid style="display:#{productViewMB.flag1} ;">
+                    <rich:dataTable id="dataTabl" var="inf"  value="#{productViewMB.datalist}" columnsWidth="120px,100px,150px,140px,60px,140px,20px,20px,3px,3px,3px"  style="font-family: 'HelveticaNeueLT Pro 55 Roman';">  
+         	
+ 
+   
+  			<rich:column headerText="Name" sortOrder="#{productViewMB.sortsOrders['createDate']}" sortBy="#{inf.createDate}" sortType="custom">  
+	        <f:facet name="header">      
+	        <a4j:commandLink action="#{productViewMB.sort()}" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Entry Date" render="dataTabl" execute="@this">
+	        <f:param value="createDate" name="sortProperty"></f:param>
+	        </a4j:commandLink>
+	           <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['createDate']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['createDate']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	         
+	        </f:facet>
+	            <h:outputText value="#{inf.createDate}"  class="label_ui">   <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+	        </rich:column> 
+	        
+	       
+	        
+	        <rich:column headerText="Name" sortOrder="#{productViewMB.sortsOrders['productName']}" sortBy="#{inf.productName}" sortType="custom">  
+	        <f:facet name="header">  <a4j:commandLink action="#{productViewMB.sort()}" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Product Name" render="dataTabl" execute="@this">
+	        <f:param value="productName" name="sortProperty"></f:param>
+	        </a4j:commandLink>
+	           <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['productName']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['productName']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	               </f:facet>
+	            <h:outputText value="#{inf.productName}"  class="label_ui"/>  
+	        </rich:column>
+	        <rich:column headerText="Name" sortOrder="#{productViewMB.sortsOrders['brand']}" sortBy="#{inf.brand}" sortType="custom">  
+	        <f:facet name="header">  <a4j:commandLink action="#{productViewMB.sort()}" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Brand Name" render="dataTabl" execute="@this">
+	        <f:param value="brand" name="sortProperty"></f:param>
+	        </a4j:commandLink>
+	           <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['brand']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['brand']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	               </f:facet>
+	            <h:outputText value="#{inf.brand}"  class="label_ui"/>  
+	        </rich:column> 
+	          
+	         <rich:column headerText="Name" sortOrder="#{productViewMB.sortsOrders['i0005.categoryType']}" sortBy="#{inf.i0005.categoryType}" sortType="custom">  
+	        <f:facet name="header">  <h:outputText  style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Category" render="dataTabl" execute="@this">
+	        <f:param value="i0005.categoryType" name="sortProperty"></f:param>
+	       </h:outputText>
+	           <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['i0005.categoryType']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['i0005.categoryType']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	               </f:facet>
+	            <h:outputText value="#{inf.i0005.categoryType}"  class="label_ui"/>  
+	        </rich:column>  
+	          <rich:column headerText="Name" sortOrder="#{productViewMB.sortsOrders['productWeight']}" sortBy="#{inf.productWeight}" sortType="custom">  
+	        <f:facet name="header">  <a4j:commandLink action="#{productViewMB.sort()}" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Product Code" render="dataTabl" execute="@this">
+	        <f:param value="productWeight" name="sortProperty"></f:param>
+	        </a4j:commandLink>
+	           <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['productWeight']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['productWeight']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	               </f:facet>
+	            <h:outputText value="#{inf.productWeight}"  class="label_ui"/>  
+	        </rich:column>  
+	          <rich:column headerText="Name" sortOrder="#{productViewMB.sortsOrders['unit']}" sortBy="#{inf.unit}" sortType="custom">  
+	        <f:facet name="header">  <a4j:commandLink action="#{productViewMB.sort()}" style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';color:white" value="Unit" render="dataTabl" execute="@this">
+	        <f:param value="unit" name="sortProperty"></f:param>
+	        </a4j:commandLink>
+	           <h:graphicImage  value="../../images/downarrow.png"  rendered="#{productViewMB.sortsOrders['unit']=='descending'}" style="width: 20px; "></h:graphicImage>
+	         <h:graphicImage  value="../../images/uparrow.png"  rendered="#{productViewMB.sortsOrders['unit']=='ascending'}" style="width: 20px; "></h:graphicImage>
+	               </f:facet>
+	            <h:outputText value="#{inf.unit}"  class="label_ui"/>  
+	        </rich:column>  
+	   		
+	             
+ 			 <rich:column headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> View  </span>      </f:facet>	         
+	           		<div align="center"> <h:commandButton   image="/images/view.png" action="#{productViewMB.productReject}">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{inf.productName}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+	             
+	            <rich:column headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Modify  </span>      </f:facet>	         
+	           		<div align="center"> <h:commandButton  image="/images/edit.png"  action="#{productViewMB.productEdit	}">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{inf.productName}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+	        
+	         <rich:column  headerText="Phone">
+	   			 <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Delete  </span>      </f:facet>	         
+	           		<div align="center"> <h:commandButton   image="/images/remove.png"  action="#{productViewMB.productRemove}">
+	             <f:setPropertyActionListener target="#{productViewMB.productName}" value="#{inf.productName}" />
+	           </h:commandButton></div> 
+	        </rich:column>
+	        
+	         
+ </rich:dataTable> </h:panelGrid>
+ <br/>
+<h:commandButton value="Print">
+<p:printer target="dataTabl"></p:printer>
+</h:commandButton>
+  </div>
+
+<div id="popup" style="display:#{productViewMB.flag2} ">
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" action="#{productViewMB.cancel}"></h:commandButton>
+
+
+
+</h:panelGrid></div>
+
+   
+
+  
+
+ 
+            
+   </div>
+
+</td></tr>
+         
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

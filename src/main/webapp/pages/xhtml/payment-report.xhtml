@@ -1,0 +1,511 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+	<title> Inacsys | Payment Report </title>
+ 	<link rel="stylesheet" href="../../css/css.css">
+ 
+	</link>
+</h:head>
+<body>
+
+			<h:form id="form">
+			<center>
+				<h:panelGrid>
+					<h:outputText value="#{purchaseReportMB.validate}" class="validation_ui"/>
+				</h:panelGrid></center>
+				 <table align="center">
+				 <tr>
+				 <td>
+				 
+				 <h:panelGrid columns="4" style="font-size:10px; width:740px; height: 100px;" align="center" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
+					<h:panelGroup>
+						<h:outputText value="From Date" class="label_ui"></h:outputText>
+						<h:outputText style="color:red" value="*"></h:outputText>
+					</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar  pattern="yyyy-MM-dd" value="#{purchaseReportMB.payFromDate}" id="fdate">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar><br/>
+					<h:message for="fdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="To Date" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar pattern="yyyy-MM-dd" value="#{purchaseReportMB.payToDate}" id="tdate">
+						<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar><br/>
+					<h:message for="tdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Type" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+				<h:selectOneMenu id="av2" style="font-size:10px;width:200px;height:25px;" class="ui-selectdropd" value="#{purchaseReportMB.type}" valueChangeListener="#{purchaseReportMB.valueChange1}">
+		  	 			<f:selectItem itemLabel=" ---Select---" itemValue="---Select---"/>
+		  	 			<f:selectItem itemLabel="Purchase" itemValue="Purchase"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Sales" itemValue="Sales"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu><br/>
+					<h:message for="av2" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Customer Name" class="label_ui" style="display:#{purchaseReportMB.customerFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{purchaseReportMB.customerFlag}" value="*" ></h:outputText>
+					<h:outputText value="Vendor Name" class="label_ui" style="display:#{purchaseReportMB.vendorFlag}"></h:outputText>
+					<h:outputText style="color:red;display:#{purchaseReportMB.vendorFlag}" value="*" ></h:outputText>
+					
+				</h:panelGroup>
+				<h:panelGroup>
+				<h:selectOneMenu id="c1" style="font-size:10px;width:200px;height:25px;display:#{purchaseReportMB.customerFlag}"  class="ui-selectdropd" value="#{purchaseReportMB.customertype}" valueChangeListener="#{purchaseReportMB.valueChange2}">
+		  	 			<f:selectItem itemLabel=" ---Select---" itemValue="---Select---"/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItems value="#{purchaseReportMB.customerList1}" ></f:selectItems>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu><br/>
+					<h:message for="c1" style="color:red;font-size:11px"></h:message>
+				<h:selectOneMenu id="v1" style="font-size:10px;width:200px;height:25px;display:#{purchaseReportMB.vendorFlag}"  class="ui-selectdropd" value="#{purchaseReportMB.vendortype}" valueChangeListener="#{purchaseReportMB.valueChange3}">
+		  	 			<f:selectItem itemLabel=" ---Select---" itemValue="---Select---"/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItems value="#{purchaseReportMB.vendorList1}" ></f:selectItems>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu><br/>
+					<h:message for="v1" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Payment Type" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+				<h:selectOneMenu id="av1" style="font-size:10px;width:200px;height:25px;"  class="ui-selectdropd" value="#{purchaseReportMB.paymentType}" valueChangeListener="#{purchaseReportMB.valueChange4}">
+		  	 			<f:selectItem itemLabel=" ---Select---" itemValue="---Select---"/>
+		  	 			<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Cash" itemValue="Cash"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Cheque" itemValue="Cheque"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Card" itemValue="Card"></f:selectItem>
+		  	 			<f:selectItem itemLabel="Transfer" itemValue="Transfer"></f:selectItem>
+		  	 			<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+					</h:selectOneMenu><br/>
+					<h:message for="av1" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				
+				
+			</h:panelGrid>
+			<center>
+				<h:panelGrid>
+						<p:commandButton  styleClass="button" style="font-size:15px" value="search" action="#{purchaseReportMB.searchPaymentReport}" ajax="false"></p:commandButton>
+				</h:panelGrid>
+			</center>
+				
+				 </td>
+				 </tr>
+				 </table>
+				 <br/>
+			<center>
+			<p:panel rendered="#{purchaseReportMB.paymentReportDtFlag}" style="width:730px;border-width:0px">
+				<ui:include src="../../pages/xhtml/PaymentReportDataTable.xhtml"></ui:include>
+			</p:panel>
+			<p:panel rendered="#{purchaseReportMB.cashpaymentReportDtFlag}" style="width:730px;border-width:0px">
+				<ui:include src="../../pages/xhtml/cashPaymentReportDataTable.xhtml"></ui:include>
+			</p:panel>
+	
+	<!-- sales CardPayment -->
+	<p:dataTable var="cardpaymentrp" rendered="#{purchaseReportMB.cardpaymentReportDtFlag}"  value="#{purchaseReportMB.paymentReportlist3}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{cardpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{cardpaymentrp.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.customerName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{cardpaymentrp.custPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.custPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{cardpaymentrp.crossTotal}" headerText="Cross Total"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{cardpaymentrp.bankName}" headerText="Bank Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.bankName}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cardpaymentrp.cardNumber}" headerText="Card Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.cardNumber}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cardpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{cardpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cardpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+
+</p:dataTable>
+
+<!-- sales ChequePayment -->
+	<p:dataTable var="chequepaymentrp" rendered="#{purchaseReportMB.chequepaymentReportDtFlag}"  value="#{purchaseReportMB.paymentReportlist4}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{chequepaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:70px;">
+            <h:outputText value="#{chequepaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{chequepaymentrp.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepaymentrp.customerName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{chequepaymentrp.custPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:80px;">
+            <h:outputText value="#{chequepaymentrp.custPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{chequepaymentrp.crossTotal}" headerText="Cross Total"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{chequepaymentrp.bankName}" headerText="Bank Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepaymentrp.bankName}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepaymentrp.chequeNumber}" headerText="Cheque Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:70px;">
+            <h:outputText value="#{chequepaymentrp.chequeNumber}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepaymentrp.chequeDate}" headerText="Cheque Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:70px;">
+            <h:outputText value="#{chequepaymentrp.chequeDate}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{chequepaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+
+</p:dataTable>
+
+<!-- sales TransferPayment -->
+
+<p:dataTable var="transpaymentrp" rendered="#{purchaseReportMB.transferpayReportDtFlag}"  value="#{purchaseReportMB.paymentReportlist5}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{transpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{transpaymentrp.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.customerName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{transpaymentrp.custPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.custPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{transpaymentrp.crossTotal}" headerText="Cross Total"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{transpaymentrp.bankName}" headerText="Bank Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.bankName}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{transpaymentrp.accountNumber}" headerText="Account Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.accountNumber}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{transpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{transpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{transpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+</p:dataTable>
+
+<!-- purchase payment Datatable-->
+
+<!--payment type:All -->
+
+<p:dataTable var="purpaymentrp" rendered="#{purchaseReportMB.purpaymentReportDtFlag}" value="#{purchaseReportMB.purpaymentReportlist1}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{purpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{purpaymentrp.vendorName}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.vendorName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{purpaymentrp.vendorPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.vendorPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{purpaymentrp.crossTotal}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{purpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<!-- <p:column filterBy="#{purpaymentrp.paymentType}" headerText="Payment Type"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.paymentType}" class="text_ui"/>
+            
+</p:column> -->
+<p:column filterBy="#{purpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{purpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{purpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+</p:dataTable>
+
+<!-- payment type:cash -->
+
+ <p:dataTable var="cashpurpaymentrp" rendered="#{purchaseReportMB.purcashpaymentReportDtFlag}"  value="#{purchaseReportMB.purpaymentReportlist2}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{cashpurpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{cashpurpaymentrp.vendorName}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.vendorName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{cashpurpaymentrp.vendorPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.vendorPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{cashpurpaymentrp.crossTotal}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{cashpurpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{cashpurpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cashpurpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cashpurpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+</p:dataTable>
+
+<!-- payment type:card -->
+
+<p:dataTable var="cardpurpaymentrp" rendered="#{purchaseReportMB.purcardpaymentReportDtFlag}"  value="#{purchaseReportMB.purpaymentReportlist3}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{cardpurpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{cardpurpaymentrp.vendorName}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.vendorName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{cardpurpaymentrp.vendorPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.vendorPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{cardpurpaymentrp.crossTotal}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{cardpurpaymentrp.bankName}" headerText="Bank Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.bankName}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cardpurpaymentrp.cardNumber}" headerText="Card Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.cardNumber}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cardpurpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{cardpurpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{cardpurpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{cardpurpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+</p:dataTable>
+
+<!-- payment type:cheque -->
+
+<p:dataTable var="chequepurpaymentrp" rendered="#{purchaseReportMB.purchequepaymentReportDtFlag}"  value="#{purchaseReportMB.purpaymentReportlist4}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{chequepurpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:70px;">
+            <h:outputText value="#{chequepurpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{chequepurpaymentrp.vendorName}" headerText="vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepurpaymentrp.vendorName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.vendorPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:80px;">
+            <h:outputText value="#{chequepurpaymentrp.vendorPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{chequepurpaymentrp.crossTotal}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepurpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.bankName}" headerText="Bank Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepurpaymentrp.bankName}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.chequeNumber}" headerText="Cheque Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:70px;">
+            <h:outputText value="#{chequepurpaymentrp.chequeNumber}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.chequeDate}" headerText="Cheque Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold;width:70px;">
+            <h:outputText value="#{chequepurpaymentrp.chequeDate}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepurpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepurpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{chequepurpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{chequepurpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+</p:dataTable>
+
+<!-- payment type:Transfer -->
+
+<p:dataTable var="transpurpaymentrp" rendered="#{purchaseReportMB.purtransferpayReportDtFlag}"  value="#{purchaseReportMB.purpaymentReportlist5}" widgetVar="paymentInfo"   paginator="true" rows="10"  
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" style="font-size:11px;width:100%">
+ <f:facet name="header">
+            <p:outputPanel>
+              
+                <p:inputText id="globalFilter" onkeyup="PF('paymentInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword" />
+            </p:outputPanel>
+ </f:facet>
+
+  <p:column filterBy="#{transpurpaymentrp.paymentDate}" headerText="Payment Date"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.paymentDate}" class="text_ui"></h:outputText>
+</p:column>
+ <p:column filterBy="#{transpurpaymentrp.vendorName}" headerText="vendor Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.vendorName}" class="text_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+</p:column>
+<p:column filterBy="#{transpurpaymentrp.vendorPhoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.vendorPhoneNumber}" class="text_ui"/>
+</p:column>
+
+<p:column filterBy="#{transpurpaymentrp.crossTotal}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.crossTotal}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{transpurpaymentrp.bankName}" headerText="Bank Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.bankName}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{transpurpaymentrp.accountNumber}" headerText="Account Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.accountNumber}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{transpurpaymentrp.paymentStatus2}" headerText="Payment Status"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.paymentStatus2}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{transpurpaymentrp.payableAmount}" headerText="Paid Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.payableAmount}" class="text_ui"/>
+            
+</p:column>
+<p:column filterBy="#{transpurpaymentrp.balanceAmount}" headerText="Balance Amount"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{transpurpaymentrp.balanceAmount}" class="text_ui"/>
+            
+</p:column>
+</p:dataTable>
+	
+	<p:dialog visible="#{purchaseReportMB.norecordFlag}" header="Confirmation" widgetVar="cd" width="200px" height="60px" modal="true" resizable="false">
+	<center> 
+	 <h:panelGrid columns="3">
+	<p style="font-size:12px;">No Records Found</p></h:panelGrid><br/>
+	<p:commandButton value="Ok" onclick="PF('cd').hide()"></p:commandButton>
+	</center>
+	</p:dialog>
+			</center> 
+				  
+			</h:form>
+			
+	
+	</body>
+
+</ui:composition>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<h:body>
+			<p:growl id="messages"></p:growl>
+			<p:tabView id="tabviewid">
+			
+				<p:tab title="Employee">
+					
+						
+<table width="100%"><tr>
+  <td width="96%"> <p:commandButton icon="fa fa-plus" value="New" action="#{employeeRegistrationFormMB.employeeFormPage}"  ajax="false"></p:commandButton></td>
+        <td width="4%"><p:commandButton icon="fa fa-refresh" value="Refresh" action="#{employeeDetailsViewFormMB.view}" ajax="false"></p:commandButton></td>
+
+	</tr></table>
+							
+					<div style="height:25px;">
+						<center><h:outputText value="#{employeeDetailsViewFormMB.validate}" class="errorTxt"></h:outputText></center>
+						</div>
+
+						<center>
+							<p:dataTable id="EmployeeDataTable" var="info" filteredValue="#{employeeDetailsViewFormMB.filterList}"
+								widgetVar="Employee" value="#{employeeDetailsViewFormMB.employeeDetailList}"
+								style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+								styleClass="order-table" headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								paginator="true" rows="10"
+									emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+								<f:facet name="header">
+									<p:outputPanel style="text-align:right">
+
+										<p:inputText id="globalFilter" onkeyup="PF('Employee').filter()"
+											style="width:20%;height:25px;backgroud:#ffffff" placeholder="Enter keyword" />
+									</p:outputPanel>
+								</f:facet>
+								 <p:column width="30" headerText="No">
+									<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+									<div align="center">
+										<h:outputText class="labelTxt" value="#{info.serialno}"/>
+									</div>
+								</p:column>
+								<p:column filterBy="#{info.regid}" width="100"
+									headerText="Registration ID" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+									<h:inputHidden value="#{info.employeeDetailsId}"></h:inputHidden>
+										<h:outputText class="label_ui" value="#{info.regid}"></h:outputText></center>
+								</p:column>	
+									<p:column  width="100" headerText="Employee ID" filterBy="#{info.employeeid}"
+									filterMatchMode="contains" filterStyle="display:none"><center>
+											<h:outputText class="label_ui" value="#{info.employeeid}"></h:outputText></center>
+									</p:column>
+									<p:column  width="100" filterBy="#{info.name}"
+									headerText="Employee Name" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+											<h:outputText class="label_ui" value="#{info.name}"></h:outputText></center>
+									</p:column>
+									<p:column  width="100" filterBy="#{info.phno}"
+									headerText="Phone Number" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+										<h:outputText class="label_ui" value="#{info.phno}"></h:outputText></center>
+									</p:column>
+									<p:column  width="100" filterBy="#{info.designation}"
+									headerText="Designation" filterMatchMode="contains"
+									filterStyle="display:none"><center>
+										
+											<h:outputText class="label_ui"
+												value="#{info.designation}"></h:outputText></center>
+									</p:column>
+									 <p:column headerText="Approval Status" filterBy="#{info.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      <center><h:outputText value="Waiting for Approval" rendered="#{info.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{info.approvalStatus}" rendered="#{info.approvalStatus!='draft'}">
+      </h:outputText></center>
+      </p:column>
+									<p:column  width="120" headerText="Action" style="align-item:center">
+											<div align="center">
+										<p:commandButton icon="fa fa-search"
+												action="#{employeeDetailsViewFormMB.viewform}">
+												<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.regid}"
+													value="#{info.regid}"></f:setPropertyActionListener>
+													<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.employeeDetailsId}"
+													value="#{info.employeeDetailsId}"></f:setPropertyActionListener>
+											</p:commandButton> 
+										<p:commandButton icon="fa fa-pencil" rendered="#{info.approvalStatus!='draft'}"
+												action="#{employeeDetailsViewFormMB.employeemodifyform}" >
+												<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.regid}"
+													value="#{info.regid}"></f:setPropertyActionListener>
+													<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.employeeDetailsId}"
+													value="#{info.employeeDetailsId}"></f:setPropertyActionListener>
+												</p:commandButton>
+												
+											<p:commandButton icon="fa fa-remove" rendered="#{info.approvalStatus!='draft'}"
+												onclick="PF('cd1').show()">
+												<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.regid}"
+													value="#{info.regid}"></f:setPropertyActionListener>
+													<f:setPropertyActionListener
+													target="#{employeeDetailsViewFormMB.employeeDetailsId}"
+													value="#{info.employeeDetailsId}"></f:setPropertyActionListener>
+											</p:commandButton></div>
+									</p:column>
+								</p:dataTable> <br/> <br/><div style="display:#{employeeDetailsViewFormMB.approveButtonFlag}">
+		</div>
+		<div style="height:200px;"></div>
+				<p:dialog header="Confirmation" widgetVar="cd1" modal="true" width="45%" height="130"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Employee?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:30px"></div>
+					<p:commandButton value="Yes" action="#{employeeDetailsViewFormMB.delete}"
+						 process="@this" immediate="true" onsuccess="PF('cd1').hide()"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('cd1').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+  
+  			<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="45%" height="130"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Employee has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				
+				</div><center><p:commandButton value="Ok" action="#{employeeDetailsViewFormMB.view}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						></p:commandButton></center>
+			</p:dialog>
+  
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="deleteconf" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="Employee has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>									
+								
+								
+						</center>
+					<p:blockUI  block="EmployeeDataTable" style="width:200px;height:30px;" trigger="EmployeeDataTable">
+  
+    <p:graphicImage value="/images/loadingimg.gif" />
+    <h:outputText value="Please wait, data is being processed..."
+     style="white-space: nowrap;width:150px;height:25px;" />
+ 
+  </p:blockUI>
+				</p:tab>
+				
+				
+			</p:tabView>
+			
+		
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px" rendered="#{employeePayrollViewFormMB.flag3}">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" ></h:commandButton>
+
+
+
+</h:panelGrid></div>
+		</h:body>
+
+	</ui:define>
+</ui:composition>

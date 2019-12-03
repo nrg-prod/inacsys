@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Report Sales  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  style="margin: 0 auto; "  align="center" border="0" class="form_background">
+<tr>
+<td>
+<ui:include src="../../pages/xhtml/folder1/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:995px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right">
+<h:commandButton value="Translate" style="font-weight:bold;"  ajax="false"> 
+<rich:componentControl target="popup" operation="show" />
+</h:commandButton>&nbsp;
+<h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+<div align="center"><rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Laporan Penjualan View" />
+        </f:facet>
+        
+ 
+        <rich:panel>
+<h:panelGrid columns="3"  border="0"  style="font-size:12px; width:300px;" align="left" bgcolor="#f4f4f4">
+
+
+<h:outputText  value="From Date" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="dari Tanggal" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="To Date " style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="hingga saat ini" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Category" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value=":" style="font-size:14px;color:#3B22DA;"></h:outputText>
+<h:outputText  value="Kategori" style="font-size:14px;color:#3B22DA;"></h:outputText>
+
+
+
+</h:panelGrid>
+<div align="center">
+<h:panelGrid columns="1">
+
+<h:commandButton align="center" value="close" onclick="#{rich:component('popup')}.hide(); return false;"></h:commandButton>
+</h:panelGrid></div>
+</rich:panel>
+
+    </rich:popupPanel></div>
+</td>
+
+</tr>
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center"><h:outputText value="Sales Report View" class="header_ui" /><br></br><br></br></td></tr>
+                   
+  <tr align="center"> <td align="center">   <h:outputText value="#{reportMB.validate2}" class="validation_ui"/></td></tr>
+
+<tr>
+                    <td align="left" >
+                     <rich:panel style="font-size:14px; width:700px" header="Search by Date"  >  
+	        <h:panelGrid  columns="4"  style="font-size:14px; width:700px;height: 150px;" align="center">  
+	       
+	         <h:outputText class="label_ui"  value="From Date *" ></h:outputText>
+				<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" datePattern="dd/MM/yyyy" value="#{reportMB.fromDate}" ></rich:calendar>
+				<h:outputText class="label_ui" value="To Date *" ></h:outputText>
+				<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" datePattern="dd/MM/yyyy" value="#{reportMB.toDate}" ></rich:calendar>
+			<h:outputText value="Category *" class="label_ui"></h:outputText>
+	        <h:selectOneMenu class="text_ui"  value="#{reportMB.cuscategory}"  label="category">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItem itemValue="Jakarta" itemLabel="Jakarta "  />
+				   		 <f:selectItem itemValue="Non-Jakarta" itemLabel="Non-Jakarta"  />
+				    	<f:selectItem itemValue="Free Lancer" itemLabel="Free Lancer"  />
+				 </h:selectOneMenu>	   
+	        </h:panelGrid>
+	        <h:panelGrid class="label_ui" border="0" style=" width:700px;" > 
+	        
+	         <table align="center"><tr><td>
+	         <h:commandButton class="button"  value="View Report" action="#{reportMB.reportSales}"  >
+	            </h:commandButton> 
+	           </td></tr></table>
+	        </h:panelGrid>  	    </rich:panel>
+                    </td>
+                  </tr>
+  
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+<td align="center" >
+
+
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+<div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

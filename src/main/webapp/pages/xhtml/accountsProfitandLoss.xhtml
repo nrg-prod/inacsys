@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+	       <ui:define name="content">
+	       <h:form>
+	      <center>
+<div class="ui-grid-row " align="center">
+        <div class="ui-grid-col-3" >
+         <p:commandLink style="text-decoration:none">
+          <div class="asdf asll" style="width: 100%;height: 70px;margin-top: 23px;margin-left:285px;">
+          <h:panelGroup>
+           <h:outputLabel class="font" value="#{profitLossMB.lAmount}" style="font-size:25px;color:white!important;margin-top: 0px;margin-bottom: 0px;padding-top:0px;margin-left: -109px;"></h:outputLabel>
+        <p class="font" style="font-size:14px;color: white !important;margin-top:-9px;margin-bottom: 0px;padding-top:5px;margin-left: -135px;">LOSS</p>
+      </h:panelGroup>
+        </div>
+        </p:commandLink>
+        </div>&nbsp;<div class="ui-grid-col-3" ></div>
+        <div class="ui-grid-col-3" >
+         <p:commandLink style="text-decoration:none;">
+        <div class="asdf aspp" style="width: 100%;height: 70px;margin-top: 23px;margin-left:295px;">       
+        <h:outputLabel class="font" value="#{profitLossMB.pAmount}" style="font-size:25px;color:white!important;margin-top: 0px;margin-bottom: 0px;padding-top:0px;margin-left: -109px;"></h:outputLabel>
+       <p class="font" style="font-size:14px;color: white !important;margin-top:-9px;margin-bottom: 0px;padding-top:5px;margin-left: -100px;" >PROFIT</p>
+       
+       </div>
+       </p:commandLink>
+        </div></div></center>
+				<table   border="0" class="form_background" style="width: 100%;margin-top: 22px;" >
+<tr>
+
+<td height="0px" align="center">
+
+<table align="center">
+
+                    <tr><td>
+                 
+                  <div style="width:100%; display:#{profitLossMB.flag}" align="center">
+<table align="center">
+
+<tr><td align="center">
+
+
+<h:panelGrid class="label_ui"    style=" width:0px;HEIGHT:10PX;font-family: 'Arial,san-serif'; " align="center" >
+	         
+	         <h:outputText value="Expenses" style="font-size:16px;font-family:'Arial,san-serif';font-weight:bold"/>
+	            </h:panelGrid></td><td align="center"> <h:panelGrid class="label_ui"    style=" width:0px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText value="Income" style="font-size:16px;font-family:'Arial,san-serif';font-weight:bold"/>
+	            </h:panelGrid></td></tr><tr><td align="center" valign="top" width="50%">
+                   <table><tr><td>
+<h:panelGrid >
+                    <p:dataTable id="dataTable1" var="info"   widgetVar="profitLosswid1"   value="#{profitLossMB.loss}" 
+						paginator="true" rows="10" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+							 emptyMessage="No information found with given criteria" reflow="true">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('profitLosswid1').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>   
+         	
+  			<p:column  headerText="Name" style="width:40">  
+	        <f:facet name="header"> <span class="datatableTxt">  NO  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </p:column> 
+	        
+	        <p:column  headerText="RollNo" style="width:80">  
+	            <f:facet name="header"> <span class="datatableTxt">  Date  </span>      </f:facet>
+	            
+	            <h:outputText value="#{info.sDate}"  class="label_ui"></h:outputText>
+	        </p:column>
+	         <p:column  headerText="Name" style="width:100" >  
+	        <f:facet name="header"> <span class="datatableTxt">  Client Name </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:80">  
+	        <f:facet name="header"> <span class="datatableTxt">  Reason   </span>      </f:facet>
+	            <h:outputText value="#{info.reason}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:110">  
+	        <f:facet name="header"> <span class="datatableTxt">  Amount  </span>      </f:facet>
+	            <h:panelGroup>
+<h:outputText  class="label_ui" value="&nbsp;"></h:outputText>
+	            <h:outputText value="#{info.amount}"  class="label2_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></h:panelGroup>  
+	        </p:column>
+	        
+ </p:dataTable> </h:panelGrid>
+ 
+</td></tr></table>
+                  
+  
+ 
+ </td><td align="center" valign="top" width="50%">
+<table><tr><td> <h:panelGrid >
+                    <p:dataTable id="dataTable" var="info" widgetVar="profitLosswid" value="#{profitLossMB.profit}"
+						paginator="true" rows="10" pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+						 emptyMessage="No information found with given criteria" reflow="true">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('profitLosswid').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>   
+         	
+  			<p:column  headerText="Name" style="width:40">  
+	        <f:facet name="header"> <span class="datatableTxt"> NO  </span>      </f:facet>
+	            <h:outputText value="#{info.sNo}"  class="label_ui"/>  
+	        </p:column> 
+	        
+	        <p:column  headerText="RollNo" style="width:70">  
+	            <f:facet name="header">
+	             <span class="datatableTxt"> Date  </span></f:facet>  
+	            
+	            <h:outputText value="#{info.sDate}"  class="label_ui"></h:outputText>
+	        </p:column>
+	        
+	        
+	        <p:column  headerText="Name" style="width:100">  
+	        <f:facet name="header"> <span class="datatableTxt">  Client Name </span>      </f:facet>
+	            <h:outputText value="#{info.clientName}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:80">  
+	        <f:facet name="header"> <span class="datatableTxt">  Reason   </span>      </f:facet>
+	            <h:outputText value="#{info.reason}"  class="label_ui"/>  
+	        </p:column> 
+	        <p:column  headerText="Name" style="width:110">  
+	        <f:facet name="header"> <span class="datatableTxt">  Amount  </span>      </f:facet>
+	         <h:panelGroup>
+<h:outputText  class="label_ui" value="&nbsp;"></h:outputText>  
+	            <h:outputText value="#{info.amount}"  class="label1_ui"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  </h:panelGroup>
+	        </p:column>
+ </p:dataTable> </h:panelGrid> </td></tr></table>
+ 
+</td></tr></table>
+ </div>
+                  
+                  </td></tr>
+                  <tr><td><table ><tr><td align="left" style="width:730px;"><div align="left">
+ <h:panelGrid columns="3" style="width:200px;display:#{profitLossMB.flag} ;">
+  <h:panelGroup>
+ <h:outputLabel value="Expenses:&nbsp;" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"></h:outputLabel>
+
+ 	
+ 	<h:outputLabel  value="#{profitLossMB.lAmount}" style="font-weight:bold;font-size:14;color:red;font-family:'Arial,san-serif'"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputLabel></h:panelGroup>
+ </h:panelGrid>
+ </div></td><td align="right" style="width: 400px;"><div align="right">
+ <h:panelGrid columns="3" style="width:200px; display:#{profitLossMB.flag};">
+ <h:panelGroup>
+ 	<h:outputLabel value="Income:&nbsp;" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"></h:outputLabel>
+ 	
+ 	<h:outputLabel  value="#{profitLossMB.pAmount}" style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif';color:#033C95;"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputLabel></h:panelGroup>
+ 	
+ </h:panelGrid>
+ </div></td></tr></table></td></tr>
+                  <tr ><td align="center">
+                  <br/>
+                  <h:panelGrid columns="3" style="display:#{profitLossMB.flag} ;" >
+                  <h:panelGroup>
+ 	<h:outputLabel value="Profit And Loss :&nbsp;"  style="font-weight:bold;font-size:14px;font-family:'Arial,san-serif'"></h:outputLabel>
+ 	
+ 	<h:outputLabel value="#{profitLossMB.plAmount}"  style="color:#{profitLossMB.color};font-weight:bold;font-size:14px;font-family:'Arial,san-serif'" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputLabel></h:panelGroup>
+ </h:panelGrid>
+
+  
+                  </td></tr>
+</table> 
+</td></tr>
+</table>
+	 </h:form></ui:define>
+	 </ui:composition>
+	 
+	 
+	 

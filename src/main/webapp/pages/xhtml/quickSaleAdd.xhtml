@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Product Register Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <!-- <div style="background-image: url('../../images/home_new copy.jpg'); height: 1000px;background-repeat:no-repeat; background-position: center;">
+ <br/>
+ <br/> -->
+ <body  onload="#{quickSaleMB.salesOrder3()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  style="margin: -10 auto;" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+<tr>
+<td align="left" style="width:1000px;"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1030px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome, #{loginMB.invusername}.</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+</table> 
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+<tr><td align="center"><h:outputText  style="font-style: normal;font-size:18px;color:#F51313;font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+<h:outputText value="#{quickSaleMB.validate}" class="validation_ui"/>
+</td></tr>
+<tr>
+                    <td align="center">
+                   
+	              <rich:panel style="width:900px;" id="tab" >
+	            <h:panelGrid class="label_ui"    style=" width:990px;HEIGHT:10PX;font-family: 'HelveticaNeueLT Pro 55 Roman';  " align="center" >
+	         
+	         <h:outputText id="reg" value="Click add to sale many product in #{quickSaleMB.saleOrderNumber}" class="header_ui"/>
+	            </h:panelGrid>
+	            </rich:panel>
+	             <rich:panel style="width:900px;">
+	             <h:panelGrid columns="4" cellpadding="10" cellspacing="10">
+	             <h:outputText class="label_ui" value="Product Name "></h:outputText>
+				<h:selectOneMenu class="text_ui" value="#{quickSaleMB.batchProductName}" onchange="submit()" valueChangeListener="#{quickSaleMB.nameChange}">
+				   	 <f:selectItem  itemLabel="--- select ---" itemValue="select"></f:selectItem>
+				   		 <f:selectItems value="#{quickSaleMB.batchProductName3}" ></f:selectItems>
+				    
+				 </h:selectOneMenu>
+				 <h:outputText class="label_ui" value="Quantity"></h:outputText>
+				<h:inputText class="text_ui" value="#{quickSaleMB.quantity}" title="Only numbers" size="30"    maxlength="10" id="Quantity" label="Quantity" valueChangeListener="#{quickSaleMB.quantityChange}" onmouseout="submit()"><f:converter converterId="javax.faces.Integer"></f:converter></h:inputText>
+				<h:outputText class="label_ui" value="Selling Price"></h:outputText>
+				<h:inputText class="text_ui" readonly="true" value="#{quickSaleMB.sellingPrice}"></h:inputText>
+				<h:outputText class="label_ui" value="Margin Price"></h:outputText>
+				<h:inputText class="text_ui" readonly="true" value="#{quickSaleMB.marginPrice}"></h:inputText>
+				<h:outputText class="label_ui" value="Total Price"></h:outputText>
+				<h:inputText class="text_ui" readonly="true" value="#{quickSaleMB.totalPrice}"></h:inputText>
+				<h:outputText class="label_ui" value="Payment Mode"></h:outputText>
+				<h:selectOneMenu class="text_ui"  value="#{quickSaleMB.paymentType}">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItem itemLabel="Cash" itemValue="Cash"/>
+				   		 <f:selectItem itemLabel="Card" itemValue="Card"/>
+				    
+				 </h:selectOneMenu>
+	             <!--  <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="4"  style="font-size:14px; width:990px;" align="center" cellpadding="3">
+	            <h:outputText class="label_ui" value="Customer Name"></h:outputText>
+				<h:inputText class="text_ui" value="#{salesOrderFormMB.customername}" title="name" size="30"  id="Name"  label="name" >
+				</h:inputText>
+				<h:outputText class="label_ui" value="Date"></h:outputText>
+					<rich:calendar inputStyle="height: 30px; width: 200px; font-size:14px;" value="#{salesOrderFormMB.salesorderdate}" size="30"   label="date"></rich:calendar>
+			<h:outputText class="label_ui" value="Phone Number"></h:outputText>
+			<h:inputText class="text_ui"  size="30"    id="size"     label="size of product" value="#{salesOrderFormMB.phoneNumber}">
+				</h:inputText><h:outputText class="label_ui" value="Email Id"></h:outputText>
+			<h:inputText class="text_ui" id="emailid"     label="size of product" value="#{salesOrderFormMB.email}">
+				</h:inputText>
+				<h:outputText class="label_ui" value="Description"></h:outputText>
+				<h:inputText class="text_ui"  size="30"    id="des"     label="description" value="#{salesOrderFormMB.note}"/>
+				 -->
+			<!-- 	<h:outputText class="label_ui" value="Quantity"></h:outputText>
+				<h:inputText class="text_ui"  size="30"     id="weight"     label="Weight" value="#{salesOrderFormMB.quantity}"></h:inputText>
+				<h:outputText class="label_ui" value="Margin Price"></h:outputText>
+				<h:inputText class="text_ui"    label="select one industry" value="#{salesOrderFormMB.marginPrice}"/>
+				<h:outputText class="label_ui" value="Selling Price"></h:outputText>
+				<h:inputText class="text_ui"    id="marketprice"     label="Marketprice" value="#{salesOrderFormMB.sellingPrice}" ></h:inputText>
+				<h:outputText class="label_ui" value="Gross Total"></h:outputText>
+				<h:inputText class="text_ui"  size="30"    id="std"     label="standard" value="#{salesOrderFormMB.crosstotal}"/>
+			 -->	</h:panelGrid></rich:panel>
+				 
+	               <rich:panel style="width:900px;">
+	             <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+<h:commandButton id="save" value="Add" class="button_ui" action="#{quickSaleMB.quicksaleSubmit1}"></h:commandButton> 
+<h:commandButton id="sav" value="Close" class="button_ui" action="#{quickSaleMB.quicksaleSubmit2}"></h:commandButton>
+<h:commandButton  id="cancel" value="Cancel" class="button_ui" action="#{reportMB.redirect1}" ></h:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid></rich:panel>
+	   
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="150">
+                      
+ 
+            
+    </td></tr>
+   
+</table> 
+
+</td></tr>
+
+
+<tr><td align="center">
+               <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

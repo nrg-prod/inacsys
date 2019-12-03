@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+</h:head>
+
+ <h:form id="sform">
+ 
+ <p:dataTable id="dt" var="retusale" selectionMode="single"  rowKey="#{retusale.orderNumber}"  value="#{SalesReportMB.salesReportList6}"  widgetVar="purchasedinfo" paginator="true"  rows="10"  style="font-size:11px"
+  emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <f:facet name="header">
+            <p:outputPanel>
+               
+                <p:inputText id="globalFilter" onkeyup="PF('purchasedinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+ </f:facet>
+  <p:ajax event="rowDblselect" listener="#{SalesReportMB.onRowSelectEvent2}" update="@all" />
+ <p:column headerText="Order Number" filterBy="#{retusale.orderNumber}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusale.orderNumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Total Quantity" filterBy="#{retusale.quantity}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusale.quantity}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Normal Return" filterBy="#{retusale.normalreturn}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{retusale.normalreturn}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Damage Return" filterBy="#{retusale.damagereturn}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold"> 
+ <h:outputText value="#{retusale.damagereturn}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Return Status" filterBy="#{retusale.returnstatus}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{retusale.returnstatus}" class="text_ui"></h:outputText>
+ </p:column>
+
+ </p:dataTable>
+ 
+
+  <p:spacer height="10px;"></p:spacer>
+  <p:dataTable id="dt1"  rendered="#{SalesReportMB.salesreturndetailFlag}"  var="retusaledetail"  value="#{SalesReportMB.salesReportList7}"  widgetVar="purchasedinfo" paginator="true"  rows="10" style="font-size:11px"
+ emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <f:facet name="header">
+            <p:outputPanel>
+               
+                <p:inputText id="globalFilter" onkeyup="PF('purchasedinfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+ </f:facet>
+ <p:column headerText="SO Number" filterBy="#{retusaledetail.orderNumber}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusaledetail.orderNumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Return Date" filterBy="#{retusaledetail.returndate}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusaledetail.returndate}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Customer Name" filterBy="#{retusaledetail.customerName}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusaledetail.customerName}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Phone Number" filterBy="#{retusaledetail.phonenumber}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusaledetail.phonenumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Product Name" filterBy="#{retusaledetail.productName}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold;width:80px;">
+ <h:outputText value="#{retusaledetail.productName}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Normal Return" filterBy="#{retusaledetail.normalreturn}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold">
+ <h:outputText value="#{retusaledetail.normalreturn}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Damage Return" filterBy="#{retusaledetail.damagereturn}" filterMatchMode="contains" filterStyle="display:none"  style="color:white;font-size:11px;font-weight:bold"> 
+ <h:outputText value="#{retusaledetail.damagereturn}" class="text_ui"></h:outputText>
+ </p:column>
+ </p:dataTable>
+ 
+ 
+  
+ 
+ 
+</h:form>
+
+</ui:composition>

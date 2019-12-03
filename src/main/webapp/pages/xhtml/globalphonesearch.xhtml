@@ -1,0 +1,144 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	 xmlns:b="http://bootsfaces.net/ui"
+	   xmlns:a4j="http://richfaces.org/a4j">
+	 <h:head>
+	 <title>Global Phone Search</title>
+			 <link rel="stylesheet" href="../../css/css.css" ></link>  
+			 <style>
+			 .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+			     background-color: #fff;
+			 }
+			 .ui-datatable thead th, .ui-datatable tfoot td{
+			  		color: #fff ! important;
+			      background: #0B49FF ! important;
+			      font-family: book antiqua;
+			      font-size: 12px;
+			 }
+			 .ui-paginator .ui-paginator-current, .ui-paginator .ui-paginator-rpp-options{
+			     font-size: 10px;
+			 }
+			 .ui-datatable tbody td{
+			 font-size: 10px;
+			 }
+			 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+			      background-color: #fff; 
+			 }
+			 </style>
+</h:head>
+
+ <h:form>
+ <!--     Vendor Details -->
+   
+        <h:panelGrid rendered="#{loginMB.vendorFlag}">
+        <h:outputText value="Vendor Details" style="font-family:'Verdana';font-size:13px;margin-left:350px;"></h:outputText>
+         <p:dataTable  var="venInfo"  widgetVar="vendorInfo" value="#{loginMB.ven1}" 
+                paginator="true" rows="5" filteredValue="#{loginMB.ven1}"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+               >
+ 
+        <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('vendorInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+        
+      <p:column filterBy="#{venInfo.vendorPhoneNumber}" headerText="Vendor Name"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{venInfo.vendorPhoneNumber}" ></h:outputText>
+        </p:column>
+        <p:column filterBy="#{venInfo.firmName}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{venInfo.firmName}" />
+        </p:column>
+         <p:column filterBy="#{venInfo.city}" headerText="City"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{venInfo.city}" />
+        </p:column>
+         <p:column filterBy="#{venInfo.country}" headerText="Country"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{venInfo.country}" />
+        </p:column>
+        <p:column filterBy="#{venInfo.email_ID_vendor}" headerText="Mail-id"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{venInfo.email_ID_vendor}" />
+        </p:column>
+         
+        </p:dataTable>
+        </h:panelGrid> 
+        
+        <!--   Customer Details -->
+   
+        <h:panelGrid rendered="#{loginMB.customerFlag}">
+        <h:outputText value="Customer Details" style="font-family:'Verdana';font-size:13px;margin-left:350px;"></h:outputText>
+         <p:dataTable  var="cusInfo"  widgetVar="customerInfo" value="#{loginMB.customerList1}" 
+                paginator="true" rows="5" filteredValue="#{loginMB.ven1}"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+               >
+ 
+        <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('customerInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+        
+      <p:column filterBy="#{cusInfo.customerName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{cusInfo.customerName}" ></h:outputText>
+        </p:column>
+        <p:column filterBy="#{cusInfo.phoneNumber}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{cusInfo.phoneNumber}" />
+        </p:column>
+         <p:column filterBy="#{cusInfo.city}" headerText="City"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{cusInfo.city}" />
+        </p:column>
+         <p:column filterBy="#{cusInfo.country}" headerText="Country"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{cusInfo.country}" />
+        </p:column>
+       <p:column filterBy="#{cusInfo.categoryName}" headerText="Category"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{cusInfo.categoryName}" />
+        </p:column>
+        <p:column filterBy="#{cusInfo.mail}" headerText="Mail-id"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{cusInfo.mail}" />
+        </p:column>
+         
+        </p:dataTable>
+        </h:panelGrid> 
+        
+         <!--   Employee Details -->
+   
+        <h:panelGrid rendered="#{loginMB.employeeFlag}">
+        <h:outputText value="Employee Details" style="font-family:'Verdana';font-size:13px;margin-left:350px;"></h:outputText>
+         <p:dataTable  var="empInfo"  widgetVar="employeeInfo" value="#{loginMB.employeeList}" 
+                paginator="true" rows="5" filteredValue="#{loginMB.employeeList}"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+               >
+ 
+        <f:facet name="header">
+            <p:outputPanel style="text-align:right">
+               
+                <p:inputText id="globalFilter" onkeyup="PF('employeeInfo').filter()" style="width:20%;height:25px;"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+         <p:column filterBy="#{empInfo.employeeid}" headerText="Employee Id"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{empInfo.employeeid}" ></h:outputText>
+        </p:column>
+      <p:column filterBy="#{empInfo.name}" headerText="Employee Name"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{empInfo.name}" ></h:outputText>
+        </p:column>
+        <p:column filterBy="#{empInfo.phno}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{empInfo.phno}" />
+        </p:column>
+         <p:column filterBy="#{empInfo.regid}" headerText="Registration ID"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{empInfo.regid}" />
+        </p:column>
+         <p:column filterBy="#{empInfo.mailid}" headerText="Email-id"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{empInfo.mailid}" />
+        </p:column>
+       <p:column filterBy="#{empInfo.designation}" headerText="Designation"  filterMatchMode="contains" filterStyle="display:none">
+            <h:outputText value="#{empInfo.designation}" />
+        </p:column>
+       </p:dataTable>
+        </h:panelGrid> 
+        </h:form>
+        </ui:composition>

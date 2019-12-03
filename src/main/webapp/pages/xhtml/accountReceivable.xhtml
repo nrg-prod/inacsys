@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+
+ 
+
+	       <ui:define name="content">
+	       <h:form>
+	      
+	       
+	       
+				<div style="height:20px;"></div>
+					<center>
+					
+					<p:dataTable id="dataTableReceivable" style="width:98%"
+						value="#{salesIncomeMB.salesList}" widgetVar="Receivableinfo" reflow="true"
+						var="Rinfo" paginator="true" rows="10" filteredValue="#{salesIncomeMB.filterList}"
+					 pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+						 emptyMessage="No information found with given criteria">
+
+						<f:facet name="header">
+							<p:outputPanel style="text-align:right">
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('Receivableinfo').filter()"
+									style="width:20%;height:25px;" placeholder="Enter keyword" />
+							</p:outputPanel>
+						</f:facet>
+
+
+						<p:column headerText="No" filterBy="#{Rinfo.sNo}" width="50"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:outputText value="#{Rinfo.sNo}" class="label_ui" />
+							</div>
+						</p:column>
+
+						<p:column headerText="Date" filterBy="#{Rinfo.tDate}" width="110"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+
+								<h:outputText value="#{Rinfo.tDate}" class="label_ui">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</div>
+						</p:column>
+
+
+						<p:column headerText="Client Name" filterBy="#{Rinfo.clientName}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:outputText value="#{Rinfo.clientName}" class="label_ui" />
+							</div>
+						</p:column>
+						<p:column headerText="Reason" filterBy="#{Rinfo.reason}" width="120"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:outputText value="#{Rinfo.reason}" class="label_ui" />
+							</div>
+						</p:column>
+						<p:column headerText="Amount" filterBy="#{Rinfo.amount}" width="140"
+							filterMatchMode="contains" filterStyle="display:none">
+							<div align="center">
+								<h:panelGroup>
+									
+									<h:outputText value="#{Rinfo.amount}" class="label1_ui">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup>
+							</div>
+						</p:column>
+					</p:dataTable>
+					</center>
+					<table>
+						<tr>
+							<td width="700"></td>
+						</tr>
+						<tr align="right">
+							<td align="right">
+								<p>
+									<h:panelGrid columns="12" style="font-weight:bold;font-size:14px; font-family:'Arial,san-serif'">
+
+										<h:outputText value="Total Amount"></h:outputText>&nbsp;
+										<h:panelGroup>
+
+											<h:outputText value=":" style="font-style: bold;font-size:14px;padding-top:5px;font-family:'Arial,san-serif';"></h:outputText>&nbsp;
+											<h:outputText value="#{salesIncomeMB.totals}"
+												class="label1_ui">
+												<f:converter converterId="com.inventory.util.UrlConverter" />
+											</h:outputText>
+										</h:panelGroup>
+									</h:panelGrid>
+								</p>
+							</td>
+						</tr>
+					</table>
+			
+	 </h:form></ui:define>
+	 </ui:composition>
+	 
+	 
+	 

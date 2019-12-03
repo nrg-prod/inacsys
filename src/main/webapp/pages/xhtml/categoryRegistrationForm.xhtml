@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Category Registration Form </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body  onload="#{productRegisterFormMB.dropDown()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table  border="0" class="form_background" align="center">
+
+
+
+<tr>
+
+
+<td align="center"   >
+ <table border="0px"  bgcolor="">
+
+
+
+
+
+ </table> 
+</td>
+</tr>
+
+<tr>
+
+<td align="center">
+
+<table align="center"  style="padding-left: 21px; padding-top: 12px;">
+
+  
+
+
+<tr><td align="center"><h:outputText value="#{categoryRegistrationMB.validate}" class="errorTxt"/>
+</td></tr>
+<tr>
+<td align="center" >
+           
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="10"   columns="2"  style="font-size:10px; width:400px;" align="center" cellpadding="3">
+	            <h:outputText class="labelTxt" value="Category Type *"></h:outputText>
+				<p:inputText styleClass="inputTxt" value="#{categoryRegistrationMB.category}"   title="name" size="30"  id="Name"  label="name" valueChangeListener="#{categoryRegistrationMB.value}" onchange="submit()">
+			
+				</p:inputText>
+				
+				
+				<h:outputText class="labelTxt" value="Description"></h:outputText>
+				<p:inputText styleClass="inputTxt" value="#{categoryRegistrationMB.description}"  size="30"    id="brand"     label="Brand">
+				</p:inputText>
+				
+				</h:panelGrid>
+	
+	             <br/>
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+
+<p:commandButton id="save" value="Save"  action="#{categoryRegistrationMB.categoryregister()}" ></p:commandButton> 
+<p:commandButton id="reset"   value="Reset"  action="#{categoryRegistrationMB.reset}"></p:commandButton>
+<p:commandButton  id="cancel" value="Cancel" action="#{categoryRegistrationMB.categoryformclose}" ></p:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/></h:panelGrid>
+</td>
+</tr>                 
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

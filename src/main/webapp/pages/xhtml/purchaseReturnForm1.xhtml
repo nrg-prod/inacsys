@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Purchase Return Form   </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body  onload="#{purchaseReturnFormMB.purchaseReturnDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;" >
+
+
+<h:form>
+<table   style="margin-top:-10" align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+<tr>
+<td align="left">
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+<tr>
+<td>
+<table style="width:1030px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome, #{loginMB.invusername}.</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+<!-- <tr>
+<td ></td> <td></td> 
+<td> 
+</td>	
+</tr>
+ --></table> 
+</td>
+</tr>
+
+<tr><td height="350px" align="center">
+<table align="center"><tr align="center"><td align="center"><h:outputText value="" style="color:white"/>
+<h:outputText value="#{salesReturnFormMB.validate}" class="validation_ui"/></td></tr>
+</table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td align="left" >
+                   </td>
+                     <td align="left" >   
+                    <rich:panel style="font-size:14px; width:450px"   > 
+                     <h:panelGrid  columns="3"  style="font-size:14px; width:490px;height:20px" align="center">  
+	          <h:outputLabel/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	            <h:outputLabel value="Purchase Return"  class="header_ui"/>
+	           <h:outputLabel/><h:outputLabel/><h:outputLabel/><h:outputLabel/>
+	             
+	           
+	            
+	            
+	            
+	            
+	        </h:panelGrid>
+	        
+	        
+                    <h:panelGrid  columns="2"  style="font-size:14px; width:490px;height: 123px;" align="center">  
+	          
+	            <h:outputLabel value="Vendor Name"  class="label_ui" />
+	           
+	             <h:selectOneMenu class="text_ui"  value="#{purchaseReturnFormMB.vendorname}" onchange="submit()" valueChangeListener="#{purchaseReturnFormMB.purchaseReturnChangeDrop}" label="select one Vendor Name">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{purchaseReturnFormMB.vendnames}"  />
+				    
+				 </h:selectOneMenu>
+				  <h:outputLabel value="Normal Order Number"  class="label_ui" />
+	            
+				 <h:selectOneMenu class="text_ui"  value="#{purchaseReturnFormMB.purchaseIdReference}"  label="select one group">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{purchaseReturnFormMB.finallist2}" />
+				    
+				 </h:selectOneMenu>
+	           
+	            <h:outputText value="" /><h:commandButton class="button"  value="Find" action="#{purchaseReturnFormMB.purInfoReturnView}" /> 
+	            
+	            
+	            
+	        </h:panelGrid></rich:panel>
+	        <br/><br></br>
+	        <h:form id="main" prependId="false">
+	        <h:panelGrid style="display:#{purchaseReturnFormMB.flag4};">
+	        <rich:panel style="width:450px;" >
+<h:panelGrid class="label_ui" border="0"   columns="2"  style="font-size:14px; width:450px;" align="center" cellpadding="3">
+   <h:outputText id="reg" value="Purchase Information " class="header_ui"/>
+	            </h:panelGrid>
+<h:panelGrid class="label_ui" border="0"     columns="2"  style="font-size:14px; width:450px; height: 85" align="center" cellpadding="3">
+	            <h:outputText class="label_ui" value="Name"></h:outputText>
+				<h:outputText class="text_ui" value="#{purchaseReturnFormMB.vendorname}" id="Name"  label="name" >
+			
+				</h:outputText>
+				<h:outputText class="label_ui" value="Telephone Number"></h:outputText>
+				<h:outputText class="text_ui" value="#{purchaseReturnFormMB.telephonenumber}" >
+				
+				</h:outputText>
+				 <h:outputText class="label_ui" value="Purchase Number "></h:outputText>
+				<h:outputText class="text_ui" value="#{purchaseReturnFormMB.purchaseIdReference}"  id="Nam"  label="name" >
+			
+				
+				 
+			
+				</h:outputText>
+				
+				
+				</h:panelGrid></rich:panel>
+	        
+	        
+	       
+	        <h:panelGrid  >
+	        <table align="center"><tr align="center"><td align="center"><div align="center"> <h:outputLabel id="text3" ></h:outputLabel></div></td></tr></table>
+    <rich:dataTable id="dataTable1" var="info"  value="#{purchaseReturnFormMB.finallist}" columnsWidth="150px,200px,150px,20px,120px,120px">  
+         	
+ 
+   <h:column   headerText="Phone">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  S.no  </span>      </f:facet>
+	         <h:outputText class="label_ui" value="#{info.serialNo}" />    
+	        </h:column>
+  
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Product Name   </span>      </f:facet>
+	            <h:outputText value="#{info.product_name}"  class="label_ui"/>  
+	        </h:column> 
+	        
+	        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Quantity   </span>      </f:facet>
+	            <h:outputText value="#{info.quantity}"  class="label_ui"/>  
+	        </h:column>
+  
+	         <h:column>
+  <f:facet name="header"><span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"></span></f:facet>
+ 
+   <h:selectBooleanCheckbox id="check" value="#{info.priority}" valueChangeListener="#{purchaseReturnFormMB.checkBox}" >
+  
+   			<f:selectItem itemValue="1" itemLabel=" " />
+   			<f:ajax render="@form" execute="check"></f:ajax>
+   			<f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+   			<f:attribute value="#{info.tempflag1}" name="flag1"></f:attribute>
+   			<f:attribute value="#{info.tempflag2}" name="flag2"></f:attribute>
+   			<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+   			
+   			<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+   			<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+   			<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+   			
+   		</h:selectBooleanCheckbox>
+  
+  </h:column>
+  
+  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> NR </span>      </f:facet>
+	   		
+	            <h:inputText id="text1" valueChangeListener="#{purchaseReturnFormMB.nrChange}" style="height: 30px; width: 100px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#04368C; background-color:#E6EBF5;font-family:cursive; display:#{info.tempflag1}; " value="#{info.nr}" >
+	           <f:ajax execute="text1" render="@form"></f:ajax>
+	           <f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+   			<f:attribute value="#{info.tempflag1}" name="flag1"></f:attribute>
+   			<f:attribute value="#{info.tempflag2}" name="flag2"></f:attribute>
+   			<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+   			
+   			<f:attribute value="#{info.priority}" name="pri"></f:attribute>
+   			<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+   			<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+   			<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+	            </h:inputText> 
+	        </h:column>  
+  <h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:16px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> DR </span>      </f:facet>
+	   		 
+	            <h:inputText id="text2" valueChangeListener="#{purchaseReturnFormMB.drChange}" style="display:#{info.tempflag1};height: 30px; width: 100px; font-size:14px;font-family:'Helvetica Neue LT Pro 55'; color:#04368C; background-color:#E6EBF5;font-family:cursive;" value="#{info.dr}" >
+	            <f:ajax execute="text2" render="@form"></f:ajax>
+	            <f:attribute value="#{info.serialNo}" name="serial"></f:attribute>
+   			<f:attribute value="#{info.tempflag1}" name="flag1"></f:attribute>
+   			<f:attribute value="#{info.tempflag2}" name="flag2"></f:attribute>
+   			<f:attribute value="#{info.quantity}" name="quant"></f:attribute>
+   			<f:attribute value="#{info.priority}" name="pri"></f:attribute>
+   			<f:attribute value="#{info.product_name}" name="pName"></f:attribute>
+   			<f:attribute value="#{info.nr}" name="nr"></f:attribute>
+   			<f:attribute value="#{info.dr}" name="dr"></f:attribute>
+	            </h:inputText>  
+	        </h:column>  
+  
+  
+  
+  
+	   		
+	          
+   
+  
+          
+ </rich:dataTable></h:panelGrid>
+	        
+	        </h:panelGrid></h:form>
+	        
+	        
+	         </td>
+                  </tr>
+                  <tr align="center">
+                  <td height="30px" align="center" colspan="2" >
+                  <h:panelGrid  columns="2">
+                  <h:commandButton value="submit" styleClass="button" action="#{purchaseReturnFormMB.purchaseReturnSubmit}" ></h:commandButton>  <h:commandButton styleClass="button" value="cancel"></h:commandButton>
+                  
+                  </h:panelGrid>
+                  </td></tr>
+                    <tr>
+                    <td>
+                  
+            
+    </td></tr>
+</table>
+                   <div style="height:100px ; width:900px; overflow-x:scroll; overflow-y:scroll;display:#{purchaseReturnFormMB.flag2}" align="center">  
+                   </div>
+  <div style="height:100px ; width:900; overflow-x:scroll; overflow-y:scroll;display:#{purchaseReturnFormMB.flag3}" align="center">
+   </div>
+
+   
+
+</td></tr>
+<tr><td style="height:180px;"></td></tr>
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

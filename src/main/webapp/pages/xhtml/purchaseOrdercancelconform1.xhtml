@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Purchase Order Cancel Confirm  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<style>
+.ui-dialog .ui-dialog-titlebar {
+    padding: 1px 4px 6px 6px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close span{
+    display: block;
+    margin: 6px 3px 1px 7px;
+}
+</style>
+</h:head>
+ 
+ <body onload="#{purchaseOrderFromMB.purchaseDrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table   border="0" class="form_background" align="center">
+
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+  <table border="0" align="center">
+<tr><td align="center"><p:panel style="width:500">
+          <h:panelGrid >
+                     <p:dataTable id="dataTable" var="info"  value="#{purchaseViewMB.purchaselist}" columnsWidth="125px,125px,125px">  
+         	
+ 
+   
+  
+	        
+	        <p:column  headerText="RollNo">  
+	           <f:facet name="header"> <span class="datatableTxt">Product Name   </span>      </f:facet> 
+	            
+	            <h:outputText value="#{info.i0031.i0001.productName}"/>  
+	        </p:column>  
+  
+  <p:column  headerText="Name">  
+	        <f:facet name="header"> <span class="datatableTxt"> Quantity </span>      </f:facet>
+	            <h:outputText value="#{info.quantity}">
+	            <f:converter converterId="com.inventory.util.UrlConverter"/>
+	            </h:outputText>  
+	        </p:column>  
+  
+  
+	   		<p:column headerText="Address">  
+	   		<f:facet name="header"> <span class="datatableTxt"> Unit Price  </span>      </f:facet>
+	         <h:panelGroup>
+	            <h:outputText value="#{info.i0031.i0001.autualPrice}" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>  
+	       </h:panelGroup> </p:column>  
+  
+        
+ </p:dataTable> 
+ 
+            </h:panelGrid>
+
+</p:panel>
+</td></tr>
+<tr>
+                    <td align="center" >
+	            
+	        
+             <p:panel style="width:630px;">
+              <h:panelGrid  border="0"  columns="3"  style="font-size:14px; width:300px;" align="center">     
+             <h:outputText value="Purchase Number" style="font-size:16px;font-family:'Arial,san-serif'!important;"></h:outputText>  
+             <h:outputText value="-&nbsp;&nbsp;" style="font-size:16px;font-family:'Arial,san-serif'!important;"></h:outputText>  
+             <h:outputText value="#{purchaseViewMB.orderNumber}" style="font-size:16px;font-family:'Arial,san-serif' !important;"></h:outputText>
+             </h:panelGrid>
+             <hr align="center" width="340" style="background-color:#033C95;border:solid 1px #222222" />
+	       <br/>
+	        <h:panelGrid  border="0"  cellspacing="10" columns="4"  style="font-size:14px; width:650px;" align="left" cellpadding="1">  
+                   
+	            <h:outputText class="labelTxt" value="Firm Name"></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.vendor_phone_number}"></h:outputText>
+				<h:outputText class="labelTxt" value="Vendor Phone Number"></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.firmName}"></h:outputText>
+				
+				
+				<h:outputText class="labelTxt" value="Order Date" ></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.orderDate}">
+				<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+			
+				<h:outputText class="labelTxt"  value="Estimated Date"></h:outputText>
+				<h:outputText class="labelTxt"  value="#{purchaseViewMB.targentDate}">
+				<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+				
+				<h:outputText class="labelTxt" value="Quantity"></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.quantity}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+				<h:outputText class="labelTxt" value="Total Price"></h:outputText>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.totalPrice}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.sourceCurrency}"></h:outputText>
+				</h:panelGroup>
+				<h:outputText class="labelTxt" value="Base Currency"></h:outputText>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.currency}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.baseCurrency}"></h:outputText>
+				</h:panelGroup>
+				<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                         <h:outputText/>   <h:outputText/> 
+		        </h:panelGrid>
+		       
+		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+<p:commandButton styleClass="button_ui" id="save" value="Confirm" onclick="PF('cd').show()"/>
+<p:commandButton styleClass="button_ui" id="cancel" value="Cancel" actionListener="#{purchaseViewMB.purchaseviewclose}"/>
+
+</h:panelGrid></p:panel>
+	   
+                    </td>
+                  </tr>
+                      <tr>
+                    <td height="10">
+    </td></tr>
+
+</table> 
+<p:dialog widgetVar="cd" appendTo="@(body)" header="Alert" width="600px" height="120" modal="true" resizable="false">
+ <center>
+<div style="height:20px;"></div>
+ <h:outputText value="Yes to Continue, No to Cancel" class="confirmTxt"/>
+ <div style="height:30px;"></div>
+ <p:commandButton styleClass="kbutton_ui" action="#{purchaseViewMB.cancelConform1}" value="yes"></p:commandButton>
+<p:commandButton styleClass="kbutton_ui" onclick="PF('cd').hide()" value="No"></p:commandButton>
+ </center>
+</p:dialog>
+</td></tr>
+</table>
+
+</h:form>
+</body>
+</ui:composition>

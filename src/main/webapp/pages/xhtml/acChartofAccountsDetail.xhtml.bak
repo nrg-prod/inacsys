@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+  	<ui:define name="content">
+  	<style>
+.order-table{
+	border-collapse:collapse;
+	width: 98%;
+    table-layout: fixed;
+    border:1px solid #9a9a9a;
+}
+.order-table-header{
+	color: #ffffff;
+    font-size: 14px;
+    font-family: 'Arial,sans-serif' !important;
+    text-transform: uppercase;
+    background: #2196f3  ! important;
+    border-bottom: 1px solid #9a9a9a;
+    padding: 4px 10px;
+    font-weight:normal;
+    border-width:1px;
+    border-style: groove;
+    height: 25px !important;
+    border: 1px solid #9a9a9a;
+}
+
+.order-table-odd-row{
+	background:none;
+	padding: 0px 10px;
+	border-top:1px solid #9a9a9a;
+	font-size: 14px;
+    height: 25px !important;
+    font-family: 'Arial,sans-serif' !important;
+    color:#171212;
+    padding-top:10px;
+}
+
+.order-table-even-row{
+	background:none;
+	padding: 0px 10px;
+	border-top:0px;
+	font-size: 14px;
+    height: 25px !important;
+    font-family: 'Arial,sans-serif' !important;
+    color:#171212;
+    padding-top:10px;
+}
+</style>
+  <h:form id="form">
+   <p:growl id="msgs" showDetail="true" sticky="true" />
+  		<p:panel header="Chart of Accounts" id="panelID">
+  		<div style="height:20px;"></div>
+  			
+  			<table align="center" width="100%">  			
+  			<tr align="center"><td>
+  			<h:outputText value="Chart of Accounts (#{accountsMB.accountsDatabean.account_name}) Detailed view " class="udLablehead"></h:outputText>
+  			</td></tr></table><br/>
+  			<div align="left" style="margin-left:15px;">
+  				<p:commandButton icon="fa fa-arrow-left" value="Back to Chart of Accounts"  action="#{accountsMB.chartofAccountsPage}" 
+  				onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"
+  				process="@this"	immediate="true" ajax="false" ></p:commandButton>
+			</div>
+  			<br/>
+  			<table width="100%"><tr><td width="92%"></td>
+	  		<td width="3%"><h:commandLink>
+                <p:graphicImage value="../../images/pdf.png" title="PDF" width="24"/>
+                <p:dataExporter type="pdf" target="dataTable2" fileName="accounts"/>
+            </h:commandLink></td>
+            <td width="3%"><h:commandLink>
+             <p:graphicImage value="../../images/Printer.png" title="Print" width="24"/>
+				    <p:printer target="dataTable2"  />
+				</h:commandLink></td><td width="2%"></td></tr></table><div style="height:10px"></div>
+  			<div align="center" id="printdatatable" >
+  			
+  			<!-- Account Receiveable Account DataTable-->
+  			<p:dataTable id="dataTable1" var="inf" widgetVar="accreccoa" value="#{accountsMB.coadetailList}" rowIndexVar="rowindex" rendered="#{accountsMB.accountsDatabean.account_type=='Accounts Receivable (A/R)'}" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:99%">
+				<f:facet name="header" >
+		        <p:outputPanel style="text-align:right">		               
+		            <p:inputText id="globalFilter" onkeyup="PF('accreccoa').filter()"  style="width:20%;height:25px;"
+		                 placeholder="Enter keyword"/>
+		        </p:outputPanel>
+	       		</f:facet>	  
+   				<p:column headerText="Date" width="8%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="12%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="13%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Charge/Credit"  width="12%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Payment"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Due Date"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.dueDate}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.dueDate}" class="udLable">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+			  		</h:outputText>
+  				</p:column>		
+  				<p:column headerText="Open Balance"  width="12%" styleClass="udLable" 
+  					filterBy="#{inf.balance}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.balance}" class="udLable">
+			  			<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+               </p:column>	
+	  	</p:dataTable>
+	  	<!-- Bank Account Datatable-->
+	  	<p:dataTable id="dataTable2" var="inf" widgetVar="BankCoa" value="#{accountsMB.coadetailList}" rendered="#{accountsMB.accountsDatabean.account_type=='Bank' || accountsMB.accountsDatabean.account_type=='Cash'}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:98%">
+				<f:facet name="header" >
+		        	<p:outputPanel style="text-align:right">		               
+		            	<p:inputText id="globalFilter" onkeyup="PF('BankCoa').filter()" style="width:20%;height:25px;" placeholder="Enter keyword"/>
+		        	</p:outputPanel>
+		      	</f:facet>	  
+   				<p:column headerText="Date" width="7%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="14%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="15%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Payment"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Deposit"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+	  	</p:dataTable>
+	  	<!-- Assets Accounts Datatable -->
+	  	<p:dataTable id="dataTable3" var="inf" widgetVar="AssetCoa" value="#{accountsMB.coadetailList}" rendered="#{accountsMB.accountsDatabean.account_type=='Other Current Assets' or accountsMB.accountsDatabean.account_type=='Fixed Assets' or accountsMB.accountsDatabean.account_type=='Other Assets'}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:98%">
+				<f:facet name="header" >
+		        	<p:outputPanel style="text-align:right">		               
+		            	<p:inputText id="globalFilter" onkeyup="PF('AssetCoa').filter()" style="width:20%;height:25px;" placeholder="Enter keyword"/>
+		        	</p:outputPanel>
+		      	</f:facet>	  
+   				<p:column headerText="Date" width="7%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="14%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="15%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Decrease"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Increase"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+	  	</p:dataTable>
+	  	<!-- Account payable Accounts Datatable -->
+	  	<p:dataTable id="dataTable4" var="inf" widgetVar="accpaycoa" value="#{accountsMB.coadetailList}" rendered="#{accountsMB.accountsDatabean.account_type=='Accounts Payable (A/P)'}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:100%">
+				<f:facet name="header" >
+		        	<p:outputPanel style="text-align:right">		               
+		            	<p:inputText id="globalFilter" onkeyup="PF('accpaycoa').filter()" style="width:20%;height:25px;" placeholder="Enter keyword"/>
+		        	</p:outputPanel>
+		      	</f:facet>	  
+   				<p:column headerText="Date" width="9%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="12%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="14%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Due Date"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.dueDate}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.dueDate}" class="udLable">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Billed"  width="9%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Paid"  width="9%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+  				<p:column headerText="Open Balance"  width="14%" styleClass="udLable" 
+  					filterBy="#{inf.balance}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.balance}" class="udLable">
+			  			<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+               </p:column>
+	  	</p:dataTable>
+	  	<!--Credit card Accounts Datatable -->
+	  	<p:dataTable id="dataTable5" var="inf" widgetVar="creditcardcoa" value="#{accountsMB.coadetailList}" rendered="#{accountsMB.accountsDatabean.account_type=='Credit Card'}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:100%">
+				<f:facet name="header" >
+		        	<p:outputPanel style="text-align:right">		               
+		            	<p:inputText id="globalFilter" onkeyup="PF('creditcardcoa').filter()" style="width:20%;height:25px;" placeholder="Enter keyword"/>
+		        	</p:outputPanel>
+		      	</f:facet>	  
+   				<p:column headerText="Date" width="9%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="11%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="15%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Charge"  width="9%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Payment"  width="9%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+	  	</p:dataTable>
+	  	<!-- Liability Accounts Datatable -->
+	  	<p:dataTable id="dataTable6" var="inf" widgetVar="libCoa" value="#{accountsMB.coadetailList}" rendered="#{accountsMB.accountsDatabean.account_type=='Other Current Liabilities' or accountsMB.accountsDatabean.account_type=='Notes Payable'  or accountsMB.accountsDatabean.account_type=='Current liabilities'}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:98%">
+				<f:facet name="header" >
+		        	<p:outputPanel style="text-align:right">		               
+		            	<p:inputText id="globalFilter" onkeyup="PF('libCoa').filter()" style="width:20%;height:25px;" placeholder="Enter keyword"/>
+		        	</p:outputPanel>
+		      	</f:facet>	  
+   				<p:column headerText="Date" width="7%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="14%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="15%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Increase"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Decrease"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+	  	</p:dataTable>
+	  	<!-- Equity Accounts Datatable -->
+	  	<p:dataTable id="dataTable7" var="inf" widgetVar="COA" value="#{accountsMB.coadetailList}" rendered="#{accountsMB.accountsDatabean.account_type=='Equity'}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:98%">
+				<f:facet name="header" >
+		        	<p:outputPanel style="text-align:right">		               
+		            	<p:inputText id="globalFilter" onkeyup="PF('COA').filter()" style="width:20%;height:25px;" placeholder="Enter keyword"/>
+		        	</p:outputPanel>
+		      	</f:facet>	  
+   				<p:column headerText="Date" width="7%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Ref No." width="14%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Payee"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="15%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Increase"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.paymentAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+  				</p:column>
+  				<p:column headerText="Decrease"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.depositAmount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+	  	</p:dataTable>
+<!-- Income Account Datatable -->
+<h:panelGroup rendered="#{accountsMB.accountsDatabean.buttonValue=='Run report'}">
+	<p:accordionPanel style="width:100%">
+        <p:tab title="#{accountsMB.accountsDatabean.account_name}" titleStyle="text-decoration:none;text-align:left">
+        	<p:dataTable id="dataTable8" var="inf" widgetVar="COA" value="#{accountsMB.coadetailList}" rowIndexVar="rowindex" filteredValue="#{accountsMB.filterList1}"  
+			    emptyMessage="No information found with given criteria" style="width:100%">
+   				<p:column headerText="Date" width="7%" styleClass="udLable"
+  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  				<h:outputText value="#{inf.account_date}" class="udLable"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+  				</p:column>
+  				<p:column headerText="Type"  width="10%" styleClass="udLable"
+  					filterBy="#{inf.transactionType}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.transactionType}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="No." width="14%" styleClass="udLable"
+  					filterBy="#{inf.refNo}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.refNo}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Name"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.payeeName}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.payeeName}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Memo"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_description}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_description}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Account"  width="15%" styleClass="udLable" 
+  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{inf.account_name}" class="udLable">
+  					</h:outputText>
+  				</p:column>
+  				<p:column headerText="Amount"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.account_amount}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:panelGroup rendered="#{accountsMB.accountsDatabean.account_type=='Income' or accountsMB.accountsDatabean.account_type=='Other Income' or accountsMB.accountsDatabean.account_type=='Sales'}">
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="-#{inf.depositAmount}" class="udLable" rendered="#{not empty inf.depositAmount}">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+			  		<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.paymentAmount}" class="udLable" rendered="#{not empty inf.paymentAmount}">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText></h:panelGroup>
+			  		<h:panelGroup rendered="#{accountsMB.accountsDatabean.account_type=='Indirect Expenses' or accountsMB.accountsDatabean.account_type=='Direct Expenses' or accountsMB.accountsDatabean.account_type=='Purchase'  or accountsMB.accountsDatabean.account_type=='Expenses' or accountsMB.accountsDatabean.account_type=='Other Expenses' or accountsMB.accountsDatabean.account_type=='Cost of Goods Sold'}">
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.depositAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.depositAmount}" class="udLable" rendered="#{not empty inf.depositAmount}">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText>
+			  		<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable" rendered="#{not empty inf.paymentAmount}"></h:outputText>
+  					&nbsp;<h:outputText value="-#{inf.paymentAmount}" class="udLable" rendered="#{not empty inf.paymentAmount}">
+			  				<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+			  		</h:outputText></h:panelGroup>
+  				</p:column>
+  				<p:column headerText="Balance"  width="10%" styleClass="udLable" 
+  					filterBy="#{inf.balance}" filterMatchMode="contains" filterStyle="display:none">  
+  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable"></h:outputText>
+  					&nbsp;<h:outputText value="#{inf.balance}" class="udLable">
+  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+  					</h:outputText>
+  				</p:column>	
+	  	</p:dataTable>
+        </p:tab>
+    </p:accordionPanel>
+</h:panelGroup>	
+</div>	
+<div style="height:200px;"></div>
+</p:panel>	
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+	<p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+</p:dialog> 
+</h:form>	
+</ui:define>
+</ui:composition>

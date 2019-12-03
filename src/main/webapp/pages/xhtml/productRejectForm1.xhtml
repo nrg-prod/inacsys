@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/pages/xhtml/login.xhtml"/>
+<title> Inacsys | Project Reject Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <body onload="#{loginMB.homeLoad()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+     
+
+<h:form>
+<table style="margin: -10 auto; " align="center" border="0" class="form_background">
+<tr bgcolor="#f4f4f4">
+<td>
+<ui:include src="../../pages/xhtml/templates/header.xhtml"></ui:include>
+<br /><br />
+</td>
+
+</tr>
+
+
+<tr>
+<td align="left"> 
+<ui:include src="../../pages/xhtml/templates/todaymenu.xhtml" />
+ </td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+<tr>
+<td>
+<table style="width:1030px;"><tr><td align="left"><p style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size: 20px;">Welcome #{loginMB.invusername}</p> </td><td align="right"><h:commandButton action="#{loginMB.logout()}" value="Logout" style="font-weight:bold;"  ajax="false"></h:commandButton></td></tr></table>
+
+</td>
+
+</tr>
+
+
+</table> 
+</td>
+</tr>
+
+<tr><td height="350px" align="center">
+<table border="0"   bgcolor="">
+
+<tr>
+                    <td align="center" id="rich">
+                   <div id="panel">
+	      
+
+	       <span style="font-size:14px;color:#F51313;font-family: 'HelveticaNeueLT Pro 55 Roman';" > </span>
+				 
+				 
+	   <rich:panel style="width:900px;" >  
+	        <h:panelGrid class="label_ui" columns="2"  style="font-size:14px; width:620px;" align="left" >
+	      
+	        <h:outputText value="Successfully rejected the product " class="header_ui"/>
+	        
+	        	        <h:outputText value="#{productRejectFormMB.productName}" class="header_ui"/>
+	        
+	        
+	        </h:panelGrid></rich:panel>
+	        <rich:panel style="width:900px;">  
+	        
+	         
+		         
+	   </rich:panel>
+	   <br/><h:commandButton class="button" action="#{productViewMB.success}" value="OK"  ajax="false"></h:commandButton></div>
+                    </td>
+                  </tr>
+                    <tr>
+                    <td height="300">
+                      
+ 
+            
+    </td></tr></table>
+</td></tr>
+
+<tr><td align="center">
+                <div style="font-size:18px;color:white;clear:both;background-color:#12b2ce; text-align:center;padding:5px;align:center;font-family: 'HelveticaNeueLT Pro 55 Roman'">
+Copyright © 
+PT. Neotural Era Graha
+</div></td></tr>
+</table>
+</h:form>
+
+</body>
+<!-- </div> -->
+</ui:composition>

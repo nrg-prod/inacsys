@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+ 
+ <title> Inacsys | Purchase Delivery Status  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("purchaseDelivery:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+ 
+ <body onload="#{purchaseDeliveryStatusMB.purchaseDeliverydrop()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form id="purchaseDelivery">
+<table   border="0" class="form_background" align="center">
+
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+
+  
+<tr><td height="10px" align="center">
+<table align="center">
+<tr><td align="center"><h:outputText value="Purchase Delivery" class="header_ui"/><br/></td></tr>
+<tr align="center"><td align="center">
+<h:outputText value="#{purchaseDeliveryStatusMB.validate}" class="validation_ui"/>
+</td></tr></table>
+
+<table border="0"   bgcolor="">
+
+
+<tr>
+                    <td align="left" >
+                    <rich:panel style="font-size:14px; width:365px;" header="Search by Order Number"  >  
+	        <h:panelGrid  columns="9"  style="font-size:14px; width:380px;height: 100px;" align="center">  
+	           
+	            <h:outputLabel value="Order Number *" class="label_ui" />
+	             &nbsp;
+	           
+	            
+	            <h:selectOneMenu onkeypress="return process(event);" class="text_ui"  value="#{purchaseDeliveryStatusMB.s}"  label="Order Number">
+				   	 <f:selectItem  itemLabel="--- select ---" noSelectOption="true" />
+				   		 <f:selectItems value="#{purchaseDeliveryStatusMB.order}" />
+				    
+				 </h:selectOneMenu>
+	            <h:outputText  />
+	            <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	            <h:outputText  class="label_ui" /> 
+	           &nbsp;
+<h:outputText class="text_ui"     required="false" label="name"/>				
+ <h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  /><h:outputText  />
+	          
+	           &nbsp;
+	            <h:outputText value="" /><h:commandButton class="button" id="find"  value="Find" action="#{purchaseDeliveryStatusMB.purchaseDeliveryStatus}" /> 
+	              </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>                   
+                  </tr>
+                  <tr>
+                  <td height="30px">
+                  </td></tr>
+                   </table> 
+ <table border="0">
+                    <tr >
+                    <td >
+                    <div style="height:200px ; width:750; overflow-x:scroll; overflow-y:scroll;display:#{purchaseDeliveryStatusMB.flag}" align="center">
+                   <h:panelGrid style="display:#{purchaseDeliveryStatusMB.flag}">
+                     <rich:dataTable id="dataTable" var="info"  value="#{purchaseDeliveryStatusMB.result4}" columnsWidth="70px,100px,145px,110px,145px,70px,90px">  
+         	
+	        <h:column  headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Date    </span>      </f:facet> 
+	            
+	            <h:outputText value="#{info.orderDate}"  class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  </h:outputText>
+	        </h:column>  
+  
+  <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">  Order Number  </span>      </f:facet>
+	            <h:outputText value="#{info.orderNumber}"  class="label_ui"/>  
+	        </h:column>  
+  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Firm Name  </span>      </f:facet>
+	            <h:outputText class="label_ui" value="#{info.firmName}" />  
+	        </h:column>  
+  
+	   		<h:column  headerText="Phone">
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Phone Number    </span>      </f:facet>  
+	           <h:outputText value="#{info.phonenumber}"  class="label_ui"/>  </h:column>  
+  
+   			<h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Total Amount  </span>      </f:facet>
+	        <h:panelGroup>
+	        <h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+	            <h:outputText value="#{info.totalPrice}" class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" />
+	            </h:outputText>  </h:panelGroup>
+	        </h:column> 
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';">Status   </span>      </f:facet>
+	            <h:outputText  value="#{info.status}"  class="filter3" rendered="#{info.status=='inserted'}"/>
+	            <h:outputText  value="#{info.status}"  class="filter3" rendered="#{info.status=='inprocess'}"/>
+	            
+	        </h:column>  
+        <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-style: normal;font-size:10px;padding-top:10px;font-family:'Helvetica Neue LT Pro 55';"> Make Delivery </span>      </f:facet>
+	            <div align="center"> <h:commandButton class="button_table"  image="/images/deliveryicon.png" style="width:20px" action="#{purchaseDeliveryStatusMB.deliveryStatusconform}" >
+	            <f:setPropertyActionListener target="#{purchaseDeliveryStatusMB.sale}" value="#{info.orderNumber}"></f:setPropertyActionListener>
+	            
+	            </h:commandButton></div>
+	        </h:column>
+          
+ </rich:dataTable> 
+  </h:panelGrid></div>
+            
+    </td> 
+ 
+            
+    </tr>
+</table> 
+</td>
+</tr><tr><td style="height:10px;"></td></tr>             
+ 
+ 
+   
+</table> 
+
+</td></tr>
+
+
+</table>
+</h:form>
+</body>
+</ui:composition>

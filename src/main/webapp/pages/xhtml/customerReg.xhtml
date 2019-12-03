@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content"  >
+<body onload="#{vendorRegisterFormMB.countryDrop()}" >		
+		<p:layout header="Customer Registration Form" id="dlg1" appendTo="@(body)"
+				widgetVar="customerDialog" modal="true"  height="230px" width="65%"
+				resizable="false">
+				<p:outputPanel id="dialogPanel1">
+					<h:form id="cus">
+						<h:outputText id="msg"></h:outputText>
+						<h:message for="msg" style="color:red"></h:message>
+						<p:panel rendered="#{salesOrderFormMB.customerSuccessFlag}">
+							<p:outputLabel value="Successfully Saved "
+								style="font-weight:normal"></p:outputLabel>&nbsp;
+				<p:outputLabel value="#{salesOrderFormMB.customername}"
+								style="color:#0B49FF"></p:outputLabel>
+						</p:panel>
+						<p:panelGrid columns="4" style="text-align:left"
+							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+							layout="grid" styleClass="ui-panelgrid-blank"
+							rendered="#{!salesOrderFormMB.customerSuccessFlag}">
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" placeholder="Customer Name *"
+									value="#{salesOrderFormMB.customername}" id="cname"
+									onblur="customername('center_content:cus:cname','cnameicon')">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cnameicon" style="font-size: 10px; color: red" />
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<p:calendar placeholder="Date" value="#{salesOrderFormMB.salesorderdate}"
+									id="cdate" datePattern="dd/MM/yyyy">
+									<p:ajax event="dateSelect" process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:calendar>
+								<span id="cdateicon" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" placeholder="City *"
+									value="#{salesOrderFormMB.city}"
+									onblur="city('center_content:cus:ccity','cuscityicon')"
+									id="ccity">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cuscityicon" style="font-size: 10px; color: red" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" placeholder="State"
+									value="#{salesOrderFormMB.state}" id="cstate">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cstateicon" style="font-size: 10px; color: red" />
+							</h:panelGroup>
+							
+							<h:panelGroup>
+								<p:selectOneMenu value="#{salesOrderFormMB.countryID}"
+									id="ccoun" style="border-radius:1px" widgetVar="var2"
+									styleClass="ui-selectdrop"
+									>
+									<f:selectItem itemLabel="--- Select Country---" itemValue="select" />
+									<f:selectItems value="#{vendorRegisterFormMB.countrydrop1}" />
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:selectOneMenu><br/>
+								<p id="ccounicon"/>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" placeholder="Phone Number  *"
+									value="#{salesOrderFormMB.phonenumber}"
+									onblur="customerpno('center_content:cus:cuspno','cuspnoicon')"
+									id="cuspno">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<p id="cuspnoicon" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneMenu value="#{salesOrderFormMB.categoryName}"
+									id="ccate" widgetVar="var3" style="border-radius:0px"
+									styleClass="ui-selectdrop"
+									>
+									<f:selectItem itemLabel="--- Select Category---" itemValue="select"></f:selectItem>
+									<f:selectItem itemLabel="Store" itemValue="Store"></f:selectItem>
+									<f:selectItem itemLabel="Personal" itemValue="Personal"></f:selectItem>
+									<f:selectItem itemLabel="Company" itemValue="Company"></f:selectItem>
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:selectOneMenu>
+								<p id="ccateicon"/>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" placeholder="Tax Number"
+									value="#{salesOrderFormMB.taxnumber}" id="ctax">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<span id="vnoteicon" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" placeholder="Email"
+									value="#{salesOrderFormMB.email}" id="cemail">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputText>
+								<span id="vemailicon" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputTextarea placeholder="Shipping Address" value="#{salesOrderFormMB.shipingaddress}"
+									id="saddr" styleClass="inputTxt">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputTextarea>
+								<p id="caddricon" style="font-size: 10px; color: red" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputTextarea styleClass="inputTxt" placeholder="Note"
+									value="#{salesOrderFormMB.note}" id="cnote">
+									<p:ajax process="@this" immediate="true"
+										update="@form"></p:ajax>
+								</p:inputTextarea>
+								<span id="cnoteicon" />
+							</h:panelGroup>
+						</p:panelGrid>
+						<br></br><div style="height:20px;"></div>
+						<center>
+							<p:commandButton id="hidenBtn" value="Submit" process="@this"
+								immediate="true" style="display:none"
+								update=":center_content:dialogPanel1"
+								action="#{salesOrderFormMB.buyerRegister}"></p:commandButton>
+							<p:commandButton value="Submit" onclick="customerValidation()"
+								rendered="#{!salesOrderFormMB.customerSuccessFlag}"></p:commandButton>
+							<p:commandButton value="Reset" process="@this" immediate="true"
+								rendered="#{!salesOrderFormMB.customerSuccessFlag}"
+								onclick="customerclear()"></p:commandButton>
+							<p:commandButton value="OK" process="@this" immediate="true" action="#{salesOrderFormMB.customerDialog}"
+								onclick="PF('customerDialog').hide();"
+								rendered="#{salesOrderFormMB.customerSuccessFlag}"
+								onblur="window.location.reload()"></p:commandButton>
+						</center>
+					</h:form>
+				</p:outputPanel>
+		</p:layout>
+	<p:remoteCommand action="#{salesOrderFormMB.cusnamecheck}"
+				name="customernamecheck"></p:remoteCommand>
+
+	<!-- customer View dialog	 -->	
+			<p:dialog header="Customer View" id="dlg1view" appendTo="@(body)"
+				widgetVar="customerDialogView" modal="true"  height="240px" width="720px"
+				 resizable="false">
+				<p:outputPanel id="dialogPanel1View">
+					<h:form id="cusView">
+
+					<p:panelGrid style="height:200px" columns="4" styleClass="ui-panelgrid-blank">
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Customer Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText  value="#{buyersViewMB.customerName}" readonly="true"
+									id="pcate"  styleClass="ui-selectdrop">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date " for="vBrandNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.date}" readonly="true"
+									id="vBrandNo" datePattern="dd/MM/yyyy">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="City " 
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.city}" readonly="true"
+									id="vproductLimit" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="State " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.state}" readonly="true"
+									id="prod-standard" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Country " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.country}" readonly="true"
+									id="prod-name" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.phoneno}" readonly="true"
+									id="prod-actual-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.categoryName}" readonly="true"
+									id="prod-size" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Tax Number " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.taxnumber}" readonly="true"
+									id="prod-market-prize" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Shipping Address " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.address}" readonly="true"
+									id="prod-desc" styleClass="inputTxt">
+									
+								</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{buyersViewMB.mail}" readonly="true"
+									id="prod-unit" styleClass="ui-selectdrop">
+							
+								</p:inputText>
+							</h:panelGroup>
+
+						</p:panelGrid>
+					
+						
+						<br></br>
+						
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+			
+			
+<!-- customer Modify -->
+		<p:dialog header="Customer Modify" id="dlg1Modify" appendTo="@(body)"
+			widgetVar="customerDialogModify" modal="true" height="290px"
+			width="720px" resizable="false">
+			<p:outputPanel id="dialogPanel1Modify">
+				<h:form id="cusModify">
+						<center>
+						<p:outputLabel value="#{buyersViewMB.validate}"
+							style="font-size: 10px; color: red"></p:outputLabel>
+					</center>	
+					<p:panelGrid style="height:200px" columns="4" styleClass="ui-panelgrid-blank"> 
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Customer Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt"
+								value="#{buyersViewMB.customerName}">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+							</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Date " for="vBrandNo" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:calendar value="#{buyersViewMB.date}" datePattern="dd/MM/yyyy">
+								<p:ajax event="dateSelect" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:calendar>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="City "
+									for="vproductLimit" />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" value="#{buyersViewMB.city}">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="State " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" value="#{buyersViewMB.state}">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Country " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneMenu value="#{buyersViewMB.country}"
+								style="border-radius:1px" 
+								styleClass="ui-selectdrop">
+								<f:selectItem itemLabel="--- Select ---" itemValue="select" />
+								<f:selectItems value="#{vendorRegisterFormMB.countrydrop1}" />
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+							</p:selectOneMenu>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Phone Number " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt"
+								value="#{buyersViewMB.phoneNumber}" readonly="true">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Category Name " />
+								<h:outputText style="color:red" value="*"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneMenu value="#{buyersViewMB.categoryName}"
+								style="border-radius:0px" styleClass="ui-selectdrop">
+								<f:selectItem itemLabel="--- Select ---" itemValue="select"></f:selectItem>
+								<f:selectItem itemLabel="Store" itemValue="Store"></f:selectItem>
+								<f:selectItem itemLabel="Personal" itemValue="Personal"></f:selectItem>
+								<f:selectItem itemLabel="Company" itemValue="Company"></f:selectItem>
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+							</p:selectOneMenu>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Tax Number " />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt"
+								value="#{buyersViewMB.taxnumber}">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Shipping Address " />
+								<h:outputText style="color:red"></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputTextarea value="#{buyersViewMB.address}"
+								styleClass="inputTxt">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:inputTextarea>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText class="label_ui" value="Email " />
+								<h:outputText style="color:red" value=""></h:outputText>
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText styleClass="inputTxt" value="#{buyersViewMB.mail}">
+								<p:ajax event="valueChange" process="@this" immediate="true"
+									update="@form"></p:ajax>
+
+							</p:inputText>
+							</h:panelGroup>
+						</p:panelGrid>
+					<br></br><p  />
+					<center>
+
+						<p:commandButton value="Update" process="@this"
+							action="#{buyersViewMB.buyerUpdate}"
+							update=":center_content:dialogPanel1Modify"></p:commandButton>
+					</center>
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+		<p:dialog header="Confirmation" widgetVar="cuc" modal="true"
+			style="font-size:11px" resizable="false" appendTo="@(body)">
+			<p:outputPanel>
+				<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Your Changes Updated Successfully" />
+
+				</p:panelGrid>
+				<br></br>
+				<center>
+
+					<p:commandButton value="OK" onsuccess="PF('cuc').hide()" onclick="PF('customerDialogModify').hide();"
+						styleClass="button_ui"></p:commandButton>
+				</center>
+			</p:outputPanel>
+		</p:dialog>
+
+</body>
+
+	</ui:define>
+</ui:composition>

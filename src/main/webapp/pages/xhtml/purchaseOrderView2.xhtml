@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+
+<title> Inacsys | Purchase Order View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ 
+ <body onload="#{purchaseOrderFromMB.purchaseDrop()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table style="margin-top:-10" align="center" border="0" class="form_background">
+
+<!-- #E0E0E0 -->
+<tr>
+
+
+<td align="center" >
+ <table border="0px"   bgcolor="">
+
+
+ </table> 
+ <table style="margin-top:-10" align="center" border="0" class="form_background"><tr><td>
+<table >
+
+<tr>
+
+<td height="300px" align="center">
+<br/><table   align="center" >
+<tr><td>  <h:panelGrid class="label_ui"  columns=""  align="center" >
+	         <h:outputText  value="Purchase Order View" class="header_ui"/>
+	            </h:panelGrid></td></tr></table>
+<div id="data"  style="border: solid; width: 600" >
+
+<table  id="data" align="center" >
+
+<tr align="center"><td align="center">
+<h:panelGrid  id="data" style="width:300px;">
+
+
+<tr>
+                    <td align="center" >
+            
+              
+	            
+	             
+	
+             <rich:panel style="width:450px;">     
+	        <h:panelGrid  border="0"  cellspacing="10" columns="2"  style="font-size:14px; width:400px;" align="left" cellpadding="3">  
+                   
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       <h:outputText/> 
+                        <h:outputText/> <h:outputText class="label_ui" value="Purchase Number"></h:outputText>
+				<h:outputText class="label_ui" value="#{stockInFormMB.orderNumber}"></h:outputText> 
+                      
+                       <h:outputText class="label_ui" value="Firm Name"></h:outputText>
+	           
+				<h:outputText class="label_ui" value="#{stockInFormMB.vendor_phone_number}"></h:outputText>
+				
+				<h:outputText class="label_ui" value="Vendor Number"></h:outputText>
+				<h:outputText class="label_ui" value="#{stockInFormMB.firmName}"></h:outputText>
+				<h:outputText class="label_ui" value="Order Date" ></h:outputText>
+				<h:outputText class="label_ui" value="#{stockInFormMB.orderDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+			
+				<h:outputText class="label_ui"  value="Estimated Delivery Date"></h:outputText>
+				<h:outputText class="label_ui"  value="#{stockInFormMB.targentDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				
+				
+				<h:outputText class="label_ui" value="Total Price"></h:outputText>
+				<h:panelGroup>
+				<h:outputText class="label_ui" value="Rp "/>
+				<h:outputText class="label_ui" value="#{stockInFormMB.totalPrice}">
+				<f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+				</h:panelGroup>
+				
+				
+				
+				
+				
+				<h:outputText/> 
+                    <h:outputText/> 
+                     <h:outputText/> 
+                      <h:outputText/> 
+                       
+		        </h:panelGrid>
+		       
+		         </rich:panel>
+	   
+                    </td>
+                  </tr>
+				  
+				  
+				  <tr><td align="center">
+<rich:panel style="width:450px">
+<h:panelGrid >
+                     <rich:dataTable id="dataTable" var="info"  value="#{stockInFormMB.purchaselist}" columnsWidth="125px,125px,125px">  
+         	
+ 
+   
+  
+	        
+	        <h:column  headerText="RollNo">  
+	           <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:12px;padding-top:10px;">Product name   </span>      </f:facet> 
+	            
+	            <h:outputText value="#{info.i0031.i0001.productName}"  class="label_ui"/>  
+	        </h:column>  
+  
+  <h:column  headerText="Name">  
+	        <f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:12px;padding-top:10px;"> Quantity </span>      </f:facet>
+	            <h:outputText value="#{info.quantity}"  class="label_ui">
+	            <f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText> 
+	        </h:column>  
+  
+  
+	   		<h:column    headerText="Address">  
+	   		<f:facet name="header"> <span style="font-family:'Helvetica Neue LT Pro 55';font-size:12px;padding-top:10px;"> Unit Price  </span>      </f:facet>
+	             <h:outputText class="label_ui" value="Rp " />
+	            <h:outputText class="label_ui" value="#{info.quantityTotal}" >
+	            <f:converter converterId="com.inventory.util.UrlConverter" />
+	            </h:outputText>  
+	              
+	        </h:column>  
+  
+        
+ </rich:dataTable> 
+ 
+            </h:panelGrid>
+
+</rich:panel>
+</td></tr>
+	          </h:panelGrid>
+</td></tr>
+
+
+</table>
+
+</div></td>
+
+</tr>
+<tr align="center"><td align="center">
+<h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;" >
+
+<h:commandButton class="button" id="save" value="Ok"  action="stockInForm.xhtml?faces-redirect=true" />
+<h:commandButton value="Print"  class="button" >  <p:printer target="data" /></h:commandButton>
+</h:panelGrid>
+
+</td></tr>
+                   
+    
+</table> 
+</td></tr>
+</table>
+</td>
+</tr>
+
+</table>
+</h:form>
+
+</body>
+</ui:composition>

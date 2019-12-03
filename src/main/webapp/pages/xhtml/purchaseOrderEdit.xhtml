@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"   
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Purchase Order Edit  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<style>
+.ui-dialog .ui-dialog-titlebar {
+    padding: 1px 4px 6px 6px;
+    position: relative;
+    border: 0px;
+}
+.ui-dialog .ui-dialog-titlebar-close span{
+    display: block;
+    margin: 6px 3px 1px 7px;
+}
+</style>
+</h:head>
+ 
+ <body onload="#{purchaseOrderFromMB.purchaseDrop()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+<h:form>
+<table   border="0" class="form_background" align="center">
+
+<tr>
+
+
+<td >
+  
+</td>
+</tr>
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table border="0"   >
+
+
+
+             <p:panel id="panel" style="border:0px;">
+		<table align="center">
+ 		<tr><td align="center">
+	            
+       <p:panelGrid   style="font-size:11px; width:760px;height:60px;" align="center" >  
+                   
+                       <f:facet name="header">
+                        <p:row >
+                         <p:column  style="background:#2196f3  !important;font-size:14px;width:130px;height:25px;font-weight:normal;font-family:'Arial-san-serif'"> 
+                          <h:outputLabel value="Purchase Number"></h:outputLabel>
+                           </p:column>
+                         <p:column style="background:#2196f3  !important;font-size:14px;width:130px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">
+                           <h:outputLabel value="Firm Name"></h:outputLabel>
+                        </p:column>
+                        <p:column style="background:#2196f3 !important;font-size:14px;width:130px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">
+                           <h:outputLabel value="Vendor Number"></h:outputLabel>
+                        </p:column>
+                         <p:column style="background:#2196f3 !important;font-size:14px;width:130px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">
+                           <h:outputLabel value="Order Date"></h:outputLabel>
+                        </p:column>
+                        <p:column style="background:#2196f3 !important;font-size:14px;width:135px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">
+                           <h:outputLabel value="Estimated Date"></h:outputLabel>
+                        </p:column>
+                        <p:column style="background:#2196f3 !important;font-size:14px;width:130px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">
+                           <h:outputLabel value="Quantity"></h:outputLabel>
+                        </p:column>
+                       
+                        <p:column style="background:#2196f3 !important;font-size:14px;width:135px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">                    
+                           <h:outputLabel value="Total Price"></h:outputLabel>
+                        </p:column>
+                        <p:column style="background:#2196f3 !important;font-size:14px;width:135px;height:25px;font-weight:normal;font-family:'Arial-san-serif'">                    
+                           <h:outputLabel value="Base Currency"></h:outputLabel>
+                        </p:column>
+                            </p:row>
+                       </f:facet>
+               <p:row>
+                    <p:column>
+				<h:outputText  class="labelTxt" value="#{purchaseViewMB.orderNumber}"></h:outputText>
+				</p:column>    
+	           <p:column>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.vendor_phone_number}"></h:outputText>
+				</p:column>
+				<p:column>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.firmName}"></h:outputText>
+				</p:column>
+				<p:column>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.orderDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+			     </p:column>
+				<p:column>
+				<h:outputText class="labelTxt"  value="#{purchaseViewMB.targentDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+				</p:column>
+				<p:column>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.quantity}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+				</p:column>
+				<p:column>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.sourceCurrency}"></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.totalPrice}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+				</h:panelGroup> 
+				</p:column>
+				<p:column>
+				<h:panelGroup>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.baseCurrency}"></h:outputText>
+				<h:outputText class="labelTxt" value="#{purchaseViewMB.currency}"><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText>
+				</h:panelGroup> 
+				</p:column>
+				 </p:row>
+		        </p:panelGrid>
+		        </td>
+		</tr>
+  			 <tr align="center">
+             <td height="30px"><h:outputText value="#{purchaseViewMB.validate1}" class="errorTxt"/></td></tr>
+		       <h:panelGrid >
+                     <p:dataTable id="dataTable" var="info"  value="#{purchaseViewMB.purchaselist}">  
+         	
+	        <p:column  headerText="RollNo">  
+	           <f:facet name="header"> <span class="datatableTxt">Product Name   </span>      </f:facet> 
+	               <div align="center"> 
+	            <h:outputText value="#{info.i0031.i0001.productName}" />  
+	       </div>
+	        </p:column>  
+  
+  <p:column  headerText="Name" width="200">  
+	        <f:facet name="header"> <span class="datatableTxt"> Quantity </span>      </f:facet>
+	             <div align="center">   
+	             <h:inputText value="#{info.quantity}">  </h:inputText>  
+	             <h:inputHidden value="#{info.quantityTotal}"></h:inputHidden>
+	          
+	      </div>
+	        </p:column>  
+  
+  
+	   		<p:column    headerText="Address">  
+	   		<f:facet name="header"> <span class="datatableTxt"> Unit Price  </span>      </f:facet>
+	                <div align="center">  <h:outputText value="#{info.i0015.currencyType}" > </h:outputText>&nbsp; <h:outputText value="#{info.i0031.i0001.marginPrice}" ><f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText> 
+	               
+	      </div>
+	        </p:column>  
+	        	<p:column    headerText="Address">  
+	   		<f:facet name="header"> <span class="datatableTxt">Action  </span>      </f:facet>
+	              <div align="center">
+	            <p:commandButton styleClass="button_ui" value="Update" action="#{purchaseViewMB.updatePurchase}" update="@form">
+	            <f:setPropertyActionListener target="#{purchaseViewMB.purchaseProductName}" value="#{info.i0031.i0001.productName}"></f:setPropertyActionListener>
+	            <f:setPropertyActionListener target="#{purchaseViewMB.purchaseQuantity}" value="#{info.quantity}"></f:setPropertyActionListener>
+	             <f:setPropertyActionListener target="#{purchaseViewMB.quantity1}" value="#{info.quantityTotal}"></f:setPropertyActionListener>
+	            </p:commandButton>	    </div>    </p:column>  
+  
+       
+ </p:dataTable> 
+ 
+            </h:panelGrid>
+
+          
+
+		       
+		       
+	   </table> 
+               </p:panel>   
+                    <tr>
+                    <td height="10">
+                    <p:dialog widgetVar="puredit" appendTo="@(body)" header="CONGRATULATIONS...!!" width="600px" height="120" modal="true" resizable="false">
+ <center>
+ <div style="height:20px"></div>
+ <h:outputText value="Quantity has been successfully updated." class="confirmTxt"/>
+ <div style="height:30px;"></div>
+<p:commandButton value="Ok" styleClass="kbutton_ui" action="#{purchaseViewMB.purchaseviewclose}"></p:commandButton>
+ </center>
+</p:dialog> 
+    </td></tr>
+  </table></td></tr>
+</table> 
+
+
+
+</h:form>
+
+</body>
+</ui:composition>

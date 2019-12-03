@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+<div style="height:5px;"></div>
+<table width="100%"><tr>
+<td width="84%"></td>
+<td width="16%">
+ <p:commandButton value="New Transaction"  action="#{aTransactionMB.AddTransaction}" ajax="false" styleClass="ui-priority-primary" />
+</td>
+</tr></table> 
+	
+						<div style="height:15px;"></div>
+	       
+          
+			<center>
+			
+				<p:dataTable id="datatable" var="expenseInfo" rowIndexVar="rowIndex" rowKey="#{expenseInfo.index}"	widgetVar="expensetable" 
+							value="#{aTransactionMB.aTransaction.expenseTransactionDataList}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+							styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row"
+							paginator="true" emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+			
+						
+							<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+									<p:inputText id="globalFilter"
+										onkeyup="PF('expensetable').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+
+						<!-- 	<p:ajax event="rowDblselect" listener="#{aTransactionMB.rowselect}" update="@form" immediate="true" process="@this">
+							</p:ajax> -->
+
+							<p:column headerText="S.No" width="40">
+								<div align="center">#{rowIndex+1}</div>
+							</p:column>
+							<p:column width="80" headerText="DATE"
+								filterBy="#{expenseInfo.date}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<div align="center">
+									<h:outputText value="#{expenseInfo.date}">
+										<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+									</h:outputText>
+								</div>
+							</p:column>
+
+							<p:column width="70" headerText="TYPE"
+								filterBy="#{expenseInfo.transactionType}"
+								filterMatchMode="contains" filterStyle="display:none">
+								<div align="center">
+									<h:inputHidden value="#{expenseInfo.index}"></h:inputHidden>
+									<h:outputText value="#{expenseInfo.transactionType}"></h:outputText>
+								</div>
+							</p:column>
+							<p:column width="100" headerText="NO"
+								filterBy="#{expenseInfo.refNo}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<div align="center">
+									<h:outputText value="#{expenseInfo.refNo}"></h:outputText>
+								</div>
+							</p:column>
+							<p:column  headerText="PAYEE" width="100"
+								filterBy="#{expenseInfo.payeeName}" filterMatchMode="contains"
+								filterStyle="display:none" rendered="#{aTransactionMB.aTransaction.clientID !='CNT0000021'}">
+								<div align="center">
+									<h:outputText value="#{expenseInfo.vendorName}"></h:outputText>
+								</div>
+							</p:column>
+							<p:column  headerText="CODE" width="80"
+								filterBy="#{expenseInfo.code}" filterMatchMode="contains"
+								filterStyle="display:none" rendered="#{aTransactionMB.aTransaction.clientID =='CNT0000021'}">
+								<div align="center">
+									<h:outputText value="#{expenseInfo.code}"></h:outputText>
+								</div>
+							</p:column>
+							<p:column  headerText="CODE Description" width="120"
+								filterBy="#{expenseInfo.codeDescription}" filterMatchMode="contains"
+								filterStyle="display:none" rendered="#{aTransactionMB.aTransaction.clientID =='CNT0000021'}">
+								<div align="center">
+									<h:outputText value="#{expenseInfo.codeDescription}"></h:outputText>
+								</div>
+							</p:column>
+							<p:column width="80" headerText="Balance"
+								filterBy="#{expenseInfo.amount}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<h:panelGroup>
+									<div align="center">
+										<h:outputText value="#{expenseInfo.baseCurrency}"></h:outputText>&nbsp;
+										<h:outputText value="#{expenseInfo.balAmount}">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+
+									</div>
+								</h:panelGroup>
+							</p:column>
+							<p:column width="110" headerText="BEFORE TAX" rendered="#{aTransactionMB.aTransaction.country == 'India'}"
+								filterBy="#{expenseInfo.amount}" filterMatchMode="contains"
+								filterStyle="display:none">
+									<div align="center">
+										<h:outputText value="#{expenseInfo.baseCurrency}"></h:outputText>&nbsp;<h:outputText value="#{expenseInfo.beforeTaxAmount}">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+									</div>
+							</p:column>
+							<p:column width="70" headerText="TAX" rendered="#{aTransactionMB.aTransaction.country == 'India'}"
+								filterBy="#{expenseInfo.amount}" filterMatchMode="contains"
+								filterStyle="display:none">
+									<div align="center">
+										<h:outputText value="#{expenseInfo.baseCurrency}"></h:outputText>&nbsp;<h:outputText value="#{expenseInfo.taxAmount}">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+									</div>
+							</p:column>
+							<p:column width="80" headerText="TOTAL"
+								filterBy="#{expenseInfo.amount}" filterMatchMode="contains"
+								filterStyle="display:none">
+									<div align="center">
+									<h:outputText value="#{expenseInfo.baseCurrency}"></h:outputText>&nbsp;
+										<h:outputText value="#{expenseInfo.amount}">
+											<f:converter converterId="com.inventory.util.UrlConverter" />
+										</h:outputText>
+									</div>
+							</p:column>
+							<p:column width="130" headerText="PAYMENT STATUS">
+								<div align="center">
+									<h:panelGroup rendered="#{expenseInfo.paymentStatus!='Paid'}"> 
+									<p:commandLink value="Make Payment" action="#{aTransactionMB.payment}" ajax="false" process="@this" onclick="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+										rendered="#{expenseInfo.transactionType=='Bill' or expenseInfo.transactionType=='Purchase Invoice'}" styleClass="labelTxt" style="color:blue">
+										<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.index}"
+										value="#{expenseInfo.index}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.refNo}"
+										value="#{expenseInfo.refNo}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.transactionType}"
+										value="#{expenseInfo.transactionType}" />
+									</p:commandLink></h:panelGroup>
+									<h:panelGroup rendered="#{expenseInfo.transactionType!='Bill' or expenseInfo.transactionType!='Purchase Invoice'}">
+									<h:outputText value="Paid" rendered="#{expenseInfo.paymentStatus=='Paid'}" styleClass="labelTxt" style="color:green">
+									</h:outputText></h:panelGroup>
+								</div>
+							</p:column>
+							<p:column width="60" headerText="STATUS"
+								filterBy="#{expenseInfo.paymentStatus}" filterMatchMode="contains"
+								filterStyle="display:none">
+								<div align="center">
+								<h:panelGroup rendered="#{expenseInfo.transactionType=='Bill' or expenseInfo.transactionType=='Purchase Invoice'}">
+									<h:outputText value="#{expenseInfo.paymentStatus}" rendered="#{expenseInfo.paymentStatus=='Partial'}" style="color:red"></h:outputText>
+									<h:outputText value="#{expenseInfo.paymentStatus}" rendered="#{expenseInfo.paymentStatus=='Paid'}" style="color:green"></h:outputText>
+									<h:outputText value="Open" rendered="#{expenseInfo.paymentStatus=='Unpaid'}"></h:outputText></h:panelGroup>
+									<h:panelGroup rendered="#{expenseInfo.transactionType=='Expense' or expenseInfo.transactionType=='Check' or expenseInfo.transactionType=='Vendor Credit'}">
+									<h:outputText value="Closed" styleClass="labelTxt"></h:outputText>
+									</h:panelGroup>
+								</div>
+							</p:column>
+							<p:column headerText="Action" width="80">
+							<div align="center">
+							<p:commandButton icon="fa fa-search"  action="#{aTransactionMB.expensetransactionview}" 
+									update=":center_content" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.index}"
+										value="#{expenseInfo.index}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.refNo}"
+										value="#{expenseInfo.refNo}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.transactionType}"
+										value="#{expenseInfo.transactionType}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.paymentStatus}"
+          								value="#{expenseInfo.paymentStatus}" />
+							</p:commandButton>
+							<h:panelGroup rendered="#{expenseInfo.paymentStatus=='Unpaid'}">
+								<p:commandButton icon="fa fa-pencil"  action="#{aTransactionMB.rowselect}" rendered="#{expenseInfo.transactionType=='Bill'}"
+									update=":center_content" process="@this" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();">
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.index}"
+										value="#{expenseInfo.index}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.refNo}"
+										value="#{expenseInfo.refNo}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.transactionType}"
+										value="#{expenseInfo.transactionType}" />
+									<f:setPropertyActionListener target="#{aTransactionMB.aTransaction.paymentStatus}"
+          								value="#{expenseInfo.paymentStatus}" />
+								</p:commandButton></h:panelGroup>
+							</div>
+							</p:column>
+						</p:dataTable></center>
+							
+					 
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:graphicImage value="../../images/loadingimg.gif"
+					style="width:80px" />
+			</p:dialog>
+ 	</ui:define>
+</ui:composition>

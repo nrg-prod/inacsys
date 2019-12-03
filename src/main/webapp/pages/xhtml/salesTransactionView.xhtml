@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+<title> #{aTransactionMB.aTransaction.transactionType} View</title>
+ <link rel="stylesheet" href="../../css/css.css"></link>
+<style>
+.ui-panel .ui-panel-content {
+    border: 0;
+    background: none;
+    padding: 1px;
+}
+.pe-inputNumber{
+	width:120px;
+	height:25px;
+	text-align: right;
+	font-weight:bold;
+}
+</style>
+</h:head>
+<h:form>
+<p:panel  id="invoicepanel">
+<p:outputPanel style="background:#f4f5f8" id="panelid">
+<h:form>
+<div style="height:10px"></div>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Invoice'}">
+<table width="100%">
+<tr><td width="84%"></td>
+<td width="16%">
+<h:outputText value="BALANCE DUE" styleClass="labelTxt"  style="font-size:16px;"></h:outputText>
+</td></tr></table>
+<table width="100%">
+<tr><td width="84%"></td>
+<td width="16%">
+<h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.balAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+</h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Credit Memo'}">
+<table width="100%">
+<tr><td width="80%"></td>
+<td width="20%">
+<h:outputText value="AMOUNT TO REFUND" styleClass="labelTxt" style="font-size:16px;"></h:outputText>
+</td></tr>
+<tr><td width="80%"></td>
+<td width="20%"><h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.totalAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table></h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Estimate' or aTransactionMB.transactionType=='Sales Receipt'}"><table width="100%">
+<tr><td width="84%"></td>
+<td width="16%">
+<h:outputText value="AMOUNT" styleClass="labelTxt" style="font-size:16px;"></h:outputText>
+</td></tr></table><div style="height:5px"></div><table width="100%">
+<tr><td width="84%"></td>
+<td width="16%">
+<h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.totalAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table></h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Delayed Charge' or aTransactionMB.transactionType=='Time Activity'}"><table width="100%">
+<tr><td width="84%"></td>
+<td width="16%">
+<h:outputText value="BALANCE DUE" styleClass="labelTxt" style="font-size:16px;"></h:outputText>
+</td></tr></table><div style="height:5px"></div><table width="100%">
+<tr><td width="84%"></td>
+<td width="16%">
+<h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.balAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:22px;"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table></h:panelGroup><div style="height:10px"></div>
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%">
+<h:outputText value="Customer Name" styleClass="labelTxt" ></h:outputText></td>
+<td width="23%"><h:outputText value="Email" styleClass="labelTxt" ></h:outputText></td>
+<td width="23%"><h:outputText value="Currency Type" styleClass="labelTxt" ></h:outputText></td>
+<td width="23%"><h:outputText value="Description" styleClass="labelTxt" ></h:outputText></td>
+</tr>
+<tr><td width="7%"></td>
+<td width="23%">
+	<p:inputText value="#{aTransactionMB.aTransaction.customerName}"  style="background:#ffffff" id="details" readonly="true">
+</p:inputText></td>
+<td width="23%">
+<p:inputText readonly="true" id="invcusemail" value="#{aTransactionMB.aTransaction.customerEmailId}" style="background:#ffffff">
+</p:inputText>
+</td><td width="23%">
+<p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.currencyType}" id="currency" readonly="true" style="background:#ffffff">
+</p:inputText>
+</td><td width="23%">
+<p:inputText styleClass="text_ui" style="background:#ffffff" readonly="true" value="#{aTransactionMB.aTransaction.description}"></p:inputText></td>
+<td width="1%"></td>
+</tr>
+</table><div style="height:25px"></div>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Invoice'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Billing Address" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Terms" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Invoice date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Due date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td  width="1%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><p:inputTextarea styleClass="text_ui" style="background:#ffffff" value="#{aTransactionMB.aTransaction.customerBillingAddress}" readonly="true"></p:inputTextarea></td>
+<td width="23%"><p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.terms}" readonly="true" id="terms"  style="background:#ffffff" >
+</p:inputText></td>
+<td width="23%"><p:inputText styleClass="text_ui" readonly="true" value="#{aTransactionMB.aTransaction.billDate}" style="background:#ffffff"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>  </p:inputText></td>
+<td width="23%"><p:inputText styleClass="text_ui" readonly="true" value="#{aTransactionMB.aTransaction.dueDate}" style="background:#ffffff"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime> </p:inputText></td>
+<td  width="1%"></td>
+</tr></table><div style="height:10px"></div>
+<h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Place of Supply" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Amounts are" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="47%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><p:inputText styleClass="text_ui" style="background:#ffffff" value="#{aTransactionMB.aTransaction.location}" readonly="true"></p:inputText></td>
+<td width="23%"><p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.taxType}" readonly="true" id="terms1"  style="background:#ffffff" >
+</p:inputText></td><td width="47%"></td>
+</tr>
+</table></h:panelGroup></h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Estimate'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Billing Address" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Estimate date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Expiration date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td  width="24%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}"><h:outputText value="Place of Supply" styleClass="labelTxt" style="font-size:16px"></h:outputText></h:panelGroup></td>
+</tr>
+<tr><td width="7%"></td>
+<td width="23%"><p:inputTextarea styleClass="text_ui" readonly="true" style="background:#ffffff" value="#{aTransactionMB.aTransaction.customerBillingAddress}"></p:inputTextarea></td>
+<td width="23%"><p:inputText  styleClass="text_ui" readonly="true" style="background:#ffffff"><f:convertDateTime pattern="dd-MM-yyyy" value="#{aTransactionMB.aTransaction.billDate}"></f:convertDateTime></p:inputText></td>
+<td width="23%"><p:inputText  styleClass="text_ui" readonly="true"  style="background:#ffffff"><f:convertDateTime pattern="dd-MM-yyyy" value="#{aTransactionMB.aTransaction.dueDate}"></f:convertDateTime></p:inputText></td>
+<td  width="24%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<p:inputText styleClass="text_ui" style="background:#ffffff" value="#{aTransactionMB.aTransaction.location}" readonly="true"></p:inputText></h:panelGroup></td>
+</tr>
+</table><div style="height:10px"></div><table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<h:outputText value="Amounts are" styleClass="labelTxt" style="font-size:16px"></h:outputText></h:panelGroup></td>
+<td width="70%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.taxType}" readonly="true" style="background:#ffffff" >
+</p:inputText></h:panelGroup></td><td width="70%"></td>
+</tr>
+</table>
+</h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Delayed Charge'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Delayed Charge Date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td  width="70%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<h:outputText value="Amounts are" styleClass="labelTxt" style="font-size:16px"></h:outputText></h:panelGroup></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><p:inputText styleClass="text_ui" readonly="true" style="background:#ffffff" value="#{aTransactionMB.aTransaction.billDate}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></p:inputText></td>
+<td  width="70%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.taxType}" readonly="true" style="background:#ffffff" >
+</p:inputText></h:panelGroup></td>
+</tr>
+</table></h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Time Activity'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td  width="23%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<h:outputText value="Amounts are" styleClass="labelTxt" style="font-size:16px"></h:outputText></h:panelGroup></td>
+<td  width="70%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td  width="23%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.taxType}" readonly="true" style="background:#ffffff" >
+</p:inputText></h:panelGroup></td><td  width="70%"></td>
+</tr>
+</table></h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Credit Memo'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Billing Address" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Credit Memo Date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<h:outputText value="Amounts are" styleClass="labelTxt" style="font-size:16px"></h:outputText></h:panelGroup></td><td width="24%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><p:inputTextarea styleClass="text_ui" readonly="true" style="background:#ffffff" value="#{aTransactionMB.aTransaction.customerBillingAddress}"></p:inputTextarea></td>
+<td width="23%"><p:inputText styleClass="text_ui" readonly="true" style="background:#ffffff" value="#{aTransactionMB.aTransaction.billDate}"><f:convertDateTime pattern="dd-MM-yyyy" ></f:convertDateTime></p:inputText></td>
+<td width="23%"><h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.taxType}" readonly="true" style="background:#ffffff" >
+</p:inputText></h:panelGroup></td><td width="24%"></td>
+</tr>
+</table></h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Sales Receipt'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Billing Address" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Sales Receipt date" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Payment method" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Deposit to" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td  width="1%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><p:inputTextarea  value="#{aTransactionMB.aTransaction.customerBillingAddress}" styleClass="text_ui" readonly="true" style="background:#ffffff"></p:inputTextarea></td>
+<td width="23%"><p:inputText value="#{aTransactionMB.aTransaction.billDate}" styleClass="text_ui" readonly="true" style="background:#ffffff"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></p:inputText></td>
+<td width="23%"><p:inputText  styleClass="text_ui" readonly="true" value="#{aTransactionMB.aTransaction.paymentMode}" id="payterms" style="background:#ffffff"></p:inputText>
+</td>
+<td width="23%"><p:inputText  styleClass="text_ui" readonly="true" value="#{aTransactionMB.aTransaction.accountType}"  id="depts" style="background:#ffffff"></p:inputText>
+</td>
+<td  width="1%"></td>
+</tr>
+</table>
+<div style="height:10px"></div>
+<h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<table width="100%">
+<tr><td width="7%"></td>
+<td width="23%"><h:outputText value="Place of Supply" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="23%"><h:outputText value="Amounts are" styleClass="labelTxt" style="font-size:16px"></h:outputText></td>
+<td width="47%"></td>
+</tr>
+<tr><td  width="7%"></td>
+<td width="23%"><p:inputText styleClass="text_ui" style="background:#ffffff" value="#{aTransactionMB.aTransaction.location}" readonly="true"></p:inputText></td>
+<td width="23%"><p:inputText styleClass="text_ui" value="#{aTransactionMB.aTransaction.taxType}" readonly="true" style="background:#ffffff" >
+</p:inputText></td><td width="47%"></td>
+</tr>
+</table></h:panelGroup></h:panelGroup>
+<div style="height:20px"></div></h:form></p:outputPanel>
+<div style="height:20px"></div>
+<center>
+<p:dataTable id="datatable" var="info" rowIndexVar="rowindex" style="font-size:10;width:98%;" widgetVar="salesInfo" value="#{aTransactionMB.productdetails}" >
+	<p:column  headerText="S.No" width="40"> 
+		<f:facet name="header"><span style="color:#fff">S.No</span></f:facet>
+		<div align="center">
+       		<h:outputText value="#{info.serialNo}"></h:outputText>
+       		<h:inputHidden value="#{info.salesPaymentID}"></h:inputHidden>
+    	</div>    
+    </p:column>
+    <p:column  headerText="Product" width="180"> 
+    <f:facet name="header"><span style="color:#fff">Product</span></f:facet>
+		<div align="center">
+       		<p:inputText  styleClass="text_ui" readonly="true" value="#{info.productName}" style="width:100%;height:28px;" id="products" >
+			</p:inputText>
+    	</div>    
+    </p:column>
+    <p:column  headerText="Quantity" width="140"> 
+    <f:facet name="header"><span style="color:#fff">Quantity</span></f:facet>
+		<div align="center">
+       		<p:inputText style="width:100%;text-align:right;" styleClass="text_ui" readonly="true" value="#{info.quantity}" id="quan" >
+       		</p:inputText>
+    	</div>    
+    </p:column>
+    <p:column  headerText="Rate" width="140"> 
+    <f:facet name="header"><span style="color:#fff">Rate</span></f:facet>
+		<div align="center">
+       		<p:inputText style="width:100%;text-align:right;" styleClass="text_ui" readonly="true" value="#{info.rate}" >
+       		<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+       		</p:inputText>
+    	</div>    
+    </p:column>
+    <p:column  headerText="Amount" width="150"> 
+    <f:facet name="header"><span style="color:#fff">Amount</span></f:facet>
+		<div align="center">
+       		<p:inputText style="width:100%;text-align:right;" value="#{info.amount}" readonly="true" styleClass="text_ui" >
+       		<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+       		</p:inputText>
+    	</div>    
+    </p:column>
+    <p:column  headerText="Tax" width="100" rendered="#{aTransactionMB.aTransaction.taxType!='Out of scope of Tax' and aTransactionMB.aTransaction.country == 'India'}"> 
+    <f:facet name="header"><span style="color:#fff">Tax</span></f:facet>
+		<div align="center">
+       		<p:inputText style="width:100%;text-align:right;" value="#{info.taxes}" readonly="true" styleClass="text_ui" >
+       		</p:inputText>
+    	</div>    
+    </p:column>
+</p:dataTable><div style="height:10px"></div>
+<h:panelGroup rendered="#{aTransactionMB.aTransaction.transactionType!='Payment'}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Subtotal" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+</td>
+<td width="22%">
+<h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.subTotalAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px">
+<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></td></tr></table>
+<h:panelGroup rendered="#{aTransactionMB.aTransaction.country == 'India'}">
+<h:panelGroup rendered="#{aTransactionMB.aTransaction.taxType != 'Out of scope of Tax'}">
+<ui:repeat var="info" value="#{aTransactionMB.productdetails}">
+<h:panelGroup style="display:#{info.percentIGSTFlag}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Includes &nbsp;" rendered="#{aTransactionMB.aTransaction.taxType == 'Inclusive of Tax'}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText><h:outputText value="#{info.gstType} @ #{info.percentageValue} on " styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+<h:outputText value="#{info.gstAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right">
+<f:converter converterId="com.inventory.util.UrlConverter"/>
+</h:outputText>
+</td>
+<td width="22%">
+<pe:inputNumber style="width:100px;height:23px" value="#{info.percentageAmount}" readonly="true"></pe:inputNumber></td></tr></table></h:panelGroup>
+<h:panelGroup style="display:#{info.percentGSTFlag}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Includes &nbsp;" rendered="#{aTransactionMB.aTransaction.taxType == 'Inclusive of Tax'}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText><h:outputText value="#{info.cgstType} @ #{info.percentageValue} on " styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+<h:outputText value="#{info.gstAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right">
+<f:converter converterId="com.inventory.util.UrlConverter"/>
+</h:outputText>
+</td>
+<td width="22%">
+<pe:inputNumber style="width:150px;height:25px" value="#{info.cgstAmount}" readonly="true"></pe:inputNumber></td></tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Includes &nbsp;" rendered="#{aTransactionMB.aTransaction.taxType == 'Inclusive of Tax'}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText><h:outputText value="#{info.sgstType} @ #{info.percentageValue} on " styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+<h:outputText value="#{info.gstAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right">
+<f:converter converterId="com.inventory.util.UrlConverter"/>
+</h:outputText>
+</td>
+<td width="22%">
+<pe:inputNumber style="width:150px;height:25px" value="#{info.sgstAmount}" readonly="true"></pe:inputNumber></td></tr></table></h:panelGroup>
+</ui:repeat></h:panelGroup></h:panelGroup></h:panelGroup>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Total" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"  rendered="#{aTransactionMB.transactionType!='Payment'}"></h:outputText>
+</td>
+<td width="22%">
+<h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:18px" rendered="#{aTransactionMB.transactionType!='Payment'}"></h:outputText>&nbsp;
+<h:outputText id="tranamt" value="#{aTransactionMB.aTransaction.totalAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px" rendered="#{aTransactionMB.transactionType!='Payment'}">
+<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></td></tr></table>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Invoice'}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Base Currency" styleClass="labelTxt" style="font-weight:bold;font-size:18px;"></h:outputText>
+</td>
+<td width="22%">
+<h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>
+&nbsp;<h:outputText value="#{aTransactionMB.aTransaction.currencyAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px">
+<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></td></tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Balance due" styleClass="labelTxt" style="font-weight:bold;font-size:18px;text-align:right"></h:outputText>
+</td>
+<td width="22%">
+<h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:18px" rendered="#{aTransactionMB.transactionType!='Payment'}"></h:outputText>&nbsp;
+<h:outputText id="tranamt1" value="#{aTransactionMB.aTransaction.balAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px" rendered="#{aTransactionMB.transactionType!='Payment'}">
+<f:converter converterId="com.inventory.util.UrlConverter"/></h:outputText></td></tr></table>
+</h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Estimate'}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Estimate Total" styleClass="labelTxt" style="font-weight:bold;font-size:18px;"></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.totalAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;"></h:outputText></td>
+</tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Base Currency" styleClass="labelTxt" style="font-weight:bold;font-size:18px;"></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.currencyAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px;"></h:outputText></td>
+</tr></table>
+</h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Credit Memo'}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Total Credit" styleClass="labelTxt" style="font-weight:bold;font-size:18px;" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt"  style="font-weight:bold;font-size:18px;"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.totalAmount}" styleClass="labelTxt"  style="font-weight:bold;font-size:18px;"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%">
+<h:outputText value="Base Currency" styleClass="labelTxt" style="font-weight:bold;font-size:18px;" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt"  style="font-weight:bold;font-size:18px;"></h:outputText>&nbsp;
+<h:outputText value="#{aTransactionMB.aTransaction.payAmount}" styleClass="labelTxt"  style="font-weight:bold;font-size:18px;"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+</h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType=='Sales Receipt'}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%"><h:outputText value="Amount received" styleClass="labelTxt" style="font-weight:bold;font-size:18px" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.currencyType}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;&nbsp;<h:outputText value="#{aTransactionMB.aTransaction.totalAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%"><h:outputText value="Base Currency" styleClass="labelTxt" style="font-weight:bold;font-size:18px" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;&nbsp;<h:outputText value="#{aTransactionMB.aTransaction.currencyAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%"><h:outputText value="Balance Due" styleClass="labelTxt" style="font-weight:bold;font-size:18px" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;&nbsp;<h:outputText value="#{aTransactionMB.aTransaction.balAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table><div style="height:5px"></div>
+</h:panelGroup>
+<h:panelGroup rendered="#{aTransactionMB.transactionType== 'Delayed Charge' or aTransactionMB.transactionType=='Time Activity'}">
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%"><h:outputText value="Base Currency" styleClass="labelTxt" style="font-weight:bold;font-size:18px" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;&nbsp;<h:outputText value="#{aTransactionMB.aTransaction.currencyAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+<table width="98%"><tr align="right"><td width="50%"></td><td width="26%"><h:outputText value="Balance Due" styleClass="labelTxt" style="font-weight:bold;font-size:18px" ></h:outputText>
+</td><td width="22%"><h:outputText value="#{aTransactionMB.aTransaction.baseCurrency}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"></h:outputText>&nbsp;&nbsp;<h:outputText value="#{aTransactionMB.aTransaction.balAmount}" styleClass="labelTxt" style="font-weight:bold;font-size:18px"><f:converter converterId="com.inventory.util.UrlConverter"></f:converter></h:outputText>
+</td></tr></table>
+</h:panelGroup>
+</center>
+<br></br><br></br>
+<center><p:commandButton value="Close" actionListener="#{aTransactionMB.transactionViewclose}"></p:commandButton> </center>
+</p:panel>
+</h:form>
+</ui:composition>

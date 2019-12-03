@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+
+		<h:body>
+			<p:growl id="messages"></p:growl>
+			<p:tabView id="tabviewid">
+			
+			
+				
+				
+				<p:tab title="PayRoll">
+				
+			<div style="height:20px;">
+			<center><h:outputText value="#{employeePayrollFormMB.validate}" id="message"
+					styleClass="validation_ui" style="align:center;" /></center>
+					
+						</div>
+				<h:form id="payrollform">
+				<p:outputPanel id="payrollofemp">
+				<div align="right">
+				<p:commandButton icon="fa fa-refresh" value="Refresh" action="#{loginMB.hrPayrollpage}" ajax="false"></p:commandButton>
+			
+						</div>
+						<div style="height:5px"></div>
+				<!-- <h:outputText value="#{employeePayrollFormMB.validate}" class="validation_ui"></h:outputText> -->
+						<p:dataTable id="EmployeeDataTable1" var="payrollinfo"
+							rowKey="#{payrollinfo.employeeId}"
+							widgetVar="payrollEmployee"
+							value="#{employeeDetailsViewFormMB.list}" selectionMode="single"
+							style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;"
+							styleClass="order-table" headerClass="order-table-header"
+							rowClasses="order-table-odd-row,order-table-even-row"
+							paginator="true" rows="10" rowIndexVar="rowindex"
+								emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+							<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+
+									<p:inputText id="Filter"
+										onkeyup="PF('payrollEmployee').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+							<p:ajax event="rowDblselect" update=":center_content:tabviewid:payrollform:datatableempdetail"
+								listener="#{employeePayrollFormMB.employeePayrolldetail}">
+							
+							</p:ajax>
+								<p:column width="30" headerText="No">
+									<f:facet name="header"> <span class="dataTableTxt"> No </span> </f:facet>
+									<div align="center">
+										#{rowindex+1}
+									</div>
+								</p:column>
+							<p:column width="100" filterBy="#{payrollinfo.registrationId}"
+								headerText="Registration ID" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.registrationId}"></h:outputText></center>
+							</p:column>
+							<p:column headerText="Employee ID" width="100"
+								filterBy="#{payrollinfo.employeeId}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui" value="#{payrollinfo.employeeId}"></h:outputText></center>
+							</p:column>
+							<p:column width="100" filterBy="#{payrollinfo.employeeName}"
+								headerText="Employee Name" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.employeeName}"></h:outputText></center>
+							</p:column>
+							<p:column width="100" filterBy="#{payrollinfo.phoneNumber}"
+								headerText="Phone Number" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.phoneNumber}"></h:outputText></center>
+							</p:column>
+							<p:column width="100" filterBy="#{payrollinfo.designation.type}"
+								headerText="Designation" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+
+								<h:outputText class="label_ui"
+									value="#{payrollinfo.designation.type}"></h:outputText></center>
+							</p:column>
+							<p:column width="70" headerText="Month"><center>
+								<h:selectOneMenu class="text_ui" style="width:76px;"
+									value="#{employeePayrollFormMB.month}">
+									<f:selectItem itemLabel="--Select--"></f:selectItem>
+									<f:selectItems value="#{employeePayrollFormMB.monthinfo}"></f:selectItems>
+									<p:ajax process="@this" update="@form" immediate="true"></p:ajax>
+								</h:selectOneMenu></center>
+							</p:column>
+							<p:column width="70" headerText="Year"><center>
+								<h:selectOneMenu class="text_ui" style="width:76px;"
+									value="#{employeePayrollFormMB.year}" id="year">
+									<f:selectItem itemLabel="--Select--"></f:selectItem>
+									<f:selectItems value="#{employeePayrollFormMB.yearinfo}"></f:selectItems>
+									<p:ajax process="@this" update="@form" immediate="true"></p:ajax>
+								</h:selectOneMenu></center>
+
+							</p:column>
+
+							<p:column headerText="Action" width="50">
+							<div align="center">
+								<p:commandButton icon="fa fa-cog"
+									action="#{employeePayrollFormMB.entry}"
+									immediate="true" process="@form" update=":center_content:tabviewid:message" >
+
+									<f:setPropertyActionListener
+										target="#{employeePayrollFormMB.employeeid}"
+										value="#{payrollinfo.employeeId}"></f:setPropertyActionListener>
+								</p:commandButton>
+								</div>
+							</p:column>
+						</p:dataTable>
+						</p:outputPanel>
+						<br/><br/><br/>
+						
+
+					<h:panelGrid colspan="2" >
+					<p:outputPanel id="epaydetail">
+					<center><h:outputText value="#{employeePayrollViewFormMB.validate}" class="errorTxt" id="msgs"></h:outputText></center>
+						<p:dataTable id="datatableempdetail" var="Epaydetailinfo" widgetVar="payrolldetail"
+							style="font-family: 'HelveticaNeueLT Pro 55 Roman';font-size:14;display:#{employeePayrollViewFormMB.flag1}" 
+							styleClass="order-table" headerClass="order-table-header"
+							rowClasses="order-table-odd-row,order-table-even-row" filteredValue="#{employeePayrollViewFormMB.employeePayroll.filterList}"
+							paginator="true" rows="10" 	emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" value="#{employeePayrollViewFormMB.value1}">
+							
+								<f:facet name="header">
+								<p:outputPanel style="text-align:right">
+
+									<p:inputText id="globalFilter"
+										onkeyup="PF('payrolldetail').filter()"
+										style="width:20%;height:25px;" placeholder="Enter keyword" />
+								</p:outputPanel>
+							</f:facet>
+							
+							<p:column headerText="Payroll Number" width="140"
+								filterBy="#{Epaydetailinfo.payrollno}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+								<h:inputHidden value="#{Epaydetailinfo.id}"></h:inputHidden>
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.payrollno}" /></center>
+
+							</p:column>
+							<p:column headerText="Employee ID" width="110" filterBy="#{Epaydetailinfo.payrollno}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.employeeid}" /></center>
+
+							</p:column>
+							<p:column headerText="Name" width="100" filterBy="#{Epaydetailinfo.name}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.name}" /></center>
+
+							</p:column>
+
+							<!-- <p:column headerText="Basic salary" width="100" filterBy="#{Epaydetailinfo.basicsalary}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="#{Epaydetailinfo.basicsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup></center>
+
+							</p:column>
+ -->
+						
+							<p:column headerText="Date" width="80" filterBy="#{Epaydetailinfo.todayDate}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.todayDate}"></h:outputText></center>
+
+							</p:column>
+
+
+							<p:column headerText="Working Days" width="110"
+								filterBy="#{Epaydetailinfo.workingdays}" filterMatchMode="contains"
+								filterStyle="display:none"><center>
+
+
+								<h:outputText class="label_ui" value="#{Epaydetailinfo.workingdays}"></h:outputText></center>
+
+							</p:column>
+
+							<!-- <p:column headerText="Total Salary" width="120" filterBy="#{Epaydetailinfo.totalsalary}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="#{Epaydetailinfo.totalsalary}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup></center>
+
+							</p:column> -->
+							<p:column headerText="Total Salary" width="120" filterBy="#{Epaydetailinfo.currencyAmount}"
+								filterMatchMode="contains" filterStyle="display:none"><center>
+
+								<h:panelGroup>
+									<h:outputText class="label_ui" value="#{employeePayrollViewFormMB.baseCurrency}"></h:outputText>&nbsp;<h:outputText class="label_ui" value="#{Epaydetailinfo.currencyAmount}">
+										<f:converter converterId="com.inventory.util.UrlConverter" />
+									</h:outputText>
+								</h:panelGroup></center>
+
+							</p:column>
+ 			<p:column headerText="Approval Status" filterBy="#{Epaydetailinfo.approvalStatus}" width="130" filterMatchMode="contains" filterStyle="display:none">
+      <center><h:outputText value="Waiting for Approval" rendered="#{Epaydetailinfo.approvalStatus=='draft'}"></h:outputText>
+      <h:outputText value="#{Epaydetailinfo.approvalStatus}" rendered="#{Epaydetailinfo.approvalStatus!='draft'}">
+      </h:outputText></center>
+      </p:column>
+									
+							<p:column headerText="Action" width="100">
+								<div align="center">
+									<p:commandButton icon="fa fa-search"
+										action="#{employeePayrollViewFormMB.payrollViewz}">
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+											<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.employeeid1}"
+											value="#{Epaydetailinfo.id}"></f:setPropertyActionListener>
+									</p:commandButton>
+								
+									<p:commandButton icon="fa fa-pencil" rendered="#{Epaydetailinfo.approvalStatus!='draft'}"
+										action="#{employeePayrollViewFormMB.payrollEdit}">
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+									</p:commandButton>
+								
+									<p:commandButton icon="fa fa-remove" align="center" rendered="#{Epaydetailinfo.approvalStatus!='draft'}"
+										onclick="PF('payrolldelete').show()"> 
+										<f:setPropertyActionListener
+											target="#{employeePayrollViewFormMB.payrollno}"
+											value="#{Epaydetailinfo.payrollno}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+							</p:column>
+							<f:facet name="footer">
+							<br/><br/>
+							
+		
+							
+							</f:facet>
+						</p:dataTable>
+						
+						<br/> <br/>
+</p:outputPanel>
+		</h:panelGrid>
+		<p:dialog header="CONGRATULATIONS...!!" widgetVar="approvalConfirm" modal="true" width="50%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:20px"></div>	<center>
+							<h:outputText value="Payroll has been successfully approved." styleClass="confirmTxt"/></center>
+				<div style="height:30px">
+				</div><center><p:commandButton value="Ok" action="#{employeePayrollFormMB.employeePayrolldetail}"
+						 process="@this" immediate="true" update=":center_content" onsuccess="PF('approvalConfirm').hide()"
+						styleClass="button_ui"></p:commandButton></center>
+			</p:dialog>
+<p:blockUI  block="EmployeeDataTable1" style="width:200px;height:30px;" trigger="EmployeeDataTable1">
+  
+    <p:graphicImage value="/images/loadingimg.gif" />
+    <h:outputText value="Please wait, data is being processed..."
+     style="white-space: nowrap;width:150px;height:25px;" />
+ 
+  </p:blockUI>
+</h:form>
+
+					
+				</p:tab>
+			</p:tabView>
+			
+		<p:dialog header="Confirmation" widgetVar="payrolldelete" modal="true" width="40%" height="120"
+				  resizable="false"
+				appendTo="@(body)">
+				<div style="height:10px"></div>	<center>
+							<h:outputText value="Are you sure,you wanted to delete this Payroll?" styleClass="confirmTxt"/></center>
+							
+					<center>
+					<div style="height:20px"></div>
+					<p:commandButton value="Yes" action="#{employeePayrollViewFormMB.payrolldelete}"
+						oncomplete="PF('payrolldelete').hide()" process="@this" immediate="true" update=":center_content:tabviewid:payrollform:epaydetail"
+						styleClass="button_ui"></p:commandButton>
+					
+						<p:commandButton value="No" onclick="PF('payrolldelete').hide()"
+							styleClass="button_ui"></p:commandButton>
+						</center>
+			</p:dialog>
+			
+			<p:dialog header="ALERT...!!" widgetVar="nopayrolldlg" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="No Payroll has been generated for this Employee." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+			<p:dialog header="CONGRATULATIONS...!!" widgetVar="paydeleteconf" modal="true" width="40%" height="120"
+				 resizable="false"
+				appendTo="@(body)">
+				<div style="height:40px"></div>	<center>
+							<h:outputText value="Payroll has been successfully deleted." styleClass="confirmTxt"/></center>
+				<div style="height:30px"></div>
+			</p:dialog>
+			
+
+<div id="logo">
+		
+		
+<h:panelGrid rowClasses="2" columns="3" class="allSides" style="background-color:#f3f2f2;width: 350px;height:100px" rendered="#{employeePayrollViewFormMB.flag3}">
+
+<p align="center" style="color: black">No Records Found</p>
+<h:outputText></h:outputText>
+<h:commandButton value="Ok" ></h:commandButton>
+
+
+
+</h:panelGrid></div>
+		</h:body>
+
+	</ui:define>
+</ui:composition>

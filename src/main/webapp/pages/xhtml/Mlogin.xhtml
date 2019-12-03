@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http:s//java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a4j="http://richfaces.org/a4j">
+    
+
+ <h:head>
+ <meta name="google-translate-customization" content="ac98269b1d539f7c-db9219efe99e9f4b-gbffea986b5de013f-19"></meta>
+<title>::: Inacsys | login  :::  </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link></h:head>
+
+ <body  style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+ <h:graphicImage  value="/images/ml1.png" style="width:  100%; 
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;" >
+ <h:form> 
+ 
+ <table align="right" style="margin-bottom:-700px;position:relative;">
+ <tr>
+ <td style="width:100px"></td>
+ <td>
+ <br/><br/><br/><br/><br/><br/>
+ <h:panelGrid>
+ <p style="font-size: 33px;font-family: Bitsumishi;color:white">&nbsp;Inventory Management System
+ <br/>
+ <h:outputText style="width: 170px; height: 25px;color:red; font-family:'HelveticaNeueLT Pro 55 Roman'" value="&nbsp; #{loginMB.validate}"></h:outputText>
+ </p>
+ </h:panelGrid> 
+ <h:panelGrid columns="1" cellpadding="5" cellspacing="5">
+ <h:inputText  value="#{loginMB.invusername}"     style=" width: 200px; height: 25px;" ></h:inputText>
+ <h:inputSecret   style="width: 200px;height: 25px;" value="#{loginMB.invpassword}"></h:inputSecret> 
+ 				<h:commandButton value ="LOGIN"  
+ 				style="font-size: 16px; height: 25px;border:0px;font-weight:bold;
+ 				width: 100px;font-family:HelveticaNeueLT Pro 55 Roman;" action="#{loginMB.userLogin}"/>
+ 				<h:outputText></h:outputText>		
+ </h:panelGrid>
+ <br/>
+ 
+ 
+ 
+ 
+ </td></tr>
+ <tr><td colspan="2">
+ <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+ <table><tr><td>
+ <h:panelGrid>
+ <p style="font-family:  HelveticaNeueLT Pro 55 Roman; font-size: 23px;color:white">
+ &thinsp;Don't have access? Please contact us through <a href="http://neotural.com/" style="font-size: 20px;color:white;text-decoration: underline;">www.neotural.com</a>
+ </p></h:panelGrid>
+ 
+ </td></tr></table>
+ 
+ </td></tr>
+ </table>
+ 
+ 
+</h:form></h:graphicImage>
+</body>
+ </ui:composition>

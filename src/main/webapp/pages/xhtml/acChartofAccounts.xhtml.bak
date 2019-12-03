@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	 xmlns:b="http://bootsfaces.net/ui"
+	 xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+  	<ui:define name="content">
+  		<p:panel header="Chart of Accounts" id="panelID">
+  		<div style="height:20px;"></div>
+  			
+  			<table align="center" width="100%">  			
+  			<tr align="center"><td>
+  			<h:outputText value="Chart of Accounts " class="udLablehead" style="font-size:24px"></h:outputText>
+  			</td></tr></table><br/>
+  			<div align="left" style="margin-left:15px;">
+  				<p:commandButton icon="fa fa-plus" value="New" actionListener="#{accountsMB.addAccounts}"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+  					update="center_content" process="@this" ></p:commandButton>
+  				<p:commandButton icon="fa fa-share" value="Run Report"  actionListener="#{accountsMB.chartofAccountsPage}"
+  				update="center_content" process="@this"  onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" ></p:commandButton>
+			</div>
+  			<br/>
+  			<table width="100%"><tr><td width="93%"></td>
+	  		<td width="3%"><h:commandLink>
+                <p:graphicImage value="../../images/pdf.png" title="PDF" width="24"/>
+                <p:dataExporter type="pdf" target="dataTable2" fileName="accounts"/>
+            </h:commandLink></td>
+            <td width="3%"><h:commandLink>
+             <p:graphicImage value="../../images/Printer.png" title="Print" width="24"/>
+				    <p:printer target="dataTable2"  />
+				</h:commandLink></td><td width="1%"></td></tr></table>
+				<div style="height:10px"></div>
+  			<div align="center" id="printdatatable" >
+  			<p:dataTable id="dataTable2" var="inf" widgetVar="COA" value="#{accountsMB.accountsDatabean.accounts}"  filteredValue="#{accountsMB.filterList1}"  
+	     cellspacing="3" rowIndexVar="rowindex"
+	    emptyMessage="No information found with given criteria" style="width:99%">
+  				
+				<f:facet name="header">
+		            <p:outputPanel style="text-align:right">		               
+		                <p:inputText id="globalFilter" onkeyup="PF('COA').filter()"  style="width:20%;height:25px;"
+		                 placeholder="Enter keyword"/>
+		            </p:outputPanel>
+	       		</f:facet>	  
+	       		<p:column width="40" headerText="No">
+					<h:outputText value="#{rowindex+1}" class="udLable"></h:outputText>
+				</p:column>
+	       		<p:column headerText="Date" width="8%" styleClass="udLable"
+	  					filterBy="#{inf.account_date}" filterMatchMode="contains" filterStyle="display:none">  
+	  					<h:outputText value="#{inf.account_date}" class="udLable">
+	  					<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+	  					</h:outputText>
+	  				</p:column>
+	  				<p:column headerText="Account Name" width="13%" styleClass="udLable"
+	  					filterBy="#{inf.account_name}" filterMatchMode="contains" filterStyle="display:none">  
+	  					<h:outputText value="#{inf.account_name}" class="udLable"></h:outputText>
+	  				</p:column>
+	  				<p:column headerText="Transaction Type" width="14%" styleClass="udLable"
+	  					filterBy="#{inf.account_type}" filterMatchMode="contains" filterStyle="display:none">  
+	  					<h:outputText value="#{inf.account_type}" class="udLable"></h:outputText>
+	  				</p:column>
+	  				<p:column headerText="Detail Type"  width="14%" styleClass="udLable"
+	  					filterBy="#{inf.detailType}" filterMatchMode="contains" filterStyle="display:none">  
+	  					<h:outputText value="#{inf.detailType}" class="udLable"></h:outputText>
+	  				</p:column>
+	  				<p:column headerText="Tax Rate"  width="10%" styleClass="udLable" rendered="#{accountsMB.accountsDatabean.country == 'India'}"
+	  					filterBy="#{inf.taxes}" filterMatchMode="contains" filterStyle="display:none">  
+	  					<h:outputText value="#{inf.taxes}" class="udLable"></h:outputText>
+	  				</p:column>
+	  				<p:column headerText="Balance"  width="9%" styleClass="udLable" 
+	  					filterBy="#{inf.balance}" filterMatchMode="contains" filterStyle="display:none">  
+	  					<h:outputText value="#{accountsMB.accountsDatabean.baseCurrency}" class="udLable"></h:outputText>&nbsp;<h:outputText value="#{inf.balance}" class="udLable">
+	  					<f:converter converterId="com.inventory.util.UrlConverter"></f:converter>
+	  					</h:outputText>
+	  				</p:column>	
+					<p:column headerText="Action" width="15%" styleClass="udLable" exportable="false">
+						<center>
+							<p:commandButton icon="fa fa-share" value="#{inf.buttonValue}"
+								style="color:blue;height: 25px;width:117px;text-align:left;" 
+								ajax="false" partialSubmit="true"
+								action="#{accountsMB.chartofAccountsDetailPage}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" >
+								<f:setPropertyActionListener value="#{inf.account_name}"
+									target="#{accountsMB.accountsDatabean.account_name}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener value="#{inf.balance}"
+									target="#{accountsMB.accountsDatabean.balance}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener value="#{inf.balance}"
+									target="#{accountsMB.accountsDatabean.balance}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener value="#{inf.account_type}"
+									target="#{accountsMB.accountsDatabean.account_type}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener value="#{inf.buttonValue}"
+									target="#{accountsMB.accountsDatabean.buttonValue}"></f:setPropertyActionListener>
+								<f:setPropertyActionListener value="#{accountsMB.accountsDatabean.baseCurrency}"
+									target="#{accountsMB.accountsDatabean.baseCurrency}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<p:commandButton title="Make Inactive" icon="fa fa-trash-o" action="#{accountsMB.makeInactive}" style="background-color: #B71C1C !important;" update="@form" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" >
+							<f:setPropertyActionListener value="#{inf.account_name}"
+									target="#{accountsMB.accountsDatabean.account_name}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</center>
+					</p:column>
+				</p:dataTable>	
+	  		</div>
+	  		<div style="height:200px;"></div>
+	 	</p:panel>	
+  			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    					  <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   					</p:dialog> 
+   						
+  		<p:dialog widgetVar="addAccount" header="Account" modal="true" width="65%" 
+ 				height="420px" resizable="false" appendTo="@(body)">
+			<p:outputPanel id="panels">
+			<h:form id="form"><div style="height:10px;"></div>
+			<div style="height:30px;">
+			<center><h:outputText value="#{accountsMB.accountsDatabean.validate}" style="font-size:14px" styleClass="errorTxt"></h:outputText> </center></div>
+			<table width="100%">
+			<tr><td width="5%" height="50px"></td>
+			<td width="15%" height="50px">
+			<h:outputText class="labelTxt" value="Account Type"></h:outputText>	
+			</td>
+			<td width="30%" height="50px">
+			<h:selectOneMenu value="#{accountsMB.accountsDatabean.account_type}" style="width:200px;height:25px;"
+					id="type" >
+					<f:selectItem itemLabel="Select Account Type" noSelectionOption="true" itemValue=""></f:selectItem>
+					<f:selectItems value="#{accountsMB.accountsDatabean.accountType}"></f:selectItems>
+					<p:ajax update="center_content:panels" process="@this" event="valueChange" partialSubmit="true"
+					 listener="#{accountsMB.accountChange}"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Name"></h:outputLabel>
+			</td>
+			<td width="35%" height="50px">
+			<p:inputText styleClass="inputTxt"  id="detName" value="#{accountsMB.accountsDatabean.account_name}">
+					<p:ajax update="detName" process="@this"></p:ajax>
+			</p:inputText></td></tr>
+			<tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"><h:message for="type" styleClass="errorTxt"></h:message></td>
+			<td width="15%"></td><td width="35%" height="20px"><h:message for="detName" styleClass="errorTxt"></h:message></td></tr>
+			<tr><td width="5%"></td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Detail Type"></h:outputLabel>
+			</td>
+			<td width="35%" height="50px">
+				<h:selectOneMenu value="#{accountsMB.accountsDatabean.detailType}" valueChangeListener="#{accountsMB.typeChange}" style="width:200px;height:25px;"
+					id="type1">
+					<f:selectItem itemLabel="Select Detail Type" noSelectionOption="true" itemValue=""></f:selectItem>
+					<f:selectItems value="#{accountsMB.accountsDatabean.types}"></f:selectItems>
+					<p:ajax update="center_content:panels" process="@this" event="valueChange" partialSubmit="true"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Currency"></h:outputLabel>
+			</td>
+			<td height="50px" width="35%">
+				<h:selectOneMenu class="text_ui" value="#{accountsMB.accountsDatabean.currency}" id="curr" style="width:200px;height:28px;" valueChangeListener="#{accountsMB.currencyTypeValueChange}">
+					<f:selectItem itemLabel="---Select Currency Type---" itemValue="" noSelectionOption="true"/>
+					<f:selectItem itemLabel="AED" itemValue="AED"/>
+				   	<f:selectItem itemLabel="IDR" itemValue="IDR"/>
+				   	<f:selectItem itemLabel="INR" itemValue="INR"/>
+				   	<f:selectItem itemLabel="MYR" itemValue="MYR"/>
+				   	<f:selectItem itemLabel="USD" itemValue="USD"/>
+					<p:ajax update="center_content:panels" process="@this" immediate="true" event="valueChange" partialSubmit="true"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			</tr><tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"><h:message for="type1" styleClass="errorTxt"></h:message></td>
+			<td width="15%" height="20px"></td><td width="35%" height="20px"><h:message for="curr" styleClass="errorTxt"></h:message></td></tr>
+			<tr><td width="5%"></td>
+			<td width="15%" height="50px">
+				<h:outputLabel class="labelTxt" value="Base Currency"></h:outputLabel>
+			</td>
+			<td width="35%" height="50px">
+				<h:panelGroup>
+				<h:outputLabel class="labelTxt" value="#{accountsMB.accountsDatabean.baseCurrency}"></h:outputLabel>
+				<h:outputLabel class="labelTxt" value="#{accountsMB.accountsDatabean.currencyAmount}">
+				<f:converter converterId="com.inventory.util.UrlConverter"/>
+				</h:outputLabel></h:panelGroup>
+			</td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Default Tax Code" rendered="#{accountsMB.accountsDatabean.country == 'India'}"></h:outputLabel>
+			</td>
+			<td height="50px" width="35%">
+				<h:selectOneMenu value="#{accountsMB.accountsDatabean.taxes}" style="width:200px;height:28px;" id="taxs" rendered="#{accountsMB.accountsDatabean.country == 'India'}">
+					<f:selectItem itemLabel="---Select Tax---" itemValue="select" noSelectionOption="true"></f:selectItem>
+					<f:selectItem itemLabel="Exempt IGST" itemValue="Exempt IGST"></f:selectItem>
+					<f:selectItem itemLabel="5.0% GST" itemValue="5% GST"></f:selectItem>
+					<f:selectItem itemLabel="18.0% IGST" itemValue="18% IGST"></f:selectItem>
+					<f:selectItem itemLabel="Exempt GST" itemValue="Exempt GST"></f:selectItem>
+					<f:selectItem itemLabel="0% IGST" itemValue="0% IGST"></f:selectItem>
+					<f:selectItem itemLabel="28.0% GST" itemValue="28% GST"></f:selectItem>
+					<f:selectItem itemLabel="12.0% GST" itemValue="12% GST"></f:selectItem>
+					<f:selectItem itemLabel="0% GST" itemValue="0% GST"></f:selectItem>
+					<f:selectItem itemLabel="Out of Scope" itemValue="Out of Scope"></f:selectItem>
+					<f:selectItem itemLabel="28.0% IGST" itemValue="28% IGST"></f:selectItem>
+					<f:selectItem itemLabel="12.0% IGST" itemValue="12% IGST"></f:selectItem>
+					<f:selectItem itemLabel="18.0% GST" itemValue="18% GST"></f:selectItem>
+					<f:selectItem itemLabel="5.0% IGST" itemValue="5% IGST"></f:selectItem>
+					<p:ajax update="@form" process="@this" immediate="true"></p:ajax>
+				</h:selectOneMenu>
+			</td>
+			</tr><tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"></td>
+			<td width="15%" height="20px"></td><td width="35%" height="20px"></td></tr>
+			<tr>
+			<td width="5%" height="20px"></td>
+			<td width="15%" height="50px">
+			<h:outputLabel class="labelTxt" value="Balance" rendered="#{accountsMB.flag}"></h:outputLabel>
+			</td>
+			<td height="50px" width="35%">
+				<pe:inputNumber styleClass="inputTxt" id="bal" value="#{accountsMB.accountsDatabean.balance}" rendered="#{accountsMB.flag}"
+						valueChangeListener="#{accountsMB.amountChange}">
+					<p:ajax update=":center_content:panels" process="@this" immediate="true" event="valueChange" partialSubmit="true"></p:ajax>
+				</pe:inputNumber>
+			</td>
+			</tr>
+			<tr><td width="5%" height="20px"></td><td width="15%" height="20px"></td><td width="30%" height="20px"><h:message for="bal" styleClass="errorTxt" rendered="#{accountsMB.flag}"></h:message></td>
+			<td width="15%" height="20px"></td><td width="35%" height="20px"></td></tr>
+			</table><div style="height:5px"></div>
+			<hr style="width:90%;align:center;border:1px solid #ccc	;"/>
+			<center>
+				<p:commandButton value="Save" icon="fa fa-database" action="#{accountsMB.saveAccount}" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"
+					update="center_content:panels" process="@this"></p:commandButton>
+				<p:commandButton value="Clear" icon="fa fa-remove" update="center_content:panels" process="@this" partialSubmit="true"
+					actionListener="#{accountsMB.cancel}">
+					
+					</p:commandButton>
+			</center>
+			</h:form>
+			</p:outputPanel>
+ 	</p:dialog> 
+ 	<p:dialog header="CONGRATULATIONS...!!"  widgetVar="confirm" modal="true" width="50%" height="140px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:25px"></div>
+							<h:panelGrid columns="3" border="0" align="center">
+ 							<h:outputText value="This Transaction has been successfully completed." styleClass="confirmTxt"></h:outputText>
+							</h:panelGrid></center>
+						<div style="height:30px"></div>
+	<center><p:commandButton value="Ok"  process="@this" immediate="true" update="center_content" oncomplete="PF('confirm').hide()"
+								></p:commandButton></center>						
+			<br /></p:dialog>	
+ 	<p:dialog widgetVar="viewAccounts" header="Account Details" modal="true" width="50%" 
+ 				height="100%" resizable="false" appendTo="@(body)">
+		<center>
+			<p:dataTable id="dataTable" var="inf" style="width:80%;overflow-y:scroll;height:300px;" 
+					styleClass="order-table" value="#{accountsMB.accountsDatabean.accounts}" 
+					headerClass="order-table-header" cellspacing="1"
+					rowClasses="order-table-odd-row,order-table-even-row"> 				  
+  				<p:column headerText="Date" width="12%" styleClass="udLable">  
+  					<h:outputText value="#{inf.account_name}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Reference No" width="12%" styleClass="udLable">  
+  					<h:outputText value="#{inf.account_type}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Account Type"  width="12%" styleClass="udLable">  
+  					<h:outputText value="#{inf.account_name}" class="udLable"></h:outputText>
+  				</p:column>
+  				<p:column headerText="Amount"  width="10%" styleClass="udLable">  
+  					<h:outputText value="#{inf.account_amount}" class="udLable"></h:outputText>
+  				</p:column>		
+  			</p:dataTable>
+  			
+  		</center>
+ 	</p:dialog> 
+ 			<p:dialog header="CONGRATULATIONS...!!"  widgetVar="activedialog" modal="true" width="50%" height="140px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:25px"></div>
+			<h:panelGrid columns="3" border="0" align="center">
+ 			<h:outputText value="This Account has been successfully Activated" styleClass="confirmTxt"></h:outputText>
+			</h:panelGrid></center>
+			<div style="height:30px"></div>
+			<center><p:commandButton value="Ok" action="#{accountsMB.chartofAccountsPage}" process="@this" immediate="true" update="center_content" oncomplete="PF('activedialog').hide()"></p:commandButton></center>						
+			<br /><br /></p:dialog>	
+			
+			<p:dialog header="ALERT...!!"  widgetVar="deactivedialog" modal="true" width="60%" height="150px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:20px"></div>
+			
+ 			<h:outputText value="This account cannot be deleted because there are many transactions based on this account." styleClass="confirmTxt" rendered="#{accountsMB.accountsDatabean.account_name=='Accounts Payable (A/P)' || accountsMB.accountsDatabean.account_name=='Accounts Receivable (A/R)'}"></h:outputText>
+ 			<h:outputText value="This account cannot be deleted because it is used by a product or service." styleClass="confirmTxt" rendered="#{accountsMB.accountsDatabean.account_name=='Services' || accountsMB.accountsDatabean.account_name=='Purchases'}"></h:outputText>
+ 			<h:outputText value="You cannot delete or edit the Opening Balance Equity account. It is used to create initial balances or balance adjustments." styleClass="confirmTxt" rendered="#{accountsMB.accountsDatabean.account_name=='Opening Balance Equity'}"></h:outputText>
+			<h:outputText value="You cannot change or delete this account as it is used by the system to track tax amounts." styleClass="confirmTxt" rendered="#{accountsMB.accountsDatabean.account_name=='Output CGST' || accountsMB.accountsDatabean.account_name=='Output SGST' || accountsMB.accountsDatabean.account_name=='Output IGST'
+			|| accountsMB.accountsDatabean.account_name=='Input CGST' || accountsMB.accountsDatabean.account_name=='Input SGST' || accountsMB.accountsDatabean.account_name=='Input IGST'}"></h:outputText>
+			</center>
+			<div style="height:30px"></div>
+			<center><p:commandButton value="Ok" action="#{accountsMB.chartofAccountsPage}" process="@this" immediate="true" update="center_content" oncomplete="PF('deactivedialog').hide()"></p:commandButton></center>						
+			<div style="height:10px"></div></p:dialog>	
+			<p:dialog header="CONGRATULATIONS...!!"  widgetVar="deactivedialog1" modal="true" width="50%" height="130px" resizable="false" draggable="false" appendTo="@(body)">
+			<center><div style="height:25px"></div>
+			<h:panelGrid columns="3" border="0" align="center">
+ 			<h:outputText value="This Account has been  Deactivated." styleClass="confirmTxt"></h:outputText>
+ 			</h:panelGrid></center>
+			<div style="height:30px"></div>
+			<center><p:commandButton value="Ok" action="#{accountsMB.chartofAccountsPage}" process="@this" immediate="true" update="center_content" oncomplete="PF('deactivedialog1').hide()"></p:commandButton></center>						
+			</p:dialog>		
+  	</ui:define>
+  </ui:composition>

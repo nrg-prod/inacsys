@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+
+		<title>Employee Report</title>
+		<link rel="stylesheet" href="../../css/css.css"></link>
+	</h:head>
+	<body>
+
+		<h:form id="form">
+		<center>	<h:panelGrid>
+				<h:outputText class="validation_ui" value="#{stockReportMB.validate}" />
+			</h:panelGrid></center>
+			 			
+				 <table align="center">
+				 <tr>
+				 <td>
+				 
+				 <h:panelGrid columns="4" style="font-size:10px; width:650px; height: 70px;" align="center" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
+						<h:panelGroup>
+						<h:outputText value="From Date" class="label_ui"></h:outputText>
+						<h:outputText style="color:red" value="*"></h:outputText>
+					</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar  pattern="dd/MM/yyyy"  id="fdate" value="#{stockReportMB.fromDate}">
+					<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar>
+					<h:message for="fdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="To Date " class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:calendar pattern="yyyy-MM-dd" id="tdate" value="#{stockReportMB.toDate}">
+						<p:ajax event="dateSelect" immediate="true" process="@this" update="@form"></p:ajax>
+					</p:calendar>
+					<h:message for="tdate" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Type" class="label_ui"></h:outputText>
+					<h:outputText style="color:red" value="*"></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+				<h:selectOneRadio id="vt" value="#{stockReportMB.type}" style="font-size:10px;" valueChangeListener="#{stockReportMB.valueChange}">
+				<f:selectItem itemLabel="Single" itemValue="single" ></f:selectItem>
+				<f:selectItem itemLabel="All" itemValue="All"></f:selectItem>
+				<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</h:selectOneRadio>
+				<h:message for="vt" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:outputText value="Employee Name" class="label_ui" for="venauto" rendered="#{stockReportMB.singleTypeFlag}"></h:outputText>
+					<h:outputText style="color:red;" rendered="#{stockReportMB.singleTypeFlag}" value="*" ></h:outputText>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:inputText  styleClass="inputTxt" id="v1" rendered="#{stockReportMB.singleTypeFlag}" value="#{stockReportMB.employeeName}">
+					<p:ajax event="valueChange" process="@this" immediate="true" update="@form"></p:ajax>
+				</p:inputText>
+				<h:message for="v1" style="color:red;font-size:11px"></h:message>
+				</h:panelGroup>
+				</h:panelGrid>
+						<center>
+							<h:panelGrid cellpadding="5">
+								<p:commandButton styleClass="button" style="font-size:15px"
+									process="@this" immediate="false" ajax="false" value="search"
+									
+									action="#{stockReportMB.employeereport}"></p:commandButton>
+							</h:panelGrid></center></td></tr></table>
+		</h:form>
+
+		<h:form>
+			<p:dataTable id="ALL" value="#{stockReportMB.allemployeeList}" rowKey="#{info.payrollNumber}"
+				 widgetVar="employeeViewInfo" rendered="#{stockReportMB.employeeFlag}"
+				var="info" paginator="true" rows="10"
+				emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+
+						<p:inputText id="globalFilter"
+							onkeyup="PF('employeeViewInfo').filter()"
+							style="width:20%;height:25px;" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>			 
+				
+
+				<p:column headerText="Employee Name" filterBy="#{info.employeeName}"
+					filterMatchMode="contains" filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+
+
+					<h:outputText class="text_ui" value="#{info.employeeName}" />
+
+				</p:column>
+				<p:column headerText="Payroll Generate Date" filterBy="#{info.payrollDate}"
+					filterMatchMode="contains" filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+
+
+					<h:outputText class="text_ui"  value="#{info.payrollDate}" />
+				</p:column>
+				<p:column headerText="Payroll Number"
+					filterBy="#{info.payrollNumber}" filterMatchMode="contains"
+					filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+					<h:outputText value="#{info.payrollNumber}" class="text_ui">
+
+					</h:outputText>
+
+				</p:column>
+				
+				<p:column headerText="Basic Salary"
+					filterBy="#{info.basicSalary}" filterMatchMode="contains"
+					filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+
+
+
+					<h:outputText class="text_ui" value="#{info.basicSalary}" />
+
+				</p:column>
+				<p:column headerText="Total Salary"
+					filterBy="#{info.totalSalary}" filterMatchMode="contains"
+					filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+					<h:outputText value="#{info.totalSalary}" class="text_ui">
+
+					</h:outputText>
+
+				</p:column>
+
+
+
+				<p:column headerText="Month"
+					filterBy="#{info.month}" filterMatchMode="contains"
+					filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+
+
+					<h:outputText class="text_ui" value="#{info.month}">
+					</h:outputText>
+
+				</p:column>
+				<p:column headerText="Year"
+					filterBy="#{info.year}" filterMatchMode="contains"
+					filterStyle="display:none"
+					style="color:white;font-size:10px;font-weight:bold">
+
+					<h:outputText class="text_ui" value="#{info.year}">
+
+			</h:outputText>
+			</p:column>
+			</p:dataTable>
+			</h:form>
+
+		<br />
+				<p:dialog header="Employee detail of #{stockReportMB.ename} " id="dlg1view" appendTo="@(body)"
+				widgetVar="EmployeeDetail" modal="true" showEffect="fade"
+				hideEffect="fade" 
+				resizable="false" >
+				<p:outputPanel id="dialogPanelView">
+					<h:form id="EmployeeDetail">
+				
+								<h:panelGrid class="label_ui" border="0" cellspacing="8"
+						columns="2" style="font-size:10px; width:400px;" align="center"
+						cellpadding="3">
+						<h:outputText value="Payroll Date" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.epayrolldate}"></h:outputText>
+						<h:outputText value="Employee Name" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.ename}"></h:outputText>
+						<h:outputText value="Employee Id" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.eid}"></h:outputText>
+							
+							
+						<h:outputText value="Designation" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.edesignation}"></h:outputText>
+						<h:outputText value="Basic Salary" class="label_ui"></h:outputText>
+						<h:panelGroup>
+							<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+							<h:outputText class="text_ui"
+								value="#{stockReportMB.ebasicsalary}">
+								<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText>
+						</h:panelGroup>
+						<h:outputText value="Month" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.emonth}"></h:outputText>
+						
+						<h:outputText value="Working Days" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.eworkingdays}"></h:outputText>
+						<h:outputText value="Commission" class="label_ui"></h:outputText>
+						<h:outputText class="text_ui"
+							value="#{stockReportMB.ecommission}">
+							<f:converter converterId="com.inventory.util.UrlConverter" />
+						</h:outputText>
+						<h:outputText value="Over Time Amount" class="label_ui"></h:outputText>
+						<h:panelGroup>
+							<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+							<h:outputText class="text_ui"
+								value="#{stockReportMB.eovertime}">
+								<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText>
+						</h:panelGroup>
+						<h:outputText value="Loan Advance" class="label_ui"></h:outputText>
+						<h:panelGroup>
+							<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+							<h:outputText class="text_ui"
+								value="#{stockReportMB.eadvanceamount}">
+								<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText>
+						</h:panelGroup>
+						<h:outputText value="Total Salary" class="label_ui"></h:outputText>
+						<h:panelGroup>
+							<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText>
+							<h:outputText class="text_ui"
+								value="#{stockReportMB.etotalsalary}">
+								<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText>
+						</h:panelGroup>
+					</h:panelGrid></h:form>
+		</p:outputPanel></p:dialog>
+	</body></ui:composition>

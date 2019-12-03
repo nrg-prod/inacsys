@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+ 
+
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+</h:head>
+
+ <h:form id="crform">
+ <p:growl id="msgs" showDetail="true" />
+ <p:dataTable id="dt" var="customerdrp" value="#{reportMB.customerReportlist1}"  selectionMode="single" widgetVar="allcustomerInfo" paginator="true" rowKey="#{customerdrp.allCustName}" rows="10" style="font-size:11px"
+   emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true" >
+ <f:facet name="header">
+            <p:outputPanel>
+               
+                <p:inputText id="globalFilter" onkeyup="PF('allcustomerInfo').filter()" style="width:25%;height:23px;margin-right:-500px"  placeholder="Enter keyword"/>
+            </p:outputPanel>
+ </f:facet>
+ 
+ <p:ajax event="rowDblselect" listener="#{reportMB.allcustRowSelect}" update="@all" />
+ 
+ <p:column filterBy="#{customerdrp.allCustName}" headerText="Customer Name"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{customerdrp.allCustName}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{customerdrp.allCustpno}" headerText="Phone Number"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{customerdrp.allCustpno}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{customerdrp.prodQuantity}" headerText="Total Quantity"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{customerdrp.prodQuantity}" class="text_ui"/>
+</p:column>
+<p:column filterBy="#{customerdrp.totprice}" headerText="Total Price"  filterMatchMode="contains" filterStyle="display:none" style="font-size:11px;color:white;font-weight:bold">
+            <h:outputText value="#{customerdrp.totprice}" class="text_ui"/>
+</p:column>
+ 
+ </p:dataTable>
+ 
+ <p:spacer height="15px;"></p:spacer>
+ 
+ 
+ <p:dataTable rendered="#{reportMB.customerDetailFlag1}" id="dt1" var="detcustomer" value="#{reportMB.customerReportlist2}" paginator="true"  rows="10" 
+  emptyMessage="No information found with given criteria" 
+  							pageLinks="10" paginatorAlwaysVisible="false" paginatorPosition="top"
+  							reflow="true">
+ <p:column headerText="SO Number" style="color:white;font-size:10px;font-weight:bold">
+ <h:outputText value="#{detcustomer.custSONumber}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Product" style="color:white;font-size:10px;font-weight:bold">
+ <h:outputText value="#{detcustomer.prodName}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Quantity" style="color:white;font-size:10px;font-weight:bold"> 
+ <h:outputText value="#{detcustomer.prodQuantity}" class="text_ui"></h:outputText>
+ </p:column>
+ <p:column headerText="Selling Price" style="color:white;font-size:10px;font-weight:bold">
+ <h:outputText value="#{detcustomer.prodUnitPrice}" class="text_ui"></h:outputText>
+ </p:column>
+  <p:column headerText="Total Amount" style="color:white;font-size:10px;font-weight:bold">
+ <h:outputText value="#{detcustomer.totprice}" class="text_ui"></h:outputText>
+ </p:column>
+ <f:facet name="footer">
+ <div align="right">
+ <h:outputText value="Grand Total: #{reportMB.totAmount}" style="font-size:12px;color:#222222;"></h:outputText>
+ </div>
+ </f:facet>
+ </p:dataTable> 
+ 
+</h:form>
+
+</ui:composition>

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+     xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Product Remove  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+
+</h:head>
+ <body onload="#{productRegisterFormMB.dropDown()}"  background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;">
+
+
+<h:form>
+<table   border="0" class="form_background" width="100%">
+
+
+<tr>
+
+<td height="300px" align="center">
+<br/>
+<table align="center">
+
+  
+
+
+<tr><td align="center">
+</td></tr>
+<tr>
+<td align="center" >
+
+
+</td>
+</tr>                 
+ <tr>
+<td align="center" >
+                   
+	 <rich:panel style="width:730px;">
+	            <h:panelGrid  class="label_ui"    style=" width:730px;HEIGHT:10PX;  " align="center" >
+	      	        	 	<h:outputText id="reg" value="Product Remove" class="header_ui"/>
+	            </h:panelGrid>
+     </rich:panel>
+     <rich:panel style="width:730px;">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="6"   columns="4"  style="font-size:14px; width:730px;font-family: 'HelveticaNeueLT Pro 55 Roman';" align="center" cellpadding="3">
+	            			<h:outputText class="label_ui" value="Category"></h:outputText>
+							<h:outputText  value="#{productViewMB.categoryname}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+	          				
+	            			<h:outputText class="label_ui" value="Product Name"></h:outputText>
+							<h:outputText  value="#{productViewMB.productName}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"></h:outputText>
+								<h:outputText class="label_ui" value="Product Code"></h:outputText>
+				<h:outputText style="font-family: 'HelveticaNeueLT Pro 55 Roman';" value="#{productViewMB.productlimit}"></h:outputText>
+				
+			<h:outputText class="label_ui" value="Unit"></h:outputText>
+				<h:outputText style="font-family: 'HelveticaNeueLT Pro 55 Roman';"  value="#{productViewMB.unit}" >
+				   	
+				 </h:outputText>
+							<h:outputText class="label_ui" value="Size"></h:outputText>
+							<h:outputText  value="#{productViewMB.size_of_product}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							
+							<h:outputText class="label_ui" value="Brand"></h:outputText>
+							<h:outputText value="#{productViewMB.brand}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';">	</h:outputText>
+							
+							<h:outputText class="label_ui" value="Color"></h:outputText>
+							<h:outputText  value="#{productViewMB.color}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							<h:outputText class="label_ui" value="Vendor"></h:outputText>
+							<h:outputText  value="#{productViewMB.vendor}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>	
+							
+							<h:outputText class="label_ui" value="Standard"></h:outputText>
+							<h:outputText value="#{productViewMB.product_standard}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+						
+							<h:outputText class="label_ui" value="Market Price" />
+							<h:outputText  value="Rp #{productViewMB.market_price}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"></h:outputText>
+							<h:outputText class="label_ui" value="Description"></h:outputText>
+							<h:outputText  value="#{productViewMB.description}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							
+							<h:outputText class="label_ui" value="Actual Price" />
+							<h:outputText  value="Rp #{productViewMB.autual_price}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"></h:outputText>
+							<h:outputText class="label_ui"  value="Date" ></h:outputText>
+							<h:outputText  value="#{productViewMB.date}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							
+									
+							<h:outputText class="label_ui"  value="Batch"></h:outputText>
+							<h:outputText value="#{productViewMB.batch}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>
+							
+							
+							<h:inputHidden class="label_ui" value="Product ID"></h:inputHidden>
+							<h:inputHidden  value="#{productViewMB.product_ID}" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"/>			  
+				
+				<!-- <h:outputText class="label_ui" value="Selling Price"></h:outputText>
+							<h:outputText   value="IDR #{productViewMB.sellingPrice}0" style="font-family: 'HelveticaNeueLT Pro 55 Roman';"></h:outputText>
+								 -->
+				</h:panelGrid>
+</rich:panel>
+               <rich:panel style="width:730px;">
+	          		         <h:panelGrid class="label_ui" border="0" columns="6" style=" width: 200px;font-family: 'HelveticaNeueLT Pro 55 Roman';">
+									<p:commandButton id="remove" value="Remove" styleClass="button_ui"  onclick="PF('cd').show()" immediate="true"></p:commandButton>
+ 									<h:commandButton id="cancel"  value="Cancel" styleClass="button_ui" action="#{reportMB.redirect1}"></h:commandButton>
+ 									<h:outputText/><h:outputText/><h:outputText/>
+
+								<h:outputText/> 
+			                    <h:outputText/> 
+			                     <h:outputText/> 
+			                      <h:outputText/> 
+			                       <h:outputText/> 
+			                        <h:outputText/>
+			                  </h:panelGrid>
+			         </rich:panel>
+	                       </td>
+                  </tr>
+                    
+   
+</table> 
+
+</td></tr>
+<tr><td style="height: 10px"></td></tr>
+
+<tr><td align="center">
+<p:confirmDialog header="Confirmation" message="Yes to continue No to cancel" widgetVar="cd" style="font-size:11px;">
+<center>
+<p:commandButton value="Yes" styleClass="kbutton_ui" action="#{productViewMB.remove1()}"></p:commandButton>
+<p:commandButton value="No" styleClass="kbutton_ui" onclick="PF('cd').hide()"></p:commandButton>
+</center>
+</p:confirmDialog>
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>

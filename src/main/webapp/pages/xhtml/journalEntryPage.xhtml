@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../../pages/xhtml/home.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+<ui:define name="content" >
+<style>
+.order-table{
+	border-collapse:collapse;
+	width: 98%;
+    table-layout: fixed;
+    border:1px solid #9a9a9a;
+}
+.order-table-header{
+	color: #ffffff;
+    font-size: 14px;
+    font-family: 'Arial,sans-serif' !important;
+    text-transform: uppercase;
+    background: #2196f3  ! important;
+    border-bottom: 1px solid #9a9a9a;
+    padding: 4px 10px;
+    font-weight:normal;
+    border-width:1px;
+    border-style: groove;
+    height: 25px !important;
+    border: 1px solid #9a9a9a;
+}
+
+.order-table-odd-row{
+	background:none;
+	padding: 0px 10px;
+	border-top:1px solid #9a9a9a;
+	font-size: 14px;
+    height: 25px !important;
+    font-family: 'Arial,sans-serif' !important;
+    color:#171212;
+    padding-top:10px;
+}
+
+.order-table-even-row{
+	background:none;
+	padding: 0px 10px;
+	border-top:0px;
+	font-size: 14px;
+    height: 25px !important;
+    font-family: 'Arial,sans-serif' !important;
+    color:#171212;
+    padding-top:10px;
+}
+.ui-datatable {
+	border-right-style:groove;
+	border-right:1px solid #9a9a9a;
+}
+.ui-datatable tbody td{
+	border-top:1px solid #9a9a9a;
+	border-right-style:hidden;
+	padding: 4px 10px;
+    overflow: hidden;
+    font-family: 'Arial,sans-serif' !important;
+    font-size: 14px;
+    padding-bottom: inherit;
+    padding-top: inherit;
+}
+</style>
+<div style="height:20px"></div>
+<div align="center">
+	<table width="95%">
+		<tr>
+			<td width="7%"></td><td width="82%">
+  				<h:outputText value="Report Period" style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';"></h:outputText>  			
+  			</td>
+  		</tr></table><br/>
+  		<table width="95%" align="center">
+  		<tr align="center">
+  			<td width="35%">			
+ 				<h:selectOneMenu style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';width:200px;height:30px;" id="reperiod"
+ 					value="#{accountsMB.accountsDatabean.reportPeriod}" class="labelTxt" valueChangeListener="#{accountsMB.reportPeriodChange}">
+ 					<f:selectItem itemLabel="Report Period" itemValue="all" noSelectionOption="true"></f:selectItem>
+ 					<f:selectItem itemLabel="All dates" itemValue="All dates"></f:selectItem>
+ 					<f:selectItem itemLabel="Custom" itemValue="Custom"></f:selectItem>
+ 					<f:selectItem itemLabel="Today" itemValue="Today"></f:selectItem>
+ 					<f:selectItem itemLabel="This Week" itemValue="This Week"></f:selectItem>
+ 					<f:selectItem itemLabel="This Week-to-date " itemValue="This Week-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This month" itemValue="This month"></f:selectItem>
+ 					<f:selectItem itemLabel="This month-to-date" itemValue="This month-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This Quarter" itemValue="This Quarter"></f:selectItem>
+ 					<f:selectItem itemLabel="This Quarter-to-date" itemValue="This Quarter-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="This Year" itemValue="This Year"></f:selectItem>
+ 					<f:selectItem itemLabel="This Year-to-date" itemValue="This Year-to-date"></f:selectItem>
+ 					<f:selectItem itemLabel="Yesterday" itemValue="Yesterday"></f:selectItem>
+ 					<f:selectItem itemLabel="Recent" itemValue="Recent"></f:selectItem>
+ 					<f:selectItem itemLabel="Last Week" itemValue="Last Week"></f:selectItem>
+ 					<f:selectItem itemLabel="Last Week-to-date" itemValue="Last Week-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Month" itemValue="Last Month"></f:selectItem>
+					<f:selectItem itemLabel="Last Month-to-date" itemValue="Last Month-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Quarter" itemValue="Last Quarter"></f:selectItem>
+					<f:selectItem itemLabel="Last Quarter-to-date" itemValue="Last Quarter-to-date"></f:selectItem>
+					<f:selectItem itemLabel="Last Year" itemValue="Last Year"></f:selectItem>
+					<f:selectItem itemLabel="Last Year-to-date" itemValue="Last Year-to-date"></f:selectItem>
+					<p:ajax process="@this" event="valueChange" update="reperiod fdates tos tdates"> </p:ajax>
+ 				</h:selectOneMenu>
+  			</td>
+  			<td width="10%">
+  				<h:panelGroup id="fdates">
+  					<p:calendar pattern="dd/MM/yyyy" style="line-height: normal;margin-left:-24px;" placeholder="From Date"
+  						id="fdate" value="#{accountsMB.accountsDatabean.fromDate}" rendered="#{accountsMB.accountsDatabean.customflag}">
+  						<p:ajax update="fdate" process="@this" event="dateSelect"></p:ajax>	
+  					</p:calendar>
+  					<p:inputText readonly="true" value="#{accountsMB.accountsDatabean.fromDate}" style="margin-left:-24px;"
+  						 rendered="#{accountsMB.accountsDatabean.otherflag}">
+  						<f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>	 
+  					</p:inputText>
+  				</h:panelGroup> 
+  			</td> 
+  			<td>
+  				<h:panelGroup id="tos">
+  					<h:outputText value="to" style="font-size:14px;font-family:'HelveticaNeueLT Pro 55 Roman';margin-left:10px;" 
+  						rendered="#{accountsMB.accountsDatabean.flag}"></h:outputText>
+  				</h:panelGroup>
+  			</td> <td width="5%"></td>
+  			<td width="10%">
+  				<h:panelGroup id="tdates">
+  					<p:calendar pattern="dd/MM/yyyy" style="line-height: normal;margin-left:-50px;" placeholder="To Date"
+  						id="tdate" value="#{accountsMB.accountsDatabean.toDate}" rendered="#{accountsMB.accountsDatabean.customflag}">
+  						<p:ajax update="tdate" process="@this" event="dateSelect"></p:ajax>	
+  					</p:calendar>
+  					<p:inputText readonly="true" value="#{accountsMB.accountsDatabean.toDate}" style="margin-left:-55px;" 
+  						 rendered="#{accountsMB.accountsDatabean.otherflag}">
+  						 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+  					</p:inputText>
+  				</h:panelGroup>
+  			</td>  
+  			<td width="20%">
+  				<p:commandButton value="Run Report" actionListener="#{accountsMB.runJournalEntry}" process="@this" update="@form" onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"></p:commandButton>
+  			</td>
+  		</tr>
+  		<tr style="height:10px;"></tr>
+  		<tr align="center">
+  		<h:panelGroup><td width="30%"><h:message for="reperiod" style="color:red;font-size:11px" ></h:message></td>
+  		<td width="10%"><h:message for="fdate" style="color:red;font-size:11px"></h:message></td>
+  		<td></td><td width="5%"></td><td width="10%"><h:message for="tdate" style="color:red;font-size:11px"></h:message></td>
+  		</h:panelGroup></tr>
+  	</table></div><br/>
+  	<table align="center" width="100%">  			
+  			<tr align="center"><td>
+  			<h:outputText value="JOURNAL ENTRY" class="udLablehead"></h:outputText>
+  			<br/><br/>
+  			<h:outputText value="All Dates" class="udLable" rendered="#{accountsMB.accountsDatabean.flag1}"></h:outputText>  
+  			<h:outputText value="This Month" class="udLable" rendered="#{accountsMB.accountsDatabean.flag3}"></h:outputText>  			
+  			<h:outputText value="#{accountsMB.accountsDatabean.fromDate}" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}">
+  			 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+  			</h:outputText>&nbsp;&nbsp;
+  			<h:outputText value="to" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}"></h:outputText>&nbsp;&nbsp;
+  			<h:outputText value="#{accountsMB.accountsDatabean.toDate}" class="udLable" rendered="#{accountsMB.accountsDatabean.flag2}">
+  			 <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime>
+  			</h:outputText>
+  			</td></tr>
+  	</table>
+	<div style="height:10px"></div>
+	<table width="100%">
+		<tr>
+			<td width="93%"></td>
+		  	<td width="3%">
+	  		</td>
+	        <td width="3%">
+	        	<h:commandLink>
+	             	<p:graphicImage value="../../images/Printer.png" title="Print" width="24"/>
+					<p:printer target="journaltable"  />
+				</h:commandLink>
+			</td>
+			<td width="1%"></td>
+		</tr>
+	</table><br/>
+	<p:panel id="journaltable">
+	 <table class="order-table" width="100%" align="center">
+		<tr>
+			<th class="order-table-header" style="width:100">Date</th>
+			<th class="order-table-header" style="width:150">Type</th>
+			<th class="order-table-header" style="width:120">No.</th>
+			<th class="order-table-header" style="width:130">Name</th>
+			<th class="order-table-header" style="width:130">Description</th>
+			<th class="order-table-header" style="width:200">Account</th>
+			<th class="order-table-header" style="width:100;text-align:right">Debit<br/>(#{accountsMB.accountsDatabean.baseCurrency})</th>
+			<th class="order-table-header" style="width:100;text-align:right">Credit<br/>(#{accountsMB.accountsDatabean.baseCurrency})</th>
+		</tr>
+		<tbody>
+			<h:panelGroup rendered="#{empty accountsMB.journalEntryList}">
+			<tr>
+				<td colspan="8" style="height:30px">
+					<center><h:outputText value="No Journal Entry found with given Criteria" styleClass="labelTxt"></h:outputText></center>
+				</td>
+			</tr>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{not empty accountsMB.journalEntryList}">
+			<ui:repeat var="info" value="#{accountsMB.journalEntryList}" varStatus="status">
+			<h:panelGroup rendered="#{status.even}">
+				<tr>
+					<td class="order-table-odd-row"><h:outputText value="#{info.account_date}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.transactionType}" rendered="#{info.transactionType!='Journal'}"></h:outputText>
+					<h:outputText value="Journal Entry" rendered="#{info.transactionType=='Journal'}"></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.refNo}"></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.payeeName}"></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.account_description}"></h:outputText></td>
+					<td class="order-table-odd-row"><ui:repeat value="#{info.debitParticularList}" var="debitpar">
+    					<li style="list-style-type:none;height:auto;min-height:30px"><h:outputText value="#{debitpar}"/></li>
+					</ui:repeat>
+					</td>
+					<td class="order-table-odd-row" style="text-align:right">
+					<ui:repeat value="#{info.debitAmountList}" var="debitamt">
+					<li style="list-style-type:none;height:auto;min-height:30px"><h:outputText value="#{debitamt}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+					</li></ui:repeat></td>
+					<td class="order-table-odd-row"></td>
+				</tr>
+				<tr>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"><h:outputText value="#{info.account_description}" rendered="#{info.transactionType=='Journal'}"></h:outputText></td>
+					<td class="order-table-even-row">
+					<ui:repeat value="#{info.creditParticularList}" var="creditpar"><li style="list-style-type:none;height:26px">
+					<h:outputText value="#{creditpar}"></h:outputText></li></ui:repeat></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row" style="text-align:right">
+					<ui:repeat value="#{info.creditAmountList}" var="creditamt">
+					<li style="list-style-type:none;height:auto;min-height:30px"><h:outputText value="#{creditamt}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+					</li></ui:repeat></td>
+				</tr>
+				<tr>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row" style="text-align:right;font-weight:bold"><h:outputText value="#{info.debitAmount}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></td>
+					<td class="order-table-even-row" style="text-align:right;font-weight:bold"><h:outputText value="#{info.creditAmount}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></td>
+				</tr>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{status.odd}">
+				<tr style="background-color:#edf5ff">
+					<td class="order-table-odd-row"><h:outputText value="#{info.account_date}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.transactionType}" rendered="#{info.transactionType!='Journal'}"></h:outputText>
+					<h:outputText value="Journal Entry" rendered="#{info.transactionType=='Journal'}"></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.refNo}"></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.payeeName}"></h:outputText></td>
+					<td class="order-table-odd-row"><h:outputText value="#{info.account_description}"></h:outputText></td>
+					<td class="order-table-odd-row"><ui:repeat value="#{info.debitParticularList}" var="debitpar">
+    					<li style="list-style-type:none;height:auto;min-height:30px"><h:outputText value="#{debitpar}"/></li>
+					</ui:repeat></td>
+					<td class="order-table-odd-row" style="text-align:right"><ui:repeat value="#{info.debitAmountList}" var="debitamt">
+					<li style="list-style-type:none;height:auto;min-height:30px"><h:outputText value="#{debitamt}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+					</li></ui:repeat></td>
+					<td class="order-table-odd-row"></td>
+				</tr>
+				<tr style="background-color:#edf5ff">
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"><h:outputText value="#{info.account_description}" rendered="#{info.transactionType=='Journal'}"></h:outputText></td>
+					<td class="order-table-even-row"><ui:repeat value="#{info.creditParticularList}" var="creditpar"><li style="list-style-type:none;height:auto;min-height:30px">
+					<h:outputText value="#{creditpar}"></h:outputText></li></ui:repeat></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row" style="text-align:right"><ui:repeat value="#{info.creditAmountList}" var="creditamt">
+					<li style="list-style-type:none;height:auto;min-height:30px"><h:outputText value="#{creditamt}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+					</li></ui:repeat></td>
+				</tr>
+				<tr style="background-color:#edf5ff">
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row"></td>
+					<td class="order-table-even-row" style="text-align:right;font-weight:bold"><h:outputText value="#{info.debitAmount}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></td>
+					<td class="order-table-even-row" style="text-align:right;font-weight:bold"><h:outputText value="#{info.creditAmount}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></td>
+				</tr>
+			</h:panelGroup>
+		</ui:repeat>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty accountsMB.journalEntryList}"><tr>
+		<td colspan="6" class="order-table-odd-row" style="padding-top:8px;padding-bottom:8px;"><h:outputText value="TOTAL IN (#{accountsMB.accountsDatabean.baseCurrency})" styleClass="labelTxt" style="font-size:16px;font-weight:bold"></h:outputText></td>
+		<td colspan="1" class="order-table-odd-row" style="text-align:right;padding-top:8px;padding-bottom:8px"><h:outputText value="#{accountsMB.accountsDatabean.debitTotal}" styleClass="labelTxt" style="font-size:16px;font-weight:bold"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></td>
+		<td colspan="1" class="order-table-odd-row" style="text-align:right;padding-top:8px;padding-bottom:8px"><h:outputText value="#{accountsMB.accountsDatabean.creditTotal}" styleClass="labelTxt" style="font-size:16px;font-weight:bold"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></td>
+		</tr><tr><td colspan="8" style="border: 1px solid #222;padding:1px;"></td></tr></h:panelGroup>
+	</tbody>
+</table>
+<br/>
+<center>
+<!-- <p:dataTable value="#{accountsMB.journalEntryList}" rendered="#{empty accountsMB.journalEntryList}" style="width:100%" emptyMessage="No Journal Entry found with given Criteria">
+<p:column headerText="Date" style="text-align:left"></p:column>
+<p:column headerText="Type" style="text-align:left"></p:column>
+<p:column headerText="No." style="text-align:left"></p:column>
+<p:column headerText="Name" style="text-align:left"></p:column>
+<p:column headerText="Description" style="text-align:left"></p:column>
+<p:column headerText="Account" style="text-align:left"></p:column>
+<p:column headerText="Debit" style="text-align:right"></p:column>
+<p:column headerText="Credit" style="text-align:right"></p:column>
+<p:columnGroup><p:row style="height:30px"><p:column colspan="8"></p:column></p:row></p:columnGroup>
+</p:dataTable>
+ <p:dataTable var="info" value="#{accountsMB.journalEntryList}" rendered="#{not empty accountsMB.journalEntryList}" style="width:99%" id="datatable" emptyMessage="No Journal Entry found with given Criteria">
+        <p:column headerText="Date" style="text-align:left;width:90px" >
+            <h:outputText value="#{info.account_date}"><f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime></h:outputText>
+        </p:column>
+        <p:column headerText="Type" style="text-align:left;width:90px">
+            <h:outputText value="#{info.transactionType}" rendered="#{info.transactionType!='Journal'}"></h:outputText>
+			<h:outputText value="Journal Entry" rendered="#{info.transactionType=='Journal'}"></h:outputText>
+        </p:column>
+        <p:column headerText="No." style="text-align:left;width:112px">
+            <h:outputText value="#{info.refNo}" />
+        </p:column>
+        <p:column headerText="Name" style="text-align:left;width:100px">
+            <h:outputText value="#{info.payeeName}" />
+        </p:column>
+        <p:column headerText="Description" style="text-align:left">
+            <h:outputText value="#{info.account_description}" /><br/><br/>
+            <h:outputText value="#{info.account_description}" rendered="#{info.transactionType=='Journal'}"></h:outputText>
+        </p:column>
+        <p:column headerText="Account" style="text-align:left;width:190px">
+        	<div class="row">
+        	<div class="col-md-12">
+        	<ui:repeat value="#{info.debitParticularList}" var="debitpar">
+    			<li style="list-style-type:none;min-height:40px;height:auto"><h:outputText value="#{debitpar}"/></li>
+			</ui:repeat></div></div>
+        	<div class="row">
+        	<div class="col-md-12"><ui:repeat value="#{info.creditParticularList}" var="creditpar">
+    			<li style="list-style-type:none;min-height:40px;height:auto"><h:outputText value="#{creditpar}"/></li>
+			</ui:repeat></div></div>
+        </p:column>
+        <p:column headerText="Debit" style="text-align:right;">
+          	<div class="row">
+        	<div class="col-md-12">	<ui:repeat value="#{info.debitAmountList}" var="debitamt">
+    			<li style="list-style-type:none;min-height:40px;height:auto"><h:outputText value="#{debitamt}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></li></ui:repeat>
+            </div></div>
+            	<div class="row">
+            <div class="col-md-12"><h:outputText value="" />
+            <h:outputText value="#{info.debitAmount}" style="text-align:right;font-weight:bold;min-height:40px;height:auto"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText>
+       </div></div> </p:column>
+        <p:column headerText="Credit" style="text-align:right">
+        	<div class="row">
+        	<div class="col-md-12">	<h:outputText value="" />	
+            <ui:repeat value="#{info.creditAmountList}" var="creditamt">
+            <li style="list-style-type:none;min-height:40px;height:auto"><h:outputText value="#{creditamt}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></li></ui:repeat>
+            </div></div>
+            <div class="row">
+        	<div class="col-md-12">	
+            <h:outputText value="#{info.creditAmount}" style="text-align:right;font-weight:bold;min-height:40px;height:auto"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></div></div>
+        </p:column>
+        <p:columnGroup type="footer">
+            <p:row style="height:30px">
+                <p:column colspan="6" footerText="TOTAL" styleClass="labelTxt" style="border:1px solid #9a9a9a;background:#ffffff !important;font-size:16px;font-weight:bold;color:#222;text-align:left"/>
+                <p:column colspan="1" footerText="#{accountsMB.accountsDatabean.debitTotal}" styleClass="labelTxt" style="border-right-style:hidden;border-left-style:hidden;border-top-style:groove;border-top-width:1px solid #9a9a9a;border-bottom-style:groove;border-bottom-width:1px solid #9a9a9a;background:#ffffff !important;font-size:16px;font-weight:bold;color:#222;text-align:right"/>
+                <p:column colspan="1" footerText="#{accountsMB.accountsDatabean.creditTotal}" styleClass="labelTxt" style="border-right-style:groove;border-left-style:hidden;border-top-style:groove;border-top-width:1px solid #9a9a9a;border-bottom-style:groove;border-bottom-width:1px solid #9a9a9a;background:#ffffff !important;font-size:16px;font-weight:bold;color:#222;text-align:right"/>
+            </p:row>
+        </p:columnGroup>
+ </p:dataTable> -->
+ 
+</center> 
+</p:panel>
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+      <p:graphicImage value="../../images/loadingimg.gif" style="width:80px"/>
+   	</p:dialog> 
+</ui:define>
+</ui:composition>

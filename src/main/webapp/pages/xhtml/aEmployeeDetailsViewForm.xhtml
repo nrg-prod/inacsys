@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+<title> Inacsys | Employee Details View  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<style>
+.ui-tabs .ui-tabs-panel {
+    padding: 1em 1.4em;
+    background: none;
+    border: 1px solid #999;
+    border-radius:1px;
+}
+.ui-tabs.ui-tabs-top > .ui-tabs-nav {
+    padding: .2em .2em 0;
+    border: 0px solid #ffffff;
+    padding: 1px 2px 0px 0px;
+    background: #ffffff;
+}
+</style>
+</h:head>
+
+ <body style="background-attachment: fixed;background-position: 50% 50%; background-size:cover; ">
+
+
+<h:form style="padding-top: 31px;"><div style="align:center;">
+	              <p:panel style="width:830px; " id="tab" >
+
+	            <p:tabView id="tabviewid" style="height:auto;border:1px !important;">
+				<p:tab title="Employee Detail" style="width:auto;height:auto;">
+	              <h:panelGrid class="label_ui" border="0"  cellspacing="12"   columns="4"  style="font-size:14px; width:740px;" align="center" cellpadding="4">
+	              		    <h:outputText value="Employee Name" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.name}"></h:outputText>
+							<h:outputText value="Employee ID" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.employeeid}"></h:outputText>
+							<h:outputText value="DOB" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.dob}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							<h:outputText value="Mail id" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.mailid}"></h:outputText>
+							<h:outputText value="Gender" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.gender}"></h:outputText>
+							<h:outputText value="Entry Date" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.entrydate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							<h:outputText value="Join Date" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.joindate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							<h:outputText value="Basic Salary" class="label_ui"></h:outputText>
+							<h:panelGroup>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.currency}"></h:outputText>&nbsp;
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.basicsalary}">
+							<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText></h:panelGroup>
+							<h:outputText value="Designation" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.designation}"></h:outputText>
+							<h:outputText value="Bank Name" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.bankName}"></h:outputText>
+							<h:outputText value="Account Number" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.accNo}"></h:outputText>
+							<h:outputText value="Description" class="label_ui"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.description}"></h:outputText>
+							<h:outputText class="text_ui" value="Currency"></h:outputText>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.currency}"></h:outputText>
+							<h:outputText class="text_ui" value="Base Currency"></h:outputText>
+							<h:panelGroup>
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.baseCurrency}"></h:outputText>&nbsp;
+							<h:outputText class="text_ui" value="#{employeeDetailsViewFormMB.currencyAmount}">
+							<f:converter converterId="com.inventory.util.UrlConverter" />
+							</h:outputText>
+							</h:panelGroup>
+							<h:outputText value="Attachment " class="label_ui"></h:outputText>
+							<a4j:mediaOutput style="width:100px;height:100px;"
+							element="img" cacheable="false" session="true" 
+							createContent="#{employeeDetailsViewFormMB.imageview}" mimeType="image/png" />			
+									
+							</h:panelGrid>
+							</p:tab></p:tabView>
+							<br/><br/>
+							 <p:tabView id="tabviewid1" style="height:auto;border:1px !important;">
+							<p:tab title="Address" style="width:auto;height:auto;">
+							<table width="100%"><tr>
+							<td width="50%"><h:outputText value="Permanent Address" class="label_ui" style="font-weight: bold;"></h:outputText></td>
+							<td width="50%"><h:outputText value="Present Address" class="label_ui" style="font-weight: bold;"></h:outputText></td>
+							
+							</tr></table>
+							<h:panelGrid class="label_ui" border="0" columns="4" style="width:800px;height:220px;" >
+							<h:outputText value="Door No/Street Name:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeDetailsViewFormMB.streetname}"  />
+										
+							<h:outputText value="Door No/Street Name:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeDetailsViewFormMB.present_streetname}"  />
+										
+							<h:outputText value="City:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeDetailsViewFormMB.city}"/>
+							
+							<h:outputText value="City:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeDetailsViewFormMB.present_city}"/>
+							
+							<h:outputText value="Country:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.country}" class="label_ui"></h:outputText>
+							
+									
+							<h:outputText value="Country:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.present_country}" class="label_ui"></h:outputText>
+							
+									
+							<h:outputText value="Province/State:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.state}" class="label_ui" ></h:outputText>
+							
+							<h:outputText value="Province/State:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.present_state}" class="label_ui" for="emp_Desc"></h:outputText>
+							
+							<h:outputText value="Postal Code:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeDetailsViewFormMB.postalcode}"  />
+							
+							<h:outputText value="Postal Code:" class="label_ui" for="emp_Desc"></h:outputText>
+							<h:outputText styleClass="inputTxt" style="box-shadow:none" value="#{employeeDetailsViewFormMB.present_postalcode}" />
+							
+							<h:outputText value="Phone Number: " class="label_ui" for="emp_Phone"></h:outputText>
+							<h:panelGroup>
+							<h:outputText styleClass="inputTxt"  value="#{employeeDetailsViewFormMB.code}" style="box-shadow:none;width:50px" />
+							<h:outputText styleClass="inputTxt" value="#{employeeDetailsViewFormMB.phno}" style="box-shadow:none;width:150px" />
+							</h:panelGroup>	
+							<h:outputText value="Phone Number: " class="label_ui" for="emp_Phone"></h:outputText>			
+							<h:panelGroup>
+							<h:outputText styleClass="inputTxt"  value="#{employeeDetailsViewFormMB.present_code}" style="box-shadow:none;width:50px" />
+							<h:outputText styleClass="inputTxt" value="#{employeeDetailsViewFormMB.present_phno}" style="box-shadow:none;width:150px" />
+							</h:panelGroup>	
+							</h:panelGrid>
+							</p:tab>
+							<p:tab title="Documents" style="width:auto;height:auto;">	
+							<h:panelGrid class="label_ui" border="0"  columns="4"  style="font-size:14px; width:600px;height:150px" align="center">
+							<h:outputText value="Passport" class="label_ui" for="emp_passport"></h:outputText>
+							<p:commandButton ajax="false" icon="fa fa-download" actionListener="#{employeeDetailsViewFormMB.file2}" rendered="#{not empty employeeDetailsViewFormMB.passport_path}">
+							<p:fileDownload value="#{employeeDetailsViewFormMB.stream2}" />  </p:commandButton>
+							<h:outputText style="width:90px;" value="No File" styleClass="label_ui" rendered="#{empty employeeDetailsViewFormMB.passport_path}"></h:outputText>
+							<h:outputText value="Expiry Date" class="label_ui" for="p_edate"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.passport_date}" class="label_ui" ><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							
+							<h:outputText value="EmiratesID" class="label_ui" for="emirates"></h:outputText>
+							<p:commandButton ajax="false" icon="fa fa-download" actionListener="#{employeeDetailsViewFormMB.file3}" rendered="#{not empty employeeDetailsViewFormMB.emirates_path}">
+							<p:fileDownload value="#{employeeDetailsViewFormMB.stream3}" />  </p:commandButton>
+							<h:outputText style="width:90px;" value="No File" styleClass="label_ui" rendered="#{empty employeeDetailsViewFormMB.emirates_path}"></h:outputText>
+							<h:outputText value="Expiry Date" class="label_ui" for="emirates_date"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.emirates_date}" class="label_ui" ><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							
+							<h:outputText value="Driving Licence" class="label_ui" for="licence"></h:outputText>
+							<p:commandButton ajax="false" icon="fa fa-download" actionListener="#{employeeDetailsViewFormMB.file4}" rendered="#{not empty employeeDetailsViewFormMB.licence_path}">
+							<p:fileDownload value="#{employeeDetailsViewFormMB.stream4}" />  </p:commandButton>
+							<h:outputText style="width:90px;" value="No File" styleClass="label_ui" rendered="#{empty employeeDetailsViewFormMB.licence_path}"></h:outputText>
+							<h:outputText value="Expiry Date" class="label_ui" for="licence_date"></h:outputText>
+							<h:outputText value="#{employeeDetailsViewFormMB.licence_date}" class="label_ui"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText>
+							
+							<h:outputText value="#{employeeDetailsViewFormMB.otherFilename}" class="label_ui" for="emirates_date"></h:outputText>
+							<p:commandButton ajax="false" icon="fa fa-download" actionListener="#{employeeDetailsViewFormMB.file5}" rendered="#{not empty employeeDetailsViewFormMB.otherfile_path}">
+							<p:fileDownload value="#{employeeDetailsViewFormMB.stream5}" />  </p:commandButton>
+							<h:outputText></h:outputText>
+							<h:outputText></h:outputText>				
+							</h:panelGrid>
+							</p:tab>
+							</p:tabView>
+							
+							
+							<p:tabView id="tabviewid2" style="height:auto;border:1px !important;">
+							<p:tab title="Qualification" style="width:840px;height:auto;">
+							<p:dataTable var="inf" value="#{employeeDetailsViewFormMB.qualificationlist}" widgetVar="VendorInfo" id="dataTable" reflow="true">
+								<p:column headerText="Course Name" >
+									<f:facet name="header"> <span class="datatableTxt">Course Name</span></f:facet>
+									<h:outputText value="#{inf.serialNo}" style="display:none;"></h:outputText>
+									<h:outputText style="width:110px;" value="#{inf.course}"></h:outputText>
+								</p:column>
+								<p:column headerText="Year of passing">
+									<f:facet name="header"> <span class="datatableTxt">Year of passing</span></f:facet>
+									<h:outputText style="width:110px;"  value="#{inf.yearofpassing}"></h:outputText>
+								</p:column>
+								<p:column headerText="School/ University" >
+									<f:facet name="header"> <span class="datatableTxt"> School/ University</span></f:facet>
+									<h:outputText style="width:110px;"  value="#{inf.university}"></h:outputText>
+								</p:column>
+								<p:column headerText="Medium of instruction" >
+									<f:facet name="header"> <span class="datatableTxt"> Medium of instruction</span></f:facet>
+									<h:outputText style="width:110px;"  value="#{inf.medium}"></h:outputText>
+								</p:column>
+								<p:column headerText="Certificate Download">
+									<f:facet name="header"> <span class="datatableTxt">Certificate Download</span></f:facet>
+									<center><p:commandButton ajax="false" icon="fa fa-download" actionListener="#{employeeDetailsViewFormMB.file}" rendered="#{not empty inf.certificate_path}">
+									 <p:fileDownload value="#{employeeDetailsViewFormMB.stream}" />  
+									<f:setPropertyActionListener value="#{inf.certificate_path}" target="#{employeeDetailsViewFormMB.certificate_path}"></f:setPropertyActionListener>
+									</p:commandButton>
+									<h:outputText style="width:90px;" value="No File" styleClass="label_ui" rendered="#{empty inf.certificate_path}"></h:outputText>
+									</center>
+								</p:column>
+								
+							</p:dataTable>
+							</p:tab></p:tabView>
+							
+							<p:tabView id="tabviewid3" style="height:auto;border:1px !important;">
+							<p:tab title="Experience" style="width:840px;height:auto;">
+							<p:dataTable  value="#{employeeDetailsViewFormMB.experiencelist}"  var="info" widgetVar="VendorInfo" id="dataTable1" reflow="true">
+								<p:column headerText="Company Name" >
+								<f:facet name="header"> <span class="datatableTxt"> Company Name</span></f:facet>
+								<h:outputText value="#{info.serialNo1}" style="display:none;"></h:outputText>
+									<h:outputText style="width:90px;" value="#{info.companyName}" styleClass="label_ui"></h:outputText>
+								</p:column>
+								<p:column headerText="From Date">
+								<f:facet name="header"> <span class="datatableTxt"> From Date</span></f:facet>
+									<h:outputText style="width:90px;" value="#{info.fromDate}" styleClass="label_ui"></h:outputText>
+								</p:column>
+								<p:column headerText="To Date">
+									<f:facet name="header"> <span class="datatableTxt">To Date</span></f:facet>
+									<h:outputText style="width:90px;" value="#{info.toDate}" styleClass="label_ui"></h:outputText>
+								</p:column>
+								<p:column headerText="Contact Name">
+									<f:facet name="header"> <span class="datatableTxt">Contact Name</span></f:facet>
+									<h:outputText style="width:90px;" value="#{info.contactName}" styleClass="label_ui"></h:outputText>
+								</p:column>
+								<p:column headerText="Contact Number">
+									<f:facet name="header"> <span class="datatableTxt">Contact Number</span></f:facet>
+									<h:outputText style="width:90px;" value="#{info.contactNumber}" styleClass="label_ui"></h:outputText>
+								</p:column>
+								<p:column headerText="Certificate download">
+									<f:facet name="header"> <span class="datatableTxt">Certificate download</span></f:facet>
+									<h:outputText style="width:90px;display:none;" value="#{info.expCertificate_path}"></h:outputText>
+									<center><p:commandButton ajax="false" icon="fa fa-download" actionListener="#{employeeDetailsViewFormMB.file1}" rendered="#{not empty info.expCertificate_path}">
+									 <p:fileDownload value="#{employeeDetailsViewFormMB.stream1}" />  
+									<f:setPropertyActionListener value="#{info.expCertificate_path}" target="#{employeeDetailsViewFormMB.expCertificate_path}"></f:setPropertyActionListener>
+									</p:commandButton>
+									<h:outputText style="width:90px;" value="No File" styleClass="label_ui" rendered="#{empty info.expCertificate_path}"></h:outputText>
+									</center>
+								</p:column>
+							</p:dataTable>
+							</p:tab></p:tabView>
+			</p:panel>
+			    
+	   </div>
+                  <div align="center">
+		         <h:panelGrid class="label_ui" border="0" columns="3" style=" width: 200px;padding-top: 10px;font-family:'Helvetica Neue LT Pro 55';" >
+<h:commandButton  id="cancel" value="Print" class="button_ui" ><p:printer target="tab"></p:printer></h:commandButton><h:outputText/><h:outputText/><h:outputText/>
+
+</h:panelGrid></div>
+ 
+</h:form>
+
+</body>
+</ui:composition>

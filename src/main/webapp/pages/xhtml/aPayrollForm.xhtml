@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+
+ <h:head>
+<title> Inacsys | Payroll Form  </title>
+ <link rel="stylesheet" href="../../css/css.css">
+ 
+</link>
+<script type="text/javaScript">
+
+function process(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("payroll:find").click();
+            return false;
+        }
+        return true;
+        
+        }
+        function process1(e){
+
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        document.getElementById("payroll:find1").click();
+            return false;
+        }
+        return true;
+        
+        }
+        </script>
+</h:head>
+
+ <body onload="#{employeePayrollFormMB.onload()}" background="../../images/brown.jpg" style="background-attachment: fixed;background-position: 50% 50%; background-size:cover;overflow: hidden;">
+
+
+<h:form id="payroll">
+<table   border="0" class="form_background" style="width: 100%;" >
+
+
+
+
+<tr>
+
+<td height="200px" align="center">
+
+<table align="center">
+
+  
+
+
+<tr><td align="center"  colspan="2" ><h:outputText value="Payroll" class="header_ui"/></td></tr>
+<tr><td align="center"  colspan="2" >
+<h:outputText value="#{employeePayrollFormMB.validate}" class="validation_ui"></h:outputText>
+<br/><br/>
+</td></tr>
+<tr><td align="left"  colspan="2" >
+&nbsp;&nbsp;&nbsp;&nbsp;
+	            <h:outputLabel value="Month *"  class="label_ui"/>
+	            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	             <h:selectOneMenu  class="text_ui" value="#{employeePayrollFormMB.month}" >
+							<f:selectItem itemLabel="--Select--"></f:selectItem>
+							<f:selectItems value="#{employeePayrollFormMB.monthinfo}"></f:selectItems>
+							</h:selectOneMenu>
+	         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	            <h:outputLabel value="Year *"  class="label_ui"/>
+	            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	             <h:selectOneMenu  class="text_ui"  value="#{employeePayrollFormMB.year}">
+							<f:selectItem  itemLabel="--Select--"></f:selectItem>
+							<f:selectItems value="#{employeePayrollFormMB.yearinfo}"></f:selectItems>
+							</h:selectOneMenu>
+							<h:outputText></h:outputText>
+	       
+
+</td></tr>
+<tr><td><br></br></td></tr>
+
+<tr>
+                    <td align="center">
+	   <rich:panel style="font-size:14px; width:365px;text-align:left" header="Search by Employee ID"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:365px;height: 120px;" align="center" cellpadding="3" cellspacing="3">  
+	        
+	            
+	             
+	             
+	         
+	            <h:outputLabel value="Employee ID *"  class="label_ui" />
+	           
+	             <h:selectOneMenu onkeypress="return process(event);" class="text_ui" value="#{employeePayrollFormMB.employeeid}"  >
+							<f:selectItem itemLabel="--Select--"></f:selectItem>
+							<f:selectItems value="#{employeePayrollFormMB.empinfo}"></f:selectItems>
+							</h:selectOneMenu><h:outputText class="label_ui" value=""/>
+	          <h:commandButton id="find" class="button" align="center" value="Search" action="#{employeePayrollFormMB.entry}"  ></h:commandButton>
+	        </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                     <td align="center" >
+                    <rich:panel style="font-size:14px; width:365px;text-align:left" header="Search by Employee Name"  >  
+	        <h:panelGrid  columns="2"  style="font-size:14px; width:365px;height: 120px;" align="center" cellspacing="3" cellpadding="3">  
+	           
+	             
+	             
+	         
+	            <h:outputLabel value="Employee Name *"  class="label_ui" />
+	           
+	           <h:selectOneMenu onkeypress="return process1(event);" class="text_ui" value="#{employeePayrollFormMB.name}" >
+							<f:selectItem itemLabel="--Select--"></f:selectItem>
+							<f:selectItems value="#{employeePayrollFormMB.nameinfo}"></f:selectItems>
+							</h:selectOneMenu><h:outputText class="label_ui" value=""/>
+	            <h:commandButton class="button" id="find1" value="Search" action="#{employeePayrollFormMB.viewdetails}" ></h:commandButton> 
+	           </h:panelGrid>  
+	  	    </rich:panel>
+                    </td>
+                  </tr>
+                   <tr><td colspan="2" align="center">
+	  	    <table style="align:center;overflow:auto;" > <tr><td height="200px">
+							<h:panelGrid colspan="2" style="display: #{employeePayrollFormMB.flag};">
+							<rich:dataTable id="datatable" var="info"  style="max-width:900px;max-height:250px ;font-size:10;" 
+  							 reRender="dynamicScroller"	rowClasses="datatable-odd,datatable-even" value="#{employeePayrollFormMB.list}" >
+							<h:column width="150px"><f:facet name="header"><span style="font-size:10px; ">Registration ID</span> </f:facet> 
+							<div align="center">
+							<h:outputText class="label_ui" value="#{info.registrationId}" ></h:outputText></div> </h:column>
+							<h:column width="150px"><f:facet name="header"><span style="font-size:10px;" >Employee ID</span></f:facet>
+							<div align="center">
+							<h:outputText  class="label_ui" value="#{info.employeeId}"></h:outputText> </div></h:column>							
+							<h:column width="120px"><f:facet name="header"><span style="font-size:10px;">Employee name</span></f:facet> 
+						    <div align="center">
+							<h:outputText  class="label_ui" value="#{info.employeeName}"></h:outputText></div> </h:column>
+							<!-- <h:column width="100px"><f:facet name="header"><span style="font-size:10px;">DOB</span></f:facet>
+							<div align="center">
+							<h:outputText  class="label_ui" value="#{info.dateOfBirth}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> </h:outputText></div> </h:column>
+							<h:column width="80px"><f:facet name="header"><span style="font-size:10px;">Gender</span> </f:facet> 
+							<div align="center">
+							<h:outputText  class="label_ui" value="#{info.gender}"></h:outputText></div> </h:column>
+							 --><h:column width="140px"><f:facet name="header"><span style="font-size:10px;">Phone number</span> </f:facet> 
+							<div align="center"><h:outputText class="label_ui" value="#{info.phoneNumber}"></h:outputText> </div></h:column>
+							<!-- <h:column width="100px"><f:facet name="header"><span style="font-size:10px;">Qualification</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.qualification.type}"></h:outputText> </div></h:column>
+							<h:column width="100px"><f:facet name="header"><span style="font-size:10px;">Entry date</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.entryDate}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText> </div></h:column>
+							<h:column width="100px"><f:facet name="header"><span style="font-size:10px;">Join date</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.dateOfJoin}"><f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime></h:outputText> </div></h:column>
+							<h:column width="150px"><f:facet name="header"><span style="font-size:10px;">Basic salary</span> </f:facet> 
+							
+							<div align="center"><h:panelGroup>
+<h:outputText class="label_ui" value="Rp&nbsp;"></h:outputText><h:outputText  class="label_ui" value="#{info.basicSalary}"><f:converter converterId="com.inventory.util.UrlConverter" /></h:outputText></h:panelGroup></div>
+</h:column>	 -->
+							<h:column width="200px"><f:facet name="header"><span style="font-size:10px;">Designation</span> </f:facet> 
+							<div align="center"><h:outputText  class="label_ui" value="#{info.designation.type}"></h:outputText> </div></h:column>	
+							<h:column width="150px"><f:facet name="header"><span style="font-size:10px;">Generate Payroll</span> </f:facet>
+							<div align="center"> <h:commandButton  align="center" image="/images/view.png" action="#{employeePayrollFormMB.entry1}" >
+							<f:setPropertyActionListener target="#{employeePayrollFormMB.regid}" value="#{info.registrationId}"></f:setPropertyActionListener>
+							</h:commandButton></div></h:column>						
+							
+							</rich:dataTable></h:panelGrid>
+							</td></tr>
+							
+							</table>
+                  
+                   </td></tr>
+                  
+                     
+</table> 
+
+</td></tr>
+<tr><td style="height: 170px"></td></tr>
+
+<tr><td align="center">
+
+          
+</td></tr>
+</table>
+</h:form>
+
+</body>
+</ui:composition>
