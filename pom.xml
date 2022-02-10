@@ -20,7 +20,7 @@
 		<jetty.version>8.1.8.v20121106</jetty.version>
 		<jstl.version>1.2</jstl.version>
 		<servlet.version>2.5</servlet.version>
-		<hibernate.version>4.1.4.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 		<hibernatevalidator.version>4.2.0.Final</hibernatevalidator.version>
 		<commonslogging.version>1.1.1</commonslogging.version>
 		<commonscollections.version>3.2.1</commonscollections.version>
